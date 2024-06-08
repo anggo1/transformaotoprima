@@ -1,0 +1,99 @@
+/*Linear Gradien – Atas ke bawah*/
+#gradien1{
+	background-image: linear-gradient(#72a4d2, #4ea984);
+}
+/*Linear Gradien – Kiri ke Kanan*/
+#gradien2{
+	background-image: linear-gradient(to right, #4682B4, #00FFFF, #00FA9A);
+}
+#gradien3{
+	background-image: linear-gradient(to right, #000000, #727272, #000000);
+}
+/*Linear Gradient – Diagonal*/
+#gradient3 {
+  background-image: linear-gradient(to bottom right, #FF0000, #FFC0CB);
+}
+
+/*Linear Gradient – Angles*/
+#gradient4 {
+  background-image: linear-gradient(-90deg, red, yellow);
+}
+/*Linear Gradient – Multiple Color*/
+#gradient5 {
+  background-image: linear-gradient(red, #FF1493, rgba(255,192,203));
+}
+/*Linear Gradient – Multiple Color Kiri ke Kanan*/
+#gradient6 {
+  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+/*Gradient Radial – Ketebalan Warna*/
+#gradient10 {
+  background-image: radial-gradient(red 5%, yellow 15%, green 60%);
+}
+.login-logo,
+.register-logo {
+    font-size: 2.1rem;
+    font-weight: 300;
+    margin-bottom: .9rem;
+    text-align: center;
+    
+}
+.login-box,
+.register-box {
+	/*text-shadow: -0.5px -0.5px #080808, 0.5px 0.5px #FFF;*/
+  text-shadow: 0 1px 0 #0e0d0d, 0 2px 0 #353434, 0 3px 0 #393838, 0 3px 0 #474646, 0 3px 0 #6e6c6c,0 4px 1px rgba(246, 244, 244, 0.1), 0 0 4px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(255, 255, 255, 0.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 10px 20px #c3c3c31a;
+  width: 360px;
+  margin: 5% auto;
+  text-decoration: #ffffff;
+  text-decoration-color: #b9b9b9;
+  font-weight: bolder;
+  font: bolder;
+  
+}
+.card {text-shadow: -0.5px -0.5px #131313, 0.5px 0.5px #FFF;
+  width: 360px;
+  margin: 5% auto;
+  border: 5px solid #FFFFFF;
+  border-radius: 0px;
+ box-shadow: 0px 0px 0px 15px  rgba(0, 0, 0, 0.43), 
+             0px 30px 25px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+@media (max-width: 576px) {
+  .login-box,
+  .register-box {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+
+.login-box-body,
+.register-box-body {
+  background: #ffffff;
+  padding: 5%;
+  border-top: 0;	   
+  color: #666;-webkit-box-shadow: 0px 42px 49px -15px rgba(0,0,0,0.86); 
+box-shadow: 0px 42px 49px -15px rgba(0,0,0,0.86);
+}
+
+.login-box-body .form-control-feedback,
+.register-box-body .form-control-feedback {
+  color: #777;
+}
+
+.login-box-msg,
+.register-box-msg {
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+  font-size:20px;color: #fff;
+font-weight: bold;
+font-family: Helvetica;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 3px 0 #b9b9b9, 0 3px 0 #aaa, 
+0 4px 1px rgba(246, 244, 244, 0.1), 0 0 4px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(255, 255, 255, 0.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 10px 20px rgba(0,0,0,.15);
+}
+
+.social-auth-links {
+  margin: 10px 0;
+}

@@ -1,0 +1,230 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Mod_part_masuknpo extends CI_Model
+{
+    var $table = 'tbl_wh_barang';
+    var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
+    var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
+    var $order = array('id_barang' => 'desc'); // default order 
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+    }
+    private function _get_datatables_query($term = '')
+    {
+
+        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,d.type_mesin,e.kelompok');
+        $this->db->from('tbl_wh_barang as a');
+        $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c','c.id_satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d','d.id_type=a.type','left');
+        $this->db->join('tbl_wh_kelompok as e','e.id_kelompok=a.kelompok','left');
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column 
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_datatables()
+    {
+        $term = $_REQUEST['search']['value'];
+        $this->_get_datatables_query($term);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function count_filtered()
+    {
+        $term = $_REQUEST['search']['value'];
+        $this->_get_datatables_query($term);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all()
+    {
+
+        $this->db->from('tbl_wh_barang as a');
+        //$this->db->join('tbl_menu as b','a.id_menu=b.id_menu');
+        return $this->db->count_all_results();
+    }
+    function get_sup()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_wh_supplier');
+        //$this->db->where('status', 'N');
+		$data = $this->db->get();
+
+		return $data->result();
+    }
+    function get_po()
+    {
+        $this->db->select('a.*,b.*');
+        $this->db->from('tbl_wh_po as a');
+        $this->db->join('tbl_wh_supplier as b','b.id_supplier=a.supplier','left');
+        //$this->db->where('status', 'N');
+		$data = $this->db->get();
+
+		return $data->result();
+    }
+    function select_part_nopo()
+    {
+        $sql    = "SELECT * FROM tbl_wh_barang" ;
+        $data = $this->db->query($sql);
+
+
+        return $data->result();
+    }
+    function get_part($id)
+    {
+        $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok,f.nama_sup');
+        $this->db->from('tbl_wh_barang as a');
+        $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
+        $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.id_supplier=a.supplier', 'left');
+        $this->db->where('a.id_barang', $id);
+        return $this->db->get('tbl_wh_barang')->row();
+    }
+    public function select_detail($id)
+    {
+
+        $this->db->select('a.*,b.*,c.satuan as nama_satuan', FALSE);
+        $this->db->from('tbl_wh_detail_part_masuk as a');
+        $this->db->join('tbl_wh_barang as b','b.no_part=a.no_part','left');
+        $this->db->join('tbl_wh_satuan as c','c.id_satuan=b.satuan', 'left');
+        $this->db->where('a.id_masuk', $id);
+        $this->db->order_by('a.id', 'asc');
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
+    }
+    public function insert_part($data)
+    {
+        $date = $data['tgl_masuk'];
+        $tgl1 = explode('-', $date);
+        $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
+        
+        $sql = "INSERT INTO tbl_wh_detail_part_masuk SET
+        id_masuk    ='".$data['kode_masuk']."',
+        no_part     ='".$data['no_part']."',
+        nama_part   ='".$data['nama_part']."',
+        status_po   ='N',
+        tgl_masuk   ='$tgl_masuk',
+        jumlah      ='0',
+        satuan    ='".$data['satuan']."',
+        hrg_part    ='".$data['hrg_awal']."',
+        stok_akhir  ='".$data['stok']."',
+        stok_a      ='".$data['stok_a']."',
+        stok_p      ='".$data['stok_p']."'";
+        $this->db->query($sql);
+
+        return $this->db->affected_rows();
+    }
+    function update_harga($id,$hrg_part)
+		{
+		$harga =str_replace(" ","", $hrg_part);
+	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET hrg_part ='$harga' WHERE id ='{$id}'"; $this->db->query($sql_update);
+		return $this->db->affected_rows();
+		}
+    function update_jml($id,$hrg_part)
+		{
+		$jumlah =str_replace(" ","", $hrg_part);
+	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
+		return $this->db->affected_rows();
+		}
+    public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_a,$stok_p)
+    {
+        $date = $data['date1'];
+        $tgl1 = explode('-', $date);
+        $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
+        $status_barang = $data['status'];
+        $ret=""; if (!empty($data['return'])){ 
+        $ret=$data['return']; }else { $ret='N'; }
+        if($status_barang=="PPU"){
+        $data1 = array();
+        foreach($no_part as $key=>$value){
+            $total = $stok[$key] + $qty_masuk[$key];
+            $total_a= $stok_a[$key] + $qty_masuk[$key];
+            $data1[]  = array(
+            'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+            'stok'=>$total,
+            'stok_a'=>$total_a
+        );
+    }}
+    if($status_barang=="MPU"){
+        $data1 = array();
+        foreach($no_part as $key=>$value){
+            $total = $stok[$key] + $qty_masuk[$key];
+            $total_p= $stok_p[$key] + $qty_masuk[$key];
+            $data1[]  = array(
+            'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+            'stok'=>$total,
+            'stok_p'=>$total_p
+        );
+    }}
+        $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
+
+        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$status_barang."', tgl_masuk='".$tgl_masuk."', status_part='".$data['status']."', part_return='".$ret."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
+		return $this->db->affected_rows();
+    }
+    public function deletepartDetail($id)
+    {
+        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $id . "'";
+
+        $this->db->query($sql);
+
+        return $this->db->affected_rows();
+    }
+
+    function select_by_id($id)
+    {
+        $this->db->select('a.*,c.*', FALSE);
+        $this->db->from('tbl_wh_part_masuk as a');
+        $this->db->join('tbl_wh_supplier as c','c.kode_sup=a.kode_sup','left');
+        $this->db->where('a.kode_masuk', $id);
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
+    }
+    function select_detail_cetak($id)
+    {
+        $this->db->select('a.*,b.*,c.satuan as nama_satuan', FALSE);
+        $this->db->from('tbl_wh_detail_part_masuk as a');
+        $this->db->join('tbl_wh_barang as b','b.no_part=a.no_part','left');
+        $this->db->join('tbl_wh_satuan as c','c.id_satuan=b.satuan', 'left');
+        $this->db->where('a.id_masuk', $id);
+        $this->db->order_by('a.id', 'ASC');
+
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
+    }
+}
