@@ -26,12 +26,14 @@
                                     <th>No</th>
                                     <th>No Part</th>
                                     <th>Nama Part</th>
-                                    <th>Stok</th>
-                                    <th>H Awal</th>
-                                    <th>Harga 1</th>
-                                    <th>Harga 2</th>
-                                    <th>Kategori</th>
-                                    <th>Kelompok</th>
+                                    <th>Satuan</th>
+                                    <th>Harga List</th>
+                                    <th>Diskon</th>
+                                    <th>Harga Net</th>
+                                    <th>Harga Rata-rata</th>
+                                    <th>PPN</th>
+                                    <th>Harga Valid</th>
+                                    <th>Ket Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>

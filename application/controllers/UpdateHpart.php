@@ -62,14 +62,16 @@ class UpdateHpart extends MY_Controller
                 $row[] = $no;
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;
-                $row[] = $p->stok;
-                $row[] = number_format($p->hrg_awal);
-                $row[] = number_format($p->hrg_1);
-                $row[] = number_format($p->hrg_2);
                 $row[] = $p->satuan;
-                $row[] = $p->kelompok;
+                $row[] = number_format($p->harga_baru);
+                $row[] = $p->diskon;
+                $row[] = number_format($p->harga_net);
+                $row[] = number_format($p->harga_rata);
+                $row[] = $p->ppn;
+                $row[] = number_format($p->harga_valid);
+                $row[] = $p->ket_harga;
                 $row[]='
-                    <button class="btn btn-sm btn-outline-primary update-harga" title="Edit" data-id="'.$p->id_barang.'"><i class="fa fa-edit"> Update Harga</i>
+                    <button class="btn btn-sm btn-outline-primary update-harga" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-edit"> Update Harga</i>
                     </button>';
                 
                 $data[] = $row;

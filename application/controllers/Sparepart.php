@@ -98,12 +98,10 @@ class Sparepart extends MY_Controller
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;
                 $row[] = $p->satuan;
-                $row[] = $p->lokasi;
                 $row[] = $p->stok;
-                $row[] = number_format($p->harga_baru);
-                $row[] = number_format($p->harga_net);
-                $row[] = number_format($p->harga_valid);
-                $row[] = number_format($p->harga_rata);
+                $row[] = $p->lokasi;
+                $row[] = $p->kelompok;
+                $row[] = $p->type;
                 $row[] = $p->kategori;
                 if($pel1->edit_level=="Y"){
                     $edit='                    
@@ -201,6 +199,7 @@ class Sparepart extends MY_Controller
 
     public function prosesTsparepart()
     {
+        $this->form_validation->set_rules('no_part', 'Nomor Part', 'trim|required');
         $this->form_validation->set_rules('kelompok', 'Kelompok Barang', 'trim|required');
         $this->form_validation->set_rules('type', 'Type Barang', 'trim|required');
         $this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
@@ -211,28 +210,13 @@ class Sparepart extends MY_Controller
         //$kdKat = $kat[1];
         //$idKat = $kat[0];
 
-		$kelompok = trim($_POST['kelompok']);
-        $kel = explode('|', $kelompok);
-        $kdKel = $kel[1];
-        $idKel = $kel[0];
-
-		$type = trim($_POST['type']);
-        $ty = explode('|', $type);
-        $kdTy = $ty[1];
-        $idTy = $ty[0];
-
-        $kodePart=$kdTy.$kdKel;
-        
-        $ci_part = get_instance();
-		$query = "SELECT max(no_part) AS maxKode FROM tbl_wh_barang WHERE no_part LIKE '%$kodePart%'";
-		$hasil = $ci_part->db->query($query)->row_array();
-		$noOrder = $hasil['maxKode'];
-		$noUrut = (int)substr($noOrder, 4, 4);
-		$noUrut++;
-		$kode_part_auto  = $kodePart.sprintf("%04s", $noUrut);
+		//$kelompok = trim($_POST['kelompok']);
+        //$kel = explode('|', $kelompok);
+        //$kdKel = $kel[1];
+        //$idKel = $kel[0];
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_sparepart->insertSparepart($kode_part_auto,$idKel,$idTy,$data);
+            $result = $this->Mod_sparepart->insertSparepart($data);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -271,18 +255,8 @@ class Sparepart extends MY_Controller
         //$kat = explode('|', $kategori);
         //$kdKat = $kat[1];
         //$idKat = $kat[0];
-
-		$kelompok = trim($_POST['kelompok']);
-        $kel = explode('|', $kelompok);
-        $kdKel = $kel[1];
-        $idKel = $kel[0];
-
-		$type = trim($_POST['type']);
-        $ty = explode('|', $type);
-        $kdTy = $ty[1];
-        $idTy = $ty[0];
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_sparepart->updateSparepart($idKel,$idTy,$data);
+			$result = $this->Mod_sparepart->updateSparepart($data);
 
 			if ($result > 0) {
 				$out['status'] = '';

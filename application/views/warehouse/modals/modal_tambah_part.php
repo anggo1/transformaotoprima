@@ -37,71 +37,28 @@
                                                     <input type="hidden" name="id_part" value="<?php if (!empty($part->id_part)) {echo $part->id_part;} ?>">
                                                 <label class="col-sm-2 col-form-label">No Part</label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" name="no_part" id="nama_part" value="<?php if (!empty($part->no_part)) {
+                                                            <input type="text" name="no_part" id="no_part" value="<?php if (!empty($part->no_part)) {
                                                           echo $part->no_part;
-                                                        } ?>" class="form-control" readonly>
+                                                        } ?>" class="form-control">
                                                         </div>
+                                                        </div>
+                                                        <div class="form-group row">
                                                     <label class="col-sm-2 col-form-label">Nama Part</label>
                                                         <div class="col-sm-4">
                                                             <input type="text" name="nama_part" id="nama_part" value="<?php if (!empty($part->nama_part)) {
                                                           echo $part->nama_part;
                                                         } ?>" class="form-control" required>
                                                         </div>
+                                                    <label class="col-sm-2 col-form-label">Name of Part</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="nama_part_e" id="nama_part_e" value="<?php if (!empty($part->nama_part_e)) {
+                                                          echo $part->nama_part_e;
+                                                        } ?>" class="form-control" required>
+                                                        </div>
                                                         </div>
                                                         
                                                 <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">Jenis</label>
-                                                        <div class="col-sm-4">
-                                                            <select name="type" class="form-control" required>
-                                                                <option value="">Pilih Jenis
-                                                                </option>
-                                                                <?php
-                                                                    if (empty($part->type)) {
-                                                                        foreach ($dataType as $ty) {
-                                                                    ?>
-                                                                <option
-                                                                    <?php echo $ty == $ty->id_type ? 'selected="selected"' : '' ?>
-                                                                    value="<?php echo $ty->id_type ?>|<?php echo $ty->kode_type ?>">
-                                                                    <?php echo $ty->type_mesin  ?><?php } ?>
-                                                                </option>
-                                                                <?php
-                                                                        } else {
-                                                                            foreach ($dataType as $tp) { ?>
-                                                                <option
-                                                                    value="<?php echo $tp->id_type; ?>|<?php echo $tp->kode_type ?>"
-                                                                    <?php if ($tp->id_type == $part->type) {  echo "selected='selected'"; } ?>>
-                                                                    <?php echo $tp->type_mesin; ?>
-                                                                </option>
-                                                                <?php } } ?>
-                                                            </select>
-                                                        </div>
-                                                        <label class="col-sm-2 col-form-label">Kelompok</label>
-                                                        <div class="col-sm-4">
-                                                            <select name="kelompok" class="form-control" required>
-                                                                <option value="">Pengelompokan.....
-                                                                </option>
-                                                                <?php
-                                                            if (empty($part->kelompok)) {
-                                                                foreach ($dataKelompok as $kp) {
-                                                            ?>
-                                                                <option
-                                                                    <?php echo $kp == $kp->id_kelompok ? 'selected="selected"' : '' ?>
-                                                                    value="<?php echo $kp->id_kelompok ?>|<?php echo $kp->kode_kelompok ?>">
-                                                                    <?php echo $kp->kelompok  ?><?php } ?>
-                                                                </option>
-                                                                <?php
-                                                                } else {
-                                                                    foreach ($dataKelompok as $kel) { ?>
-                                                                <option
-                                                                    value="<?php echo $kel->id_kelompok; ?>|<?php echo $kel->kode_kelompok ?>"
-                                                                    <?php if ($kel->id_kelompok == $part->kelompok) { echo "selected='selected'"; } ?>>
-                                                                    <?php echo $kel->kelompok; ?>
-                                                                </option>
-                                                                <?php } } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
+                                                    
                                                 <label class="col-sm-2 col-form-label">Satuan</label>
                                                 <div class="col-sm-4">
                                                     <select name="satuan" class="form-control" required>
@@ -126,6 +83,85 @@
                                                         <?php } } ?>
                                                     </select>
                                                 </div>
+                                                        <label class="col-sm-2 col-form-label">Kelompok</label>
+                                                        <div class="col-sm-4">
+                                                            <select name="kelompok" class="form-control" required>
+                                                                <option value="">Pengelompokan.....
+                                                                </option>
+                                                                <?php
+                                                            if (empty($part->kelompok)) {
+                                                                foreach ($dataKelompok as $kp) {
+                                                            ?>
+                                                                <option
+                                                                    <?php echo $kp == $kp->kelompok ? 'selected="selected"' : '' ?>
+                                                                    value="<?php echo $kp->kelompok ?>">
+                                                                    <?php echo $kp->kelompok  ?><?php } ?>
+                                                                </option>
+                                                                <?php
+                                                                } else {
+                                                                    foreach ($dataKelompok as $kel) { ?>
+                                                                <option
+                                                                    value="<?php echo $kel->kelompok; ?>"
+                                                                    <?php if ($kel->kelompok == $part->kelompok) { echo "selected='selected'"; } ?>>
+                                                                    <?php echo $kel->kelompok; ?>
+                                                                </option>
+                                                                <?php } } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">Type</label>
+                                                        <div class="col-sm-4">
+                                                            <select name="type" class="form-control" required>
+                                                                <option value="">Pilih Type
+                                                                </option>
+                                                                <?php
+                                                                    if (empty($part->type)) {
+                                                                        foreach ($dataType as $ty) {
+                                                                    ?>
+                                                                <option
+                                                                    <?php echo $ty == $ty->type ? 'selected="selected"' : '' ?>
+                                                                    value="<?php echo $ty->type ?>">
+                                                                    <?php echo $ty->type  ?><?php } ?>
+                                                                </option>
+                                                                <?php
+                                                                        } else {
+                                                                            foreach ($dataType as $tp) { ?>
+                                                                <option
+                                                                    value="<?php echo $tp->type; ?>"
+                                                                    <?php if ($tp->type == $part->type) {  echo "selected='selected'"; } ?>>
+                                                                    <?php echo $tp->type; ?>
+                                                                </option>
+                                                                <?php } } ?>
+                                                            </select>
+                                                        </div>
+
+                                                        <label class="col-sm-2 col-form-label">Kategori</label>
+                                                        <div class="col-sm-4">
+                                                            <select name="kategori" class="form-control" required>
+                                                                <option value="">Pilih Kategori
+                                                                </option>
+                                                                <?php
+                                                                    if (empty($part->kategori)) {
+                                                                        foreach ($dataKategori as $kt) {
+                                                                    ?>
+                                                                <option
+                                                                    <?php echo $kt == $kt->kategori ? 'selected="selected"' : '' ?>
+                                                                    value="<?php echo $kt->kategori ?>">
+                                                                    <?php echo $kt->kategori  ?><?php } ?>
+                                                                </option>
+                                                                <?php
+                                                                        } else {
+                                                                            foreach ($dataKategori as $tk) { ?>
+                                                                <option
+                                                                    value="<?php echo $tk->kategori; ?>"
+                                                                    <?php if ($tk->kategori == $part->kategori) {  echo "selected='selected'"; } ?>>
+                                                                    <?php echo $tk->kategori; ?>
+                                                                </option>
+                                                                <?php } } ?>
+                                                            </select>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,17 +205,18 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Min Stok Aktif</label>
+                                        <label class="col-sm-2 col-form-label">Stok</label>
                                         <div class="col-sm-4">
-                                            <input type="number" name="minstok_a" id="minstok_a" value="<?php if (!empty($part->minstok_a)) {
-                                                          echo $part->minstok_a;
+                                            <input type="number" name="stok" id="stok" value="<?php if (!empty($part->stok)) {
+                                                          echo $part->stok;
                                                         } ?>" class="form-control">
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Min Stok Pasif</label>
+                                        <label class="col-sm-2 col-form-label">Harga Baru</label>
                                         <div class="col-sm-4">
-                                            <input type="text" name="minstok_p" id="minstok_p" value="<?php if (!empty($part->minstok_p)) {
-                                                          echo $part->minstok_p;
-                                                        } ?>" class="form-control">
+                                            <input type="text" name="harga_baru" id="harga_baru" onkeyup="formatNumber(this)"onchange="formatNumber(this);" onclick="formatNumber(this);"
+                                             value="<?php if (!empty($part->harga_baru)) {
+                                                          echo $part->harga_baru;
+                                                        }else{ echo '0';} ?>" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">

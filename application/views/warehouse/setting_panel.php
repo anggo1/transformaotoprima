@@ -48,7 +48,7 @@
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Divisi</h3>
+                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Kategori</h3>
                                     <div class="text-right">
                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kategori" title="Add Data"><i class="fas fa-plus"></i>
                                             Add</button>
@@ -79,7 +79,7 @@
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-gear-b ion-lg text-blue"></i> &nbsp; Jenis
+                                    <h3 class="card-title"><i class="ion-gear-b ion-lg text-blue"></i> &nbsp; Type Mesin
                                     </h3>
                                     <div class="text-right">
                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-type" title="Add Data"><i class="fas fa-plus"></i> Add

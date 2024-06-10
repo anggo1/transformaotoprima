@@ -22,7 +22,7 @@ if (!empty($dataKategori)){
                         if (!empty($dataKategori->kode_kategori)) {
                             echo $dataKategori->kode_kategori;
                         }
-                        ?>" name="kode_kategori" aria-describedby="sizing-addon2" maxlength="1"
+                        ?>" name="kode_kategori" aria-describedby="sizing-addon2"
                         onkeyup="this.value = this.value.toUpperCase();">	
 
     </div>

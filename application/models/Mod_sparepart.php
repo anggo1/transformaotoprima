@@ -3,10 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Mod_sparepart extends CI_Model
 {
-
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.harga_baru','a.harga_net','a.harga_rata','a.kategori');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.harga_baru','a.harga_net','a.harga_rata','a.kategori');
+    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.kelompok','a.type','a.kategori');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.kelompok','a.type','a.kategori');
     var $order = array('id_part' => 'asc'); // default order 
 
     public function __construct()
@@ -167,19 +166,25 @@ class Mod_sparepart extends CI_Model
 
         return $data->result();
     }
-    function insertSparepart($kode_part_auto,$idKel,$idTy,$data)
+    function insertSparepart($data)
     {
+        
+		$harga=$data['harga_baru'];
+		$harga_baru =str_replace(",","", $harga);
+
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
-        no_part     ='".$kode_part_auto."',
+        no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
-        minstok_a   ='".$data['minstok_a']."',
-        minstok_p   ='".$data['minstok_p']."',
-        kelompok    ='".$idKel."',
-        type        ='".$idTy."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
         lokasi      ='".$data['lokasi']."',
-        supplier    ='".$data['supplier']."',
+        stok        ='".$data['stok']."',
+        harga_baru  ='".$harga_baru."',
         ket         ='".$data['ket']."',
         std_pakai   ='".$data['std_pakai']."'";
 
@@ -187,18 +192,22 @@ class Mod_sparepart extends CI_Model
 
 		return $this->db->affected_rows();
     }
-    function updateSparepart($idKel,$idTy,$data)
+    function updateSparepart($data)
     {
+		$harga=$data['harga_baru'];
+		$harga_baru =str_replace(",","", $harga);
         $sql = "UPDATE tbl_wh_barang SET
         no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
-        minstok_a   ='".$data['minstok_a']."',
-        minstok_p   ='".$data['minstok_p']."',
-        type        ='".$idTy."',
-        kelompok    ='".$idKel."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
         lokasi      ='".$data['lokasi']."',
-        supplier    ='".$data['supplier']."',
+        stok        ='".$data['stok']."',
+        harga_baru  ='".$harga_baru."',
         ket         ='".$data['ket']."',
         std_pakai   ='".$data['std_pakai']."'
         WHERE id_part='".$data['id_part']."'";

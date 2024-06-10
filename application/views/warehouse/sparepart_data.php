@@ -141,12 +141,10 @@ table.dataTable td {
                                     <th>No Part</th>
                                     <th>Nama Part</th>
                                     <th>Satuan</th>
-                                    <th>Lokasi</th>
                                     <th>Stok</th>
-                                    <th>Harga</th>
-                                    <th>Harga Net</th>
-                                    <th>Harga Valid</th>
-                                    <th>H Rata-rata</th>
+                                    <th>Lokasi</th>
+                                    <th>Kelompok</th>
+                                    <th>Type</th>
                                     <th>Kategori</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -215,7 +213,7 @@ $(document).ready(function() {
                 className: 'btn btn-outline-secondary',init: function (api, node, config) {
                 $(node).removeClass('btn-secondary') },
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
                 }
             },
             {
