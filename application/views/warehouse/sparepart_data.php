@@ -250,7 +250,7 @@ $(document).ready(function() {
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0,11],
+            "targets": [0,9],
             "orderable": false,
         }, ],
 

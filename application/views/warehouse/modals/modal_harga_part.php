@@ -60,7 +60,7 @@
                                     <label class="col-sm-2 col-form-label">Harga Awal</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="harga_baru" id="harga_baru"
-                                            value="<?php if (!empty($part->harga_baru)) { echo number_format($part->harga_baru);}?>"
+                                            value="<?php if (!empty($part->harga_baru)) { echo number_format($part->harga_baru);}?>" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
                                             class="form-control">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Diskon</label>
@@ -73,13 +73,13 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Harga Net</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="harga_net" id="harga_net"
+                                        <input type="text" name="harga_net" id="harga_net" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
                                             value="<?php if (!empty($part->harga_net)) { echo number_format($part->harga_net);}?>"
                                             class="form-control">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Harga Rata-rata</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="harga_rata" id="harga_rata"
+                                        <input type="text" name="harga_rata" id="harga_rata" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
                                             value="<?php if (!empty($part->harga_rata)) { echo number_format($part->harga_rata);}?>"
                                             class="form-control">
                                     </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Harga Valid</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="harga_valid" id="harga_valid"
+                                        <input type="text" name="harga_valid" id="harga_valid" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
                                             value="<?php if (!empty($part->harga_valid)) { echo number_format($part->harga_valid);}?>"
                                             class="form-control">
                                     </div>

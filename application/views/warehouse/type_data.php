@@ -6,7 +6,7 @@
 
            <td><?php echo $no; ?></td>
            <td><?php echo $s->kode_type; ?></td>
-           <td><?php echo $s->type_mesin; ?></td>
+           <td><?php echo $s->type; ?></td>
 
            <td class="text-center">
              <button class="btn btn-sm btn-outline-success update-dataType ion-edit" data-id="<?php echo $s->id_type; ?>"></button>

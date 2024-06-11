@@ -5,8 +5,8 @@ class Mod_update_hpart extends CI_Model
 {
 
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.harga_baru','a.harga_net','a.harga_rata','a.kategori');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.harga_baru','a.harga_net','a.harga_rata','a.kategori');
+    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
     var $order = array('id_part' => 'asc'); // default order 
 
     public function __construct()
@@ -139,40 +139,43 @@ class Mod_update_hpart extends CI_Model
 
         return $data->result();
     }
-    function view_sparepart($id)
-    {
-        $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok');
-        $this->db->from('tbl_wh_barang as a');
-        $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
-        $this->db->join('tbl_wh_satuan as c','c.id_satuan=a.satuan', 'left');
-        $this->db->join('tbl_wh_type_mesin as d','d.id_type=a.type', 'left');
-        $this->db->join('tbl_wh_kelompok as e','e.id_kelompok=a.kelompok','left');
-        $this->db->where('a.id_barang',$id);
-
-        $data = $this->db->get();
-
-        return $data->result();
-    }
 
     function updateHarga( $data)
     {
         $datenow= date("Y-m-d");
+        $hargaB=$data['harga_baru'];
+		$harga_baru =str_replace(",","", $hargaB);
+        $hargaN=$data['harga_net'];
+		$harga_net =str_replace(",","", $hargaN);
+        $hargaR=$data['harga_rata'];
+		$harga_rata =str_replace(",","", $hargaR);
+        $hargaV=$data['harga_valid'];
+		$harga_valid =str_replace(",","", $hargaV);
+
         $sql_log = "INSERT INTO tbl_wh_log_harga SET
         id = '',
-        id_barang   = '".$data['id_barang']."',
+        id_part   = '".$data['id_part']."',
         no_part     = '".$data['no_part']."',
-        hrg_awal    = '".$data['hrg_awal']."',
-        hrg_1       = '".$data['hrg_1']."',
-        hrg_2       = '".$data['hrg_2']."',
+        harga_baru  = '".$harga_baru."',
+        diskon      = '".$data['diskon']."',
+        harga_net   = '".$harga_net."',
+        harga_rata  = '".$harga_rata."',
+        harga_valid = '".$harga_valid."',
+        ket_harga   = '".$data['ket_harga']."',
+        ppn         = '".$data['ppn']."',
         tgl_update  = '$datenow',
         user        = '".$data['user']."' ";
         $this ->db ->query($sql_log);
 
         $sql = "UPDATE tbl_wh_barang SET
-        hrg_awal = '".$data['hrg_awal']."',
-        hrg_1 = '".$data['hrg_1']."',
-        hrg_2 = '".$data['hrg_2']."'
-        WHERE id_barang = '".$data['id_barang']."' ";
+        harga_baru  = '".$harga_baru."',
+        diskon      = '".$data['diskon']."',
+        harga_net   = '".$harga_net."',
+        harga_rata  = '".$harga_rata."',
+        harga_valid = '".$harga_valid."',
+        ppn         = '".$data['ppn']."',
+        ket_harga   = '".$data['ket_harga']."',
+        WHERE id_part = '".$data['id_part']."' ";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -180,7 +183,7 @@ class Mod_update_hpart extends CI_Model
 
     function get_sparepart($id)
     {
-        $this->db->where('id_barang', $id);
+        $this->db->where('id_part', $id);
         return $this->db->get('tbl_wh_barang')->row();
     }
 
@@ -204,7 +207,7 @@ class Mod_update_hpart extends CI_Model
 
     function deletePart($id)
     {
-        $sql = "DELETE FROM tbl_wh_barang WHERE id_barang='{$id}'";
+        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='{$id}'";
 
 		$this->db->query($sql);
 

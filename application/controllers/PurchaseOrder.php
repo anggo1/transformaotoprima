@@ -35,16 +35,17 @@ public function showPart()
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "<a onclick=selectPart('$pel->id_barang')>$no</a>";
+			$row[] = "<a onclick=selectPart('.$pel->id_part.','$pel->no_part','$pel->nama_part','$pel->stok','$pel->harga_baru')>$no</a>";
 			$row[] = $pel->no_part;
-			$row[] = $pel->nama_part;
-			$row[] = $pel->stok;
-			$row[] = number_format($pel->hrg_awal);
-			$row[] = $pel->kode_satuan;
-			$row[] = $pel->id_barang;
-			$row[] = $pel->stok_a;
-			$row[] = $pel->stok_p;
-			$row[] = $pel->hrg_awal;
+                $row[] = $pel->nama_part;
+                $row[] = $pel->satuan;
+                $row[] = number_format($pel->harga_baru);
+                $row[] = $pel->diskon;
+                $row[] = number_format($pel->harga_net);
+                $row[] = number_format($pel->harga_rata);
+                $row[] = $pel->ppn;
+                $row[] = number_format($pel->harga_valid);
+                $row[] = $pel->ket_harga;
 			$data[] = $row;
 		}
 

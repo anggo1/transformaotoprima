@@ -4,9 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_purchaseorder extends CI_Model
 {
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part', 'a.nama_part', 'a.stok', 'a.lokasi', 'c.kode_satuan', 'a.type', 'a.kategori', 'a.kelompok');
-    var $column_order = array('a.no_part', 'a.nama_part', 'a.stok', 'a.lokasi', 'c.kode_satuan', 'a.type', 'a.kategori', 'a.kelompok');
-    var $order = array('id_barang' => 'desc'); // default order 
+    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $order = array('id_part' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -16,12 +16,8 @@ class Mod_purchaseorder extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,d.type_mesin,e.kelompok');
+        $this->db->select('a.*');
         $this->db->from('tbl_wh_barang as a');
-        $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
-        $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
-        $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
-        $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -98,7 +94,7 @@ class Mod_purchaseorder extends CI_Model
         $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
         $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
         $this->db->join('tbl_wh_supplier as f', 'f.id_supplier=a.supplier', 'left');
-        $this->db->where('a.id_barang', $id);
+        $this->db->where('a.id_part', $id);
         return $this->db->get('tbl_wh_barang')->row();
     }
     public function select_supplier()

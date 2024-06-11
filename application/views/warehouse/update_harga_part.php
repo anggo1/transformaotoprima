@@ -79,7 +79,7 @@ show_my_confirm('hapusPart', 'hapus-part', 'Hapus Data Ini?', 'Ya, Hapus Data In
             },
             "columnDefs": [
         {
-            "targets": [ 0 ],
+            "targets": [ 0,11],
             "orderable": false,
         },
         ],
