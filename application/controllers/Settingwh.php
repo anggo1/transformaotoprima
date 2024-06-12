@@ -310,7 +310,7 @@ class Settingwh extends MY_Controller
                 $out['msg'] = show_ok_msg('Success', '20px');
             } else {
                 $out['status'] = '';
-                $out['msg'] = show_succ_msg('Filed!', '20px');
+                $out['msg'] = show_err_msg('Filed!', '20px');
             }
         } else {
             $out['status'] = 'form';

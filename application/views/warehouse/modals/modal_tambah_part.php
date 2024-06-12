@@ -39,7 +39,7 @@
                                                         <div class="col-sm-4">
                                                             <input type="text" name="no_part" id="no_part" value="<?php if (!empty($part->no_part)) {
                                                           echo $part->no_part;
-                                                        } ?>" class="form-control">
+                                                        } ?>" class="form-control" required>
                                                         </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -53,7 +53,7 @@
                                                         <div class="col-sm-4">
                                                             <input type="text" name="nama_part_e" id="nama_part_e" value="<?php if (!empty($part->nama_part_e)) {
                                                           echo $part->nama_part_e;
-                                                        } ?>" class="form-control" required>
+                                                        } ?>" class="form-control">
                                                         </div>
                                                         </div>
                                                         
@@ -61,7 +61,7 @@
                                                     
                                                 <label class="col-sm-2 col-form-label">Satuan</label>
                                                 <div class="col-sm-4">
-                                                    <select name="satuan" class="form-control" required>
+                                                    <select name="satuan" class="form-control">
                                                         <option value="">Pilih Satuan
                                                         </option>
                                                         <?php
@@ -69,15 +69,15 @@
                                                                         foreach ($dataSatuan as $sat) {
                                                                     ?>
                                                         <option
-                                                            <?php echo $sat == $sat->id_satuan ? 'selected="selected"' : '' ?>
-                                                            value="<?php echo $sat->id_satuan ?>">
+                                                            <?php echo $sat == $sat->satuan ? 'selected="selected"' : '' ?>
+                                                            value="<?php echo $sat->satuan ?>">
                                                             <?php echo $sat->satuan  ?><?php } ?>
                                                         </option>
                                                         <?php
                                                                         } else {
                                                                             foreach ($dataSatuan as $st) { ?>
-                                                        <option value="<?php echo $st->id_satuan; ?>"
-                                                            <?php if ($st->id_satuan == $part->satuan) { echo "selected='selected'"; } ?>>
+                                                        <option value="<?php echo $st->satuan; ?>"
+                                                            <?php if ($st->satuan == $part->satuan) { echo "selected='selected'"; } ?>>
                                                             <?php echo $st->satuan; ?>
                                                         </option>
                                                         <?php } } ?>
@@ -85,7 +85,7 @@
                                                 </div>
                                                         <label class="col-sm-2 col-form-label">Kelompok</label>
                                                         <div class="col-sm-4">
-                                                            <select name="kelompok" class="form-control" required>
+                                                            <select name="kelompok" class="form-control">
                                                                 <option value="">Pengelompokan.....
                                                                 </option>
                                                                 <?php
@@ -112,7 +112,7 @@
                                                     <div class="form-group row">
                                                     <label class="col-sm-2 col-form-label">Type</label>
                                                         <div class="col-sm-4">
-                                                            <select name="type" class="form-control" required>
+                                                            <select name="type" class="form-control">
                                                                 <option value="">Pilih Type
                                                                 </option>
                                                                 <?php
@@ -138,7 +138,7 @@
 
                                                         <label class="col-sm-2 col-form-label">Kategori</label>
                                                         <div class="col-sm-4">
-                                                            <select name="kategori" class="form-control" required>
+                                                            <select name="kategori" class="form-control">
                                                                 <option value="">Pilih Kategori
                                                                 </option>
                                                                 <?php
@@ -174,19 +174,19 @@
                                                 <option value="">Supplier...
                                                 </option>
                                                 <?php
-                                                            if (empty($part->supplier)) {
+                                                            if (empty($part->kode_sup)) {
                                                                 foreach ($dataSupplier as $sp) {
                                                             ?>
                                                 <option
-                                                    <?php echo $sp == $sp->id_supplier ? 'selected="selected"' : '' ?>
-                                                    value="<?php echo $sp->id_supplier ?>">
+                                                    <?php echo $sp == $sp->kode_sup ? 'selected="selected"' : '' ?>
+                                                    value="<?php echo $sp->kode_sup ?>">
                                                     <?php echo $sp->nama_sup  ?><?php } ?>
                                                 </option>
                                                 <?php
                                                                 } else {
                                                                     foreach ($dataSupplier as $sup) {          ?>
-                                                <option value="<?php echo $sup->id_supplier; ?>"
-                                                    <?php if ($sup->id_supplier == $part->supplier) {
+                                                <option value="<?php echo $sup->kode_sup; ?>"
+                                                    <?php if ($sup->kode_sup == $part->kode_sup) {
                                                                                                                                 echo "selected='selected'";
                                                                                                                             } ?>>
                                                     <?php echo $sup->nama_sup; ?>

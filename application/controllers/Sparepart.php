@@ -200,8 +200,6 @@ class Sparepart extends MY_Controller
     public function prosesTsparepart()
     {
         $this->form_validation->set_rules('no_part', 'Nomor Part', 'trim|required');
-        $this->form_validation->set_rules('kelompok', 'Kelompok Barang', 'trim|required');
-        $this->form_validation->set_rules('type', 'Type Barang', 'trim|required');
         $this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
 
         $data     = $this->input->post();

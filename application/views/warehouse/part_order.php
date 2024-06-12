@@ -15,7 +15,7 @@
                         <div class="modal-header text-blue">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Purchase Order</h5>
+                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Part Order</h5>
                             <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
                                 onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
                                 BARU</button>

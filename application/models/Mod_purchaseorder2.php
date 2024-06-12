@@ -115,17 +115,26 @@ class Mod_purchaseorder extends CI_Model
     }
     public function insertDetailPo($data)
     {
+        $id=$data['id_part'];
+        $ci_data = get_instance();
+        $query = "SELECT no_part,nama_part,satuan,harga_baru,stok FROM tbl_wh_barang WHERE id_part='{$id}'";
+        $d_data = $ci_data->db->query($query)->row_array();
+        $no_part       = $d_data['no_part'];
+        $nama_part       = $d_data['nama_part'];
+        $satuan       = $d_data['satuan'];
+        $harga_baru       = $d_data['harga_baru'];
+        $stok       = $d_data['stok'];
+
+
         $datenow = date("Y-m-d");
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
         $sql = "INSERT INTO tbl_wh_detail_po SET
             id_detail       ='',
             id_po           ='" . $data['id_po'] . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            satuan       ='" . $data['satuan'] . "',
+            no_part         ='" . $no_part. "',
+            nama_part       ='" . $nama_part . "',
+            satuan       ='" . $satuan . "',
             harga           ='" . $harga_baru. "',
-            stok_akhir     ='" . $data['stok'] . "'";
+            stok_akhir     ='" . $stok . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();

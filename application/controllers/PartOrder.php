@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class PurchaseOrder extends MY_Controller
+class PartOrder extends MY_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('Mod_purchaseorder'));
+		$this->load->model(array('Mod_partorder'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 	}
