@@ -46,12 +46,20 @@
                                                                                     ?>" name="kode_supplier" aria-describedby="sizing-addon2" readonly>
       </div>
       <div class="form-group">
-        <label class="control-label">Nama Supplier <span class="required"> *</span></label>
+        <label class="control-label">Nama Supplier <span class="required red"> *</span></label>
         <input type="text" class="form-control" placeholder="Nama Supplier" value="<?php
                                                                                     if (!empty($dataSup->nama_sup)) {
                                                                                       echo $dataSup->nama_sup;
                                                                                     }
                                                                                     ?>" name="nama_supplier" aria-describedby="sizing-addon2" require>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Detail Supplier</label>
+        <input type="text" class="form-control" placeholder="Detail Supplier" value="<?php
+                                                                                    if (!empty($dataSup->detail)) {
+                                                                                      echo $dataSup->detail;
+                                                                                    }
+                                                                                    ?>" name="detail" aria-describedby="sizing-addon2">
       </div>
       <div class="form-group">
         <label class="control-label">Alamat</label>
@@ -68,6 +76,14 @@
                                                                                         echo $dataSup->no_tlp;
                                                                                       }
                                                                                       ?>" name="no_tlp" aria-describedby="sizing-addon2">
+      </div>
+      <div class="form-group">
+        <label class="control-label">No Fax</label>
+        <input type="text" class="form-control" placeholder="No Fax Supplier" value="<?php
+                                                                                      if (!empty($dataSup->no_fax)) {
+                                                                                        echo $dataSup->no_fax;
+                                                                                      }
+                                                                                      ?>" name="no_fax" aria-describedby="sizing-addon2">
       </div>
       <div class="form-group">
         <label class="control-label">No Telp</label>

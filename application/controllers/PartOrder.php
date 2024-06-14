@@ -14,23 +14,23 @@ class PartOrder extends MY_Controller
 
 	public function index()
 	{
-		$data['page'] 		= "Purchase Order";
-		$data['judul'] 		= "PO";
+		$data['page'] 		= "Part Order";
+		$data['judul'] 		= "P O";
 		$this->load->helper('url');
-		$data['dataSupplier'] = $this->Mod_purchaseorder->select_supplier();
-		$this->template->load('layoutbackend', 'warehouse/purchase_order', $data);
+		$data['dataSupplier'] = $this->Mod_partorder->select_supplier();
+		$this->template->load('layoutbackend', 'warehouse/part_order', $data);
 	}
 public function showPart()
     {
 		$sup = $_GET['sup'];
-        $data['dataDetail'] = $this->Mod_purchaseorder->select_part($sup);
+        $data['dataDetail'] = $this->Mod_partorder->select_part($sup);
         $this->load->view('warehouse/data_part_with_supplier', $data);
     }
 	public function ajax_list()
 	{
 		ini_set('memory_limit', '512M');
 		set_time_limit(3600);
-		$list = $this->Mod_purchaseorder->get_datatables();
+		$list = $this->Mod_partorder->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $pel) {
@@ -53,8 +53,8 @@ public function showPart()
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->Mod_purchaseorder->count_all(),
-			"recordsFiltered" => $this->Mod_purchaseorder->count_filtered(),
+			"recordsTotal" => $this->Mod_partorder->count_all(),
+			"recordsFiltered" => $this->Mod_partorder->count_filtered(),
 			"data" => $data,
 		);
 		//output to json format
@@ -62,14 +62,14 @@ public function showPart()
 	}
 	public function cariKode($id)
 	{
-		$data = $this->Mod_purchaseorder->get_part($id);
+		$data = $this->Mod_partorder->get_part($id);
 		echo json_encode($data);
 	}
 	public function prosesDetailPo()
 	{
 		
 		$data 	= $this->input->post();
-		$data['dataPo'] = $this->Mod_purchaseorder->insertDetailPo($data);
+		$data['dataPo'] = $this->Mod_partorder->insertDetailPo($data);
 		
 		echo json_encode($data);
 	}
@@ -78,21 +78,26 @@ public function showPart()
         $id = $_POST['id'];
         $jml_part = $_POST['jml_part'];
         $hrg_part = $_POST['hrg_part'];
-		$data['dataPo'] = $this->Mod_purchaseorder->update_detailPo($id,$jml_part,$hrg_part);
+		$data['dataPo'] = $this->Mod_partorder->update_detailPo($id,$jml_part,$hrg_part);
 		//$this->load->view('body_repair/detail_estimasi', $data);
+	}
+	public function updateRemark()
+	{
+        $id = $_POST['id'];
+        $remark = $_POST['remark'];
+		$data['dataPo'] = $this->Mod_partorder->update_remark($id,$remark);
 	}
 	public function prosesPo()
 	{
 		
 		$sekarang= date("Y-m");
-		$this->form_validation->set_rules('tgl_po', 'Tanggal Masuk', 'trim|required');
-		$this->form_validation->set_rules('ppn', 'PPN', 'trim|required');
+		$this->form_validation->set_rules('tgl_part_order', 'Tanggal Order', 'trim|required');
 		$this->form_validation->set_rules('supplier', 'Data Supplier', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
-			$kode_po = $data['id_po'];
-			$date2 = $data['tgl_po'];
+			$kode_po = $data['id_part_order'];
+			$date2 = $data['tgl_part_order'];
 			$tgl2 = explode('-', $date2);
 			$tgl_po_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
 			$sekarang = date('Y/m/d');
@@ -104,19 +109,16 @@ public function showPart()
 			$koderef=$kode_po.$nama_ref;
 
 			$data = array(
-				'id_po'  	=> $kode_po,
-				'kode_po'   => $koderef,
-				'tgl_po'  	=> $tgl_po_fix,
-				'top'      	=> $data['top'],
-				'ppn'  		=> $data['ppn'],
+				'id_part_order'  	=> $kode_po,
+				'kode_part_order'   => $koderef,
+				'tgl_part_order'  	=> $tgl_po_fix,
 				'supplier'	=> $data['supplier'],
+				'kode_pesan'	=> $data['no_order'],
 				'keterangan' => $data['keterangan'],
-				'keterangan2' => $data['keterangan2'],
-				'pengesah' => $data['pengesah'],
 				'user'   	=> $data['user'],
 				'status_PO'	=> 'N'
 			);
-				$data['dataPo'] = $this->db->insert('tbl_wh_po', $data);
+				$data['dataPo'] = $this->db->insert('tbl_wh_part_order', $data);
 				$data 	= $this->input->post();
 				
 			if ($result > 0) {
@@ -136,9 +138,9 @@ public function showPart()
 	}
 	public function tampilDetail()
 	{
-		$id 				= $_POST['id_po'];
-		$data['dataDetail'] = $this->Mod_purchaseorder->select_detail($id);
-		$this->load->view('warehouse/detail_po', $data);
+		$id 				= $_POST['id_part_order'];
+		$data['dataDetail'] = $this->Mod_partorder->select_detail($id);
+		$this->load->view('warehouse/detail_part_order', $data);
 	}
 	public function view()
     {
@@ -147,19 +149,19 @@ public function showPart()
             $data['table'] = $table;
             $data['data_field'] = $this->db->field_data($table);
             $data['dataDetail'] = $this->Mod_userlevel->view($id)->result_array();
-            $this->load->view('warehouse/detail_po', $data);
+            $this->load->view('warehouse/detail_part_order', $data);
         
     }
 	public function tampilDetailCache()
 	{
-		$id 				= $_GET['id_po'];
-		$data['dataDetail'] = $this->Mod_purchaseorder->select_detail($id);
-		$this->load->view('warehouse/detail_po_cache', $data);
+		$id 				= $_GET['id_part_order'];
+		$data['dataDetail'] = $this->Mod_partorder->select_detail($id);
+		$this->load->view('warehouse/detail_part_order_cache', $data);
 	}
 	public function deleteDetail()
 	{
 		$id = $_POST['id'];
-		$result = $this->Mod_purchaseorder->deleteDetail_po($id);
+		$result = $this->Mod_partorder->deleteDetail_po($id);
 		if ($result > 0) {
 			//$out['datakode']=$kodeBaru;
 			$out['status'] = '';
@@ -173,9 +175,9 @@ public function showPart()
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
-		$data['dataPo'] = $this->Mod_purchaseorder->select_by_id($id);
-		$data['detailPo'] = $this->Mod_purchaseorder->select_detail($id);
+		$data['dataPo'] = $this->Mod_partorder->select_by_id($id);
+		$data['detailPo'] = $this->Mod_partorder->select_detail($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_po', 'cetak-po', $data, ' modal-xl');
+		echo show_my_print('warehouse/modals/modal_cetak_part_order', 'cetak-po', $data, ' modal-xl');
 	}
 }

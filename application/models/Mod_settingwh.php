@@ -162,16 +162,16 @@ class Mod_settingwh extends CI_Model
 	}
 	public function insertSupplier($data)
 	{
-	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',alamat='" . $data['alamat'] . "',
-	no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'";
+	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
+	no_tlp='" . $data['no_tlp'] . "',no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 	public function updateSupplier($data)
 	{
-		$sql = "UPDATE tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',alamat='" . $data['alamat'] . "',
-		no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'
+		$sql = "UPDATE tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
+		no_tlp='" . $data['no_tlp'] . ",no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "'
         WHERE kode_sup='" . $data['kode_supplier'] . "'";
 
 		$this->db->query($sql);
@@ -188,6 +188,51 @@ class Mod_settingwh extends CI_Model
 	}
 
 	//** end Supplier **//
+
+	public function select_customer()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_wh_customer');
+		$data = $this->db->get();
+		return $data->result();
+	}
+	public function select_id_customer($id)
+	{
+		$sql = " SELECT * FROM tbl_wh_customer WHERE id_customer='{$id}'";
+
+		$data = $this->db->query($sql);
+
+		return $data->result();
+	}
+	public function insertCustomer($data)
+	{
+	$sql = "INSERT INTO tbl_wh_customer SET kode_cus='" . $data['kode_customer'] . "',nama_cus='" . $data['nama_customer'] . "',alamat='" . $data['alamat'] . "',kota='" . $data['kota'] . "',
+	no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'";
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	public function updateCustomer($data)
+	{
+		$sql = "UPDATE tbl_wh_customer SET kode_cus='" . $data['kode_customer'] . "',nama_cus='" . $data['nama_customer'] . "',alamat='" . $data['alamat'] . "',kota='" . $data['kota'] . "',
+		no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'
+        WHERE kode_cus='" . $data['kode_customer'] . "'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	function deleteCus($id)
+	{
+		$sql = "DELETE FROM tbl_wh_customer WHERE id_customer='{$id}'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	//** end Customer **//
+
 	public function select_kelompok()
 	{
 		$this->db->select('*');

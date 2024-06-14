@@ -24,6 +24,7 @@ class Settingwh extends MY_Controller
         echo show_my_modal('warehouse/modals/modal_tambah_kat', 'tambah-kategori', $data);
         echo show_my_modal('warehouse/modals/modal_tambah_type', 'tambah-type', $data);
         echo show_my_modal('warehouse/modals/modal_tambah_sup', 'tambah-supplier', $data);
+        echo show_my_modal('warehouse/modals/modal_tambah_cus', 'tambah-customer', $data);
         echo show_my_modal('warehouse/modals/modal_tambah_kp', 'tambah-kelompok', $data);
         $this->template->load('layoutbackend', 'warehouse/setting_panel', $data);
     }
@@ -48,6 +49,11 @@ class Settingwh extends MY_Controller
     {
         $data['dataSup'] = $this->Mod_settingwh->select_supplier();
         $this->load->view('warehouse/sup_data', $data);
+    }
+    public function showCus()
+    {
+        $data['dataCus'] = $this->Mod_settingwh->select_customer();
+        $this->load->view('warehouse/cus_data', $data);
     }
     public function showKp()
     {
@@ -334,6 +340,75 @@ class Settingwh extends MY_Controller
         echo json_encode($out);
     }
     /*endSupplier*/
+    /*Customer*/
+    public function prosesTcustomer()
+    {
+        $this->form_validation->set_rules('nama_customer', 'Nama customer', 'trim|required');
+
+        $data     = $this->input->post();
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_settingwh->insertCustomer($data);
+
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Success', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Filed !', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
+
+        echo json_encode($out);
+    }
+    public function updateCustomer()
+    {
+        $id                 = trim($_POST['id']);
+        $data['dataCus'] = $this->Mod_settingwh->select_id_customer($id);
+
+        echo show_my_modal('warehouse/modals/modal_tambah_cus', 'update-customer', $data);
+    }
+
+    public function prosesUcustomer()
+    {
+
+        $this->form_validation->set_rules('nama_customer', 'Nama Customer', 'trim|required');
+
+        $data     = $this->input->post();
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_settingwh->updateCustomer($data);
+
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Success', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Filed!', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
+
+        echo json_encode($out);
+    }
+    public function deleteCustomer()
+    {
+        $id = $_POST['id'];
+        $result = $this->Mod_settingwh->deleteCus($id);
+
+        if ($result > 0) {
+            $out['status'] = '';
+            $out['msg'] = show_del_msg('Deleted', '20px');
+        } else {
+            $out['status'] = '';
+            $out['msg'] = show_err_msg('Filed !', '20px');
+        }
+        echo json_encode($out);
+    }
+    /*endCustomer*/
     /*Kelompok*/
     public function prosesTkelompok()
     {

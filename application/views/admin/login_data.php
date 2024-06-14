@@ -70,7 +70,7 @@
 
                     <!-- /.col -->
                     <div class="center">
-                        <button type="submit" id="login" class="btn btn-secondary bg-gradient btn-block btn-radius"><span
+                        <button type="submit" id="login" class="btn btn-dark bg-gradient btn-block btn-radius"><span
                                 class="fa fa-sign-in-alt"></span> Sign In</button>
                     </div>
                     <!-- /.col -->

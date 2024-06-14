@@ -28,9 +28,9 @@
                                     <div class="col-sm-4">
                                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
 
-                                            <input type="text" name="tgl_po" id="tgl_po" value=""
-                                                class="form-control tgl_po datetimepicker" data-toggle="datetimepicker"
-                                                data-target=".tgl_po" data-format="yyy-mm-dd" required>
+                                            <input type="text" name="tgl_part_order" id="tgl_part_order" value=""
+                                                class="form-control tgl_part_order datetimepicker" data-toggle="datetimepicker"
+                                                data-target=".tgl_part_order" data-format="yyy-mm-dd" required>
 
                                             <div class="input-group-append" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i>
@@ -38,18 +38,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label class="col-sm-2 col-form-label">TOP</label>
+                                    <label class="col-sm-1 col-form-label">No Order</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="top" id="top" value="" class="form-control"
-                                            placeholder="Term of Payment">
+                                        <input type="text" name="no_order" id="no_order" value=""
+                                            class="form-control" placeholder="No Pesanan">
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">No Penawaran</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="kode_pesan" id="kode_pesan" value=""
-                                            class="form-control" placeholder="No Penawaran / Kode Pesanan">
                                     </div>
+                                    <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Supplier</label>
                                     <div class="col-sm-4">
                                         <select name="supplier" id="supplier" class="form-control">
@@ -67,32 +62,10 @@
 											?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">PPN</label>
-                                    <div class="col-sm-3">
-                                        <input type="number" name="ppn" id="ppn" value="0" class="form-control"
-                                            onKeyDown="fn(this)" onKeyPress="fn(this)"
-                                            placeholder="Pajak Pertambahan Nilai">
-                                    </div>
-                                    <label for="Nama Konsumen" class="col-sm-1 col-form-label">%</label>
-
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-1 col-form-label">Keterangan</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="keterangan" id="keterangan" value=""
                                             class="form-control" placeholder="Keterangan">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Pengesah</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="pengesah" id="pengesah" class="form-control"
-                                            placeholder="Pengesahan Oleh">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Keterangan 2</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="keterangan2" id="keterangan2" value=""
-                                            class="form-control" placeholder="Keterangan 2">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -104,7 +77,7 @@
                                 <?php
 						$date = date("y-m");
 						$ci_kons = get_instance();
-						$query = "SELECT max(id_po) AS maxKode FROM tbl_wh_po WHERE id_po LIKE '%$date%'";
+						$query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
 						$hasil = $ci_kons->db->query($query)->row_array();
 						$noOrder = $hasil['maxKode'];
 						$noUrut = (int)substr($noOrder, 5, 4);
@@ -113,7 +86,7 @@
 						$bulan = substr($date, 3, 2);
 						$kode_po  = $tahun.'-'.$bulan.sprintf("%04s", $noUrut);
 						?>
-                                <input type="hidden" name="id_po" id="id_po" value="<?php echo $kode_po ?>"
+                                <input type="hidden" name="id_part_order" id="id_part_order" value="<?php echo $kode_po ?>"
                                     class="form-control">
                                 <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
                                 <input type="hidden" name="user" id="user"
@@ -122,7 +95,7 @@
                                     <button class="btn btn-primary" id="simpan" type="submit"><span
                                             class="fa fa-save"></span> Simpan Data</button>
                                     <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
-                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak PO</button>
+                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Part Order</button>
                                 </div>
                             </form>
                         </div>
@@ -175,7 +148,7 @@
 function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
-$('#tgl_po,#tgl_awal,#tgl_akhir').datetimepicker({
+$('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
@@ -192,7 +165,7 @@ $(document).ready(function() {
         "pageLength": 10, // Defaults number of rows to display in table
         "order": [],
         "ajax": {
-            "url": "<?php echo site_url('PurchaseOrder/ajax_list') ?>",
+            "url": "<?php echo site_url('PartOrder/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
@@ -204,8 +177,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var table = $('#table-part').DataTable();
-		var tgl_po = document.formPo.tgl_po.value;
-		var id_po = document.formPo.id_po.value;
+		var tgl_part_order = document.formPo.tgl_part_order.value;
+		var id_part_order = document.formPo.id_part_order.value;
 
     $('#table-part tbody').on('click', 'tr', function () {
         var data = table.row( this ).data();
@@ -215,14 +188,14 @@ $(document).ready(function() {
 		var satuan		= data[3];
 		var stok		= data[4];
 		var harga_baru	= data[5];
-		var tgl_po = document.formPo.tgl_po.value;
-		var id_po = document.formPo.id_po.value;
+		var tgl_part_order = document.formPo.tgl_part_order.value;
+		var id_part_order = document.formPo.id_part_order.value;
 				$.ajax({
 				method: 'POST',
-				url: '<?php echo base_url('PurchaseOrder/prosesDetailPo'); ?>',
+				url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
 				data:
-				"tgl_po=" + tgl_po +
-                "&id_po=" + id_po +
+				"tgl_part_order=" + tgl_part_order +
+                "&id_part_order=" + id_part_order +
                 "&id_part=" + id_part +
                 "&no_part=" + no_part +
                 "&nama_part=" + nama_part +
@@ -245,14 +218,14 @@ var MyTable = $('#list-po').dataTable({
 });
 
 function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
-    var tgl_po = document.formPo.tgl_po.value;
-    var id_po = document.formPo.id_po.value;
+    var tgl_part_order = document.formPo.tgl_part_order.value;
+    var id_part_order = document.formPo.id_part_order.value;
 
     $.ajax({
         method: 'POST',
-		url: '<?php echo base_url('PurchaseOrder/prosesDetailPo'); ?>',
-            data: "tgl_po=" + tgl_po +
-                "&id_po=" + id_po +
+		url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
+            data: "tgl_part_order=" + tgl_part_order +
+                "&id_part_order=" + id_part_order +
                 "&id_part=" + id_part +
                 "&no_part=" + no_part +
                 "&nama_part=" + nama_part +
@@ -261,14 +234,14 @@ function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
                 "&harga_baru=" + harga_baru
     })
 
-	tampilDetail(id_po);
+	tampilDetail(id_part_order);
 
     $('#modal_form').modal('hide');
 
 }
 
 function next(dataPo, dataRef) {
-    document.getElementById('id_po').value = dataPo;
+    document.getElementById('id_part_order').value = dataPo;
     document.getElementById('kode_ref').value = dataRef;
     var d = document.getElementById("cetak");
     d.setAttribute('data-id', dataPo);
@@ -287,12 +260,12 @@ function refresh() {
 
 function tampilDetail() {
     //var out = jQuery.parseJSON(data);
-    //var id_po = document.getElementById('id_po').value = dataPo;
-    var id_po = document.getElementById('id_po').value;
+    //var id_part_order = document.getElementById('id_part_order').value = dataPo;
+    var id_part_order = document.getElementById('id_part_order').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('PurchaseOrder/tampilDetail'); ?>',
-        data: 'id_po=' + id_po,
+        url: '<?php echo base_url('PartOrder/tampilDetail'); ?>',
+        data: 'id_part_order=' + id_part_order,
         success: function(hasil) {
             //MyTable.fnDestroy();
             $('#data-po').html(hasil);
@@ -302,11 +275,11 @@ function tampilDetail() {
 
 function tampilDetailCache(dataPo) {
     //var out = jQuery.parseJSON(data);
-    var id_po = document.getElementById('id_po').value = dataPo;
+    var id_part_order = document.getElementById('id_part_order').value = dataPo;
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url('PurchaseOrder/tampilDetailCache'); ?>?id_po=' + id_po,
-        data: 'id_po=' + id_po,
+        url: '<?php echo base_url('PartOrder/tampilDetailCache'); ?>?id_part_order=' + id_part_order,
+        data: 'id_part_order=' + id_part_order,
         success: function(hasil) {
             MyTable.fnDestroy();
             $('#data-po-cache').html(hasil);
@@ -319,7 +292,7 @@ $('#formPo').submit(function(e) {
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('PurchaseOrder/prosesPo'); ?>',
+            url: '<?php echo base_url('PartOrder/prosesPo'); ?>',
             data: data
         })
         .done(function(data) {
@@ -340,7 +313,7 @@ $('#formPo').submit(function(e) {
                 $('.dataPo').html(out.dataPo);
                 //tampilDetail(out.dataPo)
                 document.getElementById("formPo"); //reset()	
-                $('#tgl_po').attr('readonly', 'readonly');
+                $('#tgl_part_order').attr('readonly', 'readonly');
                 $('#top').attr('readonly', 'readonly');
                 $('#status').attr('readonly', 'readonly');
                 $('#supplier').attr('readonly', 'readonly');
@@ -377,7 +350,7 @@ $(document).on("click", ".cetak-po", function() {
     //var id = document.getElementById('next_proses').value=datakode;
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PurchaseOrder/cetak'); ?>",
+            url: "<?php echo base_url('PartOrder/cetak'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -394,7 +367,7 @@ $(document).on("click", ".delete-detail", function() {
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PurchaseOrder/deleteDetail'); ?>",
+            url: "<?php echo base_url('PartOrder/deleteDetail'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -402,9 +375,9 @@ $(document).on("click", ".delete-detail", function() {
             if (out.status != 'form') {
                 //$('.msg').html(out.msg);
                 $('#hapusDetail').modal('hide');
-                var id_po = document.formPo.id_po.value;
+                var id_part_order = document.formPo.id_part_order.value;
                 //next(next_proses);
-                tampilDetail(id_po);
+                tampilDetail(id_part_order);
             }
         })
 })

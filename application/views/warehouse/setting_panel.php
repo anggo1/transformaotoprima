@@ -169,6 +169,38 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card ">
+                            <div class="modal-content">
+                                <div class="card-header card-blue card-outline">
+                                    <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Customer</h3>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-customer" title="Add Data"><i class="fas fa-plus"></i>
+                                            Add</button>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover nowrap" id="list-customer">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Kode</th>
+                                                    <th>Nama</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="data-customer">
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="modal-customer"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,6 +212,7 @@ show_my_confirm('hapusSatuan', 'hapus-satuan', 'Hapus Data Ini?', 'Ya, Hapus Dat
 show_my_confirm('hapusKategori', 'hapus-kategori', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 show_my_confirm('hapusType', 'hapus-type', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 show_my_confirm('hapusSupplier', 'hapus-supplier', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusCustomer', 'hapus-customer', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 <script type="text/javascript">
@@ -188,11 +221,12 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
         showKat();
         showType();
         showSup();
+        showCus();
         showKp();
     }
 
     function refresh() {
-        MyTable = $('#list-satuan,#list-kategori,#list-mesin,#list-supplier').DataTable();
+        MyTable = $('#list-satuan,#list-kategori,#list-mesin,#list-supplier,#list-customer').DataTable();
     }
 
     function effect_msg_form() {
@@ -215,6 +249,7 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
     var tableKategori = $('#list-kategori').DataTable();
     var tableType = $('#list-type').DataTable();
     var tableSupplier = $('#list-supplier').DataTable();
+    var tableCustomer = $('#list-customer').DataTable();
     var tableKelompok = $('#list-kelompok').DataTable();
 
     //ajax Jabatan
@@ -250,6 +285,13 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
         });
     }
 
+    function showCus() {
+        $.get('<?php echo base_url('Settingwh/showCus'); ?>', function(data) {
+            tableCustomer.destroy();
+            $('#data-customer').html(data);
+            refresh();
+        });
+    }
     function showKp() {
         $.get('<?php echo base_url('Settingwh/showKp'); ?>', function(data) {
             tableKelompok.destroy();
@@ -716,6 +758,121 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
             })
     })
     //** end Supplier */
+    
+    $('#form-tambah-customer').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesTcustomer'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showCus();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-tambah-customer").reset();
+                    $('#tambah-customer').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $(document).on("click", ".update-dataCustomer", function() {
+        var id_sup = $(this).attr("data-id");
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/updateCustomer'); ?>",
+                data: "id=" + id_sup
+            })
+            .done(function(data) {
+                $('#modal-customer').html(data);
+                $('#update-customer').modal('show');
+            })
+    })
+    $(document).on('submit', '#form-update-customer', function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesUcustomer'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showCus();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-customer").reset();
+                    $('#update-customer').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $('#tambah-customer').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+
+    $('#update-customer').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+    $(document).on("click", ".delete-customer", function() {
+        id_cus = $(this).attr("data-id");
+    })
+    $(document).on("click", ".hapus-customer", function() {
+        var id = id_cus;
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/deleteCustomer'); ?>",
+                data: "id=" + id
+            })
+
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                showCus();
+                $('.msg').html(out.msg);
+                $('#hapusCustomer').modal('hide');
+                if (out.status != 'form') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    })
+    //** end Customer */
+
     $('#form-tambah-kelompok').submit(function(e) {
         var data = $(this).serialize();
 
