@@ -54,12 +54,12 @@
                     <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan" 
                     onclick="this.contentEditable=true; this.className='inEdit';"
                     onblur="this.contentEditable=false; this.className='inEdit';" 
-                    onkeypress="saveData(event,'<?php echo $s->id_part_order; ?>','<?php echo $s->id_detail; ?>','<?php echo $s->harga; ?>',$(this).html() )"><?php echo $s->jumlah; ?></td>
+                    onkeypress="saveData(event,'<?php echo $s->id_estimasi_penawaran; ?>','<?php echo $s->id_detail; ?>','<?php echo $s->harga; ?>',$(this).html() )"><?php echo $s->jumlah; ?></td>
                     <td><?php echo number_format($s->harga*$s->jumlah); ?></td>
                     <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan" 
                     onclick="this.contentEditable=true; this.className='inEdit';"
                     onblur="this.contentEditable=false; this.className='inEdit';" 
-                    onkeypress="saveRemark(event,'<?php echo $s->id_part_order; ?>','<?php echo $s->id_detail; ?>',$(this).html() )"><?php echo $s->remark; ?></td>
+                    onkeypress="saveRemark(event,'<?php echo $s->id_estimasi_penawaran; ?>','<?php echo $s->id_detail; ?>',$(this).html() )"><?php echo $s->remark; ?></td>
 
                     <td class="text-center">
                       <button class="btn btn-sm btn-outline-danger delete-detail ion-android-delete" data-id="<?php echo $s->id_detail; ?>"></button>
@@ -92,7 +92,7 @@
               e.preventDefault();
               $.ajax({
                 type: "POST",
-                url: "<?php echo base_url('PartOrder/updateDetailPo')?>",
+                url: "<?php echo base_url('EstimasiPenawaran/updateDetailPo')?>",
                 data: {  '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>',
                         'id': id,
                         'hrg_part' :hrg_part,
@@ -110,7 +110,7 @@
               e.preventDefault();
               $.ajax({
                 type: "POST",
-                url: "<?php echo base_url('PartOrder/updateRemark')?>",
+                url: "<?php echo base_url('EstimasiPenawaran/updateRemark')?>",
                 data: {  '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>',
                         'id': id,
                         'remark' :remark,

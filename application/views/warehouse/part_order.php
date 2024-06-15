@@ -1,6 +1,4 @@
-<style>
 
-</style>
 <?php if (!empty($dataPart)) {
 	foreach ($dataPart as $part) {
 	}

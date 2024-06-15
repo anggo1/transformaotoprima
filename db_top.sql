@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2024 at 11:18 AM
+-- Generation Time: Jun 15, 2024 at 11:02 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -3671,6 +3671,87 @@ INSERT INTO `tbl_wh_customer` (`id_customer`, `kode_cus`, `nama_cus`, `alamat`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_wh_detail_estimasi_penawaran`
+--
+
+CREATE TABLE `tbl_wh_detail_estimasi_penawaran` (
+  `id_detail` int(11) NOT NULL,
+  `id_estimasi_penawaran` varchar(25) NOT NULL,
+  `kode_estimasi_penawaran` varchar(35) NOT NULL,
+  `no_part` varchar(25) NOT NULL,
+  `nama_part` varchar(35) NOT NULL,
+  `satuan` varchar(25) NOT NULL,
+  `harga` decimal(10,0) NOT NULL,
+  `jumlah` decimal(10,0) NOT NULL,
+  `diskon` varchar(15) NOT NULL,
+  `total_diskon` decimal(10,0) NOT NULL,
+  `total_harga` decimal(10,0) NOT NULL,
+  `stok_akhir` varchar(5) NOT NULL,
+  `status` enum('N','P','Y') NOT NULL,
+  `sisa` decimal(10,0) NOT NULL,
+  `jml_masuk` decimal(10,0) NOT NULL,
+  `bo` enum('Y','N') NOT NULL,
+  `remark` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_detail_estimasi_penawaran`
+--
+
+INSERT INTO `tbl_wh_detail_estimasi_penawaran` (`id_detail`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
+(18, '24-060001', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, 'Y', ''),
+(19, '24-060001', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', ''),
+(20, '24-060001', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'N', 3, 0, 'Y', ''),
+(21, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'N', 3, 0, 'Y', ''),
+(32, '24-060002', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'N', 3, 0, 'Y', ''),
+(33, '24-060002', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'N', 3, 0, 'Y', ''),
+(34, '24-060002', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', ''),
+(35, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, 'Y', ''),
+(108, '24-060003', '', 'MA011 981 36 05          ', 'TAPERED ROLLER BEARING / MA009 981 ', 'PCS                      ', 1496173, 1, '', 0, 1496173, '0', 'N', 1, 0, 'Y', ''),
+(109, '24-060003', '', 'QA400 421 03 34          ', 'CORRUGATED HOSE - 700MM            ', 'PCS                      ', 63900, 88, '', 0, 5623200, '1', 'N', 88, 0, 'Y', ''),
+(115, '24-060004', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 1, '', 0, 4919900, '8', 'N', 1, 0, 'Y', ''),
+(116, '24-060004', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'Y', ''),
+(117, '24-060005', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 2, '', 0, 9839800, '8', 'N', 2, 0, 'Y', 'test'),
+(118, '24-060005', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 9, '', 0, 220500, '10', 'N', 9, 0, 'Y', 'coba juga<br>'),
+(136, '24-060005', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 2, '', 0, 20725200, '1', 'N', 2, 0, 'Y', 'test<br>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_wh_detail_estimasi_penawaran_note`
+--
+
+CREATE TABLE `tbl_wh_detail_estimasi_penawaran_note` (
+  `id_detail_note` int(11) NOT NULL,
+  `id_estimasi_penawaran` varchar(25) NOT NULL,
+  `kode_estimasi_penawaran` varchar(35) NOT NULL,
+  `remark` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_detail_estimasi_penawaran_note`
+--
+
+INSERT INTO `tbl_wh_detail_estimasi_penawaran_note` (`id_detail_note`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `remark`) VALUES
+(18, '24-060001', '', ''),
+(19, '24-060001', '', ''),
+(20, '24-060001', '', ''),
+(21, '24-060001', '', ''),
+(32, '24-060002', '', ''),
+(33, '24-060002', '', ''),
+(34, '24-060002', '', ''),
+(35, '24-060002', '', ''),
+(108, '24-060003', '', ''),
+(109, '24-060003', '', ''),
+(115, '24-060004', '', ''),
+(116, '24-060004', '', ''),
+(117, '24-060005', '', 'test'),
+(118, '24-060005', '', 'coba juga<br>'),
+(136, '24-060005', '', 'test<br>');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_wh_detail_opname`
 --
 
@@ -3784,7 +3865,12 @@ INSERT INTO `tbl_wh_detail_part_order` (`id_detail`, `id_part_order`, `kode_po`,
 (108, '24-060003', '', 'MA011 981 36 05          ', 'TAPERED ROLLER BEARING / MA009 981 ', 'PCS                      ', 1496173, 1, '', 0, 1496173, '0', 'N', 1, 0, 'Y', ''),
 (109, '24-060003', '', 'QA400 421 03 34          ', 'CORRUGATED HOSE - 700MM            ', 'PCS                      ', 63900, 88, '', 0, 5623200, '1', 'N', 88, 0, 'Y', ''),
 (115, '24-060004', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 1, '', 0, 4919900, '8', 'N', 1, 0, 'Y', ''),
-(116, '24-060004', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'Y', '');
+(116, '24-060004', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'Y', ''),
+(117, '24-060005', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 2, '', 0, 9839800, '8', 'N', 2, 0, 'Y', 'test'),
+(118, '24-060005', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 9, '', 0, 220500, '10', 'N', 9, 0, 'Y', 'coba juga<br>'),
+(136, '24-060005', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 2, '', 0, 20725200, '1', 'N', 2, 0, 'Y', 'test<br>'),
+(137, '', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
+(138, '', '', 'BA967 981 00 12/01       ', 'ROLLER BEARING                     ', 'PCS                      ', 0, 0, '', 0, 0, '0', 'N', 0, 0, 'Y', '');
 
 -- --------------------------------------------------------
 
@@ -3825,6 +3911,42 @@ INSERT INTO `tbl_wh_detail_po` (`id_detail`, `id_po`, `kode_po`, `no_part`, `nam
 (35, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0),
 (101, '24-060003', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0),
 (102, '24-060003', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_wh_estimasi_penawaran`
+--
+
+CREATE TABLE `tbl_wh_estimasi_penawaran` (
+  `id_estimasi_penawaran` varchar(25) NOT NULL,
+  `kode_estimasi_penawaran` varchar(35) NOT NULL,
+  `tgl_estimasi_penawaran` date NOT NULL,
+  `kode_pesan` varchar(50) NOT NULL,
+  `top` varchar(35) NOT NULL,
+  `ppn` varchar(15) NOT NULL,
+  `t_ppn` decimal(10,0) NOT NULL,
+  `sub_total` decimal(10,0) NOT NULL,
+  `grand_total` decimal(10,0) NOT NULL,
+  `supplier` varchar(15) NOT NULL,
+  `pengesah` varchar(35) NOT NULL,
+  `keterangan` varchar(250) NOT NULL,
+  `keterangan2` varchar(250) NOT NULL,
+  `user` varchar(35) NOT NULL,
+  `status` varchar(25) NOT NULL,
+  `status_po` enum('N','Y','P') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_estimasi_penawaran`
+--
+
+INSERT INTO `tbl_wh_estimasi_penawaran` (`id_estimasi_penawaran`, `kode_estimasi_penawaran`, `tgl_estimasi_penawaran`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
+('24-060001', '/PO/CNK/24-060001', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
+('24-060002', '24-060002/PO/06/2024', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
+('24-060003', '24-060003/PO/06/2024', '2024-06-14', ' 400020 SBY - WARRANTY', '', '', 0, 7119373, 7119373, 'SP-0002', '', ' PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
+('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 0, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
+('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -4019,7 +4141,8 @@ INSERT INTO `tbl_wh_part_order` (`id_part_order`, `kode_part_order`, `tgl_part_o
 ('24-060001', '/PO/CNK/24-060001', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
 ('24-060002', '24-060002/PO/06/2024', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
 ('24-060003', '24-060003/PO/06/2024', '2024-06-14', ' 400020 SBY - WARRANTY', '', '', 0, 7119373, 7119373, 'SP-0002', '', ' PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 0, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
+('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 0, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
+('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -4350,6 +4473,18 @@ ALTER TABLE `tbl_wh_customer`
   ADD PRIMARY KEY (`id_customer`);
 
 --
+-- Indexes for table `tbl_wh_detail_estimasi_penawaran`
+--
+ALTER TABLE `tbl_wh_detail_estimasi_penawaran`
+  ADD PRIMARY KEY (`id_detail`);
+
+--
+-- Indexes for table `tbl_wh_detail_estimasi_penawaran_note`
+--
+ALTER TABLE `tbl_wh_detail_estimasi_penawaran_note`
+  ADD PRIMARY KEY (`id_detail_note`);
+
+--
 -- Indexes for table `tbl_wh_detail_opname`
 --
 ALTER TABLE `tbl_wh_detail_opname`
@@ -4378,6 +4513,12 @@ ALTER TABLE `tbl_wh_detail_part_order`
 --
 ALTER TABLE `tbl_wh_detail_po`
   ADD PRIMARY KEY (`id_detail`);
+
+--
+-- Indexes for table `tbl_wh_estimasi_penawaran`
+--
+ALTER TABLE `tbl_wh_estimasi_penawaran`
+  ADD PRIMARY KEY (`id_estimasi_penawaran`);
 
 --
 -- Indexes for table `tbl_wh_kategori`
@@ -4558,6 +4699,18 @@ ALTER TABLE `tbl_wh_customer`
   MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran`
+--
+ALTER TABLE `tbl_wh_detail_estimasi_penawaran`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+
+--
+-- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran_note`
+--
+ALTER TABLE `tbl_wh_detail_estimasi_penawaran_note`
+  MODIFY `id_detail_note` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+
+--
 -- AUTO_INCREMENT for table `tbl_wh_detail_opname`
 --
 ALTER TABLE `tbl_wh_detail_opname`
@@ -4579,7 +4732,7 @@ ALTER TABLE `tbl_wh_detail_part_masuk`
 -- AUTO_INCREMENT for table `tbl_wh_detail_part_order`
 --
 ALTER TABLE `tbl_wh_detail_part_order`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_po`
