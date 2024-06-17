@@ -12,17 +12,49 @@
                         <div class="modal-header text-blue">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Estimasi Penawaran Part
-                            </h5>
+                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Estimasi Penawaran Part</h5>
+                            <div class="text-right">
                         </div>
                         <div class="modal-body">
 
                             <form id="formPo" name="formPo" method="POST">
                                 <div class="row">
                                     <div class="col-3">
+                                        <label class="col-form-label">No Invoice</label>
+                                        <input type="text" name="no_invoice" id="no_invoice" value=""
+                                            class="form-control" placeholder="Invoice">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">No D O</label>
+                                        <input type="text" name="no_do" id="no_do" value="" class="form-control"
+                                            placeholder="Delivery Order">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">Date</label>
+                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+
+                                            <input type="text" name="tgl_estimasi_penawaran" id="tgl_estimasi_penawaran"
+                                                value="" class="form-control tgl_estimasi_penawaran datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".tgl_estimasi_penawaran"
+                                                data-format="yyy-mm-dd" required>
+
+                                            <div class="input-group-append" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">Page</label>
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
                                         <label class="col-form-label">No Reff</label>
-                                        <input type="text" name="no_ref" id="no_ref" value="" class="form-control"
-                                            placeholder="Nomor Referensi">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Date</label>
@@ -58,69 +90,107 @@
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Page</label>
-                                        <input type="text" name="page" id="page" value="" class="form-control"
-                                            placeholder="Page">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Registration No</label>
-                                        <input type="text" name="no_reg" id="no_reg" value="" class="form-control"
-                                            placeholder="No Registration">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">VIN No</label>
-                                        <input type="text" name="no_vin" id="no_vin" value="" class="form-control"
-                                            placeholder="VIN">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Sales designation</label>
-                                        <input type="text" name="sales_design" id="sales_design" value=""
-                                            class="form-control" placeholder="Sales designation">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Date/time received</label>
-                                        <input type="text" name="date_received" id="date_received" value=""
-                                            class="form-control" placeholder="Date Received">
+                                        <div class="input-group date" id="datetimereceiuved"
+                                            data-target-input="nearest">
+
+                                            <input type="text" name="tgl_received" id="tgl_received" value=""
+                                                class="form-control tgl_received datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".tgl_received"
+                                                data-format="yyy-mm-dd" required>
+
+                                            <div class="input-group-append" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Millage/Km</label>
-                                        <input type="text" name="millage" id="millage" value="" class="form-control"
-                                            placeholder="Millage / Km">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Engine No</label>
-                                        <input type="text" name="engine_no" id="engine_no" value="" class="form-control"
-                                            placeholder="Engine No">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Account No</label>
-                                        <input type="text" name="acc_no" id="acc_no" value="" class="form-control"
-                                            placeholder="Account No">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Received by</label>
-                                        <input type="text" name="received_by" id="received_by" value=""
-                                            class="form-control" placeholder="Received by">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Routing No</label>
-                                        <input type="text" name="routing_no" id="routing_no" value=""
-                                            class="form-control" placeholder="Routing No">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Last Service date/millage/km</label>
-                                        <input type="text" name="last_km" id="last_km" value="" class="form-control"
-                                            placeholder="Last Service date/millage/km">
+                                        <input type="text" name="keterangan" id="keterangan" value=""
+                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Date of 1st registration</label>
-                                        <input type="text" name="date_of_regis" id="date_of_regis" value=""
-                                            class="form-control" placeholder="Date of 1st registration">
+                                        <div class="input-group date" id="tgl_regis" data-target-input="nearest">
+
+                                            <input type="text" name="tgl_regis" id="tgl_regis" value=""
+                                                class="form-control tgl_regis datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".tgl_regis"
+                                                data-format="yyy-mm-dd" required>
+
+                                            <div class="input-group-append" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">Deadline</label>
+                                        <div class="input-group date" id="tgl_deadline" data-target-input="nearest">
+
+                                            <input type="text" name="tgl_deadline" id="tgl_deadline" value=""
+                                                class="form-control tgl_deadline datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".tgl_deadline"
+                                                data-format="yyy-mm-dd">
+
+                                            <div class="input-group-append" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                </div>
+                                                <div class="input-group-text" id="clear"><i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -172,7 +242,7 @@
                             <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Keterangan</h3>
                             <div class="text-right">
                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal"
-                                    data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
+                                    data-target="#tambah-supplier" title="Add Data"><i class="fas fa-plus"></i>
                                     Add</button>
                             </div>
                         </div>
@@ -184,7 +254,6 @@
                                         <tr>
                                             <th width="10%">No</th>
                                             <th>Keterangan</th>
-                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="data-keterangan">
@@ -193,7 +262,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="modal-keterangan"></div>
+                        <div id="modal-supplier"></div>
                     </div>
                 </div>
             </div>
@@ -243,8 +312,7 @@ $('#tgl_estimasi_penawaran,#tgl_received,#tgl_regis').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
-//var Date = 
-$('#tgl_deadline').datetimepicker({
+var Date = $('#tgl_deadline').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 })
@@ -377,90 +445,6 @@ function tampilDetail() {
     });
 }
 
-function tampilKeterangan() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            $('#data-keterangan').html(hasil);
-        }
-    });
-}
-
-/** Form Keterangan */
-
-$('#form-keterangan').submit(function(e) {
-    var data = $(this).serialize();
-    var id = document.getElementById('id_estimasi_penawaran').value;
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/tambahKeterangan'); ?>',
-            data: data + "&id=" + id
-        })
-        .done(function(data) {
-            tampilKeterangan();
-                document.getElementById("form-keterangan").reset();
-                $('#tambah-keterangan').modal('hide');
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Mantap',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-        })
-
-    e.preventDefault();
-});
-
-$(document).on("click", ".update-dataType", function() {
-    var id = $(this).attr("data-id");
-
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('Settingwh/updateType'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#modal-type').html(data);
-            $('#update-type').modal('show');
-        })
-})
-$(document).on('submit', '#form-update-type', function(e) {
-    var data = $(this).serialize();
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('Settingwh/prosesUtype'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-
-            showType();
-            if (out.status == 'form') {
-                $('.form-msg').html(out.msg);
-                effect_msg_form();
-            } else {
-                document.getElementById("form-update-type").reset();
-                $('#update-type').modal('hide');
-                $('.msg').html(out.msg);
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-
-    e.preventDefault();
-});
-/** end Keterangan */
 function tampilDetailCache(dataPo) {
     //var out = jQuery.parseJSON(data);
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;

@@ -143,14 +143,20 @@ class Mod_estimasi_penawaran extends CI_Model
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
 			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-			
+
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function update_remark($id,$remark)
-		{			
+		{
 			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-			
+		return $this->db->affected_rows();
+			//return $data->row();
+		}
+    function insertRemark($id,$remark)
+		{
+			$sql_update = "INSERT tbl_wh_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '$id', remark ='$remark'";
+            $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
@@ -221,6 +227,13 @@ class Mod_estimasi_penawaran extends CI_Model
         $data = $this->db->query($sql);
         return $data->result();
         //return $data->row();
+    }
+    public function select_keterangan($id)
+    {
+        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='{$id}' ORDER BY id_detail_note ASC";
+
+        $data = $this->db->query($sql);
+        return $data->result();
     }
     function updatePo($a, $b, $c, $d)
     {

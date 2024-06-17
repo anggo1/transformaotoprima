@@ -17,7 +17,8 @@ class EstimasiPenawaran extends MY_Controller
 		$data['page'] 		= "Estimasi Penawaran";
 		$data['judul'] 		= "Estimasi";
 		$this->load->helper('url');
-		$data['dataCustomer'] = $this->Mod_estimasi_penawaran->select_customer();
+		$data['dataKet'] = $this->Mod_estimasi_penawaran->select_customer();
+        echo show_my_modal('warehouse/modals/modal_keterangan_estimasi', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'warehouse/estimasi_penawaran', $data);
 	}
 public function showPart()
@@ -87,6 +88,12 @@ public function showPart()
         $remark = $_POST['remark'];
 		$data['dataPo'] = $this->Mod_estimasi_penawaran->update_remark($id,$remark);
 	}
+	public function tambahKeterangan()
+	{
+        $id = $_POST['id'];
+        $remark = $_POST['keterangan'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran->insertRemark($id,$remark);
+	}
 	public function prosesPo()
 	{
 		
@@ -141,6 +148,12 @@ public function showPart()
 		$id 				= $_POST['id_estimasi_penawaran'];
 		$data['dataDetail'] = $this->Mod_estimasi_penawaran->select_detail($id);
 		$this->load->view('warehouse/detail_estimasi_penawaran', $data);
+	}
+	public function tampilKeterangan()
+	{
+		$id 				= $_POST['id_estimasi_penawaran'];
+		$data['dataKet'] = $this->Mod_estimasi_penawaran->select_keterangan($id);
+		$this->load->view('warehouse/data_keterangan_estimasi', $data);
 	}
 	public function view()
     {
