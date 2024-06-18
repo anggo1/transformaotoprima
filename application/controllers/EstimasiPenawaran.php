@@ -17,7 +17,7 @@ class EstimasiPenawaran extends MY_Controller
 		$data['page'] 		= "Estimasi Penawaran";
 		$data['judul'] 		= "Estimasi";
 		$this->load->helper('url');
-		$data['dataKet'] = $this->Mod_estimasi_penawaran->select_customer();
+		$data['dataCustomer'] = $this->Mod_estimasi_penawaran->select_customer();
         echo show_my_modal('warehouse/modals/modal_keterangan_estimasi', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'warehouse/estimasi_penawaran', $data);
 	}
@@ -74,6 +74,14 @@ public function showPart()
 		
 		echo json_encode($data);
 	}
+	public function updateDiskon()
+	{
+        $id = $_POST['id'];
+        $diskon = $_POST['diskon'];
+        $hrg_part = $_POST['hrg_part'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran->update_detailDiskon($id,$diskon,$hrg_part);
+		//$this->load->view('body_repair/detail_estimasi', $data);
+	}
 	public function updateDetailPo()
 	{
         $id = $_POST['id'];
@@ -99,7 +107,6 @@ public function showPart()
 		
 		$sekarang= date("Y-m");
 		$this->form_validation->set_rules('tgl_estimasi_penawaran', 'Tanggal Order', 'trim|required');
-		$this->form_validation->set_rules('supplier', 'Data Supplier', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
@@ -107,29 +114,31 @@ public function showPart()
 			$date2 = $data['tgl_estimasi_penawaran'];
 			$tgl2 = explode('-', $date2);
 			$tgl_po_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-			$sekarang = date('Y/m/d');
-			//$s=$data['status'];
-			$thn = substr($sekarang, 0, 4);
-			$bln = substr($sekarang, 5, 2);
-
-			$nama_ref="/PO/$bln/$thn";
-			$koderef=$kode_po.$nama_ref;
 
 			$data = array(
 				'id_estimasi_penawaran'  	=> $kode_po,
-				'kode_estimasi_penawaran'   => $koderef,
+				'kode_estimasi_penawaran'   => $data['no_ref'],
 				'tgl_estimasi_penawaran'  	=> $tgl_po_fix,
-				'supplier'	=> $data['supplier'],
-				'kode_pesan'	=> $data['no_order'],
-				'keterangan' => $data['keterangan'],
+				'id_customer'	=> $data['id_customer'],
+				'no_reg'	=> $data['no_reg'],
+				'no_vin' => $data['no_vin'],
+				'sales_design' => $data['sales_design'],
+				'date_received' => $data['date_received'],
+				'millage' => $data['millage'],
+				'engine_no' => $data['engine_no'],
+				'acc_no' => $data['acc_no'],
+				'received_by' => $data['received_by'],
+				'routing_no' => $data['routing_no'],
+				'last_km' => $data['last_km'],
+				'date_of_regis' => $data['date_of_regis'],
 				'user'   	=> $data['user'],
-				'status_PO'	=> 'N'
+				'status_po'	=> 'N'
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_estimasi_penawaran', $data);
 				$data 	= $this->input->post();
 				
 			if ($result > 0) {
-				$out['dataRef'] = $koderef;
+				$out['dataRef'] = $data['no_ref'];
 				$out['dataPo'] = $kode_po;
 				$out['status'] = '';
 				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
@@ -175,6 +184,21 @@ public function showPart()
 	{
 		$id = $_POST['id'];
 		$result = $this->Mod_estimasi_penawaran->deleteDetail_po($id);
+		if ($result > 0) {
+			//$out['datakode']=$kodeBaru;
+			$out['status'] = '';
+			$out['msg'] = show_del_msg('Deleted', '10px');
+		} else {
+			$out['status'] = '';
+			$out['msg'] = show_err_msg('Filed !', '10px');
+		}
+		echo json_encode($out);
+	}
+	
+	public function deleteKeterangan()
+	{
+		$id = $_POST['id'];
+		$result = $this->Mod_estimasi_penawaran->deleteKeterangan_po($id);
 		if ($result > 0) {
 			//$out['datakode']=$kodeBaru;
 			$out['status'] = '';

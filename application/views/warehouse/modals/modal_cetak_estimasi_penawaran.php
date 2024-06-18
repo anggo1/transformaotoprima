@@ -62,6 +62,26 @@ p, td, th {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-size:14px;
 }
+         
+.table-atas {
+    border-collapse: collapse;
+    font: bold;
+    float: right;
+}
+.table-atas td {
+    padding: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+    font: bold;
+}
+.table-atas th {
+    border: 2px solid #000;
+    font: bold;
+    font-weight: normal;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+}
+         
 .under { text-decoration: underline; }
 #A4 {background-color:#FFFFFF;
 left:1px;
@@ -100,39 +120,51 @@ font-family:Georgia, "Times New Roman", Times, serif;
       </tr>
 
 </table>
-<table width="100%" border="1">
-      <tr align="center" >
-        <th height="12" class="dbl-border"><h4>CV PART ORDER</h4></th>
-      </tr>
-</table>
   <table width="100%" border="0" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="datatable1">
     <thead>
       <tr>
-        <th colspan="2"><div align="left">To</div></th>
+        <th colspan="2"><div align="left"></div></th>
         <th>&nbsp;</th>
-        <th><div align="left">Page : __1__of__1__</div></th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th colspan="2"><div align="left"><?php echo $k->nama_sup; ?></div></th>
-        <th width="301">&nbsp;</th>
-        <th width="262">&nbsp;</th>
-        <th width="144">&nbsp;</th>
-      </tr>
-      <tr>
-        <th colspan="2"><div align="left"><?php echo $k->detail ?></div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th><div align="left">: <?php echo  $apl1->nama_owner; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="32" colspan="2"><div align="left"><?php echo $k->alamat ?></div></th>
+        <th colspan="2"><div align="left">Estimasi Penawaran Sparepart</div></th>
+        <th>&nbsp;</th>
+        <th><div align="left"></div></th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th><div align="left">Customer Name</div></th>
+        <th><div align="left">: <?php echo $k->nama_cus; ?></div></th>
+        <th width="255">&nbsp;</th>
+        <th width="319">&nbsp;</th>
+        <th width="148">&nbsp;</th>
+      </tr>
+      <tr>
+        <th><div align="left">Address</div></th>
+        <th><div align="left">: <?php echo $k->alamat ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="28" colspan="2"><div align="left">FAX : <?php echo $k->no_fax ?></div></th>
+        <th height="32"><div align="left">City</div></th>
+        <th height="32"><div align="left">: <?php echo $k->kota ?></div></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th height="28"><div align="left">Up</div></th>
+        <th height="28"><div align="left">: <?php echo $k->tlp_person ?></div></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th height="27"><div align="left">Telp or Mobile no</div></th>
+        <th height="27"><div align="left">: <?php echo $k->no_tlp ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -144,28 +176,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="27" colspan="2"><div align="left">From</div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th width="101" height="28"><div align="left"><strong>Dealer Name</strong></div></th>
-        <th width="548"><div align="left">: <?php echo  $apl1->nama_owner; ?></div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="28"><div align="left"><strong>Order No</strong></div></th>
-        <th height="28"><div align="left">: <?php echo $k->kode_pesan; ?></div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="32"><div align="left"><strong>Order Date</strong></div></th>
-        <th height="32"><div align="left">: <?php echo tglIndoSedang($k->tgl_part_order) ?></div></th>
+        <th width="185" height="28">&nbsp;</th>
+        <th width="489">&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -173,9 +185,29 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </thead>
 
   </table>
-<br>
-  <table>
+    <table width="60%" border="1" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="table-atas">
+    <thead>
+      <tr>
+        <th colspan="3">For Reference please quote the following no</th>
+        </tr>
+      <tr>
+        <th colspan="3">&nbsp;</th>
+        </tr>
+      <tr>
+        <th width="30%" height="36"><font size="-2">Date :</font><br>
+          <?php echo $k->tgl_estimasi_penawaran ?></br></th>
+        <th width="30%" align="center"><font size="-2">Customer No.</font><br>
+          <?php echo $k->kode_cus ?></br></th>
+        <th width="30%"><font size="-2">Page<br></font></th>
+      </tr>
+    </thead>
 
+  </table>
+    <p><br>
+      <table>
+    </p>
+    <p>&nbsp;</p>
+    <p>&nbsp; </p>
     <table width="100%" border="1" cellpadding="3" cellspacing="0" class="datatable2">
       <thead>
         <tr>
@@ -268,7 +300,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           </tr>
       </thead>
 
-    </table>
+  </table>
 <table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0" class="datatable2">
         <tr>
           <td colspan="4"><strong>NOTE :<?php echo $k->keterangan; ?></strong></td>
@@ -309,7 +341,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
                       <td>&nbsp;</td>
                     </tr>
       </table>
-      </table>
+      <!--</table>-->
 
 </div>
         

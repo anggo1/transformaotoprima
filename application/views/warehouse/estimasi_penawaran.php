@@ -6,22 +6,36 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <div class="card card-default">
+                <div class="card card-dark card-outline">
                     <!-- /.card-header -->
                     <div class="modal-content">
-                        <div class="modal-header text-blue">
+                        <div class="modal-header">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Estimasi Penawaran Part
+                                    class="ion-soup-can-outline ion-lg"></span>&nbsp; Estimasi Penawaran Part
                             </h5>
                         </div>
                         <div class="modal-body">
 
+                        <?php
+						$date = date("y-m");
+						$ci_kons = get_instance();
+						$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
+						$hasil = $ci_kons->db->query($query)->row_array();
+						$noOrder = $hasil['maxKode'];
+						$noUrut = (int)substr($noOrder, 5, 4);
+						$noUrut++;
+						$tahun = substr($date, 0, 2);
+						$bulan = substr($date, 3, 2);
+						$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
+						$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
+						?>
                             <form id="formPo" name="formPo" method="POST">
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">No Reff</label>
-                                        <input type="text" name="no_ref" id="no_ref" value="" class="form-control"
+                                        <input type="text" name="no_ref" id="no_ref"
+                                    value="<?php echo $kode_ref ?>"  class="form-control"
                                             placeholder="Nomor Referensi">
                                     </div>
                                     <div class="col-3">
@@ -41,7 +55,7 @@
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Customer No</label>
-                                        <select name="supplier" id="supplier" class="form-control">
+                                        <select name="id_customer" id="id_customer" class="form-control">
                                             <option value="">Customer...
                                             </option>
                                             <?php
@@ -55,11 +69,6 @@
 											}
 											?>
                                         </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Page</label>
-                                        <input type="text" name="page" id="page" value="" class="form-control"
-                                            placeholder="Page">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -131,18 +140,6 @@
 
                                     </div>
                                 </div>
-                                <?php
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 5, 4);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%04s", $noUrut);
-						?>
                                 <input type="hidden" name="id_estimasi_penawaran" id="id_estimasi_penawaran"
                                     value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
@@ -159,8 +156,7 @@
                             </form>
                             <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
                                 title="Add Part" data-toggle="modal" data-target="#modal_form"><i
-                                    class="fas fa-plus"></i> Tambah Barang
-                                PO</button>
+                                    class="fas fa-plus"></i> Tambah Barang</button>
                         </div>
                     </div>
                 </div>
@@ -168,7 +164,7 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="modal-content">
-                        <div class="card-header card-blue card-outline">
+                        <div class="card-header card-dark card-outline">
                             <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Keterangan</h3>
                             <div class="text-right">
                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal"
@@ -197,12 +193,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            </div>
+            <div class="card">
                 <div id="modal-po"></div>
                 <div id="data-po"></div>
                 <div id="data-po-cache"></div>
             </div>
-        </div>
         <div class="modal fade" id="modal_form" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -321,6 +317,17 @@ var MyTable = $('#list-po').dataTable({
     "info": true
 });
 
+var tableKeterangan = $('#list-keterangan').dataTable({
+           "responsive": false,
+           "paging": true,
+           "lengthChange": false,
+           "searching": false,
+           "ordering": false,
+           "info": false,
+           "autoWidth": true,
+           "pageLength": 5
+         });
+
 function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
     var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
     var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
@@ -384,6 +391,7 @@ function tampilKeterangan() {
         url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
         data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
         success: function(hasil) {
+            tableKeterangan.fnDestroy();
             $('#data-keterangan').html(hasil);
         }
     });
@@ -567,6 +575,30 @@ $(document).on("click", ".delete-detail", function() {
                 var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
                 //next(next_proses);
                 tampilDetail(id_estimasi_penawaran);
+            }
+        })
+})
+
+
+$(document).on("click", ".delete-keterangan", function() {
+    data_id = $(this).attr("data-id");
+})
+$(document).on("click", ".delete-keterangan", function() {
+    var id = data_id;
+
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('EstimasiPenawaran/deleteKeterangan'); ?>",
+            data: "id=" + id
+        })
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+            if (out.status != 'form') {
+                //$('.msg').html(out.msg);
+                $('#hapusKeterangan').modal('hide');
+                var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
+                //next(next_proses);
+                tampilKeterangan(id_estimasi_penawaran);
             }
         })
 })
