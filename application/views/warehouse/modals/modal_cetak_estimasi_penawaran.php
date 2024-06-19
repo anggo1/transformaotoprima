@@ -45,7 +45,7 @@ p, td, th {
     font:2 Verdana, Arial, Helvetica, sans-serif;
 	
 }
-.datatable {
+.datatable2 {
     border-collapse: collapse;
     font: bold;
 }
@@ -55,12 +55,33 @@ p, td, th {
 	font-size:14px;
     font: bold;
 }
-.datatable th {
+.datatable2 th {
     border: 2px solid #000;
     font: bold;
     font-weight: normal;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-size:14px;
+    padding: 1px 1px 1px 1px;
+}
+         
+.datatable3 {
+    border-collapse: collapse;
+    font: bold;
+}
+.datatable3 td {
+    padding: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:8px;
+    font: bold;
+}
+.datatable3 th {
+    border: 1px solid #000;
+    font-display: block;
+    align-content: center;
+    font-weight: bolder;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+    text-align: center;
 }
          
 .table-atas {
@@ -101,7 +122,6 @@ font-family:Georgia, "Times New Roman", Times, serif;
 <div id="printThis">
 
     <div class="modal-body">
-<table width="100%" border="1" cellpadding="0">
   <tbody>
     <tr>
       <td width="100%" style="padding: 15px;">
@@ -112,8 +132,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
 	$apl1 = $this->db->get("aplikasi where lokasi='".$lokasi."'")->row();
     $tgl_sekarang =date("Y-m-d");
 	?>
-<table width="100%" border="1" cellpadding="5" cellspacing="0" class="datatable2">
-    <table width="100%" border="0" cellpadding="5" cellspacing="0" class="datatable2">
+    <table width="100%" border="0" cellpadding="5" cellspacing="0">
       <tr align="center">
         <th width="99%" align="center">
           <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%"></th>
@@ -185,7 +204,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </thead>
 
   </table>
-    <table width="60%" border="1" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="table-atas">
+    <table width="60%" border="1" cellpadding="1" style="font-size: 14px;" cellspacing="0" align="right">
     <thead>
       <tr>
         <th colspan="3">For Reference please quote the following no</th>
@@ -203,26 +222,41 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </thead>
 
   </table>
-    <p><br>
-      <table>
-    </p>
-    <p>&nbsp;</p>
     <p>&nbsp; </p>
-    <table width="100%" border="1" cellpadding="3" cellspacing="0" class="datatable2">
-      <thead>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <table width="100%" border="1" cellpadding="1" cellspacing="0" class="datatable2">
         <tr>
-          <th width="4%" rowspan="2"><div align="center">No</div></th>
-          <th colspan="4"><div align="center">Part Number</div></th>
-          <th width="26%" rowspan="2"><div align="center">Description</div></th>
-          <th width="4%" rowspan="2"><div align="center">Qty</div></th>
-          <th width="3%" rowspan="2"><div align="center"><p>BO Y/N</p></div></th>
-          <th width="22%" rowspan="2"><div align="center">Remarks</div></th>
+          <th><font size="-2">Registration No</font><br>
+          <?php echo $k->tgl_estimasi_penawaran ?></br></th></th>
+          <th>Vin No</th>
+          <th>Sales designation</th>
+          <th>Date / time received</th>
         </tr>
         <tr>
-          <th width="3%">SC</th>
-          <th width="32%">&nbsp;</th>
-          <th width="3%">ES1</th>
-          <th width="3%">ES2</th>
+          <th>Milage/Km</th>
+          <th>Engine No.</th>
+          <th>Account No.</th>
+          <th>Received By</th>
+        </tr>
+        <tr>
+          <th>Routing No.</th>
+          <th>Las Service date/Millage/km</th>
+          <th>Date of 1st registration</th>
+          <th>&nbsp;</th>
+        </tr>
+          </table>
+    <br>
+    <table width="100%" border="1" cellpadding="3" cellspacing="0" class="datatable3">
+      <thead>
+        <tr>
+          <th width="3%" height="31"><div align="center">No</div></th>
+          <th width="11%"><div align="center">Part Number</div></th>
+          <th ><strong>Description</strong></th>
+          <th width="8%">Price</th>
+          <th width="4%"><div align="center">Pcs</div></th>
+          <th width="7%"><div align="center">Amount</div></th>
+          <th width="14%"><div align="center">Remarks</div></th>
         </tr>
         <?php
         $no = 0;
@@ -231,13 +265,11 @@ font-family:Georgia, "Times New Roman", Times, serif;
           $grand_total += $d->total_harga;        ?>
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>
-            <td><div align="center">&nbsp;</div></td>
-            <td><div align="center"><?php echo $d->no_part ?></div></td>
-            <td><div align="center">&nbsp;</div></td>
-            <td><div align="center">&nbsp;</div></td>
-            <td><div align="center"><?php echo $d->nama_part ?></div></td>
-            <td><div align="center"><?php echo number_format($d->jumlah) ?></div></td>
-            <td><div align="center">&nbsp;</div></td>
+            <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
+            <td width="53%"><div align="center"><?php echo $d->nama_part ?></div></td>
+            <td width="8%"><div align="center">&nbsp;<?php echo number_format($d->harga_net) ?></div></td>
+            <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
+            <td><div align="center"><?php echo number_format($d->total_harga) ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>
           
@@ -251,8 +283,6 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -262,23 +292,20 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
           </tr>
+          <?php
+        foreach ($detailKet as $k) :    ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+              <td><font size="-2">** <?php echo $k->remark; ?></font></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+          <?php endforeach ?>
           <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -288,36 +315,52 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
           </tr>
           <tr>
+            <td colspan="3" rowspan="5">&nbsp;</td>
+            <td>Total</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td rowspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>PPN</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Voucher Sparepart</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Ongkos Kirim</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Grand Total</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
       </thead>
 
   </table>
-<table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0" class="datatable2">
+<table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0">
         <tr>
-          <td colspan="4"><strong>NOTE :<?php echo $k->keterangan; ?></strong></td>
+          <td colspan="4">&nbsp;</td>
         </tr>
     </table>
-      <table width="100%" border="0" cellpadding="5" cellspacing="0" class="datatable2">
+      <table width="100%" border="0" cellpadding="5" cellspacing="0">
         <tr>
           <td width="25%">&nbsp;</td>
           <td width="25%">&nbsp;</td>
           <td width="25%">&nbsp;</td>
           <td width="25%">&nbsp;</td>
         </tr>
-        <tr>
+        <tr align="center">
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>Best Regard</td>
         </tr>
                     <tr align="center">
                       <th>&nbsp;</th>
@@ -326,19 +369,17 @@ font-family:Georgia, "Times New Roman", Times, serif;
                       <th>&nbsp;</th>
                     </tr>
                     <tr align="center">
-                      <th><strong>Signature</strong></th>
+                      <th height="61">&nbsp;</th>
                       <th>&nbsp;</th>
                       <th>&nbsp;</th>
                       <th>&nbsp;</th>
                     </tr>
                     <tr align="center">
-                      <td><img src="<?php echo base_url(); ?>assets\dist\img\topwaranty.png" width="25%">
-                          
-                      <p></p>(Ryanto Yodi)
-                      </td>
+                      <td>........................................<br>
+                      Nama dan tanda tangan</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                      <td>&nbsp;</td>
+                      <td><?php echo $this->session->userdata['full_name'] ?></td>
                     </tr>
       </table>
       <!--</table>-->

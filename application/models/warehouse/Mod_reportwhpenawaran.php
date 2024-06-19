@@ -122,6 +122,15 @@ class Mod_reportwhpenawaran extends CI_Model
         return $data->result();
         //return $data->row();
     }
+    public function select_ket($id)
+    {
+        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note 
+        WHERE id_estimasi_penawaran ='{$id}'";
+
+        $data = $this->db->query($sql);
+        return $data->result();
+        //return $data->row();
+    }
     function cetak_bon($id)
     {
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
