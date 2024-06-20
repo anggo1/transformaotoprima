@@ -68,7 +68,7 @@
     <tr>
       <td align="right" style="text-align: end;border: 0px solid #000;
 	font-size:8px;
-    font-weight: bold;"> MAMERA PERDANA UTAMA</td>
+    font-weight: bold;"> PT.Transforma Oto Prima</td>
     </tr>
   </tbody>
 </table>

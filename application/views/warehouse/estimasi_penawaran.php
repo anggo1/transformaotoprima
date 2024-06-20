@@ -131,6 +131,11 @@
                                         <input type="text" name="date_of_regis" id="date_of_regis" value=""
                                             class="form-control" placeholder="Date of 1st registration">
                                     </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">P P N</label>
+                                        <input type="text" name="ppn" id="ppn" value=""
+                                            class="form-control" placeholder="PPN">
+                                    </div>
                                 </div>
 
 
@@ -555,6 +560,7 @@ $(document).on("click", ".cetak-po", function() {
             $('#cetak-po').modal('show');
         })
 })
+
 var data_id;
 $(document).on("click", ".delete-detail", function() {
     data_id = $(this).attr("data-id");

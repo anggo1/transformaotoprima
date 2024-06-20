@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2024 at 10:49 AM
+-- Generation Time: Jun 20, 2024 at 10:39 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -31,6 +31,8 @@ CREATE TABLE `aplikasi` (
   `id` int(10) UNSIGNED NOT NULL,
   `nama_owner` varchar(100) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
+  `kota` varchar(35) NOT NULL,
+  `kode_pos` varchar(15) NOT NULL,
   `tlp` varchar(50) DEFAULT NULL,
   `title` varchar(20) DEFAULT NULL,
   `nama_aplikasi` varchar(100) DEFAULT NULL,
@@ -48,8 +50,8 @@ CREATE TABLE `aplikasi` (
 -- Dumping data for table `aplikasi`
 --
 
-INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `tlp`, `title`, `nama_aplikasi`, `logo`, `copy_right`, `versi`, `tahun`, `npwp`, `status`, `id_lokasi`, `lokasi`) VALUES
-(1, 'PT.Transforma Oto Prima', 'Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 Jatinegara , Jakarta Timur', '0080-0000-0000', 'TOP', 'Transforma Oto Prima', 'Background.png', 'Copy Right &copy;', '1.0.0.0', '2024', '-', '', '1', 'Cibitung');
+INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `kota`, `kode_pos`, `tlp`, `title`, `nama_aplikasi`, `logo`, `copy_right`, `versi`, `tahun`, `npwp`, `status`, `id_lokasi`, `lokasi`) VALUES
+(1, 'PT.Transforma Oto Prima', 'Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 Jatinegara', 'Jakarta Timur', '13410', '021 - 8591337', 'TOP', 'Transforma Oto Prima', 'Background.png', 'Copy Right &copy;', '1.0.0.0', '2024', '-', 'Head Office', '1', 'Cibitung');
 
 -- --------------------------------------------------------
 
@@ -547,14 +549,13 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (305, 1, 64, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (310, 1, 65, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
 (315, 1, 66, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
-(320, 1, 67, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
-(325, 1, 68, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(320, 1, 67, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(325, 1, 68, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (335, 1, 70, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (345, 1, 72, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (350, 1, 73, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
 (355, 1, 74, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
 (360, 1, 75, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
-(365, 1, 76, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (370, 1, 77, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (375, 1, 78, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (380, 1, 79, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
@@ -594,7 +595,6 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (459, 0, 73, 'N', 'N', 'N', 'N', 'N', 'N'),
 (460, 0, 74, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (461, 0, 75, 'N', 'N', 'N', 'N', 'N', 'N'),
-(462, 0, 76, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (463, 0, 77, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (464, 0, 78, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (465, 0, 79, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
@@ -605,10 +605,6 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (471, 0, 85, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (472, 0, 86, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (473, 0, 87, 'N', 'N', 'N', 'N', 'N', 'N'),
-(474, 0, 88, 'N', 'N', 'N', 'N', 'N', 'N'),
-(475, 1, 88, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
-(477, 0, 89, 'N', 'N', 'N', 'N', 'N', 'N'),
-(478, 1, 89, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
 (480, 9, 1, 'N', 'N', 'N', 'N', 'N', 'N'),
 (481, 9, 2, 'N', 'N', 'N', 'N', 'N', 'N'),
 (482, 9, 7, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -638,7 +634,6 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (514, 9, 73, 'N', 'N', 'N', 'N', 'N', 'N'),
 (515, 9, 74, 'N', 'N', 'N', 'N', 'N', 'N'),
 (516, 9, 75, 'N', 'N', 'N', 'N', 'N', 'N'),
-(517, 9, 76, 'Y', 'Y', 'Y', 'N', 'Y', 'Y'),
 (518, 9, 77, 'Y', 'Y', 'Y', 'N', 'Y', 'Y'),
 (519, 9, 78, 'Y', 'Y', 'Y', 'N', 'Y', 'Y'),
 (520, 9, 79, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
@@ -649,8 +644,6 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (526, 9, 85, 'Y', 'Y', 'Y', 'N', 'Y', 'Y'),
 (527, 9, 86, 'Y', 'Y', 'Y', 'N', 'Y', 'Y'),
 (528, 9, 87, 'N', 'N', 'N', 'N', 'N', 'N'),
-(529, 9, 88, 'N', 'N', 'N', 'N', 'N', 'N'),
-(530, 9, 89, 'N', 'N', 'N', 'N', 'N', 'N'),
 (531, 10, 1, 'N', 'N', 'N', 'N', 'N', 'N'),
 (532, 10, 2, 'N', 'N', 'N', 'N', 'N', 'N'),
 (533, 10, 7, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -680,7 +673,6 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (565, 10, 73, 'N', 'N', 'N', 'N', 'N', 'N'),
 (566, 10, 74, 'N', 'N', 'N', 'N', 'N', 'N'),
 (567, 10, 75, 'N', 'N', 'N', 'N', 'N', 'N'),
-(568, 10, 76, 'N', 'N', 'N', 'N', 'N', 'N'),
 (569, 10, 77, 'N', 'N', 'N', 'N', 'N', 'N'),
 (570, 10, 78, 'N', 'N', 'N', 'N', 'N', 'N'),
 (571, 10, 79, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -691,13 +683,11 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (577, 10, 85, 'N', 'N', 'N', 'N', 'N', 'N'),
 (578, 10, 86, 'N', 'N', 'N', 'N', 'N', 'N'),
 (579, 10, 87, 'N', 'N', 'N', 'N', 'N', 'N'),
-(580, 10, 88, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
-(581, 10, 89, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
-(633, 12, 1, 'N', 'N', 'N', 'N', 'N', 'N'),
-(634, 12, 2, 'N', 'N', 'N', 'N', 'N', 'N'),
-(635, 12, 7, 'Y', 'Y', 'N', 'N', 'N', 'N'),
-(636, 12, 8, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
-(637, 12, 10, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(633, 12, 1, 'N', 'N', 'N', 'N', 'Y', 'N'),
+(634, 12, 2, 'N', 'N', 'N', 'N', 'Y', 'N'),
+(635, 12, 7, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(636, 12, 8, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(637, 12, 10, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (638, 12, 15, 'N', 'N', 'N', 'N', 'N', 'N'),
 (639, 12, 17, 'N', 'N', 'N', 'N', 'N', 'N'),
 (640, 12, 18, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -707,34 +697,31 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (644, 12, 24, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (645, 12, 37, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
 (647, 12, 43, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
-(648, 12, 44, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(648, 12, 44, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (649, 12, 45, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (652, 12, 53, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
-(656, 12, 62, 'Y', 'N', 'N', 'N', 'N', 'N'),
-(657, 12, 63, 'Y', 'N', 'N', 'N', 'N', 'N'),
-(658, 12, 64, 'Y', 'Y', 'N', 'N', 'Y', 'N'),
-(659, 12, 65, 'N', 'N', 'Y', 'N', 'N', 'N'),
-(660, 12, 66, 'N', 'N', 'N', 'N', 'N', 'N'),
-(661, 12, 67, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
-(662, 12, 68, 'Y', 'N', 'N', 'N', 'N', 'N'),
-(664, 12, 70, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(656, 12, 62, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(657, 12, 63, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(658, 12, 64, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(659, 12, 65, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(660, 12, 66, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(661, 12, 67, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(662, 12, 68, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(664, 12, 70, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (666, 12, 72, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (667, 12, 73, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (668, 12, 74, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (669, 12, 75, 'Y', 'N', 'N', 'N', 'N', 'N'),
-(670, 12, 76, 'Y', 'N', 'Y', 'N', 'Y', 'N'),
-(671, 12, 77, 'Y', 'N', 'Y', 'N', 'Y', 'N'),
-(672, 12, 78, 'Y', 'N', 'Y', 'N', 'Y', 'N'),
-(673, 12, 79, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
-(674, 12, 80, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(671, 12, 77, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(672, 12, 78, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(673, 12, 79, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(674, 12, 80, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (675, 12, 81, 'Y', 'N', 'N', 'N', 'Y', 'N'),
-(676, 12, 82, 'Y', 'N', 'N', 'N', 'Y', 'N'),
-(678, 12, 84, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
-(679, 12, 85, 'Y', 'N', 'Y', 'Y', 'Y', 'N'),
-(680, 12, 86, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(676, 12, 82, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(678, 12, 84, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(679, 12, 85, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(680, 12, 86, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (681, 12, 87, 'Y', 'N', 'N', 'N', 'Y', 'N'),
-(682, 12, 88, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
-(683, 12, 89, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (684, 1, 90, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (686, 9, 90, 'N', 'N', 'N', 'N', 'N', 'N'),
 (687, 10, 90, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
@@ -746,23 +733,19 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (696, 1, 92, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (698, 9, 92, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (699, 10, 92, 'N', 'N', 'N', 'N', 'N', 'N'),
-(701, 12, 92, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(701, 12, 92, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (702, 1, 93, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
 (704, 9, 93, 'N', 'N', 'N', 'N', 'N', 'N'),
 (705, 10, 93, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
-(707, 12, 93, 'Y', 'Y', 'Y', 'N', 'N', 'N'),
-(708, 1, 94, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
-(710, 9, 94, 'N', 'N', 'N', 'N', 'N', 'N'),
-(711, 10, 94, 'Y', 'Y', 'Y', 'N', 'Y', 'N'),
-(713, 12, 94, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
-(826, 1, 95, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(707, 12, 93, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(826, 1, 95, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (828, 9, 95, 'N', 'N', 'N', 'N', 'N', 'N'),
 (829, 10, 95, 'Y', 'N', 'N', 'N', 'Y', 'N'),
-(831, 12, 95, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(831, 12, 95, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (833, 1, 96, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (835, 9, 96, 'N', 'N', 'N', 'N', 'N', 'N'),
 (836, 10, 96, 'N', 'N', 'N', 'N', 'N', 'N'),
-(838, 12, 96, 'Y', 'N', 'Y', 'Y', 'Y', 'N'),
+(838, 12, 96, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (840, 1, 97, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (842, 9, 97, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (843, 10, 97, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -774,7 +757,7 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (854, 1, 99, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (856, 9, 99, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (857, 10, 99, 'N', 'N', 'N', 'N', 'N', 'N'),
-(859, 12, 99, 'Y', 'N', 'N', 'Y', 'Y', 'N'),
+(859, 12, 99, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (861, 1, 100, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (863, 9, 100, 'N', 'N', 'N', 'N', 'N', 'N'),
 (864, 10, 100, 'Y', 'N', 'Y', 'N', 'Y', 'N'),
@@ -789,16 +772,25 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (887, 12, 103, 'N', 'N', 'N', 'N', 'N', 'N'),
 (889, 1, 104, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (890, 10, 104, 'N', 'N', 'N', 'N', 'N', 'N'),
-(891, 12, 104, 'N', 'N', 'N', 'N', 'N', 'N'),
+(891, 12, 104, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (892, 1, 105, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (893, 10, 105, 'N', 'N', 'N', 'N', 'N', 'N'),
-(894, 12, 105, 'N', 'N', 'N', 'N', 'N', 'N'),
+(894, 12, 105, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (895, 1, 106, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (896, 10, 106, 'N', 'N', 'N', 'N', 'N', 'N'),
-(897, 12, 106, 'N', 'N', 'N', 'N', 'N', 'N'),
+(897, 12, 106, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (898, 1, 107, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'),
 (899, 10, 107, 'N', 'N', 'N', 'N', 'N', 'N'),
-(900, 12, 107, 'N', 'N', 'N', 'N', 'N', 'N');
+(900, 12, 107, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(901, 1, 108, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(902, 10, 108, 'N', 'N', 'N', 'N', 'N', 'N'),
+(903, 12, 108, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(904, 1, 109, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(905, 10, 109, 'N', 'N', 'N', 'N', 'N', 'N'),
+(906, 12, 109, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(907, 1, 110, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(908, 10, 110, 'N', 'N', 'N', 'N', 'N', 'N'),
+(909, 12, 110, 'Y', 'Y', 'Y', 'Y', 'Y', 'N');
 
 -- --------------------------------------------------------
 
@@ -1047,36 +1039,35 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 (73, 'BAST', 'Bast', 'fa fa-bus-alt', 52, 'Y', 3),
 (74, 'Panel Seting', 'Settingbr', 'fa fa-cogs', 52, 'Y', 8),
 (75, 'Display Bay', 'Display', 'fa fa-chalkboard-teacher', 52, 'Y', 1),
-(76, 'Report Per Body', 'ReportWhPerbody', 'fa fa-bus-alt', 61, 'Y', 1),
 (77, 'Report Perbarang', 'ReportWhPerbarang', 'fa fa-luggage-cart', 61, 'Y', 3),
 (78, 'Report Per Divisi', 'ReportWhPerkategori', 'fa fa-layer-group', 61, 'Y', 4),
 (79, 'Penerimaan Barang', 'ReportWhMasuk', 'fa fa-dolly-flatbed', 61, 'Y', 5),
 (80, 'Pengeluaran Barang', 'ReportWhKeluar', 'fa fa-dolly', 61, 'Y', 6),
 (81, 'Edit Bay & SPK Global', 'BusPk', 'fa fa-bezier-curve', 52, 'Y', 5),
 (82, 'Panel Setting', 'SettingAcc', 'fa fa-cogs', 60, 'Y', 9),
-(84, 'List PO', 'ReportWhPo', 'fa fa-tasks', 61, 'Y', 0),
+(84, 'List P O', 'ReportWhPo', 'fa fa-tasks', 61, 'Y', 0),
 (85, 'Report Part PK', 'ReportWhPartpk', 'fa fa-tasks', 61, 'Y', 10),
 (86, 'Part Masuk Non PO', 'Part_masuk_npo', 'fa fa-file-signature', 57, 'Y', 6),
 (87, 'List Part Estimasi', 'ListPartEstimasi', 'fa fa-tasks', 52, 'Y', 7),
-(88, 'Biaya Kontrak SPK', 'BeaPK', 'fa fa-hand-holding-usd', 60, 'Y', 1),
-(89, 'Pembayaran Pekerjaan', 'PembayaranPk', 'fa fa-hand-holding', 60, 'Y', 2),
 (90, 'Report Upah Borongan', 'ReportUpahBorong', 'fa fa-file-contract', 65, 'Y', 1),
 (91, 'Bus Keluar', 'BusKeluar', 'fa fa-exchange-alt', 52, 'Y', 7),
 (92, 'Report Barang Return', 'ReportWhReturn', 'fa fa-exchange-alt', 61, 'Y', 7),
 (93, 'Saldo Awal', 'Saldo', 'fa fa-donate', 60, 'Y', 5),
-(94, 'Pengeluaran Barang Perbody', 'ReportAccPerbody', 'fa fa-bus', 65, 'Y', 3),
 (95, 'Barang Per Divisi', 'ReportAccPerpk', 'fa fa-hammer', 65, 'Y', 4),
 (96, 'Total Biaya SPK', 'ReportAccSpk', 'fa fa-money-bill-wave', 65, 'Y', 5),
 (97, 'Stok Opname', 'StokOpname', 'fa fa-pencil-ruler', 57, 'Y', 8),
 (98, 'Report Stok Opname', 'ReportOpname', 'fa fa-vote-yea', 61, 'Y', 8),
-(99, 'Report Barang Masuk', 'ReportWhMasukPerbarang', 'fa fa-chalkboard-teacher', 61, 'Y', 2),
+(99, 'Report Barang Masuk', 'ReportWhMasukPerbarang', 'fa fa-chalkboard-teacher', 61, 'Y', 8),
 (100, 'Report Stok Opname', 'ReportAccOpname', 'fa fa-vote-yea', 65, 'Y', 8),
 (101, 'Report SPK Mingguan', 'ReportAccSpkPerminggu', 'fa fa-tasks', 65, 'Y', 1),
 (103, 'Report PK Selesai', 'ReportDataSelesai', 'fa  fa-newspaper', 59, 'Y', 2),
 (104, 'Part Order', 'PartOrder', 'fa fa-cart-plus', 57, 'Y', 3),
 (105, 'Estimasi Penawaran', 'EstimasiPenawaran', 'fa fa-envelope-open-text', 57, 'Y', 4),
 (106, 'Part Keluar', 'Part_keluar', 'fa fa-file-signature', 57, 'Y', 5),
-(107, 'Report Penawaran', 'ReportWhPenawaran', 'fa fa-list', 61, 'Y', 2);
+(107, 'List Penawaran', 'ReportWhPenawaran', 'fa fa-list', 61, 'Y', 2),
+(108, 'List Part Order', 'ReportWhPartorder', 'fa fa-list', 61, 'Y', 1),
+(109, 'Purchase Order Masuk', 'PoMasuk', 'fa fa-coins', 57, 'Y', 3),
+(110, 'List PO Masuk', 'ReportWhPoMasuk', 'fa fa-tasks', 61, 'Y', 0);
 
 -- --------------------------------------------------------
 
@@ -1105,13 +1096,11 @@ INSERT INTO `tbl_user` (`id_user`, `username`, `full_name`, `password`, `id_leve
 (2, 'Dikri', 'Dikri Abdul Aziz', '$2y$05$2hCUV6GSjgxsm24mdn1RE.0EwmrDiOponXTmo8uJ3kMQNDh971s3i', 7, NULL, 'Y', '', ''),
 (8, 'akbar ', 'Akbar yasjudan', '$2y$05$DZCGV3RzmerpGXK8SZOBOOcn5l3StxK6Ct2RKHGlosaGzZjkFAyXK', 13, NULL, 'Y', '', ''),
 (9, 'tody1', 'Tody Dwi', '$2y$05$IEd1fuelMMr1hWcZhW.ZH.i8Pvds9q93wXcL0rgGxMYFxZlCDQpLK', 9, 'tody15.jpeg', 'Y', '', ''),
-(10, 'test', 'test', '$2y$05$KXO/WgsJSgfShnBlKjy7qOyOEOWz1woSU0lqMVX.aE8DL0Gjb40Me', 12, NULL, 'Y', '', ''),
-(11, 'indra', 'Indra', '$2y$05$zjf38l6N3FrgNkrzRTxkfOde7GE89fyNtT3sp7163nH8mOBFI.zHy', 12, 'indra.jpg', 'Y', '', ''),
 (12, 'DONI', 'SA', '$2y$05$49wZp0qn4w8o6xU4PeqjMe8DpwlNFN2XFVjDRt3s/V9Ytu/AeHXaC', 7, NULL, 'Y', '', ''),
-(13, 'faizal', 'faizal maulana', '$2y$05$qknnJ8Cq36oQ5kDGbW9K3e.vFvfZE5WgJ3L1k0nDIxdunHWjZfe0e', 10, NULL, 'Y', '', ''),
 (14, 'saya', 'saya', '$2y$05$djvY0vX7C16xpvPiell0f.Bg3DqTWVij82DuMkj5n6c4Xy7CCM2Ji', 9, NULL, 'Y', '', ''),
 (15, 'Faisal', 'Faisal', '$2y$05$WoCRGnKgobK47eJN.zis2ensBXwMCm6eDzd/X4hBQ2LurzL6lehym', 9, NULL, 'Y', '', ''),
-(16, 'dikri2', 'Dikri abdul aziz', '$2y$05$PEHviJ58hOsHzcUIaWgi..DuwEVO1aePM0TpIuUG4C.PrH2r13DFK', 9, NULL, 'Y', '', '');
+(16, 'dikri2', 'Dikri abdul aziz', '$2y$05$PEHviJ58hOsHzcUIaWgi..DuwEVO1aePM0TpIuUG4C.PrH2r13DFK', 9, NULL, 'Y', '', ''),
+(17, 'admintop', 'Admin TOP', '$2y$05$66g5S29irdjUvLG0AB8UpeCL79HXIcCJqX9RbCLhmrZyps7tLYpj.', 12, NULL, 'Y', '', '');
 
 -- --------------------------------------------------------
 
@@ -2303,7 +2292,7 @@ INSERT INTO `tbl_wh_barang` (`id_part`, `no_part`, `nama_part`, `nama_part_e`, `
 (1120, 'QA400 332 06 06                                   ', 'STEERING KNUCKLE PIN                              ', '                                                  ', 'PCS                      ', '                         ', '               ', '0', '', 355410, 415841, 0, '40', 323100, 0, 'A12B - BD1     ', 'QA400 332 06 06                    ', '                                                  ', 355410, '11', ' ', 'MRC', '0', 'Sparepart', ''),
 (1121, 'MA360 990 01 37                                   ', 'SCREW / WEDGE BOLT M8                             ', '                                                  ', 'PCS                      ', '                         ', '               ', '0', '', 139700, 107173, 0, '40', 67860, 0, 'A12 - BD6      ', '', '                                                  ', 74646, '11', '          ', '0', '0', 'Sparepart', ''),
 (1122, 'QA400 332 37 62                                   ', 'THRUST WASHER / 0.7 THK                           ', '                                                  ', 'PCS                      ', '                         ', '               ', '1', '', 7900, 7900, 0, '40', 3840, 0, 'A12 - BE5      ', '', '                                                  ', 4224, '11', '          ', '0', '0', 'Sparepart', ''),
-(1123, 'QA400 323 08 21                                   ', 'EYE BUSH / FRONT AXLE SUSPENSI                    ', '                                                  ', 'PCS                      ', '                         ', '               ', '0', '', 53790, 53790, 0, '40', 48900, 0, '               ', '', '                                                  ', 53790, '0', '          ', 'MRC       ', '0', 'Sparepart', ''),
+(1123, 'QA400 323 08 21                                   ', 'EYE BUSH / FRONT AXLE SUSPENSI                    ', '                                                  ', 'PCS                      ', '                         ', '               ', '0', '', 53790, 53790, 0, '40', 48900, 0, '               ', '', '                                                  ', 53790, '11', '          ', 'MRC       ', '0', 'Sparepart', ''),
 (1124, 'MN000000 003175                                   ', 'NUT  N 13023-B M 8 - 8 DBL9440.                   ', 'NUT  N 13023-B M 8 - 8 DBL9440.                   ', 'PCS                      ', '                         ', '               ', '0', '', 22106, 22106, 0, '37', 20097, 0, 'A12 - AE1      ', '', '                                                  ', 22106, '11', '          ', '', '0', 'Sparepart', ''),
 (1125, 'IA690 320 02 01/9001                              ', 'SPRING LEAF 1                                     ', '                                                  ', 'PCS                      ', '                         ', '               ', '0', '', 1236312, 1236312, 0, '40', 1123920, 0, 'LANTAI 1       ', '', '                                                  ', 1236312, '10', '          ', '0', '0', 'Sparepart', ''),
 (1126, 'QA400 141 01 60                                   ', 'GASKET                                            ', '                                                  ', 'PCS                      ', '                         ', '               ', '3', '', 29500, 19470, 0, '40', 17700, 0, 'A12 - BF4      ', '', '                                                  ', 19470, '11', '          ', '', '0', '               ', ''),
@@ -3702,7 +3691,9 @@ CREATE TABLE `tbl_wh_detail_estimasi_penawaran` (
 --
 
 INSERT INTO `tbl_wh_detail_estimasi_penawaran` (`id_detail`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `harga_net`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
-(7, '24-06006', '', 'QA400 323 08 21          ', 'EYE BUSH / FRONT AXLE SUSPENSI     ', 'PCS                      ', 53790, 1, '10', 0, 48411, 48411, '0', 'N', 1, 0, 'Y', 'FS DCVI<br>');
+(7, '24-06006', '', 'QA400 323 08 21          ', 'EYE BUSH / FRONT AXLE SUSPENSI     ', 'PCS                      ', 53790, 1, '10', 0, 48411, 48411, '0', 'N', 1, 0, 'Y', 'FS DCVI<br>'),
+(9, '24-06007', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 31500, 0, '10', 'N', 0, 0, 'Y', ''),
+(10, '24-06007', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 0, '', 0, 24500, 0, '10', 'N', 0, 0, 'Y', '');
 
 -- --------------------------------------------------------
 
@@ -3855,7 +3846,9 @@ INSERT INTO `tbl_wh_detail_part_order` (`id_detail`, `id_part_order`, `kode_po`,
 (118, '24-060005', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 9, '', 0, 220500, '10', 'N', 9, 0, 'Y', 'coba juga<br>'),
 (136, '24-060005', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 2, '', 0, 20725200, '1', 'N', 2, 0, 'Y', 'test<br>'),
 (137, '', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(138, '', '', 'BA967 981 00 12/01       ', 'ROLLER BEARING                     ', 'PCS                      ', 0, 0, '', 0, 0, '0', 'N', 0, 0, 'Y', '');
+(138, '', '', 'BA967 981 00 12/01       ', 'ROLLER BEARING                     ', 'PCS                      ', 0, 0, '', 0, 0, '0', 'N', 0, 0, 'Y', ''),
+(140, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
+(141, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', '');
 
 -- --------------------------------------------------------
 
@@ -3896,6 +3889,45 @@ INSERT INTO `tbl_wh_detail_po` (`id_detail`, `id_po`, `kode_po`, `no_part`, `nam
 (35, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0),
 (101, '24-060003', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0),
 (102, '24-060003', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_wh_detail_po_masuk`
+--
+
+CREATE TABLE `tbl_wh_detail_po_masuk` (
+  `id_detail` int(11) NOT NULL,
+  `id_po_masuk` varchar(25) NOT NULL,
+  `kode_po` varchar(35) NOT NULL,
+  `no_part` varchar(25) NOT NULL,
+  `nama_part` varchar(35) NOT NULL,
+  `satuan` varchar(25) NOT NULL,
+  `harga` decimal(10,0) NOT NULL,
+  `jumlah` decimal(10,0) NOT NULL,
+  `diskon` varchar(15) NOT NULL,
+  `total_diskon` decimal(10,0) NOT NULL,
+  `total_harga` decimal(10,0) NOT NULL,
+  `stok_akhir` varchar(5) NOT NULL,
+  `status` enum('N','P','Y') NOT NULL,
+  `sisa` decimal(10,0) NOT NULL,
+  `jml_masuk` decimal(10,0) NOT NULL,
+  `bo` enum('Y','N') NOT NULL,
+  `remark` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_detail_po_masuk`
+--
+
+INSERT INTO `tbl_wh_detail_po_masuk` (`id_detail`, `id_po_masuk`, `kode_po`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
+(1, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
+(2, '', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
+(6, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 2, '', 0, 49000, '10', 'N', 2, 0, 'Y', 'test'),
+(9, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 2, '', 0, 49000, '10', 'N', 2, 0, 'Y', 'testest'),
+(10, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, 'Y', ''),
+(11, '24-060002', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 2, '', 0, 54000, '10', 'N', 2, 0, 'Y', ''),
+(12, '24-060002', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 2, '', 0, 9839800, '8', 'N', 2, 0, 'Y', '');
 
 -- --------------------------------------------------------
 
@@ -3942,7 +3974,7 @@ CREATE TABLE `tbl_wh_estimasi_penawaran` (
 --
 
 INSERT INTO `tbl_wh_estimasi_penawaran` (`id_estimasi_penawaran`, `kode_estimasi_penawaran`, `tgl_estimasi_penawaran`, `id_customer`, `no_reg`, `no_vin`, `sales_design`, `date_received`, `millage`, `engine_no`, `acc_no`, `received_by`, `routing_no`, `last_km`, `date_of_regis`, `no_invoice`, `no_do`, `no_kwitansi`, `deadline`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-06006', 'SP/TOP/06/24/006', '2024-06-18', 'CS-0002', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 48411, 48411, '', '', '', 'Administrator', '', 'N');
+('24-06006', 'SP/TOP/06/24/006', '2024-06-18', 'CS-0002', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '11', 5325, 48411, 48411, '', '', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -4013,6 +4045,15 @@ CREATE TABLE `tbl_wh_log_harga` (
   `tgl_update` date NOT NULL,
   `user` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_log_harga`
+--
+
+INSERT INTO `tbl_wh_log_harga` (`id`, `id_part`, `no_part`, `harga_baru`, `harga_net`, `harga_rata`, `harga_valid`, `diskon`, `ppn`, `ket_harga`, `tgl_update`, `user`) VALUES
+(1, '1123', 'QA400 323 08 21          ', 53790, 48900, 53790, 53790, '40', '11', '          ', '2024-06-20', 'Administrator'),
+(2, '1123', 'QA400 323 08 21          ', 53790, 48900, 53790, 53790, '40', '11', '          ', '2024-06-20', 'Administrator'),
+(3, '1123', 'QA400 323 08 21          ', 53790, 48900, 53790, 53790, '40', '11', '          ', '2024-06-20', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -4134,10 +4175,7 @@ CREATE TABLE `tbl_wh_part_order` (
 --
 
 INSERT INTO `tbl_wh_part_order` (`id_part_order`, `kode_part_order`, `tgl_part_order`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-060001', '/PO/CNK/24-060001', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
-('24-060002', '24-060002/PO/06/2024', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
-('24-060003', '24-060003/PO/06/2024', '2024-06-14', ' 400020 SBY - WARRANTY', '', '', 0, 7119373, 7119373, 'SP-0002', '', ' PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 0, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
+('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 15282500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
 ('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
@@ -4172,6 +4210,39 @@ CREATE TABLE `tbl_wh_po` (
 INSERT INTO `tbl_wh_po` (`id_po`, `kode_po`, `tgl_po`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
 ('24-060001', '/PO/CNK/24-060001', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N'),
 ('24-060002', '24-060002/PO/06/2024', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'N');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_wh_po_masuk`
+--
+
+CREATE TABLE `tbl_wh_po_masuk` (
+  `id_po_masuk` varchar(25) NOT NULL,
+  `kode_po` varchar(35) NOT NULL,
+  `tgl_po` date NOT NULL,
+  `kode_pesan` varchar(50) NOT NULL,
+  `top` varchar(35) NOT NULL,
+  `ppn` varchar(15) NOT NULL,
+  `t_ppn` decimal(10,0) NOT NULL,
+  `sub_total` decimal(10,0) NOT NULL,
+  `grand_total` decimal(10,0) NOT NULL,
+  `customer` varchar(15) NOT NULL,
+  `pengesah` varchar(35) NOT NULL,
+  `keterangan` varchar(250) NOT NULL,
+  `keterangan2` varchar(250) NOT NULL,
+  `user` varchar(35) NOT NULL,
+  `status` varchar(25) NOT NULL,
+  `status_po` enum('N','Y','P') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_po_masuk`
+--
+
+INSERT INTO `tbl_wh_po_masuk` (`id_po_masuk`, `kode_po`, `tgl_po`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `customer`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
+('24-060001', '24-060001/PO/06/2024', '2024-06-20', '23432test', '', '', 0, 0, 0, 'CS-0002', '', 'test', '', 'Administrator', '', 'N'),
+('24-060002', '24-060002/PO/06/2024', '2024-06-20', 'test', '', '', 0, 10049600, 10049600, 'CS-0002', '', 'test', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -4511,6 +4582,12 @@ ALTER TABLE `tbl_wh_detail_po`
   ADD PRIMARY KEY (`id_detail`);
 
 --
+-- Indexes for table `tbl_wh_detail_po_masuk`
+--
+ALTER TABLE `tbl_wh_detail_po_masuk`
+  ADD PRIMARY KEY (`id_detail`);
+
+--
 -- Indexes for table `tbl_wh_estimasi_penawaran`
 --
 ALTER TABLE `tbl_wh_estimasi_penawaran`
@@ -4563,6 +4640,12 @@ ALTER TABLE `tbl_wh_part_order`
 --
 ALTER TABLE `tbl_wh_po`
   ADD PRIMARY KEY (`id_po`);
+
+--
+-- Indexes for table `tbl_wh_po_masuk`
+--
+ALTER TABLE `tbl_wh_po_masuk`
+  ADD PRIMARY KEY (`id_po_masuk`);
 
 --
 -- Indexes for table `tbl_wh_satuan`
@@ -4638,7 +4721,7 @@ ALTER TABLE `tbl_akses_menu`
 -- AUTO_INCREMENT for table `tbl_akses_submenu`
 --
 ALTER TABLE `tbl_akses_submenu`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=910;
 
 --
 -- AUTO_INCREMENT for table `tbl_hrd_cuti_pegawai`
@@ -4668,13 +4751,13 @@ ALTER TABLE `tbl_hrd_jabatan`
 -- AUTO_INCREMENT for table `tbl_submenu`
 --
 ALTER TABLE `tbl_submenu`
-  MODIFY `id_submenu` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id_submenu` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_userlevel`
@@ -4698,7 +4781,7 @@ ALTER TABLE `tbl_wh_customer`
 -- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran`
 --
 ALTER TABLE `tbl_wh_detail_estimasi_penawaran`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran_note`
@@ -4728,13 +4811,19 @@ ALTER TABLE `tbl_wh_detail_part_masuk`
 -- AUTO_INCREMENT for table `tbl_wh_detail_part_order`
 --
 ALTER TABLE `tbl_wh_detail_part_order`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_po`
 --
 ALTER TABLE `tbl_wh_detail_po`
   MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+
+--
+-- AUTO_INCREMENT for table `tbl_wh_detail_po_masuk`
+--
+ALTER TABLE `tbl_wh_detail_po_masuk`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_kategori`
@@ -4752,7 +4841,7 @@ ALTER TABLE `tbl_wh_kelompok`
 -- AUTO_INCREMENT for table `tbl_wh_log_harga`
 --
 ALTER TABLE `tbl_wh_log_harga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_opname`

@@ -4,24 +4,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class ReportWhPenawaran extends MY_Controller
+class ReportWhPartorder extends MY_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('warehouse/Mod_reportwhpenawaran', 'Mod_menu'));
+        $this->load->model(array('warehouse/Mod_reportwhpartorder', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
     }
 
     public function index()
     {
-		$data['page'] 		= "Report Penawaran";
-		$data['judul'] 		= "Penawaran";
+		$data['page'] 		= "Report Part Order";
+		$data['judul'] 		= "List PO";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
-        $this->template->load('layoutbackend', 'warehouse/report_wh/penawaran', $data);
+        $this->template->load('layoutbackend', 'warehouse/report_wh/part_order', $data);
     }
 
     public function listPo() {
@@ -32,8 +32,8 @@ class ReportWhPenawaran extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataPo'] = $this->Mod_reportwhpenawaran->cari_po($ttmp1,$ttmp2); 
-        $this->load->view('warehouse/report_wh/data_penawaran', $data);
+		$data['dataPo'] = $this->Mod_reportwhpartorder->cari_po($ttmp1,$ttmp2); 
+        $this->load->view('warehouse/report_wh/data_part_order', $data);
 	}
     
 
@@ -73,32 +73,13 @@ class ReportWhPenawaran extends MY_Controller
 
         echo json_encode($out);
     }
-    public function cetakBon()
-	{
-		$id 				= $_POST['id'];
-		$data['dataPk'] = $this->Mod_partpk->cetak_pk_bon($id);
-		$data['dataDetail'] = $this->Mod_partpk->cetak_bon($id);
-
-		echo show_my_print('warehouse/modals/modal_cetak_bon', 'cetak-bon', $data, ' modal-xl');
-	}
-    
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
-		$data['dataPo'] = $this->Mod_reportwhpenawaran->select_by_id($id);
-		$data['detailPo'] = $this->Mod_reportwhpenawaran->select_detail($id);
-		$data['detailKet'] = $this->Mod_reportwhpenawaran->select_ket($id);
+		$data['dataPo'] = $this->Mod_reportwhpartorder->select_by_id($id);
+		$data['detailPo'] = $this->Mod_reportwhpartorder->select_detail($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran', 'cetak-po', $data, ' modal-xl');
-	}
-    public function cetak_int()
-	{
-		$id 				= $_POST['id'];
-		$data['dataPo'] = $this->Mod_reportwhpenawaran->select_by_id($id);
-		$data['detailPo'] = $this->Mod_reportwhpenawaran->select_detail($id);
-		$data['detailKet'] = $this->Mod_reportwhpenawaran->select_ket($id);
-
-		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran_internal', 'cetak-po-int', $data, ' modal-xl');
+		echo show_my_print('warehouse/modals/modal_cetak_part_order', 'cetak-po', $data, ' modal-xl');
 	}
 	public function deletePo()
     {

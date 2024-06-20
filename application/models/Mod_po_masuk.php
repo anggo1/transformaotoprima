@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Mod_estimasi_penawaran extends CI_Model
+class Mod_po_masuk extends CI_Model
 {
     var $table = 'tbl_wh_barang';
     var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
@@ -99,12 +99,13 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function select_supplier()
     {
-        $sql = " SELECT * FROM tbl_wh_supplier";
+        $sql = " SELECT * FROM tbl_wh_customer";
 
         $data = $this->db->query($sql);
 
         return $data->result();
     }
+    
     public function select_customer()
     {
         $sql = " SELECT * FROM tbl_wh_customer";
@@ -115,15 +116,7 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function deleteDetail_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
-
-        $this->db->query($sql);
-
-        return $this->db->affected_rows();
-    }
-    public function deleteKeterangan_po($id)
-    {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_detail_note='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_po_masuk WHERE id_detail='" . $id . "'";
 
         $this->db->query($sql);
 
@@ -134,49 +127,31 @@ class Mod_estimasi_penawaran extends CI_Model
         $datenow = date("Y-m-d");
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
-        $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
+        $sql = "INSERT INTO tbl_wh_detail_po_masuk SET
             id_detail       ='',
-            id_estimasi_penawaran           ='" . $data['id_estimasi_penawaran'] . "',
-            no_part     ='" . $data['no_part'] . "',
-            nama_part   ='" . $data['nama_part'] . "',
-            satuan      ='" . $data['satuan'] . "',
-            harga       ='" . $harga_baru. "',
-            harga_net   ='" . $harga_baru. "',
-            stok_akhir  ='" . $data['stok'] . "'";
+            id_po_masuk           ='" . $data['id_po_masuk'] . "',
+            no_part         ='" . $data['no_part'] . "',
+            nama_part       ='" . $data['nama_part'] . "',
+            satuan       ='" . $data['satuan'] . "',
+            harga           ='" . $harga_baru. "',
+            stok_akhir     ='" . $data['stok'] . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
     }
-    function update_detailDiskon($id,$diskon,$hrg_part)
-		{			
-		$jml_diskon =str_replace(" ","", $diskon);
-		$total=$hrg_part * $jml_diskon / 100;
-        $harga_asli = $hrg_part;
-        $totalnya = $harga_asli - $total;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
     function update_detailPo($id,$jml_part,$hrg_part)
 		{			
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-
+			$sql_update = "UPDATE tbl_wh_detail_po_masuk SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function update_remark($id,$remark)
-		{
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
-    function insertRemark($id,$remark)
-		{
-			$sql_update = "INSERT tbl_wh_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '$id', remark ='$remark'";
-            $this->db->query($sql_update);
+		{			
+			$sql_update = "UPDATE tbl_wh_detail_po_masuk SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
@@ -184,11 +159,11 @@ class Mod_estimasi_penawaran extends CI_Model
     {
         $kodenya = "";
         $koderefnya = "";
-        if (empty($data['id_estimasi_penawaran'])) {
+        if (empty($data['id_po_masuk'])) {
             $kodenya = $kodePo;
             $koderefnya = $koderef;
         } else {
-            $kodenya = $data['id_estimasi_penawaran'];
+            $kodenya = $data['id_po_masuk'];
             $koderefnya = $data['kode_ref'];
         }
         $total_harga = $data['total_harga'];
@@ -196,9 +171,9 @@ class Mod_estimasi_penawaran extends CI_Model
             $total_harga = $data['total_harga'] - $data['total_diskon'];
         }
         $datenow = date("Y-m-d");
-        $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
+        $sql = "INSERT INTO tbl_wh_detail_po_masuk SET
             id_detail       ='',
-            id_estimasi_penawaran   ='" . $kodenya . "',
+            id_po_masuk   ='" . $kodenya . "',
             kode_po         ='" . $koderefnya . "',
             no_part         ='" . $data['no_part'] . "',
             nama_part       ='" . $data['nama_part'] . "',
@@ -214,9 +189,9 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function select_by_id($id)
     {
-        $sql = "SELECT * FROM tbl_wh_estimasi_penawaran 
-        LEFT JOIN tbl_wh_customer ON tbl_wh_customer.kode_cus=tbl_wh_estimasi_penawaran.id_customer
-        WHERE id_estimasi_penawaran ='{$id}'";
+        $sql = "SELECT * FROM tbl_wh_po_masuk 
+        LEFT JOIN tbl_wh_customer ON tbl_wh_customer.kode_cus=tbl_wh_po_masuk.customer
+        WHERE id_po_masuk ='{$id}'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -225,44 +200,36 @@ class Mod_estimasi_penawaran extends CI_Model
     public function select_detail($id)
     {
         $ci = get_instance();
-                $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_estimasi_penawaran as a 
-                    LEFT JOIN tbl_wh_estimasi_penawaran as b ON b.id_estimasi_penawaran=a.id_estimasi_penawaran
-                    WHERE a.id_estimasi_penawaran='{$id}'";
+                $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_po_masuk as a 
+                    LEFT JOIN tbl_wh_po_masuk as b ON b.id_po_masuk=a.id_po_masuk
+                    WHERE a.id_po_masuk='{$id}'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
-        $ppn       = $d_data['ppn'];
-        $total_ppn = $total * $ppn / 100;
+        //$ppn       = $d_data['ppn'];
+        //$total_ppn = $total * $ppn / 100;
         $grand_total = $total;
-        $sql_update = "UPDATE tbl_wh_estimasi_penawaran SET
-        t_ppn       ='$total_ppn',
+        $sql_update = "UPDATE tbl_wh_po_masuk SET
         sub_total   ='$total',
         grand_total ='$grand_total'
-        WHERE id_estimasi_penawaran ='{$id}'";
+        WHERE id_po_masuk ='{$id}'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
-        FROM tbl_wh_detail_estimasi_penawaran AS a
-        WHERE a.id_estimasi_penawaran ='{$id}' ORDER BY a.id_detail ASC";
+        FROM tbl_wh_detail_po_masuk AS a
+        WHERE a.id_po_masuk ='{$id}' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
         //return $data->row();
     }
-    public function select_keterangan($id)
-    {
-        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='{$id}' ORDER BY id_detail_note ASC";
-
-        $data = $this->db->query($sql);
-        return $data->result();
-    }
     function updatePo($a, $b, $c, $d)
     {
-        $sql = "UPDATE tbl_wh_estimasi_penawaran SET
+        $sql = "UPDATE tbl_wh_po_masuk SET
         t_ppn       ='$a',
         sub_total   ='$b',
         grand_total ='$c'
-        WHERE id_estimasi_penawaran ='" . $data['id_estimasi_penawaran'] . "'";
+        WHERE id_po_masuk ='" . $data['id_po_masuk'] . "'";
 
         $this->db->query($sql);
 

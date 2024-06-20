@@ -164,7 +164,7 @@ class Mod_update_hpart extends CI_Model
         ket_harga   = '".$data['ket_harga']."',
         ppn         = '".$data['ppn']."',
         tgl_update  = '$datenow',
-        user        = '".$data['user']."' ";
+        user        = '".$data['user']."'";
         $this ->db ->query($sql_log);
 
         $sql = "UPDATE tbl_wh_barang SET
@@ -174,8 +174,8 @@ class Mod_update_hpart extends CI_Model
         harga_rata  = '".$harga_rata."',
         harga_valid = '".$harga_valid."',
         ppn         = '".$data['ppn']."',
-        ket_harga   = '".$data['ket_harga']."',
-        WHERE id_part = '".$data['id_part']."' ";
+        ket_harga   = '".$data['ket_harga']."'
+        WHERE id_part = '".$data['id_part']."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

@@ -108,7 +108,7 @@ class UpdateHpart extends MY_Controller
 
 	public function prosesUharga() {
 		
-		$this->form_validation->set_rules('hrg_awal', 'Harga', 'trim|required');
+		$this->form_validation->set_rules('harga_baru', 'Harga', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {

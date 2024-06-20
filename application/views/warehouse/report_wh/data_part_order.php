@@ -18,14 +18,13 @@ foreach ($dataPo as $s) {
 ?> <tr>
 
         <td><?php echo $no; ?></td>
-        <td><?php echo $s->kode_estimasi_penawaran; ?></td>
-        <td><?php echo tglIndoSedang($s->tgl_estimasi_penawaran); ?></td>
-        <td><?php echo $s->no_reg; ?></td>
-        <td><?php echo $s->nama_cus; ?></td>
+        <td><?php echo $s->kode_part_order; ?></td>
+        <td><?php echo tglIndoSedang($s->tgl_part_order); ?></td>
+        <td><?php echo $s->kode_pesan; ?></td>
+        <td><?php echo $s->nama_sup; ?></td>
 
         <td class="text-center">
-            <button class="btn btn-xs btn-outline-warning cetak-po-int" data-id="<?php echo $s->id_estimasi_penawaran; ?>"><i class="fa fa-eye"></i> view</button>
-            <button class="btn btn-xs btn-outline-primary cetak-po" data-id="<?php echo $s->id_estimasi_penawaran; ?>"><i class="fa fa-print"></i> Print</button>
+            <button class="btn btn-xs btn-outline-primary cetak-po" data-id="<?php echo $s->id_part_order; ?>"><i class="fa fa-print"></i> Print</button>
 			
     </td>
     </tr>

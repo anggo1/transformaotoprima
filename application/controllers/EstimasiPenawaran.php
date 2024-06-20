@@ -131,6 +131,7 @@ public function showPart()
 				'routing_no' => $data['routing_no'],
 				'last_km' => $data['last_km'],
 				'date_of_regis' => $data['date_of_regis'],
+				'ppn' => $data['ppn'],
 				'user'   	=> $data['user'],
 				'status_po'	=> 'N'
 			);
@@ -216,5 +217,13 @@ public function showPart()
 		$data['detailPo'] = $this->Mod_estimasi_penawaran->select_detail($id);
 
 		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran', 'cetak-po', $data, ' modal-xl');
+	}
+	public function cetak_int()
+	{
+		$id 				= $_POST['id'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran->select_by_id($id);
+		$data['detailPo'] = $this->Mod_estimasi_penawaran->select_detail($id);
+
+		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran_internal', 'cetak-po-int', $data, ' modal-xl');
 	}
 }

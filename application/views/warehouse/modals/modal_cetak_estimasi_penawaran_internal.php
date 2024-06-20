@@ -57,7 +57,11 @@ p, td, th {
 }
 .datatable2 th {
     border: 1px solid #000;
-    height: 10px;
+    font: bold;
+    font-weight: normal;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+    padding: 1px 1px 1px 1px;
 }
          
 .datatable3 {
@@ -98,6 +102,7 @@ p, td, th {
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-size:14px;
 }
+         
    .text1 {
     font: bold;
     font-weight: normal;
@@ -106,6 +111,7 @@ p, td, th {
        padding: 1px 1px 1px 1px;
        padding-bottom: 0px;
        width: auto;
+       position: top;
 }
     .text2 {
     font: bold;
@@ -117,6 +123,7 @@ p, td, th {
        padding: 1px 1px 1px 1px;
        width: auto;
 }
+  
          
 .under { text-decoration: underline; }
 #A4 {background-color:#FFFFFF;
@@ -159,58 +166,58 @@ font-family:Georgia, "Times New Roman", Times, serif;
       <tr>
         <th colspan="2"><div align="left"></div></th>
         <th>&nbsp;</th>
-        <th><div align="left"></div></th>
+        <th><div align="left">: <?php echo  $apl1->nama_owner; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th colspan="2"><div align="left">Estimasi Penawaran Sparepart</div></th>
         <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->nama_owner; ?></div></th>
+        <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Customer Name</div></th>
         <th><div align="left">: <?php echo $k->nama_cus; ?></div></th>
-        <th width="138">&nbsp;</th>
-        <th width="513"><div align="left"><?php echo  $apl1->status; ?></div></th>
-        <th width="71">&nbsp;</th>
+        <th width="255">&nbsp;</th>
+        <th width="319">&nbsp;</th>
+        <th width="148">&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Address</div></th>
         <th><div align="left">: <?php echo $k->alamat ?></div></th>
         <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->alamat; ?></div></th>
+        <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="20"><div align="left">City</div></th>
-        <th height="20"><div align="left">: <?php echo $k->kota ?></div></th>
-        <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->kota.' '.$apl1->kode_pos; ?> Indonesia</div></th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="20"><div align="left">Up</div></th>
-        <th height="20"><div align="left">: <?php echo $k->tlp_person ?></div></th>
-        <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->tlp; ?></div></th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="20"><div align="left">Telp or Mobile no</div></th>
-        <th height="20"><div align="left">: <?php echo $k->no_tlp ?></div></th>
+        <th height="32"><div align="left">City</div></th>
+        <th height="32"><div align="left">: <?php echo $k->kota ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="19" colspan="2">&nbsp;</th>
+        <th height="28"><div align="left">Up</div></th>
+        <th height="28"><div align="left">: <?php echo $k->tlp_person ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th width="185" height="19">&nbsp;</th>
+        <th height="27"><div align="left">Telp or Mobile no</div></th>
+        <th height="27"><div align="left">: <?php echo $k->no_tlp ?></div></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th height="27" colspan="2">&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th width="185" height="28">&nbsp;</th>
         <th width="489">&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -243,31 +250,21 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="1" cellpadding="1" cellspacing="0" class="datatable2">
         <tr>
             <th height="37"><div class="text1"><font size="-2">Registration No</font></div>
-          <div class="text2"><?php echo $k->tgl_estimasi_penawaran ?></div></th>
-          <th><div class="text1"><font size="-2">Vin No</font></div>
-            <span class="text2"><?php echo $k->no_vin ?></span></th>
-          <th><div class="text1"><font size="-2">Sales designation</font></div>
-            <span class="text2"><?php echo $k->sales_design ?></span></th>
-          <th><div class="text1"><font size="-2">Date / time received</font></div>
-            <span class="text2"><?php echo $k->date_received ?></span></th>
+          <div class="text2"><?php echo tglIndoSedang($k->tgl_estimasi_penawaran) ?></div></th>
+          <th><div class="text1"><font size="-2">Vin No</font></div></th>
+          <th><div class="text1"><font size="-2">Sales designation</font></div></th>
+          <th><div class="text1"><font size="-2">Date / time received</font></div></th>
         </tr>
         <tr>
-          <th><div class="text1"><font size="-2">Millage/Km</font></div>
-            <span class="text2"><?php echo $k->millage ?></span></th>
-          <th><div class="text1"><font size="-2">Engine No.</font></div>
-            <span class="text2"><?php echo $k->engine_no ?></span></th>
-          <th><div class="text1"><font size="-2">Account No.</font></div>
-            <span class="text2"><?php echo $k->acc_no?></span></th>
-          <th><div class="text1"><font size="-2">Received By</font></div>
-            <span class="text2"><?php echo $k->received_by ?></span></th>
+          <th><div class="text1"><font size="-2">Milage/Km</font></div></th>
+          <th><div class="text1"><font size="-2">Engine No.</font></div></th>
+          <th><div class="text1"><font size="-2">Account No.</font></div></th>
+          <th><div class="text1"><font size="-2">Received By</font></div></th>
         </tr>
         <tr>
-          <th><div class="text1"><font size="-2">Routing No.</font></div>
-            <span class="text2"><?php echo $k->routing_no ?></span></th>
-          <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
-            <span class="text2"><?php echo $k->last_km ?></span></th>
-          <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <span class="text2"><?php echo $k->date_of_regis ?></span></th>
+          <th><div class="text1"><font size="-2">Routing No.</font></div></th>
+          <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div></th>
+          <th><div class="text1"><font size="-2">Date of 1st registration</font></div></th>
           <th>&nbsp;</th>
         </tr>
           </table>
@@ -278,6 +275,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th width="3%" height="31"><div align="center">No</div></th>
           <th width="11%"><div align="center">Part Number</div></th>
           <th ><strong>Description</strong></th>
+          <th ><strong>Pricelist</strong></th>
+          <th ><strong>Discount</strong></th>
           <th width="8%">Price</th>
           <th width="4%"><div align="center">Pcs</div></th>
           <th width="7%"><div align="center">Amount</div></th>
@@ -294,7 +293,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>
             <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
-            <td width="53%"><div align="center"><?php echo $d->nama_part ?></div></td>
+            <td width="39%"><div align="center"><?php echo $d->nama_part ?></div></td>
+            <td width="8%" align="center"><?php echo number_format($d->harga) ?></td>
+            <td width="6%" align="center"><?php echo number_format($d->diskon) ?></td>
             <td width="8%"><div align="center">&nbsp;<?php echo number_format($d->harga_net) ?></div></td>
             <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
             <td><div align="center"><?php echo number_format($d->total_harga) ?></div></td>
@@ -311,13 +312,6 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
@@ -329,11 +323,46 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="3">&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -344,7 +373,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-              <td><font size="-2">** <?php echo $k->remark; ?></font></td>
+              <td colspan="3"><font size="-2">** <?php echo $k->remark; ?></font></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -354,14 +383,14 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td colspan="3">&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="3" rowspan="5">&nbsp;</td>
+            <td colspan="5" rowspan="5">&nbsp;</td>
             <td>Total</td>
             <td>&nbsp;</td>
             <td align="right"><?php echo number_format($grand_total); ?></td>

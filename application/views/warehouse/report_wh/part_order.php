@@ -14,7 +14,7 @@
                         <div class="card">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Riwayat Purchase Order</h3>
+                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Part Order</h3>
                                 </div>
                                 
                         
@@ -78,20 +78,12 @@
         "pageLength": 5
     });
 
-    function showPk() {
-        $.get('<?php echo base_url('PartPk/showPk'); ?>', function(data) {
-            MyTable.fnDestroy();
-            $('#data-pk').html(data);
-            refresh();
-        });
-    }
-
     $(document).on("click", ".cetak-po", function() {
 		var id = $(this).attr("data-id");
 		//var id = document.getElementById('next_proses').value=datakode;
 		$.ajax({
 				method: "POST",
-				url: "<?php echo base_url('ReportWhPenawaran/cetak'); ?>",
+				url: "<?php echo base_url('ReportWhPartorder/cetak'); ?>",
 				data: "id=" + id
 			})
 			.done(function(data) {
@@ -99,20 +91,6 @@
 				$('#cetak-po').modal('show');
 			})
 	})
-	
-$(document).on("click", ".cetak-po-int", function() {
-    var id = $(this).attr("data-id");
-    //var id = document.getElementById('next_proses').value=datakode;
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('ReportWhPenawaran/cetak_int'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#modal-po').html(data);
-            $('#cetak-po-int').modal('show');
-        })
-})
     //end setoran
     // Laporan Po
     function listPo() {
@@ -120,7 +98,7 @@ $(document).on("click", ".cetak-po-int", function() {
 		var date2 = document.getElementById("tgl_akhir").value;
 		$.ajax({
 		type: 'GET',
-		url: '<?php echo base_url('ReportWhPenawaran/listPo'); ?>?date1'+date1+'&date2=' +date2,
+		url: '<?php echo base_url('ReportWhPartorder/listPo'); ?>?date1'+date1+'&date2=' +date2,
 		data: 'date1=' +date1+'&date2=' +date2,
 			success:
             function(hasil) {
