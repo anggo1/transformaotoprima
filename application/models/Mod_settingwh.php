@@ -9,7 +9,94 @@ class Mod_settingwh extends CI_Model
 		parent::__construct();
 		$this->load->database();
 	}
+	public function select_voucher()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_wh_voucher');
+		$data = $this->db->get();
+		return $data->result();
+	}
+	public function select_id_voucher($id)
+	{
+		$sql = " SELECT * FROM tbl_wh_voucher WHERE id_voucher='{$id}'";
 
+		$data = $this->db->query($sql);
+
+		return $data->result();
+	}
+	public function insertVoucher($data,$date1,$date2)
+	{
+		$sql = "INSERT INTO tbl_wh_voucher VALUES
+		('','" . $data['kode_voucher'] . "','" . $date1. "','" . $date2. "','" . $data['keterangan'] . "','N')";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	public function updateVoucher($data)
+	{
+		$sql = "UPDATE tbl_wh_kategori SET tgl_awal='" . $date1 . "',tgl_akhir='" . $date2 . "',keterangan='" . $data['keterangan'] . "'
+        WHERE id_voucher='" . $data['id_voucher'] . "'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	function deleteVoucher($id)
+	{
+		$sql = "DELETE FROM tbl_wh_voucher WHERE id_voucher='{$id}'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	// End Voucher //
+
+	
+	public function select_kode_po()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_wh_kode_po');
+		$data = $this->db->get();
+		return $data->result();
+	}
+	public function select_id_kode_po($id)
+	{
+		$sql = " SELECT * FROM tbl_wh_kode_po WHERE id_kode_po='{$id}'";
+
+		$data = $this->db->query($sql);
+
+		return $data->result();
+	}
+	public function insertKode_po($data)
+	{
+		$sql = "INSERT INTO tbl_wh_kode_po VALUES
+		('','" . $data['kode_po'] . "','" . $data['keterangan'] . "')";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	public function updateKode_po($data)
+	{
+		$sql = "UPDATE tbl_wh_kode_po SET keterangan='" . $data['keterangan'] . "'
+        WHERE id_kode_po='" . $data['id_kode_po'] . "'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	function deleteKode_po($id)
+	{
+		$sql = "DELETE FROM tbl_wh_kode_po WHERE id_kode_po='{$id}'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	// End Kode Po //
 	public function select_satuan()
 	{
 		$this->db->select('*');

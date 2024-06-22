@@ -13,7 +13,39 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
+                        <div class="card ">
+                            <div class="modal-content">
+                                <div class="card-header card-blue card-outline">
+                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Voucher</h3>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-voucher" title="Add Data"><i class="fas fa-plus"></i>
+                                            Add</button>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover nowrap" id="list-voucher">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Kode</th>
+                                                    <th>Periode</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="data-voucher">
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="modal-voucher"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -44,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -75,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -107,7 +139,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
+                        <div class="card ">
+                            <div class="modal-content">
+                                <div class="card-header card-blue card-outline">
+                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Kode PO</h3>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kode-po" title="Add Data"><i class="fas fa-plus"></i>
+                                            Add</button>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover nowrap" id="list-po">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Kode</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="data-kode-po">
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="modal-kode-po"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -138,7 +201,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -170,7 +233,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="card ">
                             <div class="modal-content">
                                 <div class="card-header card-blue card-outline">
@@ -214,6 +277,8 @@ show_my_confirm('hapusType', 'hapus-type', 'Hapus Data Ini?', 'Ya, Hapus Data In
 show_my_confirm('hapusSupplier', 'hapus-supplier', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 show_my_confirm('hapusCustomer', 'hapus-customer', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusVoucher', 'hapus-voucher', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusKode_po', 'hapus-kode-po', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 <script type="text/javascript">
     window.onload = function() {
@@ -223,8 +288,12 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
         showSup();
         showCus();
         showKp();
+        showVoucher();
+        showPo();
     }
-
+    $('#tgl_awal,#tgl_akhir').datetimepicker({
+    format: 'DD-MM-YYYY'
+});
     function refresh() {
         MyTable = $('#list-satuan,#list-kategori,#list-mesin,#list-supplier,#list-customer').DataTable();
     }
@@ -251,6 +320,8 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
     var tableSupplier = $('#list-supplier').DataTable();
     var tableCustomer = $('#list-customer').DataTable();
     var tableKelompok = $('#list-kelompok').DataTable();
+    var tableVoucher = $('#list-voucher').DataTable();
+    var tablePo = $('#list-po').DataTable();
 
     //ajax Jabatan
     function showSat() {
@@ -299,6 +370,255 @@ show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus
             refresh();
         });
     }
+    
+    function showVoucher() {
+        $.get('<?php echo base_url('Settingwh/showVoucher'); ?>', function(data) {
+            tableVoucher.destroy();
+            $('#data-voucher').html(data);
+            refresh();
+        });
+    }
+    
+    function showPo() {
+        $.get('<?php echo base_url('Settingwh/showPo'); ?>', function(data) {
+            tablePo.destroy();
+            $('#data-kode-po').html(data);
+            refresh();
+        });
+    }
+
+    $('#form-tambah-voucher').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesTvoucher'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showVoucher();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-tambah-voucher").reset();
+                    $('#tambah-voucher').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $(document).on("click", ".update-dataVoucher", function() {
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/updateVoucher'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-voucher').html(data);
+                $('#update-voucher').modal('show');
+            })
+    })
+    $(document).on('submit', '#form-update-voucher', function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesUvoucher'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showVoucher();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-voucher").reset();
+                    $('#update-voucher').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $('#tambah-voucher').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+
+    $('#update-voucher').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+    $(document).on("click", ".delete-voucher", function() {
+        id_sat = $(this).attr("data-id");
+    })
+    $(document).on("click", ".hapus-voucher", function() {
+        var id = id_sat;
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/deleteVoucher'); ?>",
+                data: "id=" + id
+            })
+
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                showVoucher();
+                $('.msg').html(out.msg);
+                $('#hapusVoucher').modal('hide');
+                if (out.status != 'form') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    })
+
+
+    //*** end Voucher **//
+
+    $('#form-tambah-kode-po').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesTkode_po'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showPo();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-tambah-kode-po").reset();
+                    $('#tambah-kode-po').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $(document).on("click", ".update-dataKode-po", function() {
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/updateKode_po'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-kode-po').html(data);
+                $('#update-kode-po').modal('show');
+            })
+    })
+    $(document).on('submit', '#form-update-kode-po', function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesUkode_po'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showPo();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-kode-po").reset();
+                    $('#update-kode-po').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $('#tambah-kode-po').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+
+    $('#update-kode-po').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+    $(document).on("click", ".delete-kode-po", function() {
+        id_sat = $(this).attr("data-id");
+    })
+    $(document).on("click", ".hapus-kode-po", function() {
+        var id = id_sat;
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/deleteKode_po'); ?>",
+                data: "id=" + id
+            })
+
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                showPo();
+                $('.msg').html(out.msg);
+                $('#hapusKode_po').modal('hide');
+                if (out.status != 'form') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    })
+
+
+    //*** end KOde_po **//
+
 
     $('#form-tambah-satuan').submit(function(e) {
         var data = $(this).serialize();

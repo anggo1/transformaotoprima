@@ -294,11 +294,11 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><div align="center"><?php echo $no ?></div></td>
             <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
             <td width="39%"><div align="center"><?php echo $d->nama_part ?></div></td>
-            <td width="8%" align="center"><?php echo number_format($d->harga) ?></td>
+            <td width="8%" align="right"><?php echo "Rp. " .number_format($d->harga,0,",",".") ?></td>
             <td width="6%" align="center"><?php echo number_format($d->diskon) ?></td>
-            <td width="8%"><div align="center">&nbsp;<?php echo number_format($d->harga_net) ?></div></td>
-            <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
-            <td><div align="center"><?php echo number_format($d->total_harga) ?></div></td>
+            <td width="8%"><div align="right">&nbsp;<?php echo "Rp. " . number_format($d->harga_net,0,",",".") ?></div></td>
+            <td width="4%"><div align="center">&nbsp;<?php echo "Rp. " .number_format($d->jumlah) ?></div></td>
+            <td><div align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>
           
@@ -393,13 +393,13 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td colspan="5" rowspan="5">&nbsp;</td>
             <td>Total</td>
             <td>&nbsp;</td>
-            <td align="right"><?php echo number_format($grand_total); ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($grand_total,0,",","."); ?></td>
             <td rowspan="5">&nbsp;</td>
           </tr>
           <tr>
             <td>PPN <?php echo $ppnnya; ?> %</td>
             <td>&nbsp;</td>
-            <td align="right"><?php echo number_format($ppn); ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($ppn,0,",","."); ?></td>
           </tr>
           <tr>
             <td>Voucher Sparepart</td>
@@ -414,7 +414,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td>Grand Total</td>
             <td align="right">&nbsp;</td>
-            <td align="right"><?php echo number_format($grand_total + $ppn); ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($grand_total + $ppn,0,",","."); ?></td>
           </tr>
       </thead>
 

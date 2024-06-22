@@ -1,15 +1,15 @@
 <?php
 $no = 1;
-foreach ($dataSat as $s) {
+foreach ($dataPo as $s) {
 ?> <tr>
 
         <td><?php echo $no; ?></td>
-        <td><?php echo $s->kode_satuan; ?></td>
-        <td><?php echo $s->satuan; ?></td>
+        <td><?php echo $s->kode_po; ?></td>
+        <td><?php echo $s->keterangan; ?></td>
 
         <td class="text-center">
-            <button class="btn btn-sm btn-outline-success update-dataSatuan ion-edit" data-id="<?php echo $s->id_satuan; ?>"></button>
-            <button class="btn btn-sm btn-outline-danger delete-satuan ion-android-delete" data-toggle="modal" data-target="#hapusSatuan" data-id="<?php echo $s->id_satuan; ?>"></button>
+            <button class="btn btn-sm btn-outline-success update-dataKode-po ion-edit" data-id="<?php echo $s->id_kode_po; ?>"></button>
+            <button class="btn btn-sm btn-outline-danger delete-kode-po ion-android-delete" data-toggle="modal" data-target="#hapusKode_po" data-id="<?php echo $s->id_kode_po; ?>"></button>
         </td>
     </tr>
 <?php
@@ -17,7 +17,7 @@ foreach ($dataSat as $s) {
 }
 ?>
 <script type="text/javascript">
-    var tableSatuan = $('#list-satuan').DataTable({
+    var tablePo = $('#list-po').DataTable({
         "responsive": false,
         "paging": true,
         "lengthChange": false,

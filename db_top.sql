@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2024 at 10:39 AM
+-- Generation Time: Jun 22, 2024 at 10:49 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -51,7 +51,8 @@ CREATE TABLE `aplikasi` (
 --
 
 INSERT INTO `aplikasi` (`id`, `nama_owner`, `alamat`, `kota`, `kode_pos`, `tlp`, `title`, `nama_aplikasi`, `logo`, `copy_right`, `versi`, `tahun`, `npwp`, `status`, `id_lokasi`, `lokasi`) VALUES
-(1, 'PT.Transforma Oto Prima', 'Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 Jatinegara', 'Jakarta Timur', '13410', '021 - 8591337', 'TOP', 'Transforma Oto Prima', 'Background.png', 'Copy Right &copy;', '1.0.0.0', '2024', '-', 'Head Office', '1', 'Cibitung');
+(1, 'PT.Transforma Oto Prima', 'Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 Jatinegara', 'Jakarta Timur', '13410', '021 - 8591337', 'TOP', 'Transforma Oto Prima', 'Background.png', 'Copy Right &copy;', '1.0.0.0', '2024', '-', 'Head Office', '1', 'Cibitung'),
+(3, 'PT.Transforma Oto Prima', 'Jl.Tambak Osowilangon 23', 'Surabaya', '60191', '021 - 9934 0505 / 0811 1560 073', 'TOP', 'Transforma Oto Prima', 'Background.png', 'Copy Right &copy;', '1.0.0.0', '2024', '-', 'Branch office', '1', 'Surabaya');
 
 -- --------------------------------------------------------
 
@@ -3848,7 +3849,9 @@ INSERT INTO `tbl_wh_detail_part_order` (`id_detail`, `id_part_order`, `kode_po`,
 (137, '', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
 (138, '', '', 'BA967 981 00 12/01       ', 'ROLLER BEARING                     ', 'PCS                      ', 0, 0, '', 0, 0, '0', 'N', 0, 0, 'Y', ''),
 (140, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(141, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', '');
+(141, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
+(142, '24-060006', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 5, '', 0, 389500, '10', 'N', 5, 0, 'Y', 'test'),
+(143, '24-060006', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', 'test');
 
 -- --------------------------------------------------------
 
@@ -4028,6 +4031,27 @@ INSERT INTO `tbl_wh_kelompok` (`id_kelompok`, `kode_kelompok`, `kelompok`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_wh_kode_po`
+--
+
+CREATE TABLE `tbl_wh_kode_po` (
+  `id_kode_po` int(11) NOT NULL,
+  `kode_po` varchar(35) NOT NULL,
+  `keterangan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_kode_po`
+--
+
+INSERT INTO `tbl_wh_kode_po` (`id_kode_po`, `kode_po`, `keterangan`) VALUES
+(1, '7', 'test'),
+(2, '4', 'test'),
+(3, '5', 'testtestset');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_wh_log_harga`
 --
 
@@ -4176,7 +4200,8 @@ CREATE TABLE `tbl_wh_part_order` (
 
 INSERT INTO `tbl_wh_part_order` (`id_part_order`, `kode_part_order`, `tgl_part_order`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
 ('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', 0, 15282500, 15282500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
+('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
+('24-060006', '24-060006/PO/06/2024', '2024-06-21', '1231232', '', '', 0, 484000, 484000, 'SP-0002', '', 'test', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -4241,7 +4266,7 @@ CREATE TABLE `tbl_wh_po_masuk` (
 --
 
 INSERT INTO `tbl_wh_po_masuk` (`id_po_masuk`, `kode_po`, `tgl_po`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `customer`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-060001', '24-060001/PO/06/2024', '2024-06-20', '23432test', '', '', 0, 0, 0, 'CS-0002', '', 'test', '', 'Administrator', '', 'N'),
+('24-060001', '24-060001/PO/06/2024', '2024-06-20', '23432test', '', '', 0, 98000, 98000, 'CS-0002', '', 'test', '', 'Administrator', '', 'N'),
 ('24-060002', '24-060002/PO/06/2024', '2024-06-20', 'test', '', '', 0, 10049600, 10049600, 'CS-0002', '', 'test', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
@@ -4372,6 +4397,28 @@ INSERT INTO `tbl_wh_type_mesin` (`id_type`, `kode_type`, `type`) VALUES
 (46, 'TO', 'Toilet'),
 (47, 'TR', 'Triplek'),
 (48, 'WI', 'Wiper');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_wh_voucher`
+--
+
+CREATE TABLE `tbl_wh_voucher` (
+  `id_voucher` int(11) NOT NULL,
+  `kode_voucher` varchar(35) NOT NULL,
+  `tgl_awal` date NOT NULL,
+  `tgl_akhir` date NOT NULL,
+  `keterangan` varchar(150) NOT NULL,
+  `status_voucher` enum('Y','N') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_voucher`
+--
+
+INSERT INTO `tbl_wh_voucher` (`id_voucher`, `kode_voucher`, `tgl_awal`, `tgl_akhir`, `keterangan`, `status_voucher`) VALUES
+(2, 'VR-0001', '2024-06-22', '2024-06-23', 'test', 'N');
 
 --
 -- Indexes for dumped tables
@@ -4606,6 +4653,12 @@ ALTER TABLE `tbl_wh_kelompok`
   ADD PRIMARY KEY (`id_kelompok`);
 
 --
+-- Indexes for table `tbl_wh_kode_po`
+--
+ALTER TABLE `tbl_wh_kode_po`
+  ADD PRIMARY KEY (`id_kode_po`);
+
+--
 -- Indexes for table `tbl_wh_log_harga`
 --
 ALTER TABLE `tbl_wh_log_harga`
@@ -4666,6 +4719,12 @@ ALTER TABLE `tbl_wh_type_mesin`
   ADD PRIMARY KEY (`id_type`);
 
 --
+-- Indexes for table `tbl_wh_voucher`
+--
+ALTER TABLE `tbl_wh_voucher`
+  ADD PRIMARY KEY (`id_voucher`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -4673,7 +4732,7 @@ ALTER TABLE `tbl_wh_type_mesin`
 -- AUTO_INCREMENT for table `aplikasi`
 --
 ALTER TABLE `aplikasi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_acc_akun`
@@ -4811,7 +4870,7 @@ ALTER TABLE `tbl_wh_detail_part_masuk`
 -- AUTO_INCREMENT for table `tbl_wh_detail_part_order`
 --
 ALTER TABLE `tbl_wh_detail_part_order`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_po`
@@ -4836,6 +4895,12 @@ ALTER TABLE `tbl_wh_kategori`
 --
 ALTER TABLE `tbl_wh_kelompok`
   MODIFY `id_kelompok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tbl_wh_kode_po`
+--
+ALTER TABLE `tbl_wh_kode_po`
+  MODIFY `id_kode_po` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_log_harga`
@@ -4866,6 +4931,12 @@ ALTER TABLE `tbl_wh_supplier`
 --
 ALTER TABLE `tbl_wh_type_mesin`
   MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `tbl_wh_voucher`
+--
+ALTER TABLE `tbl_wh_voucher`
+  MODIFY `id_voucher` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

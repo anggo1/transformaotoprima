@@ -26,6 +26,11 @@
            "ordering": true,
            "info": false,
            "autoWidth": true,
-           "pageLength": 5
+           "pageLength": 5,
+        "order": [],
+        "columnDefs": [{
+            "targets": [0,3],
+            "orderable": false,
+        }, ]
          });
        </script>

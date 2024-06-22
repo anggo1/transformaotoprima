@@ -93,7 +93,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th width="99%" align="left"><h4><img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%"></h5></th>
       </tr>
       <tr align="center" >
-        <th colspan="2"><h4>PURCHASE ORDER</h4></th>
+        <th colspan="2"><h4>PURCHASE ORDER MASUK</h4></th>
       </tr>
     </thead>
 
@@ -139,13 +139,13 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="1" cellpadding="5" cellspacing="0" class="datatable2">
       <thead>
         <tr>
-          <th width="6%">No</th>
-          <th width="16%">No Barang</th>
-          <th width="20%">Nama Barang</th>
-          <th width="10%">Satuan</th>
-          <th width="10%">JML</th>
-          <th width="12%">Harga</th>
-          <th width="9%">Total</th>
+          <th width="8%">No</th>
+          <th width="10%">No Barang</th>
+          <th width="25%">Nama Barang</th>
+          <th width="5%">Satuan</th>
+          <th width="5%">JML</th>
+          <th width="15%">Harga</th>
+          <th width="15%">Total</th>
         </tr>
         <?php
         $no = 0;
@@ -155,27 +155,27 @@ font-family:Georgia, "Times New Roman", Times, serif;
           //$ppn = $grand_total * $k->ppn / 100;
         ?>
           <tr>
-            <th><?php echo $no ?></th>
-            <th><?php echo $d->no_part ?></th>
-            <th><?php echo $d->nama_part ?></th>
-            <th><?php echo $d->satuan?></th>
-            <th><?php echo number_format($d->jumlah) ?></th>
-            <th><?php echo number_format($d->harga) ?></th>
-            <th><?php echo number_format($d->total_harga) ?></th>
+            <td><?php echo $no ?></td>
+            <td><?php echo $d->no_part ?></td>
+            <td><?php echo $d->nama_part ?></td>
+            <td><?php echo $d->satuan?></td>
+            <td align="center"><?php echo number_format($d->jumlah) ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($d->harga,0,",",".") ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></td>
           </tr>
         <?php $no + 1;
         endforeach ?>
         <tr>
-          <th colspan="5" rowspan="3">&nbsp;</th>
-          <th  align="right">Sub Total</th>
-          <th id="sub_total"><?php echo number_format($grand_total) ?></th>
+          <td colspan="5" rowspan="3">&nbsp;</td>
+          <td  align="right">Sub Total</td>
+          <td id="sub_total" align="right"><?php echo "Rp. " .number_format($grand_total,0,",",".") ?></td>
         </tr>
         <tr>
 
-          <th align="right">Grand Total</th>
-          <th id="grand_total">
-            <font size="+1"><?php echo number_format($grand_total) ?></font>
-          </th>
+          <td align="right">Grand Total</td>
+          <td id="grand_total" align="right">
+            <font size="+1"><?php echo "Rp. " .number_format($grand_total,0,",",".") ?></font>
+          </td>
         </tr>
       </thead>
 

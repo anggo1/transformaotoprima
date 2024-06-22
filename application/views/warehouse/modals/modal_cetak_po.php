@@ -45,15 +45,16 @@ p, td, th {
     font:2 Verdana, Arial, Helvetica, sans-serif;
 	
 }
-.datatable {
+.datatable2 {
     border-collapse: collapse;
     font: bold;
 }
 .datatable td {
-    padding: 0px;
+    padding: 2px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:14px;
+	font-size:12px;
     font: bold;
+    text-align: right;
 }
 .datatable th {
     border: 2px solid #000;
@@ -87,18 +88,14 @@ font-family:Georgia, "Times New Roman", Times, serif;
 <table width="100%" border="0" cellpadding="5" cellspacing="0" class="datatable2">
     <thead>
       <tr align="center">
-        <!--<th width="10%" align="right"><img src="<?php echo base_url(); ?>assets/foto/logo/<?php echo  $apl1->logo; ?>" width="100%" height="100">
-          
-        </th> -->
-        <th width="99%" align="left"><h4><?php echo  $apl1->nama_owner; ?></h4>
-          <h5><?php echo  $apl1->alamat; ?></h5></th>
+        <th align="center"><img src="<?php echo base_url(); ?>assets/foto/logo/<?php echo  $apl1->logo; ?>" width="8%" height="8%">
+        <h4 style="text-transform: capitalize;"><?php echo  $apl1->nama_owner; ?></h4>
       </tr>
       <tr align="center">
-        <th colspan="2">NPWP :
-        <?php  echo $apl1->npwp; ?></th>
+        <th><h6><?php echo  $apl1->alamat.' '.$apl1->kota.' Telp: '.$apl1->tlp; ?></h5></th>
       </tr>
       <tr align="center" >
-        <th colspan="2"><h4>PURCHASE ORDER</h4></th>
+        <th><h4>PURCHASE ORDER</h4></th>
       </tr>
     </thead>
 
@@ -137,20 +134,20 @@ font-family:Georgia, "Times New Roman", Times, serif;
       </tr>
     </thead>
 
-  </table>
+</table>
 <br>
   <table>
 
     <table width="100%" border="1" cellpadding="5" cellspacing="0" class="datatable2">
       <thead>
-        <tr>
-          <th width="6%">No</th>
-          <th width="16%">No Barang</th>
-          <th width="20%">Nama Barang</th>
+        <tr align="center">
+          <th width="5%">No</th>
+          <th width="10%">No Barang</th>
+          <th width="30%">Nama Barang</th>
           <th width="10%">Satuan</th>
-          <th width="10%">JML</th>
-          <th width="12%">Harga</th>
-          <th width="9%">Total</th>
+          <th width="5%">JML</th>
+          <th width="10%">Harga</th>
+          <th width="10%">Total</th>
         </tr>
         <?php
         $no = 0;
@@ -160,31 +157,30 @@ font-family:Georgia, "Times New Roman", Times, serif;
           $ppn = $grand_total * $k->ppn / 100;
         ?>
           <tr>
-            <th><?php echo $no ?></th>
-            <th><?php echo $d->no_part ?></th>
-            <th><?php echo $d->nama_part ?></th>
-            <th><?php echo $d->satuan?></th>
-            <th><?php echo number_format($d->jumlah) ?></th>
-            <th><?php echo number_format($d->harga) ?></th>
-            <th><?php echo number_format($d->total_harga) ?></th>
+            <td><?php echo $no ?></td>
+            <td><?php echo $d->no_part ?></td>
+            <td><?php echo $d->nama_part ?></td>
+            <td align="center"><?php echo $d->satuan?></td>
+            <td align="center"><?php echo number_format($d->jumlah) ?></td>
+            <td align="right"><?php echo number_format($d->harga) ?></td>
+            <td align="right"><?php echo number_format($d->total_harga,2,",",".") ?></td>
           </tr>
         <?php $no + 1;
         endforeach ?>
         <tr>
-          <th colspan="5" rowspan="3">&nbsp;</th>
-          <th  align="right">Sub Total</th>
-          <th id="sub_total"><?php echo number_format($grand_total) ?></th>
+          <td colspan="5" rowspan="3">&nbsp;</td>
+          <td  align="right">Sub Total</td>
+          <td id="sub_total" align="right"><?php echo number_format($grand_total,2,",",".") ?></td>
         </tr>
         <tr>
-          <th align="right">PPN <?php echo $k->ppn ?> %</th>
-          <th id="t_ppn"><?php echo number_format($ppn) ?></th>
+          <td align="right">PPN <?php echo $k->ppn ?> %</td>
+          <td id="t_ppn" align="right"><?php echo number_format($ppn) ?></td>
         </tr>
         <tr>
-
-          <th align="right">Grand Total</th>
-          <th id="grand_total">
-            <font size="+1"><?php echo number_format($grand_total + $ppn) ?></font>
-          </th>
+          <td align="right">Grand Total</td>
+          <td id="grand_total" align="right">
+            <font size="+1"><?php echo number_format($grand_total + $ppn,2,",",".") ?></font>
+          </td>
         </tr>
       </thead>
 
