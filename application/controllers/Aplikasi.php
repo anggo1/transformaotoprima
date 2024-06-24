@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;    
+
 
 class Aplikasi extends MY_Controller
 {
@@ -17,6 +18,7 @@ class Aplikasi extends MY_Controller
 	{
 		$data['page'] 		= "Setting Nama Perusahan";
 		$data['judul'] 		= "Perusahaan";
+        echo show_my_modal('admin/modals/modal_tambah_pool', 'tambah-pool', $data);
 		$this->template->load('layoutbackend', 'admin/aplikasi',$data);
 	}
 
@@ -281,15 +283,15 @@ class Aplikasi extends MY_Controller
             $sheet->getStyle('D3')->applyFromArray($style_col);
             $sheet->getStyle('E3')->applyFromArray($style_col);
             // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-            $siswa = $this->SiswaModel->view();
+            $siswa = $this->Mod_aplikasi->select_aplikasi();
             $no = 1; // Untuk penomoran tabel, di awal set dengan 1
             $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
             foreach($siswa as $data){ // Lakukan looping pada variabel siswa
               $sheet->setCellValue('A'.$numrow, $no);
-              $sheet->setCellValue('B'.$numrow, $data->test);
-              $sheet->setCellValue('C'.$numrow, $data->test);
-              $sheet->setCellValue('D'.$numrow, $data->test);
-              $sheet->setCellValue('E'.$numrow, $data->test);
+              $sheet->setCellValue('B'.$numrow, $data->nama_aplikasi);
+              $sheet->setCellValue('C'.$numrow, $data->alamat);
+              $sheet->setCellValue('D'.$numrow, $data->status);
+              $sheet->setCellValue('E'.$numrow, $data->lokasi);
               
               // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
               $sheet->getStyle('A'.$numrow)->applyFromArray($style_row);

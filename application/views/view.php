@@ -36,10 +36,10 @@
 				if (!empty($siswa)) { // Jika data pada database tidak sama dengan empty (alias ada datanya)
 					foreach ($siswa as $data) { // Lakukan looping pada variabel siswa dari controller
 						echo "<tr>";
-						echo "<td>" . $data->nis . "</td>";
-						echo "<td>" . $data->nama . "</td>";
-						echo "<td>" . $data->jenis_kelamin . "</td>";
+						echo "<td>" . $data->nama_owner . "</td>";
 						echo "<td>" . $data->alamat . "</td>";
+						echo "<td>" . $data->nama_aplikasi . "</td>";
+						echo "<td>" . $data->status . "</td>";
 						echo "</tr>";
 					}
 				} else { // Jika data tidak ada

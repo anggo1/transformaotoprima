@@ -78,6 +78,13 @@ class Mod_aplikasi extends CI_Model
     {
         return $this->db->get("aplikasi");
     }
+    public function select_aplikasi()
+    {
+		$this->db->select('*');
+		$this->db->from('aplikasi');
+		$data = $this->db->get();
+		return $data->result();
+    }
     function getAplikasi($id)
     {   
         $this->db->where("id", $id);
