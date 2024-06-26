@@ -8,21 +8,38 @@ if (!empty($dataPool)){
 			}}
       
 ?>
-  <p></span><h4 style="display:block; text-align:center;"><?php if (!empty($dataPool->kode_pool)) {
+  <p></span><h4 style="display:block; text-align:center;"><?php if (!empty($dataPool->kode_kota)) {
                             echo 'Edit Data Pool';
                         } else { echo 'Penambahan Data Pool';}
                         ?></h4>
 					</p></div><div class="modal-body">
-  <form <?php if (empty($dataPool->kode_pool)) {echo 'id="form-tambah-pool"';} else { echo 'id="form-update-pool"';}?> method="POST">
+  <form <?php if (empty($dataPool->kode_kota)) {echo 'id="form-tambah-pool"';} else { echo 'id="form-update-pool"';}?> method="POST">
     <div class="form-group">
           </div>
 	  <div class="input-group form-group">
-      <input type="hidden" name="kode_pool" value="<?php if (!empty($dataPool->kode_pool)) { echo $dataPool->kode_pool; } ?>">
-      <input type="text" class="form-control" placeholder="Pool" value="<?php
-                        if (!empty($dataPool->nama_pool)) {
-                            echo $dataPool->nama_pool;
+      <input type="text" class="form-control" placeholder="Kode Kota" value="<?php
+                        if (!empty($dataPool->kode_kota)) {
+                            echo $dataPool->kode_kota;
                         }
-                        ?>" name="nama_pool" aria-describedby="sizing-addon2" onkeyup="this.value = this.value.toUpperCase();">	
+                        ?>" name="kode_kota" aria-describedby="sizing-addon2" onkeyup="this.value = this.value.toUpperCase();">	
+
+    </div>
+    
+	  <div class="input-group form-group">
+      <input type="text" class="form-control" placeholder="Nama Kota" value="<?php
+                        if (!empty($dataPool->nama_kota)) {
+                            echo $dataPool->nama_kota;
+                        }
+                        ?>" name="nama_kota" aria-describedby="sizing-addon2">	
+
+    </div>
+    
+	  <div class="input-group form-group">
+      <input type="text" class="form-control" placeholder="Wilayah" value="<?php
+                        if (!empty($dataPool->nama_kota)) {
+                            echo $dataPool->nama_kota;
+                        }
+                        ?>" name="wilayah" aria-describedby="sizing-addon2">	
 
     </div>
 

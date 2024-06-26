@@ -5,12 +5,13 @@
          <tr>
 
            <td><?php echo $no; ?></td>
-           <td><?php echo $s->kode_pool; ?></td>
-           <td><?php echo $s->nama_pool; ?></td>
+           <td><?php echo $s->kode_kota; ?></td>
+           <td><?php echo $s->nama_kota; ?></td>
+           <td><?php echo $s->wilayah; ?></td>
 
            <td class="text-center">
-             <button class="btn btn-sm btn-outline-success update-dataPool ion-edit" data-id="<?php echo $s->kode_pool; ?>"></button>
-             <button class="btn btn-sm btn-outline-danger delete-pool ion-android-delete" data-toggle="modal" data-target="#hapusPool" data-id="<?php echo $s->kode_pool; ?>"></button>
+             <button class="btn btn-sm btn-outline-success update-dataPool ion-edit" data-id="<?php echo $s->id_kota; ?>"></button>
+             <button class="btn btn-sm btn-outline-danger delete-pool ion-android-delete" data-toggle="modal" data-target="#hapusPool" data-id="<?php echo $s->id_kota; ?>"></button>
            </td>
          </tr>
        <?php

@@ -31,7 +31,7 @@
                                     <th>Copy Right</th>
                                     <th>Versi</th>
                                     <th>Tahun</th>
-                                    <th>NPWP</th>
+                                    <th>Status</th>
                                     <th>Logo</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -65,6 +65,7 @@
                                             <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama</th>
+                                            <th>Wilayah</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -98,9 +99,11 @@ show_my_confirm('hapusPool', 'hapus-pool', 'Hapus Data Ini?', 'Ya, Hapus Data In
     window.onload = function() {
         showPl();
     }
-  
+    function refresh() {
+        MyTable = $('#list-laporan,#list-kategori,#list-pk,#list-kelas').DataTable();
+    }
   function showPl() {
-        $.get('<?php echo base_url('Settingbr/showPl'); ?>', function(data) {
+        $.get('<?php echo base_url('Aplikasi/showPl'); ?>', function(data) {
             tablePool.destroy();
             $('#data-pool').html(data);
             refresh();
@@ -111,7 +114,7 @@ show_my_confirm('hapusPool', 'hapus-pool', 'Hapus Data Ini?', 'Ya, Hapus Data In
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Settingbr/prosesTpool'); ?>',
+                url: '<?php echo base_url('Aplikasi/prosesTpool'); ?>',
                 data: data
             })
             .done(function(data) {
@@ -143,7 +146,7 @@ show_my_confirm('hapusPool', 'hapus-pool', 'Hapus Data Ini?', 'Ya, Hapus Data In
 
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Settingbr/updatePool'); ?>",
+                url: "<?php echo base_url('Aplikasi/updatePool'); ?>",
                 data: "id=" + id
             })
             .done(function(data) {
@@ -156,7 +159,7 @@ show_my_confirm('hapusPool', 'hapus-pool', 'Hapus Data Ini?', 'Ya, Hapus Data In
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Settingbr/prosesUpool'); ?>',
+                url: '<?php echo base_url('Aplikasi/prosesUpool'); ?>',
                 data: data
             })
             .done(function(data) {
@@ -198,7 +201,7 @@ show_my_confirm('hapusPool', 'hapus-pool', 'Hapus Data Ini?', 'Ya, Hapus Data In
 
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Settingbr/deletePool'); ?>",
+                url: "<?php echo base_url('Aplikasi/deletePool'); ?>",
                 data: "id=" + id
             })
 
@@ -315,6 +318,8 @@ function edit_aplikasi(id) {
             $('[name="id"]').val(data.id);
             $('[name="nama_owner"]').val(data.nama_owner);
             $('[name="alamat"]').val(data.alamat);
+            $('[name="kota"]').val(data.kota);
+            $('[name="kode_pos"]').val(data.kode_pos);
             $('[name="tlp"]').val(data.tlp);
             $('[name="title"]').val(data.title);
             $('[name="nama_aplikasi"]').val(data.nama_aplikasi);
@@ -388,6 +393,125 @@ var loadFile = function(event) {
     var image = document.getElementById('v_image');
     image.src = URL.createObjectURL(event.target.files[0]);
 };
+
+/** Start Pool */
+
+var tablePool = $('#list-pool').DataTable();
+
+$('#form-tambah-pool').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Aplikasi/prosesTpool'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showPl();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-tambah-pool").reset();
+                    $('#tambah-pool').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $(document).on("click", ".update-dataPool", function() {
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Aplikasi/updatePool'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-pool').html(data);
+                $('#update-pool').modal('show');
+            })
+    })
+    $(document).on('submit', '#form-update-pool', function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Aplikasi/prosesUpool'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                showPl();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-pool").reset();
+                    $('#update-pool').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    $('#tambah-pool').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+
+    $('#update-pool').on('hidden.bs.modal', function() {
+        $('.form-msg').html('');
+    })
+    $(document).on("click", ".delete-pool", function() {
+        id_pool = $(this).attr("data-id");
+    })
+    $(document).on("click", ".hapus-pool", function() {
+        var id = id_pool;
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Aplikasi/deletePool'); ?>",
+                data: "id=" + id
+            })
+
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                showPl();
+                $('.msg').html(out.msg);
+                $('#hapusPool').modal('hide');
+                if (out.status != 'form') {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+    })
+//** end pool */
+
 </script>
 
 
@@ -428,6 +552,20 @@ var loadFile = function(event) {
                             <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
                             <div class="col-sm-9 kosong">
                                 <input type="text" class="form-control" name="alamat" id="alamat" placeholder="Alamat">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="alamat" class="col-sm-3 col-form-label">Kota</label>
+                            <div class="col-sm-9 kosong">
+                                <input type="text" class="form-control" name="kota" id="kota" placeholder="Kota">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="alamat" class="col-sm-3 col-form-label">Kode Pos</label>
+                            <div class="col-sm-9 kosong">
+                                <input type="text" class="form-control" name="kode_pos" id="kode_pos" placeholder="Kode Pos">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -477,14 +615,12 @@ var loadFile = function(event) {
                                 <span class="help-block"></span>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Status</label>
-                            <div class="col-sm-9">
-                                <select name="status" id="status" class="form-control" required>
-                                    <option value="">Pilih Status ...</option>
-                                    <option value="PPU">PPU</option>
-                                    <option value="MPU">MPU</option>
-                                </select>
+                        
+                        <div class="form-group row ">
+                            <label for="tahun" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9 kosong">
+                                <input type="text" class="form-control" name="status" id="status" placeholder="Status Office">
+                                <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group row ">

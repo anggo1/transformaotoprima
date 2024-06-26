@@ -40,7 +40,7 @@ class Aplikasi extends MY_Controller
             $row[] = $apl->copy_right;
             $row[] = $apl->versi;
             $row[] = $apl->tahun;
-            $row[] = $apl->npwp;
+            $row[] = $apl->status;
             $row[] = $apl->logo;  
             $row[] = $apl->id;
             $data[] = $row;
@@ -55,7 +55,82 @@ class Aplikasi extends MY_Controller
         //output to json format
         echo json_encode($output);
     }
+    
+    public function showPl()
+    {
+        $data['dataPl'] = $this->Mod_aplikasi->select_pool();
+        $this->load->view('admin/pool_data', $data);
+    }
+ /*Pool*/
+ public function prosesTpool()
+ {
+     $this->form_validation->set_rules('nama_kota', 'Nama Pool', 'trim|required');
 
+     $data     = $this->input->post();
+     if ($this->form_validation->run() == TRUE) {
+         $result = $this->Mod_aplikasi->insertPool($data);
+
+         if ($result > 0) {
+             $out['status'] = '';
+             $out['msg'] = show_ok_msg('Success', '20px');
+         } else {
+             $out['status'] = '';
+             $out['msg'] = show_err_msg('Filed !', '20px');
+         }
+     } else {
+         $out['status'] = 'form';
+         $out['msg'] = show_err_msg(validation_errors());
+     }
+
+     echo json_encode($out);
+ }
+ public function updatePool()
+ {
+     $id                 = trim($_POST['id']);
+     $data['dataPool'] = $this->Mod_aplikasi->select_id_pool($id);
+
+     echo show_my_modal('admin/modals/modal_tambah_pool', 'update-pool', $data);
+ }
+
+ public function prosesUPool()
+ {
+
+     $this->form_validation->set_rules('nama_kota', 'Nama Pool', 'trim|required');
+
+     $data     = $this->input->post();
+     if ($this->form_validation->run() == TRUE) {
+         $result = $this->Mod_aplikasi->updatePool($data);
+
+         if ($result > 0) {
+             $out['status'] = '';
+             $out['msg'] = show_ok_msg('Success', '20px');
+         } else {
+             $out['status'] = '';
+             $out['msg'] = show_succ_msg('Filed!', '20px');
+         }
+     } else {
+         $out['status'] = 'form';
+         $out['msg'] = show_err_msg(validation_errors());
+     }
+
+     echo json_encode($out);
+ }
+ public function deletePool()
+ {
+     $id = $_POST['id'];
+     $result = $this->Mod_aplikasi->deletePool($id);
+
+     if ($result > 0) {
+         $out['status'] = '';
+         $out['msg'] = show_del_msg('Deleted', '20px');
+     } else {
+         $out['status'] = '';
+         $out['msg'] = show_err_msg('Filed !', '20px');
+     }
+     echo json_encode($out);
+ }
+
+ /*endPool*/
     public function edit_aplikasi($id)
     {
             
@@ -123,6 +198,8 @@ class Aplikasi extends MY_Controller
             $save  = array(
                 'nama_owner' => $this->input->post('nama_owner'),
                 'alamat'    => $this->input->post('alamat'),
+                'kota'    => $this->input->post('kota'),
+                'kode_pos'    => $this->input->post('kode_pos'),
                 'tlp'       => $this->input->post('tlp'),
                 'title' => $this->input->post('title'),
                 'nama_aplikasi'  => $this->input->post('nama_aplikasi'),
@@ -204,38 +281,88 @@ class Aplikasi extends MY_Controller
 
      public function download()
         {
-            //$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-            $sheet->setCellValue('A1', 'No');
-            $sheet->setCellValue('B1', 'Nama Aplikasi');
-            $sheet->setCellValue('C1', 'Nama Owner');
-            $sheet->setCellValue('D1', 'No Telp');
-            $sheet->setCellValue('E1', 'Title');
-            $sheet->setCellValue('F1', 'Copy Right');
-            $sheet->setCellValue('G1', 'Alamat');
-
-            $aplikasi = $this->Mod_aplikasi->getAll()->result();
-            $no = 1;
-            $x = 2;
-            foreach($aplikasi as $row)
-            {
-                $sheet->setCellValue('A'.$x, $no++);
-                $sheet->setCellValue('B'.$x, $row->nama_aplikasi);
-                $sheet->setCellValue('C'.$x, $row->nama_owner);
-                $sheet->setCellValue('D'.$x, $row->tlp);
-                $sheet->setCellValue('E'.$x, $row->title);
-                $sheet->setCellValue('F'.$x, $row->copy_right);
-                $sheet->setCellValue('G'.$x, $row->alamat);
-                $x++;
+            // Buat sebuah variabel untuk menampung pengaturan style dari header tabel
+            $style_col = [
+              'font' => ['bold' => true], // Set font nya jadi bold
+              'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+              ],
+              'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+              ]
+            ];
+            // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
+            $style_row = [
+              'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+              ],
+              'borders' => [
+                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+              ]
+            ];
+            $sheet->setCellValue('A1', "DATA Aplikasi"); // Set kolom A1 dengan tulisan "DATA Aplikasi"
+            $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
+            $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
+            // Buat header tabel nya pada baris ke 3
+            $sheet->setCellValue('A3', "NO"); // Set kolom A3 dengan tulisan "NO"
+            $sheet->setCellValue('B3', "NAMA"); // Set kolom B3 dengan tulisan "NIS"
+            $sheet->setCellValue('C3', "ALAMAT"); // Set kolom C3 dengan tulisan "NAMA"
+            $sheet->setCellValue('D3', "STATUS"); // Set kolom D3 dengan tulisan "JENIS KELAMIN"
+            $sheet->setCellValue('E3', "LOKASI"); // Set kolom E3 dengan tulisan "ALAMAT"
+            // Apply style header yang telah kita buat tadi ke masing-masing kolom header
+            $sheet->getStyle('A3')->applyFromArray($style_col);
+            $sheet->getStyle('B3')->applyFromArray($style_col);
+            $sheet->getStyle('C3')->applyFromArray($style_col);
+            $sheet->getStyle('D3')->applyFromArray($style_col);
+            $sheet->getStyle('E3')->applyFromArray($style_col);
+            // Panggil function view yang ada di AplikasiModel untuk menampilkan semua data Aplikasinya
+            $Aplikasi = $this->Mod_aplikasi->select_aplikasi();
+            $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+            $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
+            foreach($Aplikasi as $data){ // Lakukan looping pada variabel Aplikasi
+              $sheet->setCellValue('A'.$numrow, $no);
+              $sheet->setCellValue('B'.$numrow, $data->nama_aplikasi);
+              $sheet->setCellValue('C'.$numrow, $data->alamat);
+              $sheet->setCellValue('D'.$numrow, $data->status);
+              $sheet->setCellValue('E'.$numrow, $data->lokasi);
+              
+              // Apply style row yang telah kita buat tadi ke masing-masing baris (isi tabel)
+              $sheet->getStyle('A'.$numrow)->applyFromArray($style_row);
+              $sheet->getStyle('B'.$numrow)->applyFromArray($style_row);
+              $sheet->getStyle('C'.$numrow)->applyFromArray($style_row);
+              $sheet->getStyle('D'.$numrow)->applyFromArray($style_row);
+              $sheet->getStyle('E'.$numrow)->applyFromArray($style_row);
+              
+              $no++; // Tambah 1 setiap kali looping
+              $numrow++; // Tambah 1 setiap kali looping
             }
-            $writer = new Xlsx($spreadsheet);
-            $filename = 'laporan-Aplikasi';
+            // Set width kolom
+            $sheet->getColumnDimension('A')->setWidth(5); // Set width kolom A
+            $sheet->getColumnDimension('B')->setWidth(15); // Set width kolom B
+            $sheet->getColumnDimension('C')->setWidth(25); // Set width kolom C
+            $sheet->getColumnDimension('D')->setWidth(20); // Set width kolom D
+            $sheet->getColumnDimension('E')->setWidth(30); // Set width kolom E
             
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+            // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+            $sheet->getDefaultRowDimension()->setRowHeight(-1);
+            // Set orientasi kertas jadi LANDSCAPE
+            $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            // Set judul file excel nya
+            $sheet->setTitle("Laporan Data Aplikasi");
+            // Proses file excel
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="Data Aplikasi.xlsx"'); // Set nama file excel nya
             header('Cache-Control: max-age=0');
-    
+            $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
         }
         public function export(){
@@ -267,7 +394,7 @@ class Aplikasi extends MY_Controller
                 'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
               ]
             ];
-            $sheet->setCellValue('A1', "DATA SISWA"); // Set kolom A1 dengan tulisan "DATA SISWA"
+            $sheet->setCellValue('A1', "DATA Aplikasi"); // Set kolom A1 dengan tulisan "DATA Aplikasi"
             $sheet->mergeCells('A1:E1'); // Set Merge Cell pada kolom A1 sampai E1
             $sheet->getStyle('A1')->getFont()->setBold(true); // Set bold kolom A1
             // Buat header tabel nya pada baris ke 3
@@ -282,11 +409,11 @@ class Aplikasi extends MY_Controller
             $sheet->getStyle('C3')->applyFromArray($style_col);
             $sheet->getStyle('D3')->applyFromArray($style_col);
             $sheet->getStyle('E3')->applyFromArray($style_col);
-            // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-            $siswa = $this->Mod_aplikasi->select_aplikasi();
+            // Panggil function view yang ada di AplikasiModel untuk menampilkan semua data Aplikasinya
+            $Aplikasi = $this->Mod_aplikasi->select_aplikasi();
             $no = 1; // Untuk penomoran tabel, di awal set dengan 1
             $numrow = 4; // Set baris pertama untuk isi tabel adalah baris ke 4
-            foreach($siswa as $data){ // Lakukan looping pada variabel siswa
+            foreach($Aplikasi as $data){ // Lakukan looping pada variabel Aplikasi
               $sheet->setCellValue('A'.$numrow, $no);
               $sheet->setCellValue('B'.$numrow, $data->nama_aplikasi);
               $sheet->setCellValue('C'.$numrow, $data->alamat);
@@ -315,10 +442,10 @@ class Aplikasi extends MY_Controller
             // Set orientasi kertas jadi LANDSCAPE
             $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
             // Set judul file excel nya
-            $sheet->setTitle("Laporan Data Siswa");
+            $sheet->setTitle("Laporan Data Aplikasi");
             // Proses file excel
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment; filename="Data Siswa.xlsx"'); // Set nama file excel nya
+            header('Content-Disposition: attachment; filename="Data Aplikasi.xlsx"'); // Set nama file excel nya
             header('Cache-Control: max-age=0');
             $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');

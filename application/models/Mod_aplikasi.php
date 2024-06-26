@@ -104,4 +104,50 @@ class Mod_aplikasi extends CI_Model
         $this->db->where('id', $id);
         return $this->db->get();
     }
+
+    /** pool */
+    
+	public function select_pool()
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_kota');
+		$data = $this->db->get();
+		return $data->result();
+	}
+	public function select_id_pool($id)
+	{
+		$sql = " SELECT * FROM tbl_kota WHERE kode_kota='{$id}'";
+
+		$data = $this->db->query($sql);
+
+		return $data->result();
+	}
+	public function insertPool($data)
+	{
+
+		$sql = "INSERT INTO tbl_kota VALUES
+		('','" . $data['kode_kota'] . "','" . $data['nama_kota'] . "','" . $data['wilayah'] . "')";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	public function updatePool($data)
+	{
+		$sql = "UPDATE tbl_kota SET kode_kota='" . $data['kode_kota'] . "',nama_kota='" . $data['nama_kota'] . "',wilayah='" . $data['wilayah'] . "'
+        WHERE kode_kota='" . $data['kode_kota'] . "'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	function deletePool($id)
+	{
+		$sql = "DELETE FROM tbl_kota WHERE id_kota='{$id}'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
 }
