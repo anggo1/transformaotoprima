@@ -1,4 +1,3 @@
-
 <?php if (!empty($dataPart)) {
 	foreach ($dataPart as $part) {
 	}
@@ -20,6 +19,19 @@
                         </div>
                         <div class="modal-body">
 
+                            <?php
+						$date = date("y-m");
+						$ci_kons = get_instance();
+						$query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
+						$hasil = $ci_kons->db->query($query)->row_array();
+						$noOrder = $hasil['maxKode'];
+						$noUrut = (int)substr($noOrder, 6, 5);
+						$noUrut++;
+						$tahun = substr($date, 0, 2);
+						$bulan = substr($date, 3, 2);
+						$kode_po  = $tahun.'-'.$bulan.sprintf("%05s", $noUrut);
+						$kode_po2  = sprintf("%05s", $noUrut);
+						?>
                             <form id="formPo" name="formPo" method="POST">
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Tanggal</label>
@@ -27,8 +39,9 @@
                                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
 
                                             <input type="text" name="tgl_part_order" id="tgl_part_order" value=""
-                                                class="form-control tgl_part_order datetimepicker" data-toggle="datetimepicker"
-                                                data-target=".tgl_part_order" data-format="yyy-mm-dd" required>
+                                                class="form-control tgl_part_order datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".tgl_part_order"
+                                                data-format="yyy-mm-dd" required>
 
                                             <div class="input-group-append" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i>
@@ -37,12 +50,26 @@
                                         </div>
                                     </div>
                                     <label class="col-sm-1 col-form-label">No Order</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="no_order" id="no_order" value=""
-                                            class="form-control" placeholder="No Pesanan">
+                                    <div class="row col-sm-4">
+                                        <select name="kode" id="kode" class="col-sm-2 form-control">
+                                            <option value="">Kode...
+                                            </option>
+                                            <?php
+											if (!empty($dataKode)) {
+												foreach ($dataKode as $k) {   ?>
+                                            <option value="<?php echo $k->kode_po; ?>">
+                                                <?php echo $k->kode_po; ?>
+                                            </option>
+                                            <?php
+												}
+											}
+											?>
+                                        </select>
+                                        <input type="text" name="no_order" id="no_order" value="<?php echo $kode_po2 ?>"
+                                            class="col-sm-6 form-control" placeholder="No Pesanan" readonly>
                                     </div>
-                                    </div>
-                                    <div class="form-group row">
+                                </div>
+                                <div class="row form-group row">
                                     <label class="col-sm-2 col-form-label">Supplier</label>
                                     <div class="col-sm-4">
                                         <select name="supplier" id="supplier" class="form-control">
@@ -72,28 +99,17 @@
 
                                     </div>
                                 </div>
-                                <?php
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 5, 4);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%04s", $noUrut);
-						?>
-                                <input type="hidden" name="id_part_order" id="id_part_order" value="<?php echo $kode_po ?>"
-                                    class="form-control">
-                                <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
+                                <input type="text" name="id_part_order" id="id_part_order"
+                                    value="<?php echo $kode_po ?>" class="form-control">
+                                <input type="text" name="kode_ref" id="kode_ref" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                                 <div class="modal-footer right-content-between">
                                     <button class="btn btn-primary" id="simpan" type="submit"><span
                                             class="fa fa-save"></span> Simpan Data</button>
                                     <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
-                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Part Order</button>
+                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Part
+                                        Order</button>
                                 </div>
                             </form>
                         </div>
@@ -175,24 +191,23 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var table = $('#table-part').DataTable();
-		var tgl_part_order = document.formPo.tgl_part_order.value;
-		var id_part_order = document.formPo.id_part_order.value;
+    var tgl_part_order = document.formPo.tgl_part_order.value;
+    var id_part_order = document.formPo.id_part_order.value;
 
-    $('#table-part tbody').on('click', 'tr', function () {
-        var data = table.row( this ).data();
-		var id_part = data[0];
-		var no_part		= data[1];
-		var nama_part	= data[2];
-		var satuan		= data[3];
-		var stok		= data[4];
-		var harga_baru	= data[5];
-		var tgl_part_order = document.formPo.tgl_part_order.value;
-		var id_part_order = document.formPo.id_part_order.value;
-				$.ajax({
-				method: 'POST',
-				url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
-				data:
-				"tgl_part_order=" + tgl_part_order +
+    $('#table-part tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        var id_part = data[0];
+        var no_part = data[1];
+        var nama_part = data[2];
+        var satuan = data[3];
+        var stok = data[4];
+        var harga_baru = data[5];
+        var tgl_part_order = document.formPo.tgl_part_order.value;
+        var id_part_order = document.formPo.id_part_order.value;
+        $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
+            data: "tgl_part_order=" + tgl_part_order +
                 "&id_part_order=" + id_part_order +
                 "&id_part=" + id_part +
                 "&no_part=" + no_part +
@@ -200,12 +215,12 @@ $(document).ready(function() {
                 "&satuan=" + satuan +
                 "&stok=" + stok +
                 "&harga_baru=" + harga_baru
-			})
-			tampilDetail();
-		$('#modal_form').modal('hide');
-			tampilDetail();
-    } );
-	} );
+        })
+        tampilDetail();
+        $('#modal_form').modal('hide');
+        tampilDetail();
+    });
+});
 var MyTable = $('#list-po').dataTable({
     "responsive": true,
     "paging": true,
@@ -221,18 +236,18 @@ function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
 
     $.ajax({
         method: 'POST',
-		url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
-            data: "tgl_part_order=" + tgl_part_order +
-                "&id_part_order=" + id_part_order +
-                "&id_part=" + id_part +
-                "&no_part=" + no_part +
-                "&nama_part=" + nama_part +
-                "&satuan=" + satuan +
-                "&stok=" + stok +
-                "&harga_baru=" + harga_baru
+        url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
+        data: "tgl_part_order=" + tgl_part_order +
+            "&id_part_order=" + id_part_order +
+            "&id_part=" + id_part +
+            "&no_part=" + no_part +
+            "&nama_part=" + nama_part +
+            "&satuan=" + satuan +
+            "&stok=" + stok +
+            "&harga_baru=" + harga_baru
     })
 
-	tampilDetail(id_part_order);
+    tampilDetail(id_part_order);
 
     $('#modal_form').modal('hide');
 

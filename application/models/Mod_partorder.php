@@ -105,6 +105,14 @@ class Mod_partorder extends CI_Model
 
         return $data->result();
     }
+    public function select_kode()
+    {
+        $sql = " SELECT * FROM tbl_wh_kode_po";
+
+        $data = $this->db->query($sql);
+
+        return $data->result();
+    }
     public function deleteDetail_po($id)
     {
         $sql = "DELETE FROM tbl_wh_detail_part_order WHERE id_detail='" . $id . "'";

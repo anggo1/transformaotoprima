@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class PartOrder extends MY_Controller
+class MAnagementStok extends MY_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('Mod_partorder'));
+		$this->load->model(array('Mod_management_stok'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 	}
@@ -18,7 +18,6 @@ class PartOrder extends MY_Controller
 		$data['judul'] 		= "P O";
 		$this->load->helper('url');
 		$data['dataSupplier'] = $this->Mod_partorder->select_supplier();
-		$data['dataKode'] = $this->Mod_partorder->select_kode();
 		$this->template->load('layoutbackend', 'warehouse/part_order', $data);
 	}
 public function showPart()

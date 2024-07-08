@@ -216,13 +216,17 @@ class Mod_sparepart extends CI_Model
 
 		return $this->db->affected_rows();
     }
-    function updateStok( $data)
+    function updateStok($data)
     {
-        $stok=$data['stok_a'] + $data['stok_p'];
+        $id = $data['id_part'];
+
         $sql = "UPDATE tbl_wh_barang SET
-        stok_a  ='".$data['stok_a']."',
-        stok_p  ='".$data['stok_p']."',
-        stok    ='".$stok."'
+        stok_jkt  ='".$data['stok_jkt']."',
+        lok_jkt  ='".$data['lok_jkt']."',
+        stok_cbt  ='".$data['stok_cbt']."',
+        lok_cbt  ='".$data['lok_cbt']."',
+        stok_sby  ='".$data['stok_sby']."',
+        lok_sby  ='".$data['lok_sby']."'
         WHERE id_part='".$data['id_part']."'";
 
 		$this->db->query($sql);
