@@ -129,9 +129,27 @@ class Mod_estimasi_penawaran extends CI_Model
 
         return $this->db->affected_rows();
     }
+    public function insertNote($id)
+    {        
+        $sql_detil = "INSERT INTO tbl_wh_detail_estimasi_penawaran_note (id_estimasi_penawaran,remark) 
+        VALUES ('".$id."','Masa berlaku 7 hari'), 
+        ('".$id."','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
+        ('".$id."','Harga dapat berubah sewaktu-waktu'),
+        ('".$id."','Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
+        ('".$id."','Term of Payment Cash Before Delivery'),
+        ('".$id."','Harga Sudah Termasuk Diskon'),
+        ('".$id."','Barga Belum termasuk ongkos kirim'),
+        ('".$id."','Harga Belum termasuk jasa'),
+        ('".$id."','Semua sparepart yang kami tawarkan original Merced...'),
+        ('".$id."','Jika ada sparepart yang Tidak Ready maka Indent'),
+        ('".$id."','Pembayaran harap ditransfer atau Bilyet Giro atas ...')";
+        $this->db->query($sql_detil);
+        return $this->db->affected_rows();
+    }
     public function insertDetailPo($data)
     {
         $datenow = date("Y-m-d");
+        $id=$data['id_estimasi_penawaran'];
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
         $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET

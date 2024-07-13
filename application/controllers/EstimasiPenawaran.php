@@ -102,6 +102,11 @@ public function showPart()
         $remark = $_POST['keterangan'];
 		$data['dataPo'] = $this->Mod_estimasi_penawaran->insertRemark($id,$remark);
 	}
+	public function tambahNote()
+	{
+        $id = $_POST['id'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran->insertNote($id);
+	}
 	public function prosesPo()
 	{
 		
@@ -112,6 +117,10 @@ public function showPart()
 			$result = $this->input->post();
 			$kode_po = $data['id_estimasi_penawaran'];
 			$date2 = $data['tgl_estimasi_penawaran'];
+			
+			$bea=$data['bea_kirim'];
+			$bea_kirim =str_replace(",","", $bea);
+
 			$tgl2 = explode('-', $date2);
 			$tgl_po_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
 
@@ -132,6 +141,7 @@ public function showPart()
 				'last_km' => $data['last_km'],
 				'date_of_regis' => $data['date_of_regis'],
 				'ppn' => $data['ppn'],
+				'bea_kirim' => $bea_kirim,
 				'user'   	=> $data['user'],
 				'status_po'	=> 'N'
 			);

@@ -24,7 +24,10 @@ foreach ($dataPo as $s) {
         <td><?php echo $s->nama_sup; ?></td>
 
         <td class="text-center">
-            <button class="btn btn-xs btn-outline-primary cetak-po" data-id="<?php echo $s->id_part_order; ?>"><i class="fa fa-print"></i> Print</button>
+            <button class="btn btn-sm btn-outline-primary cetak-po" data-id="<?php echo $s->id_part_order; ?>"><i class="fa fa-print"></i> Print</button>
+            <a href="<?php echo base_url('PartOrder/export'); ?>?id=<?php echo $s->id_part_order; ?>"
+                                class="btn btn-sm btn-outline-info" title="Download" target="_blank"><i
+                                    class="fas fa-file-excel"></i> Excel</a>
 			
     </td>
     </tr>

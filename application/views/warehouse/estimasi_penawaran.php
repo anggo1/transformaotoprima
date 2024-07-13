@@ -14,6 +14,9 @@
                             <h5 style="display:block; text-align:center;"><span
                                     class="ion-soup-can-outline ion-lg"></span>&nbsp; Estimasi Penawaran Part
                             </h5>
+                            <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
+                                onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
+                                BARU</button>
                         </div>
                         <div class="modal-body">
 
@@ -70,13 +73,13 @@
 											?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Registration No</label>
                                         <input type="text" name="no_reg" id="no_reg" value="" class="form-control"
                                             placeholder="No Registration">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">VIN No</label>
                                         <input type="text" name="no_vin" id="no_vin" value="" class="form-control"
@@ -92,13 +95,13 @@
                                         <input type="text" name="date_received" id="date_received" value=""
                                             class="form-control" placeholder="Date Received">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Millage/Km</label>
                                         <input type="text" name="millage" id="millage" value="" class="form-control"
                                             placeholder="Millage / Km">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Engine No</label>
                                         <input type="text" name="engine_no" id="engine_no" value="" class="form-control"
@@ -114,13 +117,13 @@
                                         <input type="text" name="received_by" id="received_by" value=""
                                             class="form-control" placeholder="Received by">
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Routing No</label>
                                         <input type="text" name="routing_no" id="routing_no" value=""
                                             class="form-control" placeholder="Routing No">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-3">
                                         <label class="col-form-label">Last Service date/millage/km</label>
                                         <input type="text" name="last_km" id="last_km" value="" class="form-control"
@@ -135,6 +138,11 @@
                                         <label class="col-form-label">P P N</label>
                                         <input type="text" name="ppn" id="ppn" value=""
                                             class="form-control" placeholder="PPN">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="col-form-label">Bea Kirim</label>
+                                        <input type="text" name="bea_kirim" id="bea_kirim" value="0" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
+                                            class="form-control" placeholder="Bea Pengiriman Barang" style="text-align:right; color:red;">
                                     </div>
                                 </div>
 
@@ -151,7 +159,7 @@
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                                 <div class="modal-footer right-content-between">
-                                    <button class="btn btn-primary" id="simpan" type="submit"><span
+                                    <button class="btn btn-primary" id="simpan" type="submit"  hidden="hidden"><span
                                             class="fa fa-save"></span>
                                         Simpan Data</button>
                                     <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
@@ -172,7 +180,9 @@
                         <div class="card-header card-dark card-outline">
                             <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Keterangan</h3>
                             <div class="text-right">
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i class="fas fa-plus"></i>
+                                    Standart Keterangan</button>
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
                                     Add</button>
                             </div>
@@ -309,8 +319,10 @@ $(document).ready(function() {
                 "&harga_baru=" + harga_baru
         })
         tampilDetail();
+        document.getElementById("simpan").hidden = false;
         $('#modal_form').modal('hide');
         tampilDetail();
+        tampilKeterangan();
     });
 });
 var MyTable = $('#list-po').dataTable({
@@ -385,6 +397,18 @@ function tampilDetail() {
         success: function(hasil) {
             //MyTable.fnDestroy();
             $('#data-po').html(hasil);
+        }
+    });
+}
+
+function insertNote() {
+    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('EstimasiPenawaran/tambahNote'); ?>',
+        data: 'id=' + id_estimasi_penawaran,
+        success: function(hasil) {
+            tampilKeterangan()
         }
     });
 }

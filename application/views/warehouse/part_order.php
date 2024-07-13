@@ -57,8 +57,8 @@
                                             <?php
 											if (!empty($dataKode)) {
 												foreach ($dataKode as $k) {   ?>
-                                            <option value="<?php echo $k->kode_po; ?>">
-                                                <?php echo $k->kode_po; ?>
+                                            <option value="<?php echo $k->kode_po.'|'.$k->keterangan; ?>">
+                                                <?php echo $k->kode_po.'|'.$k->keterangan; ?>
                                             </option>
                                             <?php
 												}
@@ -99,9 +99,9 @@
 
                                     </div>
                                 </div>
-                                <input type="text" name="id_part_order" id="id_part_order"
+                                <input type="hidden" name="id_part_order" id="id_part_order"
                                     value="<?php echo $kode_po ?>" class="form-control">
-                                <input type="text" name="kode_ref" id="kode_ref" class="form-control">
+                                <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                                 <div class="modal-footer right-content-between">

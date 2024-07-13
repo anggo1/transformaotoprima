@@ -102,7 +102,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
 </table>
 <table width="100%" border="1">
       <tr align="center" >
-        <th height="12" class="dbl-border"><h4>CV PART ORDER</h4></th>
+        <th height="12" class="dbl-border"><h5>CV PART ORDER</h5></th>
       </tr>
 </table>
   <table width="100%" border="0" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="datatable1">
@@ -158,7 +158,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
       </tr>
       <tr>
         <th height="28"><div align="left"><strong>Order No</strong></div></th>
-        <th height="28"><div align="left">: <?php echo $k->kode_pesan; ?></div></th>
+        <th height="28"><div align="left">: <?php echo $k->kode_pesan.' '.$k->ket_pesan; ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -205,7 +205,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><div align="center">&nbsp;</div></td>
             <td><div align="center"><?php echo $d->nama_part ?></div></td>
             <td><div align="center"><?php echo number_format($d->jumlah) ?></div></td>
-            <td><div align="center">&nbsp;</div></td>
+            <td><div align="center"><?php echo $d->bo ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>
           
@@ -318,5 +318,12 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </div>
 <div class="modal-footer justify-content-between">
 <button type="button" id="btnPrint" class="btn btn-success"><span class="fa fa-print"></span>&nbsp;&nbsp; C E T A K </button>
-  <button class="btn btn-danger" id="tutup" onClick="window.location.assign(" <?php echo base_url(); ?>/Transaksi/Pengiriman");" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
+<a href="<?php echo base_url('PartOrder/export'); ?>?id=<?php echo $k->id_part_order; ?>"
+                                class="btn btn-info" title="Download" target="_blank"><i
+                                    class="fas fa-file-excel"></i>&nbsp;  EXCEL</a>
+  <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
     </div>
+    <script language="javascript">
+
+
+    </script>

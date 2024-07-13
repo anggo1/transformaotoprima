@@ -147,6 +147,12 @@ class Mod_partorder extends CI_Model
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
+    function update_detailBo($id,$bo)
+		{			
+			$sql_update = "UPDATE tbl_wh_detail_part_order SET bo ='$bo' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			
+		return $this->db->affected_rows();
+		}
     function update_remark($id,$remark)
 		{			
 			$sql_update = "UPDATE tbl_wh_detail_part_order SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);

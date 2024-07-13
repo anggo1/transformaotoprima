@@ -16,7 +16,8 @@
 											<th>Nama Part</th>
 											<th>Satuan</th>
 											<th>Harga</th>
-											<th>jumlah</th>
+											<th>JML</th>
+											<th>BO</th>
 											<th>Total</th>
 										</tr>
 									</thead>
@@ -33,6 +34,7 @@
                     <td><?php echo $s->satuan; ?></td>
                     <td><?php echo number_format($s->harga); ?></td>
                     <td><?php echo $s->jumlah; ?></td>
+                    <td><?php echo $s->bo; ?></td>
                     <td><?php echo number_format($s->harga*$s->jumlah); ?></td>
                   </tr>
                 <?php
