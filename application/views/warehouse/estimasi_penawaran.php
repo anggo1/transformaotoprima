@@ -15,7 +15,7 @@
                                     class="ion-soup-can-outline ion-lg"></span>&nbsp; Estimasi Penawaran Part
                             </h5>
                             <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
-                                onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
+                                onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> DATA
                                 BARU</button>
                         </div>
                         <div class="modal-body">

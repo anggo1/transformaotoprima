@@ -19,6 +19,7 @@ class Part_masuk extends MY_Controller
 		//$data['dataKode'] = $this->Mod_cuti->select_kode_cuti();
         $data['dataPo'] = $this->Mod_part_masuk->get_po();
         $data['dataSup'] = $this->Mod_part_masuk->get_sup();
+        $data['dataKota'] = $this->Mod_part_masuk->get_kota();
 		$this->template->load('layoutbackend', 'warehouse/part_masuk',$data);
 	}
 
@@ -89,7 +90,7 @@ class Part_masuk extends MY_Controller
 				'kode_masuk'  	=> $kode_awal,
 				'id_masuk'  	=> $kode_masuk,
 				'tgl_masuk'  	=> $tgl_masuk,
-				'status'      	=> $data['status'],
+				'status'      	=> $data['lokasi'],
 				'keterangan'  	=> $data['keterangan'],
 				'status_po'		=> 'Y',
 				'no_po'			=> $data['no_po'],
@@ -97,6 +98,7 @@ class Part_masuk extends MY_Controller
 				'no_inv_sup'	=> $data['no_inv_sup'],
 				'kode_sup'		=> $data['kode_sup'],
 				'nama_supplier'		=> $data['supplier'],
+				'lokasi'   		=> $data['lokasi'],
 				'user'   		=> $data['user']
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_part_masuk', $data);
@@ -107,10 +109,17 @@ class Part_masuk extends MY_Controller
 				$qty_masuk = $this->input->post('qty_masuk');
 				$satuan = $this->input->post('satuan');
 				$stok = $this->input->post('stok');
-				$stok_a = $this->input->post('stok_a');
-				$stok_p = $this->input->post('stok_p');
+				$stok_jkt = $this->input->post('stok_jkt');
+				$stok_cbt = $this->input->post('stok_cbt');
+				$stok_sby = $this->input->post('stok_sby');
+				$lokasi = $this->input->post('lokasi');
+				
+				$kl = explode('|',$lokasi);
+				$kd_lok = $kl[0];
+				$nm_lok = $kl[1];
+
 				$id_po=$data['id_po'];
-				$this->Mod_part_masuk->insert_part($kode_awal,$kode_masuk, $data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_a,$stok_p,$id_po);
+				$this->Mod_part_masuk->insert_part($kode_awal,$kode_masuk, $data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_jkt,$stok_cbt,$stok_sby,$id_po,$kd_lok,$nm_lok);
 			if ($result > 0) {
 				$out['dataPo'] = $kode_awal;
 				$out['status'] = '';

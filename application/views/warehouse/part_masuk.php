@@ -72,6 +72,26 @@ table.dataTable td {
                                         <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan Barang Masuk PO">
                                     </div>
                                 </div>
+                                
+                                <div class="row form-group row">
+                                    <label class="col-sm-2 col-form-label">Stok Cabang</label>
+                                    <div class="col-sm-4">
+                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                            <option value="">Cabang Dealer...
+                                            </option>
+                                            <?php
+                                            $lok = $this->session->userdata['lokasi'];
+                                                                    foreach ($dataKota as $kel) { ?>
+                                                                <option
+                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
+                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
+                                                                    <?php echo $kel->nama_kota; ?>
+                                                                </option>
+                                                                <?php }  ?>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div id="data_po_detail"></div>
 
                                 <input type="hidden" name="status" id="status" class="form-control">
@@ -183,7 +203,7 @@ function showPo() {
         })
 }
 
-function selectPart(no_part, nama_part, hrg_awal, stok_awal, stok_a, stok_p, jumlah, supplier) {
+function selectPart(no_part, nama_part, hrg_awal, stok_awal, stok_jkt, stok_cbt, stok_sby, jumlah, supplier) {
 
     $('[name = "no_part"]').val(no_part);
     $('[name = "nama_part"]').val(nama_part);
@@ -191,8 +211,9 @@ function selectPart(no_part, nama_part, hrg_awal, stok_awal, stok_a, stok_p, jum
     $('[name = "jumlah"]').val(jumlah);
     $('[name = "supplier"]').val(supplier);
     $('[name = "stok_awal"]').val(stok_awal);
-    $('[name = "stok_a"]').val(stok_a);
-    $('[name = "stok_p"]').val(stok_p);
+    $('[name = "stok_jkt"]').val(stok_jkt);
+    $('[name = "stok_cbt"]').val(stok_cbt);
+    $('[name = "stok_sby"]').val(stok_sby);
 
 
     $('#modal_form').modal('hide');

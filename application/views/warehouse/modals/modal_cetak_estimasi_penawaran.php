@@ -245,29 +245,29 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <th height="37"><div class="text1"><font size="-2">Registration No</font></div>
           <div class="text2"><?php echo $k->tgl_estimasi_penawaran ?></div></th>
           <th><div class="text1"><font size="-2">Vin No</font></div>
-            <span class="text2"><?php echo $k->no_vin ?></span></th>
+            <div class="text2"><?php echo $k->no_vin ?></div></th>
           <th><div class="text1"><font size="-2">Sales designation</font></div>
-            <span class="text2"><?php echo $k->sales_design ?></span></th>
+            <div class="text2"><?php echo $k->sales_design ?></div></th>
           <th><div class="text1"><font size="-2">Date / time received</font></div>
-            <span class="text2"><?php echo $k->date_received ?></span></th>
+            <div class="text2"><?php echo $k->date_received ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Millage/Km</font></div>
-            <span class="text2"><?php echo $k->millage ?></span></th>
+            <div class="text2"><?php echo $k->millage ?></div></th>
           <th><div class="text1"><font size="-2">Engine No.</font></div>
-            <span class="text2"><?php echo $k->engine_no ?></span></th>
+            <div class="text2"><?php echo $k->engine_no ?></div></th>
           <th><div class="text1"><font size="-2">Account No.</font></div>
-            <span class="text2"><?php echo $k->acc_no?></span></th>
+            <div class="text2"><?php echo $k->acc_no?></div></th>
           <th><div class="text1"><font size="-2">Received By</font></div>
-            <span class="text2"><?php echo $k->received_by ?></span></th>
+            <div class="text2"><?php echo $k->received_by ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Routing No.</font></div>
-            <span class="text2"><?php echo $k->routing_no ?></span></th>
+            <div class="text2"><?php echo $k->routing_no ?></div></th>
           <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
-            <span class="text2"><?php echo $k->last_km ?></span></th>
+            <div class="text2"><?php echo $k->last_km ?></div></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <span class="text2"><?php echo $k->date_of_regis ?></span></th>
+            <div class="text2"><?php echo $k->date_of_regis ?></div></th>
           <th>&nbsp;</th>
         </tr>
           </table>
@@ -340,11 +340,11 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
           </tr>
           <?php
-        foreach ($detailKet as $k) :    ?>
+        foreach ($detailKet as $c) :    ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-              <td><font size="-2">** <?php echo $k->remark; ?></font></td>
+              <td><font size="-2">** <?php echo $c->remark; ?></font></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -380,12 +380,12 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td>Ongkos Kirim</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td align="right"><?php echo "Rp. " .number_format($k->bea_kirim,0,",","."); ?></td>
           </tr>
           <tr>
             <td>Grand Total</td>
             <td align="right">&nbsp;</td>
-            <td align="right"><?php echo "Rp. " .number_format($grand_total + $ppn,0,",","."); ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($grand_total + $ppn + $k->bea_kirim,0,",","."); ?></td>
           </tr>
       </thead>
 

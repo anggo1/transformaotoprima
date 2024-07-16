@@ -29,9 +29,18 @@ class Mod_part_masuk extends CI_Model
 
 		return $data->result();
     }
+    function get_kota()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_kota');
+        //$this->db->where('status', 'N');
+		$data = $this->db->get();
+
+		return $data->result();
+    }
     function select_part($po)
     {
-        $sql    = "SELECT a.*,b.hrg_awal,b.stok,b.stok_a,b.stok_p,c.*,d.satuan 
+        $sql    = "SELECT a.*,b.harga_baru,b.stok,b.stok_jkt,b.stok_cbt,b.stok_sby,c.*,d.satuan 
         FROM tbl_wh_detail_po AS a 
         LEFT JOIN tbl_wh_barang AS b ON a.no_part=b.no_part
         LEFT JOIN tbl_wh_po AS c ON a.id_po=c.id_po
@@ -95,7 +104,7 @@ class Mod_part_masuk extends CI_Model
         return $data = $query_result->result();
     }
  
-    public function insert_part($kode_awal,$kode_masuk,$data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_a,$stok_p,$id_po)
+    public function insert_part($kode_awal,$kode_masuk,$data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_jkt,$stok_cbt,$stok_sby,$id_po,$kd_lok,$nm_lok)
     {
         //$id = md5(DATE('ymdhms') . rand());
         $tgl_masuk =  date("y-m-d");
@@ -116,32 +125,41 @@ class Mod_part_masuk extends CI_Model
             $this->db->query($sql_po2);
         }
         //$stok_awal       = $d_data['stok'];
-
-
-       $status_barang = $data['status'];
-       if($status_barang=="PPU"){
+       $status_barang = $data['lokasi'];
+       if($nm_lok=="Cibitung"){
         $data1 = array();
         foreach($no_part as $key=>$value){ 
             $total = $stok[$key] + $qty_masuk[$key];
-            $total_a= $stok_a[$key] + $qty_masuk[$key];
+            $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
             'stok'=>$total,
-            'stok_a'=>$total_a
+            'stok_cbt'=>$total_jkt
         );
-    }}
-    if($status_barang=="MPU"){
-        $data1 = array();
-        foreach($no_part as $key=>$value){
-            $total = $stok[$key] + $qty_masuk[$key];
-            $total_p= $stok_p[$key] + $qty_masuk[$key];
-            $data1[]  = array(
-            'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-            'stok'=>$total,
-            'stok_p'=>$total_p
-        );
-    }}
-        $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
+                }}
+                if($nm_lok=="Jakarta"){
+                    $data1 = array();
+                    foreach($no_part as $key=>$value){
+                        $total = $stok[$key] + $qty_masuk[$key];
+                        $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
+                        $data1[]  = array(
+                        'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+                        'stok'=>$total,
+                        'stok_jkt'=>$total_cbt
+                    );
+                }}
+                if($nm_lok=="Surabaya"){
+                    $data1 = array();
+                    foreach($no_part as $key=>$value){
+                        $total = $stok[$key] + $qty_masuk[$key];
+                        $total_sby= $stok_sby[$key] + $qty_masuk[$key];
+                        $data1[]  = array(
+                        'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+                        'stok'=>$total,
+                        'stok_sby'=>$total_sby
+                    );
+                }}
+                    $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
 
 
         $data = array();

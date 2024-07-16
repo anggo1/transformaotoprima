@@ -209,7 +209,7 @@ class Mod_reportwhpo extends CI_Model
     function cari_masuk($ttmp1 =null,$ttmp2=null,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
-        a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.hrg_awal) AS total', FALSE);
+        a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.harga_baru) AS total', FALSE);
         $this->db->from('tbl_wh_part_masuk as a');
         $this->db->join('tbl_wh_detail_part_masuk as b','a.kode_masuk=b.id_masuk','left');
         $this->db->join('tbl_wh_barang as c','c.no_part=b.no_part','left');
@@ -223,7 +223,7 @@ class Mod_reportwhpo extends CI_Model
     function cari_masuk_status($ttmp1 =null,$ttmp2=null,$status_po,$status)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
-        a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.hrg_awal) AS total', FALSE);
+        a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.harga_baru) AS total', FALSE);
         $this->db->from('tbl_wh_part_masuk as a');
         $this->db->join('tbl_wh_detail_part_masuk as b','a.kode_masuk=b.id_masuk','left');
         $this->db->join('tbl_wh_barang as c','c.no_part=b.no_part','left');

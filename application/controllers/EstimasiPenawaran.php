@@ -225,6 +225,7 @@ public function showPart()
 		$id 				= $_POST['id'];
 		$data['dataPo'] = $this->Mod_estimasi_penawaran->select_by_id($id);
 		$data['detailPo'] = $this->Mod_estimasi_penawaran->select_detail($id);
+		$data['detailKet'] = $this->Mod_estimasi_penawaran->select_keterangan($id);
 
 		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran', 'cetak-po', $data, ' modal-xl');
 	}

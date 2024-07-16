@@ -120,7 +120,7 @@
 	foreach ($dataMasuk as $k) {
   }
 	$status=$k->status;
-	$apl = $this->db->get("aplikasi where status='".$k->status."'")->row();
+	$apl = $this->db->get("aplikasi where lokasi='".$this->session->userdata['lokasi']."'")->row();
 
 	?>
 
@@ -200,7 +200,7 @@
         $no = 0;
         $total = 0;
         foreach ($detailMasuk as $d) : $no++;
-          $total += $d->hrg_awal * $d->jumlah;
+          $total += $d->harga_baru * $d->jumlah;
         ?>
           <tr>
             <th style="text-align: center;"><?php echo $no ?></th>
@@ -209,8 +209,8 @@
             <th><?php echo $d->ket?></th>
             <th style="text-align: right;"><?php echo $d->jumlah ?></th>
             <th style="text-align: right;"><?php echo $d->nama_satuan ?></th>
-            <th style="text-align: right;"><?php echo number_format($d->hrg_awal) ?></th>
-            <th style="text-align: right;"><?php echo number_format($d->hrg_awal * $d->jumlah) ?></th>
+            <th style="text-align: right;"><?php echo number_format($d->harga_baru) ?></th>
+            <th style="text-align: right;"><?php echo number_format($d->harga_baru * $d->jumlah) ?></th>
             <th style="text-align: center;"><?php echo $d->stok-$d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $d->stok ?></th>
