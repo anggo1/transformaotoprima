@@ -32,10 +32,10 @@
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->nama_satuan; ?></td>
             <td><?php echo $s->stok; ?></td>
-            <td><?php echo $s->hrg_awal; ?></td>
+            <td><?php echo $s->harga_baru; ?></td>
             <td class="qty">
               <input type="number" name="harga[]" id="harga[]"
-              value="<?php if(empty($s->hrg_part)){echo $s->hrg_awal; }else{echo $s->hrg_part;} ?>"
+              value="<?php if(empty($s->hrg_part)){echo $s->harga_baru; }else{echo $s->hrg_part;} ?>"
                     onkeypress="saveHarga(event,'<?php echo $s->id; ?>','<?php echo $s->id_masuk; ?>',$(this).val() )"
                     class="form-control col-sm-10">
             </td>
@@ -48,12 +48,13 @@
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
                 <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok; ?>">
-                <input type="hidden" name="stok_a[]" id="stok_a[]" value="<?php echo $s->stok_a; ?>">
-                <input type="hidden" name="stok_p[]" id="stok_p[]" value="<?php echo $s->stok_p; ?>">
+                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
+                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
+                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
             </td>
             <td><?php 
             if(!empty($s->jumlah)){
-                 if(empty($s->hrg_part)) { echo number_format($s->hrg_awal * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}
+                 if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}
             }
              ?></td>
             <td class="text-center">

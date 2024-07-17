@@ -85,6 +85,11 @@ class Part_masuk extends MY_Controller
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
+			
+			$lokasi = $this->input->post('lokasi');				
+			$kl = explode('|',$lokasi);
+			$kd_lok = $kl[0];
+			$nm_lok = $kl[1];
 
 			$data = array(
 				'kode_masuk'  	=> $kode_awal,
@@ -98,7 +103,7 @@ class Part_masuk extends MY_Controller
 				'no_inv_sup'	=> $data['no_inv_sup'],
 				'kode_sup'		=> $data['kode_sup'],
 				'nama_supplier'		=> $data['supplier'],
-				'lokasi'   		=> $data['lokasi'],
+				'lokasi'   		=> $nm_lok,
 				'user'   		=> $data['user']
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_part_masuk', $data);

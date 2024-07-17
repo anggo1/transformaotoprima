@@ -89,6 +89,23 @@ textarea {
 
                                     </div>
                                     <label class="col-sm-2 col-form-label">Status</label>
+
+                                    <div class="col-sm-2">
+                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                            <option value="">Cabang Dealer...
+                                            </option>
+                                            <?php
+                                            $lok = $this->session->userdata['lokasi'];
+                                                                    foreach ($dataKota as $kel) { ?>
+                                            <option value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
+                                                <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
+                                                <?php echo $kel->nama_kota; ?>
+                                            </option>
+                                            <?php }  ?>
+                                        </select>
+                                    </div>
+                                    <!--
                                     <div class="col-sm-1">
                                         <select name="status" id="status" class="form-control"
                                             onchange="fungsiKode(event)" required>
@@ -97,10 +114,8 @@ textarea {
                                             <option value="MPU">MPU</option>
                                         </select>
                                     </div>
-									
-                                    <label class="col-sm-1 col-form-label">No Ref</label>
+                                                                    -->
                                     <div class="col-sm-2">
-                                        <input type="text" name="id_masuk" id="id_masuk" class="form-control" required readonly>
                                     </div>
                                 </div>
 
@@ -150,8 +165,10 @@ textarea {
                                     </div>
                                 </div>
                                 <div id="data-masuk"></div>
+                                <div id="data-masuk-cache"></div>
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
+                                <input type="hidden" name="id_masuk" id="id_masuk" class="form-control" value="<?php echo $kode_awal ?>" required readonly>
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-xl btn-outline-primary" id="tambahBarang"
                                         title="Add Part" data-toggle="modal" data-target="#modal_form"><i
@@ -284,27 +301,29 @@ $(document).ready(function() {
     var kode_masuk = document.formpartmasuk.kode_masuk.value;
     $('#table-part tbody').on('click', 'tr', function() {
         var data = table.row(this).data();
-        var id_barang = data[6];
+        var id_part = data[6];
         var no_part = data[1];
         var nama_part = data[2];
         var stok = data[3];
         var satuan = data[5];
-        var stok_a = data[7];
-        var stok_p = data[8];
-        var hrg_awal = data[9];
+        var stok_jkt = data[7];
+        var stok_cbt = data[8];
+        var stok_sby = data[9];
+        var harga_baru = data[10];
         $.ajax({
             method: 'POST',
             url: '<?php echo base_url('Part_masuk_npo/prosesDetailInput'); ?>',
             data: "tgl_masuk=" + tgl_masuk +
                 "&kode_masuk=" + kode_masuk +
-                "&id_barang=" + id_barang +
+                "&id_part=" + id_part +
                 "&no_part=" + no_part +
                 "&nama_part=" + nama_part +
                 "&stok=" + stok +
                 "&satuan=" + satuan +
-                "&stok_a=" + stok_a +
-                "&stok_p=" + stok_p +
-                "&hrg_awal=" + hrg_awal
+                "&stok_jkt=" + stok_jkt +
+                "&stok_cbt=" + stok_cbt +
+                "&stok_sby=" + stok_sby +
+                "&harga_baru=" + harga_baru
         })
         tampilDetail(kode_masuk);
         tampilDetail(kode_masuk);

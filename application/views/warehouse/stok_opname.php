@@ -45,16 +45,33 @@ table.dataTable td {
                                         </div>
                                     </div>
                             
+                                    <label class="col-sm-2 col-form-label">Stok Cabang</label>
+                                    <div class="col-sm-4">
+                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                            <option value="">Cabang Dealer...
+                                            </option>
+                                            <?php
+                                            $lok = $this->session->userdata['lokasi'];
+                                                                    foreach ($dataKota as $kel) { ?>
+                                                                <option
+                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
+                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
+                                                                    <?php echo $kel->nama_kota; ?>
+                                                                </option>
+                                                                <?php }  ?>
+                                        </select>
+                                    </div> 
                         </div>
 						<div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Kelompok</label>
                                 <div class="col-sm-4">
-                                    <select name="kelompok" id="kelompok" class="form-control" onchange="tampilKelompok()"
+                                    <select name="kelompok" id="kelompok" class="form-control"
                                         required>
                                         <?php
 											if (!empty($dataKelompok)) {
 												foreach ($dataKelompok as $kel) {   ?>
-                                        <option value="<?php echo $kel->id_kelompok; ?>|<?php echo $kel->kelompok; ?>">
+                                        <option value="<?php echo $kel->kelompok; ?>|<?php echo $kel->kelompok; ?>">
                                             <?php echo $kel->kelompok; ?>
                                         </option>
                                         <?php
@@ -88,8 +105,10 @@ table.dataTable td {
                     <input type="hidden" name="id_opname" id="id_opname" value="<?php echo $kode_po ?>" class="form-control">
                     <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
                     <input type="hidden" name="user" id="user"
-                        value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
+                        value="<?php echo $this->session->userdata['full_name']; ?>"class="form-control">
                     <div class="modal-footer right-content-between">
+                        <button class="btn btn-success" id="simpan"  onclick="tampilKelompok()" ><span class="fa fa-search"></span>
+                            Cari</button>
                         <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
                             Simpan Data</button>
                     </div>
@@ -175,14 +194,29 @@ function refresh() {
 
 function tampilKelompok(dataKelompok) {
         var id_kelompok = document.getElementById("kelompok").value;
+        var lokasi = document.getElementById("lokasi").value;
         $.ajax({
             type: 'GET',
-            url: '<?php echo base_url('StokOpname/tampilKelompok'); ?>?id_kelompok=' + id_kelompok,
-            data: 'id_kelompok=' + id_kelompok,
+            url: '<?php echo base_url('StokOpname/tampilKelompok'); ?>?id_kelompok=' + id_kelompok+'&lokasi=' + lokasi,
+            data: 'id_kelompok=' + id_kelompok+'&lokasi=' + lokasi,
             success: function (hasil) {
                 MyTable.fnDestroy();
                 $('#data-kelompok').html(hasil);
-				document.getElementById("cetak").hidden = false;
+				//document.getElementById("cetak").hidden = false;
+            }
+        });
+    }
+    function tampilCabang(dataKelompok) {
+        var id_kelompok = document.getElementById("kelompok").value;
+        var lokasi = document.getElementById("lokasi").value;
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo base_url('StokOpname/tampilCabang'); ?>?id_kelompok=' + id_kelompok+'&lokasi=' + lokasi,
+            data: 'id_kelompok=' + id_kelompok+'&lokasi=' + lokasi,
+            success: function (hasil) {
+                MyTable.fnDestroy();
+                $('#data-kelompok').html(hasil);
+				//document.getElementById("cetak").hidden = false;
             }
         });
     }

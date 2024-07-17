@@ -18,6 +18,7 @@ class StokOpname extends MY_Controller
 		$this->load->helper('url');
 		$data['dataSupplier'] = $this->Mod_stokopname->select_supplier();
 		$data['dataKelompok'] = $this->Mod_stokopname->select_kelompok();
+        $data['dataKota'] = $this->Mod_stokopname->get_kota();
 		$this->template->load('layoutbackend', 'warehouse/stok_opname', $data);
 	}
 	public function showPart()
@@ -109,8 +110,21 @@ class StokOpname extends MY_Controller
 		$id_kelompok 	= $_GET['id_kelompok'];
 		$kl 			= explode('|', $id_kelompok);
 		$id = $kl[0];
-		$data['dataDetail'] = $this->Mod_stokopname->select_part_group($id);
+		$lokasi 	= $_GET['lokasi'];
+		$lok 			= explode('|', $lokasi);
+		$kode_lok = $lok[0];
+		$data['dataDetail'] = $this->Mod_stokopname->select_part_group($id, $kode_lok);
 		$this->load->view('warehouse/detail_opname_kelompok', $data);
+	}
+	public function tampilCabang()
+	{
+		$id_kelompok 	= $_GET['id_kelompok'];
+		$kl 			= explode('|', $id_kelompok);
+		$id = $kl[0];
+		$lokasi 	= $_GET['lokasi'];
+		$lok 			= explode('|', $lokasi);
+		$kode_lok = $lok[0];
+		$data['dataDetail'] = $this->Mod_stokopname->select_part_group_cabang($id, $kode_lok);
 	}
 	public function tampilKelompokUpdate()
 	{

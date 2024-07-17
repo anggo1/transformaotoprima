@@ -16,7 +16,7 @@ class Mod_stokopname extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,d.type_mesin,e.kelompok');
+        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,d.type,e.kelompok');
         $this->db->from('tbl_wh_barang as a');
         $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
         $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
@@ -79,7 +79,7 @@ class Mod_stokopname extends CI_Model
     }
     function select_part($sup)
     {
-        $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok');
+        $this->db->select('a.*,b.kategori,c.satuan,d.type,e.kelompok');
         $this->db->from('tbl_wh_barang as a');
         $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
         $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
@@ -91,19 +91,27 @@ class Mod_stokopname extends CI_Model
     }
     function get_part($id)
     {
-        $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok,f.nama_sup,f.kode_sup');
+        $this->db->select('a.*,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
         $this->db->from('tbl_wh_barang as a');
         $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
         $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
         $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
         $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
-        $this->db->join('tbl_wh_supplier as f', 'f.id_supplier=a.supplier', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
         $this->db->where('a.id_barang', $id);
         return $this->db->get('tbl_wh_barang')->row();
     }
     public function select_supplier()
     {
         $sql = " SELECT * FROM tbl_wh_supplier";
+
+        $data = $this->db->query($sql);
+
+        return $data->result();
+    }
+    public function get_kota()
+    {
+        $sql = " SELECT * FROM tbl_kota";
 
         $data = $this->db->query($sql);
 
@@ -169,7 +177,7 @@ class Mod_stokopname extends CI_Model
             status      ='N',
             pembuat ='$pembuat' "; $this->db->query($sql_update);
 
-            $query=$this->db->query("SELECT a.no_part,a.nama_part,a.lokasi,a.stok,b.satuan,c.type_mesin,d.kelompok
+            $query=$this->db->query("SELECT a.no_part,a.nama_part,a.lokasi,a.stok,b.satuan,c.type,d.kelompok
             FROM tbl_wh_barang AS a 
             LEFT JOIN  tbl_wh_satuan AS b ON b.id_satuan=a.satuan
             LEFT JOIN  tbl_wh_type_mesin AS c ON c.id_type=a.type
@@ -181,7 +189,7 @@ class Mod_stokopname extends CI_Model
                 $data[]  = array(
                 'id_opname'=>$idUpdate,
                 'kelompok'=>$value->kelompok,
-                'type'=>$value->type_mesin,
+                'type'=>$value->type,
                 'lokasi'=>$value->lokasi,
                 'no_part'=>$value->no_part,
                 'nama_part'=>$value->nama_part,
@@ -203,17 +211,77 @@ class Mod_stokopname extends CI_Model
         return $data->result();
         //return $data->row();
     }
-    public function select_part_group($id)
+    public function select_part_group($id,$kode_lok)
     {
-
-        $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok,f.nama_sup,f.kode_sup');
+        if($kode_lok =='JKT'){
+            $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_jkt AS lokasi_part,a.stok_jkt AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
         $this->db->from('tbl_wh_barang as a');
-        $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
-        $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=a.satuan', 'left');
-        $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
-        $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
-        $this->db->join('tbl_wh_supplier as f', 'f.id_supplier=a.supplier', 'left');
+        $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+        $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
         $this->db->where('a.kelompok', $id);
+        $data = $this->db->get();
+        return $data->result();
+        }
+        if($kode_lok =='CBT'){
+            $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_cbt AS lokasi_part,a.stok_cbt AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
+            $this->db->from('tbl_wh_barang as a');
+            $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+            $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+            $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+            $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+            $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
+            $this->db->where('a.kelompok', $id);
+            $data = $this->db->get();
+            return $data->result();
+        }
+        if($kode_lok =='SBY'){
+        $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_sby AS lokasi_part,a.stok_sby AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
+        $this->db->from('tbl_wh_barang as a');
+        $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+        $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
+        $this->db->where('a.kelompok', $id);
+        $data = $this->db->get();
+        return $data->result();
+        }
+
+    }
+    public function select_part_group_cabang($id,$kode_lok)
+    {
+        if($kode_lok =='JKT'){
+            $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_jkt AS lokasi_part,a.stok_jkt AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
+        $this->db->from('tbl_wh_barang as a');
+        $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+        $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
+        $this->db->where('a.kelompok', $id);
+        }
+        if($kode_lok =='CBT'){
+            $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_cbt AS lokasi_part,a.stok_cbt AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
+            $this->db->from('tbl_wh_barang as a');
+            $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+            $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+            $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+            $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+            $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
+        }
+        if($kode_lok =='SBY'){
+        $this->db->select('a.no_part,a.nama_part,a.nama_part_e,a.lok_sby AS lokasi_part,a.stok_sby AS stok_barang,b.kategori,c.satuan,d.type,e.kelompok,f.nama_sup,f.kode_sup');
+        $this->db->from('tbl_wh_barang as a');
+        $this->db->join('tbl_wh_kategori as b', 'b.kategori=a.kategori', 'left');
+        $this->db->join('tbl_wh_satuan as c', 'c.satuan=a.satuan', 'left');
+        $this->db->join('tbl_wh_type_mesin as d', 'd.type=a.type', 'left');
+        $this->db->join('tbl_wh_kelompok as e', 'e.kelompok=a.kelompok', 'left');
+        $this->db->join('tbl_wh_supplier as f', 'f.kode_sup=a.kode_sup', 'left');
+        $this->db->where('a.kelompok', $id);
+        }
         $data = $this->db->get();
         return $data->result();
     }

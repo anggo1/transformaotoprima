@@ -126,7 +126,7 @@ class Mod_part_masuk extends CI_Model
         }
         //$stok_awal       = $d_data['stok'];
        $status_barang = $data['lokasi'];
-       if($nm_lok=="Cibitung"){
+       if($nm_lok=="Jakarta"){
         $data1 = array();
         foreach($no_part as $key=>$value){ 
             $total = $stok[$key] + $qty_masuk[$key];
@@ -134,10 +134,10 @@ class Mod_part_masuk extends CI_Model
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
             'stok'=>$total,
-            'stok_cbt'=>$total_jkt
+            'stok_jkt'=>$total_jkt
         );
                 }}
-                if($nm_lok=="Jakarta"){
+                if($nm_lok=="Cibitung"){
                     $data1 = array();
                     foreach($no_part as $key=>$value){
                         $total = $stok[$key] + $qty_masuk[$key];
@@ -145,7 +145,7 @@ class Mod_part_masuk extends CI_Model
                         $data1[]  = array(
                         'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
                         'stok'=>$total,
-                        'stok_jkt'=>$total_cbt
+                        'stok_cbt'=>$total_cbt
                     );
                 }}
                 if($nm_lok=="Surabaya"){

@@ -17,6 +17,7 @@ class Part_masuk_npo extends MY_Controller
 		$data['judul'] 		= "Input Stok";
 		$this->load->helper('url');
         $data['dataSup'] = $this->Mod_part_masuknpo->get_sup();
+        $data['dataKota'] = $this->Mod_part_masuknpo->get_kota();
 		$this->template->load('layoutbackend', 'warehouse/part_masuk_non_po',$data);
 	}
 	public function ajax_list()
@@ -29,16 +30,17 @@ class Part_masuk_npo extends MY_Controller
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "<a onclick=selectPart('$pel->id_barang')>$no</a>";
+			$row[] = "<a onclick=selectPart('$pel->id_part')>$no</a>";
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
 			$row[] = $pel->stok;
-			$row[] = number_format($pel->hrg_awal);
+			$row[] = number_format($pel->harga_baru);
 			$row[] = $pel->kode_satuan;
-			$row[] = $pel->id_barang;
-			$row[] = $pel->stok_a;
-			$row[] = $pel->stok_p;
-			$row[] = $pel->hrg_awal;
+			$row[] = $pel->id_part;
+			$row[] = $pel->stok_jkt;
+			$row[] = $pel->stok_cbt;
+			$row[] = $pel->stok_sby;
+			$row[] = $pel->harga_baru;
 			$data[] = $row;
 		}
 
@@ -96,6 +98,12 @@ class Part_masuk_npo extends MY_Controller
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
+
+			$lokasi = $this->input->post('lokasi');				
+			$kl = explode('|',$lokasi);
+			$kd_lok = $kl[0];
+			$nm_lok = $kl[1];
+
 			$idnye=$data['kode_masuk'];
 			$kode_masuk  = $data['id_masuk'];
 			$ret=""; if (!empty($data['return'])){ 
@@ -104,12 +112,13 @@ class Part_masuk_npo extends MY_Controller
 				'kode_masuk'  	=> $data['kode_masuk'],
 				'id_masuk'  	=> $data['id_masuk'],
 				'tgl_masuk'  	=> $tgl_masuk,
-				'status'      	=> $data['status'],
+				'status'      	=> $kd_lok ,
 				'keterangan'  	=> $data['keterangan'],
 				'status_po'		=> 'N',
 				'no_sj_sup'		=> $data['no_sj_sup'],
 				'no_inv_sup'	=> $data['no_inv_sup'],
 				'kode_sup'		=> $data['supplier'],
+				'lokasi'   		=> $nm_lok,
 				'user'   		=> $data['user'],
 				'part_return'	=> $ret
 			);
@@ -119,10 +128,15 @@ class Part_masuk_npo extends MY_Controller
 				$nama_part 	= $this->input->post('nama_part');
 				$qty_masuk 	= $this->input->post('qty_masuk');
 				$stok 		= $this->input->post('stok');
-				$stok_a 	= $this->input->post('stok_a');
-				$stok_p 	= $this->input->post('stok_p');
+				$stok_jkt = $this->input->post('stok_jkt');
+				$stok_cbt = $this->input->post('stok_cbt');
+				$stok_sby = $this->input->post('stok_sby');
+				$lokasi = $this->input->post('lokasi');
+				$kl = explode('|',$lokasi);
+				$kd_lok = $kl[0];
+				$nm_lok = $kl[1];
 				//$kode_po=$data['id_po'];
-				$this->Mod_part_masuknpo->insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_a,$stok_p);
+				$this->Mod_part_masuknpo->insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok);
 			if ($result > 0) {
 				$out['dataPo'] = $idnye;
 				$out['status'] = '';

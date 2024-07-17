@@ -31,12 +31,12 @@
 
                     <td><?php echo $no; ?></td>
                     <td><?php echo $s->kelompok; ?></td>
-                    <td><?php echo $s->type_mesin; ?></td>
-                    <td><?php echo $s->lokasi; ?></td>
+                    <td><?php echo $s->type; ?></td>
+                    <td><?php echo $s->lokasi_part; ?></td>
                     <td><?php echo $s->no_part; ?></td>
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo $s->stok; ?></td>
+                    <td><?php echo $s->stok_barang; ?></td>
                     <td style="background-color: lightgrey;"></td>
                   </tr>
                 <?php

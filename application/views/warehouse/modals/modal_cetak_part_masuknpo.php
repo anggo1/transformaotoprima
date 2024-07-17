@@ -120,7 +120,7 @@
 	foreach ($dataMasuk as $k) {
   }
 	$status=$k->status;
-	$apl = $this->db->get("aplikasi where status='".$k->status."'")->row();
+	$apl = $this->db->get("aplikasi where lokasi='".$this->session->userdata['lokasi']."'")->row();
 
 	?>
 
@@ -178,6 +178,7 @@
           <th width="10%" rowspan="2" style="text-align: center;">Harga</th>
           <th width="5%" rowspan="2" style="text-align: center;">Jumlah</th>
           <th width="10%" rowspan="2" style="text-align: center;">Total</th>
+          <th width="5%" rowspan="2" style="text-align: center;">Status Stok</th>
           <th colspan="3" align="center" style="text-align: center;">Stok</th>
         </tr>
           <tr>
@@ -189,7 +190,7 @@
         $no = 0;
         $total = 0;
         foreach ($detailMasuk as $d) : $no++;
-          $total += $d->hrg_awal * $d->jumlah;
+          $total += $d->harga_baru * $d->jumlah;
           $stok=$d->stok;
           if(empty($stok)){
             $stok='0';
@@ -200,9 +201,10 @@
             <th style="text-align: center;"><?php echo $d->no_part ?></th>
             <th><?php echo $d->nama_part ?></th>
             <th style="text-align: center;"><?php echo $d->nama_satuan?></th>
-            <th  style="text-align: right;"><?php echo number_format($d->hrg_awal) ?></th>
+            <th  style="text-align: right;"><?php echo number_format($d->harga_baru) ?></th>
             <th style="text-align: center;"><?php echo $d->jumlah ?></th>
-            <th style="text-align: right;"><?php echo number_format($d->hrg_awal * $d->jumlah) ?></th>
+            <th style="text-align: right;"><?php echo number_format($d->harga_baru * $d->jumlah) ?></th>
+            <th style="text-align: center;"><?php echo $d->status_part ?></th>
             <th style="text-align: center;"><?php echo $stok-$d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $stok ?></th>

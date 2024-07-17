@@ -6,7 +6,7 @@ class Mod_part_masuknpo extends CI_Model
     var $table = 'tbl_wh_barang';
     var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
     var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
-    var $order = array('id_barang' => 'desc'); // default order 
+    var $order = array('id_part' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -16,11 +16,11 @@ class Mod_part_masuknpo extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,d.type_mesin,e.kelompok');
+        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,e.kelompok');
         $this->db->from('tbl_wh_barang as a');
         $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
         $this->db->join('tbl_wh_satuan as c','c.id_satuan=a.satuan', 'left');
-        $this->db->join('tbl_wh_type_mesin as d','d.id_type=a.type','left');
+        //$this->db->join('tbl_wh_type_mesin as d','d.id_type=a.type','left');
         $this->db->join('tbl_wh_kelompok as e','e.id_kelompok=a.kelompok','left');
         $i = 0;
 
@@ -86,6 +86,15 @@ class Mod_part_masuknpo extends CI_Model
 
 		return $data->result();
     }
+    function get_kota()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_kota');
+        //$this->db->where('status', 'N');
+		$data = $this->db->get();
+
+		return $data->result();
+    }
     function get_po()
     {
         $this->db->select('a.*,b.*');
@@ -113,7 +122,7 @@ class Mod_part_masuknpo extends CI_Model
         $this->db->join('tbl_wh_type_mesin as d', 'd.id_type=a.type', 'left');
         $this->db->join('tbl_wh_kelompok as e', 'e.id_kelompok=a.kelompok', 'left');
         $this->db->join('tbl_wh_supplier as f', 'f.id_supplier=a.supplier', 'left');
-        $this->db->where('a.id_barang', $id);
+        $this->db->where('a.id_part', $id);
         return $this->db->get('tbl_wh_barang')->row();
     }
     public function select_detail($id)
@@ -130,6 +139,11 @@ class Mod_part_masuknpo extends CI_Model
     }
     public function insert_part($data)
     {
+        
+		$lokasi = $data['tgl_masuk'];
+		$kl = explode('|',$lokasi);
+		$kd_lok = $kl[0];
+
         $date = $data['tgl_masuk'];
         $tgl1 = explode('-', $date);
         $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
@@ -137,15 +151,13 @@ class Mod_part_masuknpo extends CI_Model
         $sql = "INSERT INTO tbl_wh_detail_part_masuk SET
         id_masuk    ='".$data['kode_masuk']."',
         no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
+        nama_part   ='".$kd_lok."',
         status_po   ='N',
         tgl_masuk   ='$tgl_masuk',
         jumlah      ='0',
         satuan    ='".$data['satuan']."',
-        hrg_part    ='".$data['hrg_awal']."',
-        stok_akhir  ='".$data['stok']."',
-        stok_a      ='".$data['stok_a']."',
-        stok_p      ='".$data['stok_p']."'";
+        hrg_part    ='".$data['harga_baru']."',
+        stok_akhir  ='".$data['stok']."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -162,39 +174,51 @@ class Mod_part_masuknpo extends CI_Model
 	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
-    public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_a,$stok_p)
+    public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
     {
         $date = $data['date1'];
         $tgl1 = explode('-', $date);
         $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
-        $status_barang = $data['status'];
+        //$status_barang = $data['status'];
         $ret=""; if (!empty($data['return'])){ 
         $ret=$data['return']; }else { $ret='N'; }
-        if($status_barang=="PPU"){
+        
+       if($nm_lok=="Jakarta"){
         $data1 = array();
-        foreach($no_part as $key=>$value){
+        foreach($no_part as $key=>$value){ 
             $total = $stok[$key] + $qty_masuk[$key];
-            $total_a= $stok_a[$key] + $qty_masuk[$key];
+            $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
             'stok'=>$total,
-            'stok_a'=>$total_a
+            'stok_jkt'=>$total_jkt
         );
     }}
-    if($status_barang=="MPU"){
+    if($nm_lok=="Cibitung"){
         $data1 = array();
         foreach($no_part as $key=>$value){
             $total = $stok[$key] + $qty_masuk[$key];
-            $total_p= $stok_p[$key] + $qty_masuk[$key];
+            $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
             'stok'=>$total,
-            'stok_p'=>$total_p
+            'stok_cbt'=>$total_cbt
+        );
+    }}
+    if($nm_lok=="Surabaya"){
+        $data1 = array();
+        foreach($no_part as $key=>$value){
+            $total = $stok[$key] + $qty_masuk[$key];
+            $total_sby= $stok_sby[$key] + $qty_masuk[$key];
+            $data1[]  = array(
+            'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+            'stok'=>$total,
+            'stok_sby'=>$total_sby
         );
     }}
         $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
 
-        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$status_barang."', tgl_masuk='".$tgl_masuk."', status_part='".$data['status']."', part_return='".$ret."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
+        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$kd_lok."', tgl_masuk='".$tgl_masuk."', part_return='".$ret."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
     }
     public function deletepartDetail($id)

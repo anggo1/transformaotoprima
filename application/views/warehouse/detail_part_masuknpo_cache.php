@@ -31,10 +31,10 @@
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
             <td><?php echo $s->stok; ?></td>
-            <td><?php echo $s->hrg_awal; ?></td>
+            <td><?php echo $s->harga_baru; ?></td>
             <td><?php echo $s->hrg_part;?></td>
             <td><?php echo $s->jumlah; ?></td>
-            <td><?php if(empty($s->hrg_part)) { echo number_format($s->hrg_awal * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>
+            <td><?php if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>
         </tr>
         <?php
             $no++;
