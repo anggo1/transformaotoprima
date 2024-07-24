@@ -13,11 +13,12 @@ class Part_keluar extends MY_Controller
 
 	public function index()
 	{
-		$data['page'] 		= "Barang Keluar Non PK";
+		$data['page'] 		= "Barang Keluar Non PO";
 		$data['judul'] 		= "Barang Keluar";
 		$this->load->helper('url');
 		$data['dataSupplier'] = $this->Mod_part_keluar->select_supplier();
         $data['dataKategori'] = $this->Mod_part_keluar->select_kategori();
+        $data['dataKota'] = $this->Mod_part_keluar->get_kota();
 		$this->template->load('layoutbackend', 'warehouse/part_keluar', $data);
 	}
 
@@ -31,15 +32,17 @@ class Part_keluar extends MY_Controller
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "<a onclick=selectPart('$pel->id_barang')>$no</a>";
+			$row[] = "<a onclick=selectPart('$pel->id_part')>$no</a>";
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
 			$row[] = $pel->stok;
+			$row[] = number_format($pel->harga_baru);
 			$row[] = $pel->kode_satuan;
-			$row[] = $pel->id_barang;
-			$row[] = $pel->stok_a;
-			$row[] = $pel->stok_p;
-			$row[] = $pel->hrg_awal;
+			$row[] = $pel->id_part;
+			$row[] = $pel->stok_jkt;
+			$row[] = $pel->stok_cbt;
+			$row[] = $pel->stok_sby;
+			$row[] = $pel->harga_baru;
 			$data[] = $row;
 		}
 
@@ -90,44 +93,22 @@ class Part_keluar extends MY_Controller
 			$tgl_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
 			$sekarang = date('Y/m/d');
 			
-			$divisi = $data['divisi'];			
-			$status_div="";
-			if(empty($divisi)){
-				$data = array(
-					'kode_keluar' 	=> $data['kode_keluar'],
-					'id_keluar' 	=> $data['id_keluar'],
-					'tgl_keluar' 	=> $tgl_fix,
-					'tujuan'		=> $data['tujuan'],
-					'status'		=> $data['status_part'],
-					'no_spk'		=> "NON",
-					'keterangan'	=> $data['ket_surat'],
-					'user'   		=> $data['user'],
-					'no_po_cus'   	=> $data['no_po_cus'],
-					'alamat'   		=> $data['alamat']
-				);
-				
-				$data['dataKeluar'] = $this->db->insert('tbl_wh_part_keluar', $data);
-				$data 		= $this->input->post();
-				$no_part 	= $this->input->post('no_part');
-				$nama_part 	= $this->input->post('nama_part');
-				$qty_keluar 	= $this->input->post('qty_keluar');
-				$stok 		= $this->input->post('stok');
-				$stok_a 	= $this->input->post('stok_a');
-				$stok_p 	= $this->input->post('stok_p');
-				$this->Mod_part_keluar->insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_a,$stok_p);
-
-			}else{
+			$divisi = $data['divisi'];		
 				$divisi = $data['divisi'];
 				$div = explode('|', $divisi);
 				$id_div = $div[0];
 				$nama_div = $div[1];
+				$lokasi 	= $data['lokasi'];
+				$loknye = explode('|',$lokasi);
+				$kd_lok = $loknye[0];
+				$nm_lok = $loknye[1];
 				$data = array(
 				'kode_keluar' 	=> $data['kode_keluar'],
 				'id_keluar' 	=> $data['id_keluar'],
 				'tgl_keluar' 	=> $tgl_fix,
 				'tujuan'		=> $data['tujuan'],
-				'status'		=> $data['status_part'],
-				'no_spk'		=> "DIV",
+				'lokasi'		=> $data['lokasi'],
+				'no_spk'		=> "NON",
 				'keterangan'	=> $data['ket_surat'],
 				'user'   		=> $data['user'],
 				'no_po_cus'   	=> $data['no_po_cus'],
@@ -141,11 +122,16 @@ class Part_keluar extends MY_Controller
 				$no_part 	= $this->input->post('no_part');
 				$nama_part 	= $this->input->post('nama_part');
 				$qty_keluar 	= $this->input->post('qty_keluar');
-				$stok 		= $this->input->post('stok');
-				$stok_a 	= $this->input->post('stok_a');
-				$stok_p 	= $this->input->post('stok_p');
-				$this->Mod_part_keluar->insertGlobal_divisi($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_a,$stok_p,$id_div,$nama_div);
-				}
+				$stok 	= $this->input->post('stok');
+				$stok_jkt 	= $this->input->post('stok_jkt');
+				$stok_cbt 	= $this->input->post('stok_cbt');
+				$stok_sby 	= $this->input->post('stok_sby');
+				$lokasi 	= $this->input->post('lokasi');
+				$lokasinye = explode('|',$lokasi);
+				$kd_lok = $lokasinye[0];
+				$nm_lok = $lokasinye[1];
+				$this->Mod_part_keluar->insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok);
+				
 			if ($result > 0) {
 				$out['dataKeluar'] = $kode_keluar;
 				$out['status'] = '';

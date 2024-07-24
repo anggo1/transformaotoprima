@@ -162,62 +162,62 @@ font-family:Georgia, "Times New Roman", Times, serif;
 
 </table>
   <table width="100%" border="0" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="datatable1">
-    <thead>
+  <thead>
       <tr>
         <th colspan="2"><div align="left"></div></th>
-        <th>&nbsp;</th>
-        <th><div align="left">: <?php echo  $apl1->nama_owner; ?></div></th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th colspan="2"><div align="left">Estimasi Penawaran Sparepart</div></th>
         <th>&nbsp;</th>
         <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
+        <th colspan="2"><div align="left">Estimasi Penawaran Sparepart</div></th>
+        <th>&nbsp;</th>
+        <th><div align="left"><?php echo  $apl1->nama_owner; ?></div></th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
         <th><div align="left">Customer Name</div></th>
         <th><div align="left">: <?php echo $k->nama_cus; ?></div></th>
-        <th width="255">&nbsp;</th>
-        <th width="319">&nbsp;</th>
-        <th width="148">&nbsp;</th>
+        <th width="138">&nbsp;</th>
+        <th width="513"><div align="left"><?php echo  $apl1->status; ?></div></th>
+        <th width="71">&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Address</div></th>
         <th><div align="left">: <?php echo $k->alamat ?></div></th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="32"><div align="left">City</div></th>
-        <th height="32"><div align="left">: <?php echo $k->kota ?></div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th><div align="left"><?php echo  $apl1->alamat; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="28"><div align="left">Up</div></th>
-        <th height="28"><div align="left">: <?php echo $k->tlp_person ?></div></th>
+        <th height="20"><div align="left">City</div></th>
+        <th height="20"><div align="left">: <?php echo $k->kota ?></div></th>
         <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-      </tr>
-      <tr>
-        <th height="27"><div align="left">Telp or Mobile no</div></th>
-        <th height="27"><div align="left">: <?php echo $k->no_tlp ?></div></th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th><div align="left"><?php echo  $apl1->kota.' '.$apl1->kode_pos; ?> Indonesia</div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th height="27" colspan="2">&nbsp;</th>
+        <th height="20"><div align="left">Up</div></th>
+        <th height="20"><div align="left">: <?php echo $k->tlp_person ?></div></th>
+        <th>&nbsp;</th>
+        <th><div align="left"><?php echo  $apl1->tlp; ?></div></th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th height="20"><div align="left">Telp or Mobile no</div></th>
+        <th height="20"><div align="left">: <?php echo $k->no_tlp ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th width="185" height="28">&nbsp;</th>
+        <th height="19" colspan="2">&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr>
+        <th width="185" height="19">&nbsp;</th>
         <th width="489">&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -276,8 +276,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th width="11%"><div align="center">Part Number</div></th>
           <th ><strong>Description</strong></th>
           <th ><strong>Pricelist</strong></th>
-          <th ><strong>Discount</strong></th>
-          <th width="8%">Price</th>
+          <th ><strong>Discount%</strong></th>
+          <th width="8%">Net Price</th>
           <th width="4%"><div align="center">Pcs</div></th>
           <th width="7%"><div align="center">Amount</div></th>
           <th width="14%"><div align="center">Remarks</div></th>
@@ -295,9 +295,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
             <td width="39%"><div align="center"><?php echo $d->nama_part ?></div></td>
             <td width="8%" align="right"><?php echo "Rp. " .number_format($d->harga,0,",",".") ?></td>
-            <td width="6%" align="center"><?php echo number_format($d->diskon) ?></td>
+            <td width="6%" align="center"><?php echo $d->diskon ?></td>
             <td width="8%"><div align="right">&nbsp;<?php echo "Rp. " . number_format($d->harga_net,0,",",".") ?></div></td>
-            <td width="4%"><div align="center">&nbsp;<?php echo "Rp. " .number_format($d->jumlah) ?></div></td>
+            <td width="4%"><div align="center">&nbsp;<?php echo $d->jumlah ?></div></td>
             <td><div align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>
@@ -369,11 +369,11 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td>&nbsp;</td>
           </tr>
           <?php
-        foreach ($detailKet as $k) :    ?>
+        foreach ($detailKet as $c) :    ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-              <td colspan="3"><font size="-2">** <?php echo $k->remark; ?></font></td>
+              <td colspan="3"><font size="-2">** <?php echo $c->remark; ?></font></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -409,12 +409,12 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <tr>
             <td>Ongkos Kirim</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td align="right"><?php echo "Rp. " .number_format($k->bea_kirim,0,",","."); ?></td>
           </tr>
           <tr>
             <td>Grand Total</td>
             <td align="right">&nbsp;</td>
-            <td align="right"><?php echo "Rp. " .number_format($grand_total + $ppn,0,",","."); ?></td>
+            <td align="right"><?php echo "Rp. " .number_format($grand_total + $ppn + $k->bea_kirim,0,",","."); ?></td>
           </tr>
       </thead>
 
@@ -466,5 +466,5 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </div>
 <div class="modal-footer justify-content-between">
 <button type="button" id="btnPrint" class="btn btn-success"><span class="fa fa-print"></span>&nbsp;&nbsp; C E T A K </button>
-  <button class="btn btn-danger" id="tutup" onClick="window.location.assign(" <?php echo base_url(); ?>/Transaksi/Pengiriman");" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
+  <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
     </div>

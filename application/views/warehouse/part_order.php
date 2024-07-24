@@ -51,7 +51,7 @@
                                     </div>
                                     <label class="col-sm-1 col-form-label">No Order</label>
                                     <div class="row col-sm-4">
-                                        <select name="kode" id="kode" class="col-sm-2 form-control">
+                                        <select name="kode" id="kode" class="col-sm-2 form-control" required>
                                             <option value="">Kode...
                                             </option>
                                             <?php
@@ -94,9 +94,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="Nama Konsumen" class="col-sm-2 col-form-label"></label>
+                                   
+                                <label class="col-sm-2 col-form-label">Stok Cabang</label>
                                     <div class="col-sm-4">
-
+                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                            <option value="">Cabang Dealer...
+                                            </option>
+                                            <?php
+                                            $lok = $this->session->userdata['lokasi'];
+                                                                    foreach ($dataKota as $kel) { ?>
+                                                                <option
+                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
+                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
+                                                                    <?php echo $kel->nama_kota; ?>
+                                                                </option>
+                                                                <?php }  ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <input type="hidden" name="id_part_order" id="id_part_order"

@@ -26,7 +26,7 @@
 						</div>
 						<div class="modal-body">
 						<?php
-						$kd='PBN-';
+						$kd='TOP-';
 								$tgl_keluar = date("y-m-d");
 								$date = date("ym");
 								$ci_kons = get_instance();
@@ -84,18 +84,27 @@
 									</div>
 									</div>
 								<div class="form-group row">
-									<label class="col-sm-2 col-form-label">Status</label>
-									<div class="col-sm-4">
-										<select name="status_part" id="status_part" class="form-control" onchange="myFunction()" onclick="myFunction()" required>
-											<option value="">Pilih Status ...</option>
-											<option value="PPU">PPU</option>
-											<option value="MPU">MPU</option>
-										</select>
-									</div>
-									<label class="col-sm-2 col-form-label">Divisi</label>
+                                    <label class="col-sm-2 col-form-label">Stok Cabang</label>
+                                    <div class="col-sm-4">
+                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                            <option value="">Cabang Dealer...
+                                            </option>
+                                            <?php
+                                            $lok = $this->session->userdata['lokasi'];
+                                                                    foreach ($dataKota as $kel) { ?>
+                                                                <option
+                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
+                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
+                                                                    <?php echo $kel->nama_kota; ?>
+                                                                </option>
+                                                                <?php }  ?>
+                                        </select>
+                                    </div>
+									<label class="col-sm-2 col-form-label">Kategori</label>
                                                         <div class="col-sm-4">
-                                                            <select name="divisi" id="divisi" class="form-control">
-                                                                <option value="">Pilih Divisi...
+                                                            <select name="divisi" id="divisi" class="form-control" required>
+                                                                <option value="">Pilih Kategori...
                                                                 </option>
                                                                 <?php
                                                             if (empty($part->kategori)) { foreach ($dataKategori as $kt) {
@@ -120,7 +129,7 @@
 						</div>
 						<input type="hidden" name="user" id="user" value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
 						<div class="modal-footer justify-content-between">
-								<button type="button" class="btn btn-xl btn-success" disabled id="tambahBarang" title="Add Part" data-toggle="modal" data-target="#modal_form"><i class="fas fa-plus"></i> Tambah Barang</button>
+								<button type="button" class="btn btn-xl btn-success" id="tambahBarang" title="Add Part" data-toggle="modal" data-target="#modal_form"><i class="fas fa-plus"></i> Tambah Barang</button>
 									<button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span> Simpan</button>
 								<button type="button" class="btn bg-gradient-info cetak-keluar" id="cetak" hidden="hidden" data-id="" title="Cetak"><i class="fas fa-print"></i> Surat Jalan</button>
                                 <button type="button" class="btn bg-gradient-indigo cetak-bon-keluar" id="cetakBon" hidden="hidden" title="Cetak Bon"><i
@@ -215,25 +224,26 @@
 
     $('#table-part tbody').on('click', 'tr', function () {
         var data = table.row( this ).data();
-		var id_barang = data[5];
-		var no_part		= data[1];
-		var nama_part	= data[2];
-		var stok		= data[3];
-		var satuan		= data[4];
-		var stok_a		= data[6];
-		var stok_p		= data[7];
-		var hrg_awal	= data[8];
-        selectPart(id_barang,no_part,nama_part,satuan,stok,stok_a,stok_p,hrg_awal);
+        var id_part = data[6];
+        var no_part = data[1];
+        var nama_part = data[2];
+        var stok = data[3];
+        var satuan = data[5];
+        var stok_jkt = data[7];
+        var stok_cbt = data[8];
+        var stok_sby = data[9];
+        var harga_baru = data[10];
+        selectPart(id_part,no_part,nama_part,satuan,stok,stok_jkt,stok_cbt,stok_sby,harga_baru);
     } );
 } );
 	function refresh() {
 		//MyTable = $('#table-part').dataTable();
 	}
     
-	function selectPart(id_barang,no_part,nama_part,satuan,stok,stok_a,stok_p,hrg_awal) {
+	function selectPart(id_part,no_part,nama_part,satuan,stok,harga_baru) {
 		var tgl_keluar = document.formKeluar.tgl_keluar.value;
 		var id_keluar = document.formKeluar.id_keluar.value;
-		var status_part = document.formKeluar.status_part.value;
+		var lokasi = document.formKeluar.lokasi.value;
 		
 				$.ajax({
 				method: 'POST',
@@ -241,15 +251,13 @@
 				data: 
 				"tgl_keluar=" + tgl_keluar +
 				"&id_keluar=" + id_keluar +
-				"&id_barang="+id_barang + 
+				"&id_part="+id_part + 
 				"&no_part="+no_part + 
 				"&nama_part="+nama_part + 
 				"&satuan="+satuan + 
-				"&status_part="+status_part + 
+				"&lokasi="+lokasi + 
 				"&stok="+stok + 
-				"&stok_a="+stok_a + 
-				"&stok_p="+stok_p + 
-				"&hrg_awal="+hrg_awal 
+				"&harga_baru="+harga_baru 
 			})
 			
 			tampilDetail(id_keluar);

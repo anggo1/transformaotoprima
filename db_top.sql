@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2024 at 10:51 AM
+-- Generation Time: Jul 24, 2024 at 10:15 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -795,7 +795,13 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (909, 12, 110, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (913, 1, 112, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (914, 10, 112, 'N', 'N', 'N', 'N', 'N', 'N'),
-(915, 12, 112, 'Y', 'Y', 'Y', 'Y', 'Y', 'N');
+(915, 12, 112, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(916, 1, 113, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(917, 10, 113, 'N', 'N', 'N', 'N', 'N', 'N'),
+(918, 12, 113, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(919, 1, 114, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(920, 10, 114, 'N', 'N', 'N', 'N', 'N', 'N'),
+(921, 12, 114, 'Y', 'Y', 'Y', 'Y', 'Y', 'N');
 
 -- --------------------------------------------------------
 
@@ -1051,9 +1057,9 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 (24, 'Proses PK Aktif', 'ProsesPk', 'fa fa-retweet', 52, 'Y', 6),
 (37, 'Report SPK Pertanggal', 'ReportBrSpkPertanggal', 'fa fa-calendar', 59, 'Y', 15),
 (43, 'Material&Sparepart', 'Sparepart', 'fa fa-wrench', 57, 'Y', 1),
-(44, 'Part Masuk PO', 'Part_masuk', 'fa fa-file-signature', 57, 'Y', 5),
-(45, 'Update Harga', 'UpdateHpart', 'fa fa-hand-holding-usd', 57, 'Y', 7),
-(53, 'Panel Setting Gudang', 'Settingwh', 'fa fa-cogs', 57, 'Y', 10),
+(44, 'Part Masuk PO', 'Part_masuk', 'fa fa-file-signature', 57, 'Y', 9),
+(45, 'Update Harga', 'UpdateHpart', 'fa fa-hand-holding-usd', 57, 'Y', 3),
+(53, 'Panel Setting Gudang', 'Settingwh', 'fa fa-cogs', 57, 'Y', 20),
 (62, 'Daftar Akun', 'Account', 'fa fa-list', 60, 'Y', 3),
 (63, 'Jurnal Umum', 'jurnal', 'fa fa-tags', 60, 'Y', 4),
 (64, 'Buku Besar', 'BukuBesar', 'fa fa-book', 60, 'Y', 8),
@@ -1061,7 +1067,7 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 (66, 'Neraca Saldo Akhir', '#', 'fa fa-balance-scale', 60, 'Y', 7),
 (67, 'Report Keuangan', '#', 'fa fa-folder-open', 65, 'Y', 1),
 (68, 'Report Laba Rugi', '#', 'fa fa-list-alt', 65, 'Y', 6),
-(70, 'Purchase Order', 'PurchaseOrder', 'fa fa-coins', 57, 'Y', 2),
+(70, 'Purchase Order', 'PurchaseOrder', 'fa fa-coins', 57, 'Y', 5),
 (72, 'Daftar Bus', 'Body', 'fa fa-bus', 52, 'Y', 2),
 (73, 'BAST', 'Bast', 'fa fa-bus-alt', 52, 'Y', 3),
 (74, 'Panel Seting', 'Settingbr', 'fa fa-cogs', 52, 'Y', 8),
@@ -1074,7 +1080,7 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 (82, 'Panel Setting', 'SettingAcc', 'fa fa-cogs', 60, 'Y', 9),
 (84, 'List P O', 'ReportWhPo', 'fa fa-tasks', 61, 'Y', 0),
 (85, 'Report Part PK', 'ReportWhPartpk', 'fa fa-tasks', 61, 'Y', 10),
-(86, 'Part Masuk Non PO', 'Part_masuk_npo', 'fa fa-file-signature', 57, 'Y', 6),
+(86, 'Part Masuk Non PO', 'Part_masuk_npo', 'fa fa-file-signature', 57, 'Y', 10),
 (87, 'List Part Estimasi', 'ListPartEstimasi', 'fa fa-tasks', 52, 'Y', 7),
 (90, 'Report Upah Borongan', 'ReportUpahBorong', 'fa fa-file-contract', 65, 'Y', 1),
 (91, 'Bus Keluar', 'BusKeluar', 'fa fa-exchange-alt', 52, 'Y', 7),
@@ -1082,20 +1088,22 @@ INSERT INTO `tbl_submenu` (`id_submenu`, `nama_submenu`, `link`, `icon`, `id_men
 (93, 'Saldo Awal', 'Saldo', 'fa fa-donate', 60, 'Y', 5),
 (95, 'Barang Per Divisi', 'ReportAccPerpk', 'fa fa-hammer', 65, 'Y', 4),
 (96, 'Total Biaya SPK', 'ReportAccSpk', 'fa fa-money-bill-wave', 65, 'Y', 5),
-(97, 'Stok Opname', 'StokOpname', 'fa fa-pencil-ruler', 57, 'Y', 8),
+(97, 'Stock Opname', 'StokOpname', 'fa fa-pencil-ruler', 57, 'Y', 12),
 (98, 'Report Stok Opname', 'ReportOpname', 'fa fa-vote-yea', 61, 'Y', 8),
 (99, 'Report Barang Masuk', 'ReportWhMasukPerbarang', 'fa fa-chalkboard-teacher', 61, 'Y', 8),
 (100, 'Report Stok Opname', 'ReportAccOpname', 'fa fa-vote-yea', 65, 'Y', 8),
 (101, 'Report SPK Mingguan', 'ReportAccSpkPerminggu', 'fa fa-tasks', 65, 'Y', 1),
 (103, 'Report PK Selesai', 'ReportDataSelesai', 'fa  fa-newspaper', 59, 'Y', 2),
-(104, 'Part Order', 'PartOrder', 'fa fa-cart-plus', 57, 'Y', 3),
-(105, 'Estimasi Penawaran', 'EstimasiPenawaran', 'fa fa-envelope-open-text', 57, 'Y', 4),
-(106, 'Part Keluar', 'Part_keluar', 'fa fa-file-signature', 57, 'Y', 5),
+(104, 'Part Order', 'PartOrder', 'fa fa-cart-plus', 57, 'Y', 5),
+(105, 'Estimasi Penawaran', 'EstimasiPenawaran', 'fa fa-envelope-open-text', 57, 'Y', 6),
+(106, 'Part Keluar', 'Part_keluar', 'fa fa-file-signature', 57, 'Y', 11),
 (107, 'List Penawaran', 'ReportWhPenawaran', 'fa fa-list', 61, 'Y', 2),
 (108, 'List Part Order', 'ReportWhPartorder', 'fa fa-list', 61, 'Y', 1),
-(109, 'Purchase Order Masuk', 'PoMasuk', 'fa fa-coins', 57, 'Y', 3),
+(109, 'Purchase Order Masuk', 'PoMasuk', 'fa fa-coins', 57, 'Y', 6),
 (110, 'List PO Masuk', 'ReportWhPoMasuk', 'fa fa-tasks', 61, 'Y', 0),
-(112, 'Lokasi Stok Gudang', 'LokasiGudang', 'fa fa-map-marker-alt', 57, 'Y', 11);
+(112, 'Estimasi Penawaran Service', '#', 'fas fa-screwdriver', 57, 'Y', 7),
+(113, 'Part Keluar PO', '#', 'fa fa-file-signature', 57, 'Y', 12),
+(114, 'Transfer Stock Part', '#', 'fas fa-share', 57, 'Y', 2);
 
 -- --------------------------------------------------------
 
@@ -3637,8 +3645,8 @@ INSERT INTO `tbl_wh_barang` (`id_part`, `no_part`, `nama_part`, `nama_part_e`, `
 (2420, 'MA970 262 30 34                                   ', 'SYNCHRONIZER RING 1ST AND 2ND SPEED               ', '                                                  ', 'PCS                      ', '                         ', '               ', '11', '', 0, 1151823, 0, '', 0, 0, 'A13 - DC1      ', '', '                                                  ', 0, '11', '          ', 'PT DCVI   ', '0', 'Sparepart', '', 0, '', 0, '', 0, '0'),
 (2424, 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bambi Ukuran F4', 'Plastik PP POCKET F/C 5221 Merk Bambi Ukuran F4', 'Pack', 'ATK', 'Lain-lain', '13', '', 24500, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 0, '', 3, '', 0, '0'),
 (2425, 'FC12346', 'MAP Bening Tanpa Tali Folder One UK F4', '', 'Pack', 'ATK', '', '15', '', 27000, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 0, '', 3, '', 2, '0'),
-(2426, 'FC12347', 'Amplop Coklat Tanpa Tali ', '', 'Pack', 'ATK', '', '15', '', 31500, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 0, '', 3, '', 2, '0'),
-(2427, 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', '', 'Pack', 'ATK', '', '16', '', 77900, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 2, '1JKT', 2, '2CBT', 2, '3SBY');
+(2426, 'FC12347', 'Amplop Coklat Tanpa Tali ', '', 'Pack', 'ATK', '', '1', '', 31500, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 3, '', 8, '', 2, '0'),
+(2427, 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', '', 'Pack', 'ATK', '', '0', '', 77900, 0, 0, '', 0, 0, '', '', '', 0, '', '', 'SP-0001', '', 'ATK', '', 2, '1JKT', 0, '2CBT', 2, '3SBY');
 
 -- --------------------------------------------------------
 
@@ -3721,17 +3729,6 @@ CREATE TABLE `tbl_wh_detail_estimasi_penawaran` (
   `remark` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_wh_detail_estimasi_penawaran`
---
-
-INSERT INTO `tbl_wh_detail_estimasi_penawaran` (`id_detail`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `harga_net`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
-(22, '24-07001', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 1, '', 0, 4919900, 4919900, '8', 'N', 1, 0, 'Y', 'test'),
-(23, '24-07001', '', 'MA002 545 00 09/64       ', 'TAPPET SWITCH                      ', 'PCS                      ', 660400, 2, '', 0, 660400, 1320800, '5', 'N', 2, 0, 'Y', 'test'),
-(25, '24-07001', '', 'BA012 542 47 17/01       ', 'ROTATIONAL SPEED SENSOR            ', 'PCS                      ', 7576000, 1, '', 0, 7576000, 7576000, '4', 'N', 1, 0, 'Y', 'test1'),
-(31, '24-07002', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, 10362600, '1', 'N', 1, 0, 'Y', 'test'),
-(33, '24-07002', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 5, '', 0, 4919900, 24599500, '8', 'N', 5, 0, 'Y', 'test');
-
 -- --------------------------------------------------------
 
 --
@@ -3744,34 +3741,6 @@ CREATE TABLE `tbl_wh_detail_estimasi_penawaran_note` (
   `kode_estimasi_penawaran` varchar(35) NOT NULL,
   `remark` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_detail_estimasi_penawaran_note`
---
-
-INSERT INTO `tbl_wh_detail_estimasi_penawaran_note` (`id_detail_note`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `remark`) VALUES
-(57, '24-07001', '', 'Masa berlaku 7 hari'),
-(58, '24-07001', '', 'Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
-(59, '24-07001', '', 'Harga dapat berubah sewaktu-waktu'),
-(60, '24-07001', '', 'Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
-(61, '24-07001', '', 'Term of Payment Cash Before Delivery'),
-(62, '24-07001', '', 'Harga Sudah Termasuk Diskon'),
-(63, '24-07001', '', 'Barga Belum termasuk ongkos kirim'),
-(64, '24-07001', '', 'Harga Belum termasuk jasa'),
-(65, '24-07001', '', 'Semua sparepart yang kami tawarkan original Merced...'),
-(66, '24-07001', '', 'Jika ada sparepart yang Tidak Ready maka Indent'),
-(67, '24-07001', '', 'Pembayaran harap ditransfer atau Bilyet Giro atas ...'),
-(68, '24-07002', '', 'Masa berlaku 7 hari'),
-(69, '24-07002', '', 'Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
-(70, '24-07002', '', 'Harga dapat berubah sewaktu-waktu'),
-(71, '24-07002', '', 'Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
-(72, '24-07002', '', 'Term of Payment Cash Before Delivery'),
-(73, '24-07002', '', 'Harga Sudah Termasuk Diskon'),
-(74, '24-07002', '', 'Barga Belum termasuk ongkos kirim'),
-(75, '24-07002', '', 'Harga Belum termasuk jasa'),
-(76, '24-07002', '', 'Semua sparepart yang kami tawarkan original Merced...'),
-(77, '24-07002', '', 'Jika ada sparepart yang Tidak Ready maka Indent'),
-(78, '24-07002', '', 'Pembayaran harap ditransfer atau Bilyet Giro atas ...');
 
 -- --------------------------------------------------------
 
@@ -6015,13 +5984,11 @@ CREATE TABLE `tbl_wh_detail_part_keluar` (
   `tgl_keluar` date NOT NULL,
   `jumlah` varchar(10) NOT NULL,
   `satuan` varchar(25) NOT NULL,
-  `status_part` varchar(25) NOT NULL,
+  `lokasi` varchar(25) NOT NULL,
   `user` varchar(25) NOT NULL,
   `hrg_part` decimal(10,0) NOT NULL,
   `total_harga` varchar(20) NOT NULL,
   `stok_akhir` decimal(7,0) NOT NULL,
-  `stok_a` decimal(10,0) NOT NULL,
-  `stok_p` decimal(10,0) NOT NULL,
   `ket_part` varchar(50) NOT NULL,
   `divisi` varchar(35) DEFAULT NULL,
   `nama_divisi` varchar(35) DEFAULT NULL
@@ -6052,25 +6019,6 @@ CREATE TABLE `tbl_wh_detail_part_masuk` (
   `part_return` enum('N','Y') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_wh_detail_part_masuk`
---
-
-INSERT INTO `tbl_wh_detail_part_masuk` (`id`, `id_masuk`, `id_barang`, `no_part`, `nama_part`, `status_po`, `no_po`, `tgl_masuk`, `jumlah`, `satuan`, `status_part`, `user`, `hrg_part`, `stok_akhir`, `lokasi`, `part_return`) VALUES
-(1, '24070001', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Y', '', '2024-07-16', '2', 'Pack', 'CBT|C', '', 77900, 0, '', 'N'),
-(2, '24070001', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Y', '', '2024-07-16', '1', 'Pack', 'CBT|C', '', 31500, 0, '', 'N'),
-(3, '24070001', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Y', '', '2024-07-16', '1', 'Pack', 'CBT|C', '', 27000, 0, '', 'N'),
-(4, '24070001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Y', '', '2024-07-16', '3', 'Pack', 'CBT|C', '', 24500, 0, '', 'N'),
-(5, '24070005', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Y', '', '2024-07-16', '3', '', 'CBT|C', '', 24500, 0, '', 'N'),
-(6, '24070005', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Y', '', '2024-07-16', '3', '', 'CBT|C', '', 27000, 0, '', 'N'),
-(7, '24070005', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Y', '', '2024-07-16', '3', '', 'CBT|C', '', 31500, 0, '', 'N'),
-(8, '24070005', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Y', '', '2024-07-16', '3', '', 'CBT|C', '', 77900, 0, '', 'N'),
-(9, '24070006', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Y', '', '2024-07-16', '2', '', 'CBT|C', '', 77900, 0, '', 'N'),
-(12, '24070007', '', 'FC12348', '17-07-2024', 'N', '', '2024-07-17', '2', 'null', 'JKT', '', 77900, 12, '', 'N'),
-(15, '24070008', '', 'FC12348', '17-07-2024', 'N', '', '2024-07-17', '2', 'null', 'SBY', '', 77900, 14, '', 'N'),
-(18, '24070009', '', 'FC12347', '17-07-2024', 'N', '', '2024-07-17', '2', 'null', 'SBY', '', 31500, 13, '', 'N'),
-(20, '24070010', '', 'FC12346', '17-07-2024', 'N', '', '2024-07-17', '2', 'null', 'SBY', '', 27000, 13, '', 'N');
-
 -- --------------------------------------------------------
 
 --
@@ -6097,39 +6045,6 @@ CREATE TABLE `tbl_wh_detail_part_order` (
   `remark` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_wh_detail_part_order`
---
-
-INSERT INTO `tbl_wh_detail_part_order` (`id_detail`, `id_part_order`, `kode_po`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
-(18, '24-060001', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, '', ''),
-(19, '24-060001', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', ''),
-(20, '24-060001', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'N', 3, 0, 'Y', ''),
-(21, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'N', 3, 0, 'Y', ''),
-(32, '24-060002', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'N', 3, 0, 'Y', ''),
-(33, '24-060002', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'N', 3, 0, 'Y', ''),
-(34, '24-060002', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', ''),
-(35, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, 'Y', ''),
-(108, '24-060003', '', 'MA011 981 36 05          ', 'TAPERED ROLLER BEARING / MA009 981 ', 'PCS                      ', 1496173, 1, '', 0, 1496173, '0', 'N', 1, 0, 'Y', ''),
-(109, '24-060003', '', 'QA400 421 03 34          ', 'CORRUGATED HOSE - 700MM            ', 'PCS                      ', 63900, 88, '', 0, 5623200, '1', 'N', 88, 0, 'Y', ''),
-(115, '24-060004', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 1, '', 0, 4919900, '8', 'N', 1, 0, 'Y', ''),
-(116, '24-060004', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'Y', ''),
-(117, '24-060005', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 2, '', 0, 9839800, '8', 'N', 2, 0, 'Y', 'test'),
-(118, '24-060005', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 9, '', 0, 220500, '10', 'N', 9, 0, 'Y', 'coba juga<br>'),
-(136, '24-060005', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 2, '', 0, 20725200, '1', 'N', 2, 0, 'Y', 'test<br>'),
-(137, '', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(138, '', '', 'BA967 981 00 12/01       ', 'ROLLER BEARING                     ', 'PCS                      ', 0, 0, '', 0, 0, '0', 'N', 0, 0, 'Y', ''),
-(140, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(141, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(142, '24-060006', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 5, '', 0, 389500, '10', 'N', 5, 0, 'Y', 'test'),
-(143, '24-060006', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'N', 3, 0, 'Y', 'test'),
-(145, '24-0700001', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, '', 'test'),
-(152, '24-0700001', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'N', 3, 0, 'Y', 'test2'),
-(155, '24-0700002', '', 'MA011 981 36 05          ', 'TAPERED ROLLER BEARING / MA009 981 ', 'PCS                      ', 1496173, 5, '', 0, 7480865, '0', 'N', 5, 0, 'N', 'COBA REMARK<br>'),
-(157, '24-0700002', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'N', 'COBA JUGA<br>'),
-(158, '24-0700003', '', 'MA906 030 44 17          ', 'PISTON QA400 037 03 01             ', 'PCS                      ', 10362600, 1, '', 0, 10362600, '1', 'N', 1, 0, 'Y', 'REMARK1'),
-(159, '24-0700003', '', 'QA400 981 56 05          ', 'TAPERED ROLLER BEARING WHEEL HUB   ', 'PCS                      ', 936000, 5, '', 0, 4680000, '15', 'N', 5, 0, 'N', 'REMARK2');
-
 -- --------------------------------------------------------
 
 --
@@ -6153,20 +6068,6 @@ CREATE TABLE `tbl_wh_detail_po` (
   `sisa` decimal(10,0) NOT NULL,
   `jml_masuk` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_detail_po`
---
-
-INSERT INTO `tbl_wh_detail_po` (`id_detail`, `id_po`, `kode_po`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`) VALUES
-(18, '24-060001', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'Y', 0, 2),
-(19, '24-060001', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'P', 0, 3),
-(20, '24-060001', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'P', 0, 3),
-(21, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'Y', 0, 3),
-(32, '24-060002', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 3, '', 0, 73500, '10', 'Y', 0, 3),
-(33, '24-060002', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 3, '', 0, 81000, '10', 'Y', 0, 3),
-(34, '24-060002', '', 'FC12347', 'Amplop Coklat Tanpa Tali ', 'Pack', 31500, 3, '', 0, 94500, '10', 'Y', 0, 3),
-(35, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'Y', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -6193,19 +6094,6 @@ CREATE TABLE `tbl_wh_detail_po_masuk` (
   `bo` enum('Y','N') NOT NULL,
   `remark` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_detail_po_masuk`
---
-
-INSERT INTO `tbl_wh_detail_po_masuk` (`id_detail`, `id_po_masuk`, `kode_po`, `no_part`, `nama_part`, `satuan`, `harga`, `jumlah`, `diskon`, `total_diskon`, `total_harga`, `stok_akhir`, `status`, `sisa`, `jml_masuk`, `bo`, `remark`) VALUES
-(1, '', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(2, '', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 0, '', 0, 0, '10', 'N', 0, 0, 'Y', ''),
-(6, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 2, '', 0, 49000, '10', 'N', 2, 0, 'Y', 'test'),
-(9, '24-060001', '', 'FC12345', 'Plastik PP POCKET F/C 5221 Merk Bam', 'Pack', 24500, 2, '', 0, 49000, '10', 'N', 2, 0, 'Y', 'testest'),
-(10, '24-060002', '', 'FC12348', 'Rak Kertas Dokumen - 3 Tingkat ', 'Pack', 77900, 2, '', 0, 155800, '10', 'N', 2, 0, 'Y', ''),
-(11, '24-060002', '', 'FC12346', 'MAP Bening Tanpa Tali Folder One UK', 'Pack', 27000, 2, '', 0, 54000, '10', 'N', 2, 0, 'Y', ''),
-(12, '24-060002', '', 'MA005 997 12 36          ', 'VALVE                              ', 'PCS                      ', 4919900, 2, '', 0, 9839800, '8', 'N', 2, 0, 'Y', '');
 
 -- --------------------------------------------------------
 
@@ -6263,14 +6151,6 @@ CREATE TABLE `tbl_wh_estimasi_penawaran` (
   `status` varchar(25) NOT NULL,
   `status_po` enum('N','Y','P') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_estimasi_penawaran`
---
-
-INSERT INTO `tbl_wh_estimasi_penawaran` (`id_estimasi_penawaran`, `kode_estimasi_penawaran`, `tgl_estimasi_penawaran`, `id_customer`, `no_reg`, `no_vin`, `sales_design`, `date_received`, `millage`, `engine_no`, `acc_no`, `received_by`, `routing_no`, `last_km`, `date_of_regis`, `no_invoice`, `no_do`, `no_kwitansi`, `deadline`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `bea_kirim`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-07001', 'SP/TOP/07/24/001', '2024-07-13', 'CS-0002', '1234', 'test', 'test', 'test', 'test', 'test', '', '', '', '', '', '', '', '', '', '', '', '', 0, 13816700, 13816700, '500000', '', '', '', 'Administrator', '', 'N'),
-('24-07002', 'SP/TOP/07/24/002', '2024-07-15', '', '2345dryry', '34545', 'test', '', '', '2345345', '345234', 'test', 'test', '2233', '', '', '', '', '', '', '', '10', 3496210, 34962100, 34962100, '1500000', '', '', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -6338,9 +6218,11 @@ CREATE TABLE `tbl_wh_kode_po` (
 --
 
 INSERT INTO `tbl_wh_kode_po` (`id_kode_po`, `kode_po`, `keterangan`) VALUES
-(1, '7', 'test'),
-(2, '4', 'SBY-WARRANTY'),
-(3, '5', 'testtestset');
+(1, '7', 'VOR'),
+(2, '4', 'WARRANTY'),
+(5, '8', 'REGULAR-STOCK'),
+(6, '3', 'COURIER'),
+(7, '2', 'SPECIAL TOOLS');
 
 -- --------------------------------------------------------
 
@@ -6412,7 +6294,7 @@ CREATE TABLE `tbl_wh_part_keluar` (
   `tgl_keluar` date NOT NULL,
   `tujuan` varchar(35) NOT NULL,
   `acc` varchar(25) NOT NULL,
-  `status` varchar(25) NOT NULL,
+  `lokasi` varchar(25) NOT NULL,
   `no_spk` varchar(50) NOT NULL,
   `no_pk` varchar(25) NOT NULL,
   `ket_pk` varchar(25) NOT NULL,
@@ -6426,6 +6308,13 @@ CREATE TABLE `tbl_wh_part_keluar` (
   `divisi` varchar(35) DEFAULT NULL,
   `nama_divisi` varchar(35) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_wh_part_keluar`
+--
+
+INSERT INTO `tbl_wh_part_keluar` (`kode_keluar`, `id_keluar`, `tgl_keluar`, `tujuan`, `acc`, `lokasi`, `no_spk`, `no_pk`, `ket_pk`, `no_body`, `keterangan`, `total_harga`, `user`, `no_po_cus`, `alamat`, `faktur`, `divisi`, `nama_divisi`) VALUES
+('24070001', 'PBN-24070001', '2024-07-24', 'TEST', '', 'CBT|Cibitung', 'NON', '', '', '', 'TEST', 0, 'Administrator', 'TEST', 'TEST', '', '4', 'ATK');
 
 -- --------------------------------------------------------
 
@@ -6451,22 +6340,6 @@ CREATE TABLE `tbl_wh_part_masuk` (
   `lokasi` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_wh_part_masuk`
---
-
-INSERT INTO `tbl_wh_part_masuk` (`kode_masuk`, `id_masuk`, `tgl_masuk`, `tujuan`, `status`, `keterangan`, `status_po`, `no_po`, `no_sj_sup`, `no_inv_sup`, `kode_sup`, `nama_supplier`, `user`, `part_return`, `lokasi`) VALUES
-('24070001', '24070001', '2024-07-16', '', 'CBT|Cibitung', 'test', 'Y', '/PO/CNK/24-060001', 'test', 'test', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070002', '24070002', '2024-07-16', '', 'CBT|Cibitung', '', 'Y', '/PO/CNK/24-060001', '', '', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070003', '24070003', '2024-07-16', '', 'CBT|Cibitung', 'test', 'Y', '/PO/CNK/24-060001', 'test', 'test', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070004', '24070004', '2024-07-16', '', 'CBT|Cibitung', '', 'Y', '24-060002/PO/06/2024', 'test', 'test', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070005', '24070005', '2024-07-16', '', 'CBT|Cibitung', '', 'Y', '24-060002/PO/06/2024', 'test', 'test', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070006', '24070006', '2024-07-16', '', 'CBT|Cibitung', '', 'Y', '24-060002/PO/06/2024', '', '', 'SP-0001', 'KIKI STATIONERY', 'Administrator', 'N', 'CBT|Cibitung'),
-('24070007', '24070007', '2024-07-17', '', 'JKT', 'test', 'N', '', 'test', 'test', '', '', 'Administrator', 'N', 'Jakarta'),
-('24070008', '24070008', '2024-07-17', '', 'SBY', 'test', 'N', '', 'test', 'test', 'SP-0001', '', 'Administrator', 'N', 'Surabaya'),
-('24070009', '24070009', '2024-07-17', '', 'SBY', 'test', 'N', '', 'test', 'test', '', '', 'Administrator', 'N', 'Surabaya'),
-('24070010', '24070010', '2024-07-17', '', 'SBY', 'test', 'N', '', 'test', 'test', 'SP-0001', '', 'Administrator', 'N', 'Surabaya');
-
 -- --------------------------------------------------------
 
 --
@@ -6490,20 +6363,9 @@ CREATE TABLE `tbl_wh_part_order` (
   `keterangan2` varchar(250) NOT NULL,
   `user` varchar(35) NOT NULL,
   `status` varchar(25) NOT NULL,
-  `status_po` enum('N','Y','P') NOT NULL
+  `status_po` enum('N','Y','P') NOT NULL,
+  `lokasi` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_part_order`
---
-
-INSERT INTO `tbl_wh_part_order` (`id_part_order`, `kode_part_order`, `tgl_part_order`, `kode_pesan`, `ket_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-060004', '24-060004/PO/06/2024', '2024-06-14', '400020 SBY - WARRANTY', '', '', '', 0, 15282500, 15282500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-060005', '24-060005/PO/06/2024', '2024-06-15', '400020 SBY - WARRANTY', '', '', '', 0, 30785500, 30785500, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-060006', '24-060006/PO/06/2024', '2024-06-21', '1231232', '', '', '', 0, 484000, 484000, 'SP-0002', '', 'test', '', 'Administrator', '', 'N'),
-('24-0700001', '24-0700001/PO/07/2024', '2024-07-12', '700001', 'SBY-WARANTY', '', '', 0, 236800, 236800, 'SP-0002', '', 'test', '', 'Administrator', '', 'N'),
-('24-0700002', '24-0700002/PO/07/2024', '2024-07-12', '1200002', '07', '', '', 0, 17843465, 17843465, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N'),
-('24-0700003', '24-0700003/PO/07/2024', '2024-07-12', '400003', 'SBY-WARRANTY', '', '', 0, 15042600, 15042600, 'SP-0002', '', 'PART MOHON DIKIRIMKAN KE DEALER TOP SURABAYA', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -6530,14 +6392,6 @@ CREATE TABLE `tbl_wh_po` (
   `status_po` enum('N','Y','P') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_wh_po`
---
-
-INSERT INTO `tbl_wh_po` (`id_po`, `kode_po`, `tgl_po`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `supplier`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-060001', '/PO/CNK/24-060001', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'P'),
-('24-060002', '24-060002/PO/06/2024', '2024-06-12', '', '2 Minggu', '0', 0, 404800, 404800, 'SP-0001', 'Teddy Rusly', 'Barang dikirim kan ke alamat : PT TRANSFORMA OTO PRIMA Jl.D.I.Panjaitan No.12 Rt.01/Rw.001 jatinegara , Jakarta Timur', 'Pembayaran : 2 minggu setelah terima Invoice', 'Administrator', '', 'P');
-
 -- --------------------------------------------------------
 
 --
@@ -6562,14 +6416,6 @@ CREATE TABLE `tbl_wh_po_masuk` (
   `status` varchar(25) NOT NULL,
   `status_po` enum('N','Y','P') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_wh_po_masuk`
---
-
-INSERT INTO `tbl_wh_po_masuk` (`id_po_masuk`, `kode_po`, `tgl_po`, `kode_pesan`, `top`, `ppn`, `t_ppn`, `sub_total`, `grand_total`, `customer`, `pengesah`, `keterangan`, `keterangan2`, `user`, `status`, `status_po`) VALUES
-('24-060001', '24-060001/PO/06/2024', '2024-06-20', '23432test', '', '', 0, 98000, 98000, 'CS-0002', '', 'test', '', 'Administrator', '', 'N'),
-('24-060002', '24-060002/PO/06/2024', '2024-06-20', 'test', '', '', 0, 10049600, 10049600, 'CS-0002', '', 'test', '', 'Administrator', '', 'N');
 
 -- --------------------------------------------------------
 
@@ -7094,7 +6940,7 @@ ALTER TABLE `tbl_akses_menu`
 -- AUTO_INCREMENT for table `tbl_akses_submenu`
 --
 ALTER TABLE `tbl_akses_submenu`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=916;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=922;
 
 --
 -- AUTO_INCREMENT for table `tbl_hrd_cuti_pegawai`
@@ -7130,7 +6976,7 @@ ALTER TABLE `tbl_kota`
 -- AUTO_INCREMENT for table `tbl_submenu`
 --
 ALTER TABLE `tbl_submenu`
-  MODIFY `id_submenu` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id_submenu` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -7160,13 +7006,13 @@ ALTER TABLE `tbl_wh_customer`
 -- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran`
 --
 ALTER TABLE `tbl_wh_detail_estimasi_penawaran`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran_note`
 --
 ALTER TABLE `tbl_wh_detail_estimasi_penawaran_note`
-  MODIFY `id_detail_note` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id_detail_note` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_opname`
@@ -7184,25 +7030,25 @@ ALTER TABLE `tbl_wh_detail_part_keluar`
 -- AUTO_INCREMENT for table `tbl_wh_detail_part_masuk`
 --
 ALTER TABLE `tbl_wh_detail_part_masuk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_part_order`
 --
 ALTER TABLE `tbl_wh_detail_part_order`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_po`
 --
 ALTER TABLE `tbl_wh_detail_po`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_po_masuk`
 --
 ALTER TABLE `tbl_wh_detail_po_masuk`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_stok`
@@ -7226,7 +7072,7 @@ ALTER TABLE `tbl_wh_kelompok`
 -- AUTO_INCREMENT for table `tbl_wh_kode_po`
 --
 ALTER TABLE `tbl_wh_kode_po`
-  MODIFY `id_kode_po` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kode_po` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_log_harga`

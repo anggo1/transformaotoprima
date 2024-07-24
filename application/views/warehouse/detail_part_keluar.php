@@ -15,7 +15,7 @@
             <th>Satuan</th>
             <th>Stok</th>
             <th>Harga Satuan</th>
-            <th>Qty Masuk</th>
+            <th>Qty Keluar</th>
             <th>Total</th>
             <th>Aksi</th>
         </tr>
@@ -29,9 +29,9 @@
             <td><?php echo $no; ?></td>
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
-            <td><?php echo $s->nama_satuan; ?></td>
+            <td><?php echo $s->satuan; ?></td>
             <td><?php echo $s->stok; ?></td>
-            <td><?php echo $s->hrg_awal; ?></td>
+            <td><?php echo number_format($s->harga_baru); ?></td>
             <td class="jml">
               <input type="number" name="qty_keluar[]" id="qty_keluar[]"
                     value="<?php echo $s->jumlah ?>"
@@ -40,10 +40,15 @@
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok; ?>">
-                <input type="hidden" name="stok_a[]" id="stok_a[]" value="<?php echo $s->stok_a; ?>">
-                <input type="hidden" name="stok_p[]" id="stok_p[]" value="<?php echo $s->stok_p; ?>">
+                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
+                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
+                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
             </td>
-            <td><?php if($s->hrg_part !=0) { echo number_format($s->hrg_awal * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>
+            <td><?php 
+            if(!empty($s->jumlah)){
+                 if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->harga_baru * $s->jumlah);}
+            }
+             ?></td>
             <td class="text-center">
 			<div class="input-group mb-3 danger">
                   <div class="input-group-prepend">

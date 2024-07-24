@@ -89,12 +89,16 @@ width: 8.50in; /*Ukuran Lebar Kertas */
 margin:1px solid #FFFFFF;
  
 font-family:Georgia, "Times New Roman", Times, serif;
+}
 </style>
 <div class="modal-body">
 <div id="printThis">
-  <?php foreach ($dataPart as $k) {
-	$apl1 = $this->db->get("aplikasi where status='".$k->status."'")->row();
-  } 
+  <?php 
+	foreach ($dataPart as $k) {
+  }
+	$status=$k->lokasi;
+	$apl1 = $this->db->get("aplikasi where lokasi='".$this->session->userdata['lokasi']."'")->row();
+
 	?>
 
   <table width="100%" border="0" cellpadding="5" cellspacing="0" class="datatable1">
@@ -161,7 +165,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         $no = 0;
         $grand_total = 0;
         foreach ($detailPart as $d) : $no++;
-          $grand_total += $d->jumlah * $d->hrg_awal;
+          $grand_total += $d->jumlah * $d->harga_baru;
         ?>
           <tr>
             <th><?php echo $no ?></th>
@@ -206,4 +210,4 @@ font-family:Georgia, "Times New Roman", Times, serif;
 </div>
 <div class="card-footer">
 <button type="button" id="btnPrint" class="btn btn-success"><span class="fa fa-print"></span>&nbsp;&nbsp; C E T A K </button>
-  <button class="btn btn-danger" id="tutup" onClick="window.location.assign(" <?php echo base_url(); ?>/Transaksi/Pengiriman");" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
+  <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>

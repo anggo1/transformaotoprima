@@ -22,6 +22,7 @@ class PartOrder extends MY_Controller
 		$this->load->helper('url');
 		$data['dataSupplier'] = $this->Mod_partorder->select_supplier();
 		$data['dataKode'] = $this->Mod_partorder->select_kode();
+		$data['dataKota'] = $this->Mod_partorder->select_kota();
 		$this->template->load('layoutbackend', 'warehouse/part_order', $data);
 	}
 public function showPart()
@@ -116,6 +117,9 @@ public function showPart()
 			$kode = explode('|', $data_pesan);
 			$kode_angka = $kode[0];
 			$kode_ket = $kode[1];
+			$lokasi = $data['lokasi'];
+			$kode_lk = explode('|', $lokasi);
+			$lok1 = $kode_lk[0];
 
 			$sekarang = date('Y/m/d');
 			//$s=$data['status'];
@@ -134,7 +138,8 @@ public function showPart()
 				'ket_pesan'	=> $kode_ket,
 				'keterangan' => $data['keterangan'],
 				'user'   	=> $data['user'],
-				'status_PO'	=> 'N'
+				'status_PO'	=> 'N',
+				'lokasi'   	=> $lok1
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_part_order', $data);
 				$data 	= $this->input->post();
@@ -393,7 +398,7 @@ public function showPart()
 		$sheet->setTitle("PART ORDER".$tgl_sekarang);
 		// Proses file excel
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="PART ORDER'.$tgl_sekarang.'.xlsx"'); // Set nama file excel nya
+		header('Content-Disposition: attachment; filename="PO'.$detail->kode_pesan.$detail->lokasi.'.xlsx"'); // Set nama file excel nya
 		header('Cache-Control: max-age=0');
 		$writer = new Xlsx($spreadsheet);
 		$writer->save('php://output');

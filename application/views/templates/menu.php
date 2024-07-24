@@ -15,7 +15,7 @@ $apl = $this->db->get("aplikasi")->row();
 ?>
 <!-- main-header navbar navbar-expand navbar-default navbar-dark navbar-cyan -->
 <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-dark">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">

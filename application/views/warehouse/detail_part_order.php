@@ -34,7 +34,7 @@ table.dataTable td {
                             <th>Satuan</th>
                             <th>Harga</th>
                             <th>BO</th>
-                            <th>jumlah</th>
+                            <th>Jumlah</th>
                             <th>Total</th>
                             <th>Remark</th>
                             <th>Aksi</th>
