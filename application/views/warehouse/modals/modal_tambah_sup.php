@@ -54,6 +54,14 @@
                                                                                     ?>" name="nama_supplier" aria-describedby="sizing-addon2" require>
       </div>
       <div class="form-group">
+        <label class="control-label">Ko Supplier <span class="required red"> *</span></label>
+        <input type="text" class="form-control" placeholder="Nama Supplier" value="<?php
+                                                                                    if (!empty($dataSup->nama_sup)) {
+                                                                                      echo $dataSup->nama_sup;
+                                                                                    }
+                                                                                    ?>" name="nama_supplier" aria-describedby="sizing-addon2" require>
+      </div>
+      <div class="form-group">
         <label class="control-label">Detail Supplier</label>
         <input type="text" class="form-control" placeholder="Detail Supplier" value="<?php
                                                                                     if (!empty($dataSup->detail)) {
