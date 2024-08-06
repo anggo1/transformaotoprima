@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Sparepart extends MY_Controller
+class Sparepart_sby extends MY_Controller
 {
 
     public function __construct()
@@ -39,9 +39,8 @@ class Sparepart extends MY_Controller
         $data['viewLevel']  = $this->Mod_sparepart->select_by_level($idlevel, $id_sub);
         
 		echo show_my_modal('warehouse/modals/modal_tambah_part', 'tambah-sparepart', $data, ' modal-lg');
-        $this->template->load('layoutbackend', 'warehouse/sparepart_data', $data);
+        $this->template->load('layoutbackend', 'warehouse/sparepart_data_sby', $data);
     }
-
     public function ajax_list()
     {
         $link=$this->uri->segment(1);
@@ -99,24 +98,15 @@ class Sparepart extends MY_Controller
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;
                 $row[] = $p->satuan;
-                if($idlevel=='1' or $idlevel=='12'){
-                    $row[] = $p->stok_cbt+$p->stok_jkt+$p->stok_sby;
+                if ($idlokasi=='Cibitung'){
                     $row[] = $p->stok_cbt;
-                    $row[] = $p->lok_cbt;
-                    $row[] = $p->stok_jkt;
-                    $row[] = $p->lok_jkt;
-                    $row[] = $p->stok_sby;
-                    $row[] = $p->lok_sby;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi =='Cibitung'){
-                    $row[] = $p->stok_cbt;
-                    $row[] = $p->lok_cbt;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Jakarta'){
+                    $row[] = $p->lok_cbt;}
+                    if ($idlokasi=='Jakarta'){
                         $row[] = $p->stok_jkt;
-                        $row[] = $p->lok_jkt;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
+                        $row[] = $p->lok_jkt;}
+                        if ($idlokasi=='Surabaya'){
                             $row[] = $p->stok_sby;
-                            $row[] = $p->lok_sby;}
-                
+                            $row[] = $p->lok_sby;}                
                 $row[] = $p->kode_sup;
                 $row[] = $p->type;
                 $row[] = $p->kategori;
@@ -162,7 +152,81 @@ class Sparepart extends MY_Controller
         //output to json format
         echo json_encode($output);
     }
+    public function ajax_list_sby()
+    {
+        $link=$this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $idlokasi = $this->session->userdata['lokasi'];
+        $get_id = $this->Mod_sparepart->get_by_nama($link);
+        foreach ($get_id as $idnye){
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub=$idnye->id_submenu;
+        }
+        $viewLevel = $this->Mod_sparepart->select_by_level($idlevel, $id_sub);
 
+        foreach ($viewLevel as $pel1) {
+            $row1 = array();
+            $row1[] = $pel1->id_submenu;
+            $data1[] = $row1;
+
+            $list = $this->Mod_sparepart->get_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $p) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $p->no_part;
+                $row[] = $p->nama_part;
+                $row[] = $p->satuan;
+                $row[] = $p->stok_sby;
+                $row[] = $p->lok_sby;             
+                $row[] = $p->kode_sup;
+                $row[] = $p->type;
+                $row[] = $p->kategori;
+                if($pel1->edit_level=="Y"){
+                    $edit='                    
+                    <button class="btn btn-sm btn-outline-success update-sparepart" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-edit"></i>
+                    </button>';
+                }                
+                if($pel1->delete_level=="Y"){
+                    $delete='
+                    <button class="btn btn-sm btn-outline-danger delete-part" title="Delete" data-toggle="modal" data-target="#hapusPart" data-id="'.$p->id_part.'">
+                    <i class="fa fa-trash"></i></button>';
+                }
+                if($pel1->upload_level=="Y"){
+                    $upload='
+                    <button class="btn btn-sm btn-outline-info update-stok" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-random"></i>
+                    </button>
+                    ';
+                }
+                if($pel1->delete_level=="N"){
+                    $delete='';
+                }
+                if($pel1->edit_level=="N"){
+                    $edit='';
+                }
+                if($pel1->upload_level=="N"){
+                    $upload='';
+                }
+                $lainnya='<a href="#" onclick="testPrint('.$p->id_part.')">
+                <button class="btn btn-sm btn-outline-primary" title="Cetak" data-cetak="'.$p->no_part.'" data-id="'.$p->id_part.'"><i class="fa fa-qrcode"></i>
+                </button></a>';
+                $akses_system=$lainnya.$edit.$delete.$upload;
+                $row[] = $akses_system;
+                $data[] = $row;
+            }
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_sparepart->count_all(),
+            "recordsFiltered" => $this->Mod_sparepart->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
     public function cetak_label() {
         
 		$id 				= $_POST['id'];

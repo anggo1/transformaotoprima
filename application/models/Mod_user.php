@@ -1,9 +1,5 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-/**
- * Create By : Aryo
- * Youtube : Aryo Coding
- */
 class Mod_user extends CI_Model {
 
 	var $table = 'tbl_user';
@@ -22,6 +18,7 @@ class Mod_user extends CI_Model {
     	$this->db->select('a.*,b.nama_level');
     	$this->db->join('tbl_userlevel b', 'a.id_level=b.id_level');
         $this->db->from('tbl_user a');
+        $this->db->where('a.id_level !=',1);
 
         $i = 0;
     
@@ -128,7 +125,13 @@ class Mod_user extends CI_Model {
     function userlevel()
     {
        return $this->db->order_by('id_level ASC')
-                        ->get('tbl_userlevel')
+                        ->get_where('tbl_userlevel','id_level != 1')
+                        ->result();
+    }
+    function userlokasi()
+    {
+       return $this->db->order_by('id_kota ASC')
+                        ->get('tbl_kota')
                         ->result();
     }
 

@@ -249,7 +249,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function insertSupplier($data)
 	{
-	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
+	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',kode_nama='" . $data['kode_nama'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
 	no_tlp='" . $data['no_tlp'] . "',no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "'";
 		$this->db->query($sql);
 
@@ -257,9 +257,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateSupplier($data)
 	{
-		$sql = "UPDATE tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
-		no_tlp='" . $data['no_tlp'] . ",no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "'
-        WHERE kode_sup='" . $data['kode_supplier'] . "'";
+		$sql = "UPDATE tbl_wh_supplier SET kode_nama='" . $data['kode_nama'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
+		no_tlp='" . $data['no_tlp'] . "',no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "' WHERE kode_sup='" . $data['kode_sup'] . "'";
 
 		$this->db->query($sql);
 

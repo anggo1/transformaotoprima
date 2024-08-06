@@ -178,18 +178,18 @@
                                                                 foreach ($dataSupplier as $sp) {
                                                             ?>
                                                 <option
-                                                    <?php echo $sp == $sp->kode_sup ? 'selected="selected"' : '' ?>
-                                                    value="<?php echo $sp->kode_sup ?>">
-                                                    <?php echo $sp->nama_sup  ?><?php } ?>
+                                                    <?php echo $sp == $sp->kode_nama ? 'selected="selected"' : '' ?>
+                                                    value="<?php echo $sp->kode_nama ?>">
+                                                    <?php echo $sp->kode_nama  ?><?php } ?>
                                                 </option>
                                                 <?php
                                                                 } else {
                                                                     foreach ($dataSupplier as $sup) {          ?>
-                                                <option value="<?php echo $sup->kode_sup; ?>"
-                                                    <?php if ($sup->kode_sup == $part->kode_sup) {
+                                                <option value="<?php echo $sup->kode_nama; ?>"
+                                                    <?php if ($sup->kode_nama == $part->kode_sup) {
                                                                                                                                 echo "selected='selected'";
                                                                                                                             } ?>>
-                                                    <?php echo $sup->nama_sup; ?>
+                                                    <?php echo $sup->kode_nama; ?>
                                                 </option>
                                                 <?php
                                                                     }

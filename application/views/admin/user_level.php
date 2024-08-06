@@ -87,7 +87,7 @@ $(document).ready(function() {
             "targets": [-1], //last column
             "render": function(data, type, row) {
                 if (row[1] == 1 || row[2] > 2) {
-                    return "<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vlevel(" +
+                    return row[3]+"<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vlevel(" +
                         row[1] +
                         ")\"><i class=\"fas fa-eye\"></i></a> <a class=\"btn btn-xs btn-outline-primary\" href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_level(" +
                         row[1] + ")\"><i class=\"fas fa-edit\"></i></a>";

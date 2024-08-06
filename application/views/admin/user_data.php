@@ -17,6 +17,7 @@
                 <table id="tabeluser" class="table table-bordered table-striped table-hover">
                   <thead>
                     <tr class="bg-info">
+                      <th>No</th>
                       <th>Foto</th>
                       <th>User name</th>
                       <th>Full Name</th>
@@ -88,10 +89,10 @@ $(document).ready(function() {
             "targets": [-1], //last column
             "render": function ( data, type, row ) {
              
-              if (row[4]=="Y") { 
-                return "<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vuser("+row[5]+")\"><i class=\"fas fa-eye\"></i></a> <a class=\"btn btn-xs btn-outline-primary\"  href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_user("+row[5]+")\"><i class=\"fas fa-edit\"></i></a> <a class=\"btn btn-xs btn-outline-warning\" href=\"javascript:void(0)\" title=\"Reset Password\" onclick=\"riset("+row[5]+")\"><i>Riset Pass</i> </a> <a class=\"btn btn-xs btn-outline-danger\" href=\"javascript:void(0)\" title=\"Delete\"  onclick=\"deluser("+row[5]+")\"><i class=\"fas fa-trash\"></i></a>"
+              if (row[5]=="Y") { 
+                return "<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vuser("+row[6]+")\"><i class=\"fas fa-eye\"></i></a> <a class=\"btn btn-xs btn-outline-primary\"  href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_user("+row[6]+")\"><i class=\"fas fa-edit\"></i></a> <a class=\"btn btn-xs btn-outline-warning\" href=\"javascript:void(0)\" title=\"Reset Password\" onclick=\"riset("+row[6]+")\"><i>Riset Pass</i> </a> <a class=\"btn btn-xs btn-outline-danger\" href=\"javascript:void(0)\" title=\"Delete\"  onclick=\"deluser("+row[6]+")\"><i class=\"fas fa-trash\"></i></a>"
               }else{
-               return "<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vuser("+row[5]+")\"><i class=\"fas fa-eye\"></i>"+row[4]+"</a> <a class=\"btn btn-xs btn-outline-primary\" href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_user("+row[5]+")\"><i class=\"fas fa-edit\"></i></a> <a class=\"btn btn-xs btn-outline-warning\" href=\"javascript:void(0)\" title=\"Reset Password\" onclick=\"riset("+row[5]+")\"><i>Riset Pass</i></a>";
+               return "<a class=\"btn btn-xs btn-outline-info\" href=\"javascript:void(0)\" title=\"View\" onclick=\"vuser("+row[6]+")\"><i class=\"fas fa-eye\"></i>"+row[4]+"</a> <a class=\"btn btn-xs btn-outline-primary\" href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_user("+row[6]+")\"><i class=\"fas fa-edit\"></i></a> <a class=\"btn btn-xs btn-outline-warning\" href=\"javascript:void(0)\" title=\"Reset Password\" onclick=\"riset("+row[6]+")\"><i>Riset Pass</i></a>";
              }
              
 
@@ -100,12 +101,12 @@ $(document).ready(function() {
             
           },
           {
-            "targets": [0],
+            "targets": [1],
             "render": function(data , type , row){
-              if (row[0]!=null) {
-                return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/user/");?>"+row[0]+"' width=\"100px\" height=\"100px\">";
+              if (row[1]!=null) {
+                return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/user/");?>"+row[1]+"' width=\"50px\" height=\"50px\">";
               }else{
-                return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/default-150x150.png");?>' width=\"100px\" height=\"100px\">";
+                return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/default-150x150.png");?>' width=\"50px\" height=\"50px\">";
               }
             }
           },
@@ -273,6 +274,7 @@ function add_user()
         $('[name="full_name"]').val(data.full_name);
         $('[name="is_active"]').val(data.is_active);
         $('[name="level"]').val(data.id_level);
+        $('[name="lokasi"]').val(data.lokasi);
         
         if (data.image==null) {
           var image = "<?php echo base_url('assets/foto/user/default.png')?>";
@@ -422,6 +424,18 @@ function add_user()
                   <?php
                   foreach ($user_level as $level) {?>
                     <option value="<?=$level->id_level;?>"><?=$level->nama_level;?></option>
+                  <?php }?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row ">
+              <label for="level" class="col-sm-3 col-form-label">Lokasi</label>
+              <div class="col-sm-9 kosong">
+                <select class="form-control" name="lokasi" id="lokasi">
+                  <option value="">Pilih Lokasi</option>
+                  <?php
+                  foreach ($user_lokasi as $lokasi) {?>
+                    <option value="<?=$lokasi->nama_kota;?>"><?=$lokasi->nama_kota;?></option>
                   <?php }?>
                 </select>
               </div>

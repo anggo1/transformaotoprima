@@ -217,8 +217,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Nama</th>
+                                                    <th>Nama Sup</th>
+                                                    <th>Nama Panjang</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>

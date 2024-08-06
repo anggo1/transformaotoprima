@@ -5,7 +5,7 @@
        <tr>
 
            <td><?php echo $no; ?></td>
-           <td><?php echo $s->kode_sup; ?></td>
+           <td><?php echo $s->kode_nama; ?></td>
            <td><?php echo $s->nama_sup; ?></td>
 
            <td class="text-center">

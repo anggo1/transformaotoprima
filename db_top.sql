@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2024 at 07:17 AM
+-- Generation Time: Aug 06, 2024 at 10:29 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -503,7 +503,14 @@ INSERT INTO `tbl_akses_menu` (`id`, `id_level`, `id_menu`, `view_level`) VALUES
 (194, 12, 60, 'Y'),
 (195, 12, 61, 'Y'),
 (197, 12, 63, 'N'),
-(199, 12, 65, 'Y');
+(199, 12, 65, 'Y'),
+(226, 15, 1, 'N'),
+(227, 15, 2, 'N'),
+(228, 15, 57, 'Y'),
+(229, 15, 60, 'N'),
+(230, 15, 61, 'N'),
+(231, 15, 63, 'N'),
+(232, 15, 65, 'N');
 
 -- --------------------------------------------------------
 
@@ -689,7 +696,7 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (634, 12, 2, 'N', 'N', 'N', 'N', 'Y', 'N'),
 (635, 12, 7, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (636, 12, 8, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
-(637, 12, 10, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(637, 12, 10, 'Y', 'N', 'N', 'N', 'N', 'N'),
 (638, 12, 15, 'N', 'N', 'N', 'N', 'N', 'N'),
 (639, 12, 17, 'N', 'N', 'N', 'N', 'N', 'N'),
 (640, 12, 18, 'N', 'N', 'N', 'N', 'N', 'N'),
@@ -801,7 +808,68 @@ INSERT INTO `tbl_akses_submenu` (`id`, `id_level`, `id_submenu`, `view_level`, `
 (918, 12, 113, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (919, 1, 114, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
 (920, 10, 114, 'N', 'N', 'N', 'N', 'N', 'N'),
-(921, 12, 114, 'Y', 'Y', 'Y', 'Y', 'Y', 'N');
+(921, 12, 114, 'Y', 'Y', 'Y', 'Y', 'Y', 'N'),
+(922, 15, 1, 'N', 'N', 'N', 'N', 'N', 'N'),
+(923, 15, 2, 'N', 'N', 'N', 'N', 'N', 'N'),
+(924, 15, 7, 'N', 'N', 'N', 'N', 'N', 'N'),
+(925, 15, 8, 'N', 'N', 'N', 'N', 'N', 'N'),
+(926, 15, 10, 'N', 'N', 'N', 'N', 'N', 'N'),
+(927, 15, 15, 'N', 'N', 'N', 'N', 'N', 'N'),
+(928, 15, 17, 'N', 'N', 'N', 'N', 'N', 'N'),
+(929, 15, 18, 'N', 'N', 'N', 'N', 'N', 'N'),
+(930, 15, 19, 'N', 'N', 'N', 'N', 'N', 'N'),
+(931, 15, 20, 'N', 'N', 'N', 'N', 'N', 'N'),
+(932, 15, 23, 'N', 'N', 'N', 'N', 'N', 'N'),
+(933, 15, 24, 'N', 'N', 'N', 'N', 'N', 'N'),
+(934, 15, 37, 'N', 'N', 'N', 'N', 'N', 'N'),
+(935, 15, 43, 'Y', 'Y', 'Y', 'N', 'N', 'N'),
+(936, 15, 44, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(937, 15, 45, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(938, 15, 53, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(939, 15, 62, 'N', 'N', 'N', 'N', 'N', 'N'),
+(940, 15, 63, 'N', 'N', 'N', 'N', 'N', 'N'),
+(941, 15, 64, 'N', 'N', 'N', 'N', 'N', 'N'),
+(942, 15, 65, 'N', 'N', 'N', 'N', 'N', 'N'),
+(943, 15, 66, 'N', 'N', 'N', 'N', 'N', 'N'),
+(944, 15, 67, 'N', 'N', 'N', 'N', 'N', 'N'),
+(945, 15, 68, 'N', 'N', 'N', 'N', 'N', 'N'),
+(946, 15, 70, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(947, 15, 72, 'N', 'N', 'N', 'N', 'N', 'N'),
+(948, 15, 73, 'N', 'N', 'N', 'N', 'N', 'N'),
+(949, 15, 74, 'N', 'N', 'N', 'N', 'N', 'N'),
+(950, 15, 75, 'N', 'N', 'N', 'N', 'N', 'N'),
+(951, 15, 77, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(952, 15, 78, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(953, 15, 79, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(954, 15, 80, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(955, 15, 81, 'N', 'N', 'N', 'N', 'N', 'N'),
+(956, 15, 82, 'N', 'N', 'N', 'N', 'N', 'N'),
+(957, 15, 84, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(958, 15, 85, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(959, 15, 86, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(960, 15, 87, 'N', 'N', 'N', 'N', 'N', 'N'),
+(961, 15, 90, 'N', 'N', 'N', 'N', 'N', 'N'),
+(962, 15, 91, 'N', 'N', 'N', 'N', 'N', 'N'),
+(963, 15, 92, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(964, 15, 93, 'N', 'N', 'N', 'N', 'N', 'N'),
+(965, 15, 95, 'N', 'N', 'N', 'N', 'N', 'N'),
+(966, 15, 96, 'N', 'N', 'N', 'N', 'N', 'N'),
+(967, 15, 97, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(968, 15, 98, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(969, 15, 99, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(970, 15, 100, 'N', 'N', 'N', 'N', 'N', 'N'),
+(971, 15, 101, 'N', 'N', 'N', 'N', 'N', 'N'),
+(972, 15, 103, 'N', 'N', 'N', 'N', 'N', 'N'),
+(973, 15, 104, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(974, 15, 105, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(975, 15, 106, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(976, 15, 107, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(977, 15, 108, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(978, 15, 109, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(979, 15, 110, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(980, 15, 112, 'Y', 'Y', 'Y', 'Y', 'N', 'N'),
+(981, 15, 113, 'Y', 'N', 'N', 'N', 'N', 'N'),
+(982, 15, 114, 'Y', 'N', 'N', 'N', 'N', 'N');
 
 -- --------------------------------------------------------
 
@@ -1129,14 +1197,8 @@ CREATE TABLE `tbl_user` (
 
 INSERT INTO `tbl_user` (`id_user`, `username`, `full_name`, `password`, `id_level`, `image`, `is_active`, `id_lokasi`, `lokasi`) VALUES
 (1, 'admin', 'Administrator', '$2y$05$k0YjpooPpWGSeeL./YPtJOhdj2.E.70VP9ga8ykjvIdCG9j16V8JC', 1, 'admin1.png', 'Y', '1', 'Cibitung'),
-(2, 'Dikri', 'Dikri Abdul Aziz', '$2y$05$2hCUV6GSjgxsm24mdn1RE.0EwmrDiOponXTmo8uJ3kMQNDh971s3i', 7, NULL, 'Y', '', ''),
-(8, 'akbar ', 'Akbar yasjudan', '$2y$05$DZCGV3RzmerpGXK8SZOBOOcn5l3StxK6Ct2RKHGlosaGzZjkFAyXK', 13, NULL, 'Y', '', ''),
-(9, 'tody1', 'Tody Dwi', '$2y$05$IEd1fuelMMr1hWcZhW.ZH.i8Pvds9q93wXcL0rgGxMYFxZlCDQpLK', 9, 'tody15.jpeg', 'Y', '', ''),
-(12, 'DONI', 'SA', '$2y$05$49wZp0qn4w8o6xU4PeqjMe8DpwlNFN2XFVjDRt3s/V9Ytu/AeHXaC', 7, NULL, 'Y', '', ''),
-(14, 'saya', 'saya', '$2y$05$djvY0vX7C16xpvPiell0f.Bg3DqTWVij82DuMkj5n6c4Xy7CCM2Ji', 9, NULL, 'Y', '', ''),
-(15, 'Faisal', 'Faisal', '$2y$05$WoCRGnKgobK47eJN.zis2ensBXwMCm6eDzd/X4hBQ2LurzL6lehym', 9, NULL, 'Y', '', ''),
-(16, 'dikri2', 'Dikri abdul aziz', '$2y$05$PEHviJ58hOsHzcUIaWgi..DuwEVO1aePM0TpIuUG4C.PrH2r13DFK', 9, NULL, 'Y', '', ''),
-(17, 'admintop', 'Admin TOP', '$2y$05$66g5S29irdjUvLG0AB8UpeCL79HXIcCJqX9RbCLhmrZyps7tLYpj.', 12, NULL, 'Y', '', '');
+(17, 'admintop', 'Admin TOP', '$2y$05$66g5S29irdjUvLG0AB8UpeCL79HXIcCJqX9RbCLhmrZyps7tLYpj.', 12, NULL, 'Y', '', 'Cibitung'),
+(18, 'test', 'test', '$2y$05$cjoRvqB6yJEplrzr9Xq0GOKxfZ6tz6moweHYs0MFDvy3TK8Jo5x4G', 15, NULL, 'Y', '', 'Cibitung');
 
 -- --------------------------------------------------------
 
@@ -1154,9 +1216,10 @@ CREATE TABLE `tbl_userlevel` (
 --
 
 INSERT INTO `tbl_userlevel` (`id_level`, `nama_level`) VALUES
-(1, 'admin'),
+(1, 'Super Admin'),
 (10, 'Accounting'),
-(12, 'Admin System');
+(12, 'Admin System'),
+(15, 'Staff Gudang');
 
 -- --------------------------------------------------------
 
@@ -7849,8 +7912,8 @@ CREATE TABLE `tbl_wh_supplier` (
 --
 
 INSERT INTO `tbl_wh_supplier` (`id_supplier`, `kode_sup`, `kode_nama`, `nama_sup`, `detail`, `alamat`, `no_tlp`, `no_fax`, `tlp_person`, `kode_akun`, `nama_akun`, `status_akun`, `lawan_kode_akun`, `lawan_nama_akun`) VALUES
-(1, 'SP-0001', '', 'KIKI STATIONERY', '', 'Jl. Mangga Dua Raya - Jakarta', '021 - 29986799', '', 'Bpk. Richard', '', '', '', '', ''),
-(2, 'SP-0002', '', 'PT. MercedesBenz Distribution Indonesia', 'After Sales Marketing', 'Jl. L.RE Martadinata KM.7 Ciputat Jakarta', '', '021 27595862', '', '', '', '', '', '');
+(1, 'SP-0001', 'KS', 'KIKI STATIONERY', '', 'Jl. Mangga Dua Raya - Jakarta', '021 - 29986799', '', 'Bpk. Richard', '', '', '', '', ''),
+(2, 'SP-0002', 'DCVI', 'PT. MercedesBenz Distribution Indonesia', 'After Sales Marketing', 'Jl. L.RE Martadinata KM.7 Ciputat Jakarta', '', '021 27595862', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -8303,13 +8366,13 @@ ALTER TABLE `tbl_acc_type`
 -- AUTO_INCREMENT for table `tbl_akses_menu`
 --
 ALTER TABLE `tbl_akses_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
 
 --
 -- AUTO_INCREMENT for table `tbl_akses_submenu`
 --
 ALTER TABLE `tbl_akses_submenu`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=922;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=983;
 
 --
 -- AUTO_INCREMENT for table `tbl_hrd_cuti_pegawai`
@@ -8351,13 +8414,13 @@ ALTER TABLE `tbl_submenu`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_user` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tbl_userlevel`
 --
 ALTER TABLE `tbl_userlevel`
-  MODIFY `id_level` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_level` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_barang`

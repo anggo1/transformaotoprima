@@ -128,8 +128,8 @@ table.dataTable td {
                             <?php foreach ($viewLevel as $l) {
                             if ($l->add_level=='Y'){
                             echo '<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-sparepart" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>';
-                            }}                            
-                            $idlevel = $this->session->userdata['id_level'];
+                            }}
+                            $idUser = $this->session->userdata['id_user'];
                             ?>
 						</div>
                     </div>
@@ -142,21 +142,8 @@ table.dataTable td {
                                     <th>No Part</th>
                                     <th>Nama Part</th>
                                     <th>Satuan</th>
-                                    <?php 
-                                    if($idlevel=='1'or $idlevel=='12')
-                                    {
-                                    ?>
-                                    <th>Total Stok</th>
-                                    <th>Stok Jkt</th>
-                                    <th>Lokasi JKT</th>
-                                    <th>Stok Cbt</th>
-                                    <th>Lokasi CBT</th>
-                                    <th>Stok SBY</th>
-                                    <th>Lokasi SBY</th>
-                                    <?php } else { if($idlevel ='1'or $idlevel!='12')?>                                        
                                     <th>Stok</th>
                                     <th>Lokasi</th>
-                                    <?php } ?>
                                     <th>Supplier</th>
                                     <th>Type</th>
                                     <th>Kategori</th>
