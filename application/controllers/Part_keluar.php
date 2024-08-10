@@ -27,6 +27,8 @@ class Part_keluar extends MY_Controller
 		ini_set('memory_limit', '512M');
 		set_time_limit(3600);
 		$list = $this->Mod_part_keluar->get_datatables();
+        $idlevel = $this->session->userdata['id_level'];
+        $idlokasi = $this->session->userdata['lokasi'];
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $pel) {
@@ -35,9 +37,18 @@ class Part_keluar extends MY_Controller
 			$row[] = "<a onclick=selectPart('$pel->id_part')>$no</a>";
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
-			$row[] = $pel->stok;
-			$row[] = number_format($pel->harga_baru);
-			$row[] = $pel->kode_satuan;
+			if($idlevel=='1' or $idlevel=='12'){
+				$row[] = $pel->stok;
+			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi =='Cibitung'){
+				$row[] = $pel->stok_cbt;
+			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Jakarta'){
+					$row[] = $pel->stok_jkt;
+			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
+						$row[] = $pel->stok_sby;
+			}
+			//$row[] = $pel->stok;
+			//$row[] = number_format($pel->harga_baru);
+			$row[] = $pel->satuan;
 			$row[] = $pel->id_part;
 			$row[] = $pel->stok_jkt;
 			$row[] = $pel->stok_cbt;
@@ -85,7 +96,7 @@ class Part_keluar extends MY_Controller
 		$this->form_validation->set_rules('tgl_keluar', 'Tanggal Keluar', 'trim|required');
 		$data 	= $this->input->post();
 		$kode_keluar = $data['id_keluar'];
-		$no_keluar = $data['id_keluar'];
+		//$no_keluar = $data['id_keluar'];
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
 			$date2 = $data['tgl_keluar'];
@@ -93,11 +104,15 @@ class Part_keluar extends MY_Controller
 			$tgl_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
 			$sekarang = date('Y/m/d');
 			
-			$divisi = $data['divisi'];		
+			$divisi = $data['divisi'];	
+			$id_div = '';			
+			$nama_div='';
+			if(!empty($divisi)){
 				$divisi = $data['divisi'];
 				$div = explode('|', $divisi);
 				$id_div = $div[0];
 				$nama_div = $div[1];
+			}
 				$lokasi 	= $data['lokasi'];
 				$loknye = explode('|',$lokasi);
 				$kd_lok = $loknye[0];
@@ -121,8 +136,8 @@ class Part_keluar extends MY_Controller
 				$data 		= $this->input->post();
 				$no_part 	= $this->input->post('no_part');
 				$nama_part 	= $this->input->post('nama_part');
-				$qty_keluar 	= $this->input->post('qty_keluar');
-				$stok 	= $this->input->post('stok');
+				$qty_keluar = $this->input->post('qty_keluar');
+				$stok 		= $this->input->post('stok');
 				$stok_jkt 	= $this->input->post('stok_jkt');
 				$stok_cbt 	= $this->input->post('stok_cbt');
 				$stok_sby 	= $this->input->post('stok_sby');

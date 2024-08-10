@@ -176,7 +176,7 @@ show_my_confirm('startPk', 'start-pk', 'PK Dimulai', 'Ya, Mulai', 'Batal Mulai')
 
                 url: "<?php echo base_url('PartPk/Part'); ?>",
 
-                data: "id=" + id+"&id_spk=" + id_spk
+                data: "id=" + id + "&id_spk=" + id_spk
 
             })
 
@@ -299,7 +299,7 @@ show_my_confirm('startPk', 'start-pk', 'PK Dimulai', 'Ya, Mulai', 'Batal Mulai')
 
             url: '<?php echo base_url('PartPk/showDetail'); ?>?id_keluar=' + id_keluar,
 
-            data: 'id_keluar=' + id_keluar+'&id_lapor=' + id_lapor,
+            data: 'id_keluar=' + id_keluar + '&id_lapor=' + id_lapor,
 
             success: function(hasil) {
 

@@ -87,7 +87,7 @@
                                     <label class="col-sm-2 col-form-label">Stok Cabang</label>
                                     <div class="col-sm-4">
                                         <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
-                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
+                                        if ($lvl !='1' && $lvl !='12'){ echo 'readonly';} ?>>
                                             <option value="">Cabang Dealer...
                                             </option>
                                             <?php
@@ -103,7 +103,7 @@
                                     </div>
 									<label class="col-sm-2 col-form-label">Kategori</label>
                                                         <div class="col-sm-4">
-                                                            <select name="divisi" id="divisi" class="form-control" required>
+                                                            <select name="divisi" id="divisi" class="form-control">
                                                                 <option value="">Pilih Kategori...
                                                                 </option>
                                                                 <?php
@@ -224,15 +224,15 @@
 
     $('#table-part tbody').on('click', 'tr', function () {
         var data = table.row( this ).data();
-        var id_part = data[6];
+        var id_part = data[5];
         var no_part = data[1];
         var nama_part = data[2];
         var stok = data[3];
-        var satuan = data[5];
-        var stok_jkt = data[7];
-        var stok_cbt = data[8];
-        var stok_sby = data[9];
-        var harga_baru = data[10];
+        var satuan = data[4];
+        var stok_jkt = data[6];
+        var stok_cbt = data[7];
+        var stok_sby = data[8];
+        var harga_baru = data[9];
         selectPart(id_part,no_part,nama_part,satuan,stok,stok_jkt,stok_cbt,stok_sby,harga_baru);
     } );
 } );

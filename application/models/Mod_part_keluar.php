@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_part_keluar extends CI_Model
 {
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
-    var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
+    var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','a.satuan','a.type','a.kelompok');
+    var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','a.satuan','a.type','a.kelompok');
     var $order = array('id_part' => 'desc'); // default order 
 
     public function __construct()
@@ -16,10 +16,10 @@ class Mod_part_keluar extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('a.*,b.kategori,c.kode_satuan,c.satuan,e.kelompok');
+        $this->db->select('a.*,b.kategori,e.kelompok');
         $this->db->from('tbl_wh_barang as a');
         $this->db->join('tbl_wh_kategori as b', 'b.id_kategori=a.kategori', 'left');
-        $this->db->join('tbl_wh_satuan as c','c.id_satuan=a.satuan', 'left');
+        //$this->db->join('tbl_wh_satuan as c','c.id_satuan=a.satuan', 'left');
         //$this->db->join('tbl_wh_type_mesin as d','d.id_type=a.type','left');
         $this->db->join('tbl_wh_kelompok as e','e.id_kelompok=a.kelompok','left');
         $i = 0;
@@ -135,7 +135,7 @@ class Mod_part_keluar extends CI_Model
 	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
-    public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok_jkt,$stok,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
+    public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
         {
             $date = $data['tgl_keluar'];
             $tgl1 = explode('-', $date);
@@ -149,36 +149,36 @@ class Mod_part_keluar extends CI_Model
                  $total = $stok[$key] - $qty_keluar[$key];
                  $total_jkt= $stok_jkt[$key] - $qty_keluar[$key];
                  $data1[]  = array(
-                 'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+                 'no_part'=>$no_part[$key],  
                  'stok'=>$total,
                  'stok_jkt'=>$total_jkt
              );
                      }}
-                     if($nm_lok=="Cibitung"){
+                     elseif($nm_lok=="Cibitung"){
                          $data1 = array();
                          foreach($no_part as $key=>$value){
                              $total = $stok[$key] - $qty_keluar[$key];
                              $total_cbt= $stok_cbt[$key] - $qty_keluar[$key];
                              $data1[]  = array(
-                             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+                             'no_part'=>$no_part[$key], 
                              'stok'=>$total,
                              'stok_cbt'=>$total_cbt
                          );
                      }}
-                     if($nm_lok=="Surabaya"){
+                     elseif($nm_lok=="Surabaya"){
                          $data1 = array();
                          foreach($no_part as $key=>$value){
                              $total = $stok[$key] - $qty_keluar[$key];
                              $total_sby= $stok_sby[$key] - $qty_keluar[$key];
                              $data1[]  = array(
-                             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
+                             'no_part'=>$no_part[$key],  
                              'stok'=>$total,
                              'stok_sby'=>$total_sby
                          );
                      }}
             $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
     
-            $sql_update = "UPDATE tbl_wh_detail_part_keluar SET lokasi ='".$lokasi."', tgl_keluar='".$tgl_keluar."' WHERE id_keluar ='{$id_keluar}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_wh_detail_part_keluar SET lokasi ='".$nm_lok."', tgl_keluar='".$tgl_keluar."' WHERE id_keluar ='{$id_keluar}'"; $this->db->query($sql_update);
             return $this->db->affected_rows();
         }
     public function insertGlobal_divisi($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_a,$stok_p,$id_div,$nama_div)

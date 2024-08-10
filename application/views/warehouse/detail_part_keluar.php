@@ -30,7 +30,7 @@
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
-            <td><?php echo $s->stok; ?></td>
+            <td><?php echo $s->stok_akhir; ?></td>
             <td><?php echo number_format($s->harga_baru); ?></td>
             <td class="jml">
               <input type="number" name="qty_keluar[]" id="qty_keluar[]"
@@ -39,10 +39,10 @@
                     class="form-control col-sm-10">
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok; ?>">
-                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
-                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
-                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
+                s<input type="text" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
+                j<input type="text" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
+                c<input type="text" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
+                b<input type="text" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
             </td>
             <td><?php 
             if(!empty($s->jumlah)){
