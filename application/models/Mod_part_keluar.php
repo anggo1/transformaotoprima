@@ -6,7 +6,7 @@ class Mod_part_keluar extends CI_Model
     var $table = 'tbl_wh_barang';
     var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','a.satuan','a.type','a.kelompok');
     var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','a.satuan','a.type','a.kelompok');
-    var $order = array('id_part' => 'desc'); // default order 
+    var $order = array('id_part' => 'asc'); // default order 
 
     public function __construct()
     {
@@ -246,10 +246,11 @@ class Mod_part_keluar extends CI_Model
     public function select_detail($id)
     {
 
-        $this->db->select('a.*,b.*,c.satuan as nama_satuan', FALSE);
+        $this->db->select('a.*', FALSE);
+        $this->db->select('b.*', FALSE);
         $this->db->from('tbl_wh_detail_part_keluar as a');
         $this->db->join('tbl_wh_barang as b','b.no_part=a.no_part','left');
-        $this->db->join('tbl_wh_satuan as c','c.id_satuan=b.satuan', 'left');
+        //$this->db->join('tbl_wh_satuan as c','c.id_satuan=b.satuan', 'left');
         $this->db->where('a.id_keluar', $id);
         $this->db->order_by('a.id', 'asc');
         $query_result = $this->db->get();

@@ -34,7 +34,7 @@ class Part_keluar extends MY_Controller
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "<a onclick=selectPart('$pel->id_part')>$no</a>";
+			$row[] = $pel->id_part;
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
 			if($idlevel=='1' or $idlevel=='12'){
@@ -192,7 +192,7 @@ class Part_keluar extends MY_Controller
 	}
 	public function deletepartDetail()
 	{
-		$id = $_POST['id_detail'];
+		$id = $_POST['id'];
 		$data['dataPo']  = $this->Mod_part_keluar->deletepartDetail($id);
 	}
 	public function cetak()

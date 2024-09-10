@@ -261,7 +261,6 @@
 			})
 			
 			tampilDetail(id_keluar);
-			tampilDetail(id_keluar);
 			$('#modal_form').modal('hide');
 			}
 

@@ -39,10 +39,10 @@
                     class="form-control col-sm-10">
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
-                s<input type="text" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
-                j<input type="text" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
-                c<input type="text" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
-                b<input type="text" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
+                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
+                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
+                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
             </td>
             <td><?php 
             if(!empty($s->jumlah)){
@@ -112,8 +112,8 @@ function delData(e, id_detail,id_keluar) {
             type: "POST",
             url: "<?php echo base_url('Part_keluar/deletepartDetail')?>",
             data: {
-                'id_detail': id_detail,
-                'id': id_keluar,
+                'id': id_detail,
+                'id_keluar': id_keluar,
             },
 
             success: function(response) {
