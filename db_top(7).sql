@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2024 at 10:58 AM
+-- Generation Time: Sep 25, 2024 at 10:10 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -1133,6 +1133,19 @@ CREATE TABLE `tbl_mk_chasis` (
   `jns_pelayanan` varchar(35) NOT NULL,
   `imei_gps` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_mk_keterangan_spk`
+--
+
+CREATE TABLE `tbl_mk_keterangan_spk` (
+  `id_ket_spk` int(11) NOT NULL,
+  `id_spk` varchar(25) NOT NULL,
+  `no_spk` varchar(35) NOT NULL,
+  `keterangan` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -5916,6 +5929,13 @@ CREATE TABLE `tbl_wh_detail_estimasi_penawaran_note` (
   `remark` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tbl_wh_detail_estimasi_penawaran_note`
+--
+
+INSERT INTO `tbl_wh_detail_estimasi_penawaran_note` (`id_detail_note`, `id_estimasi_penawaran`, `kode_estimasi_penawaran`, `remark`) VALUES
+(12, '24-09001', '', 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -8898,6 +8918,12 @@ ALTER TABLE `tbl_mk_chasis`
   ADD PRIMARY KEY (`no_body`);
 
 --
+-- Indexes for table `tbl_mk_keterangan_spk`
+--
+ALTER TABLE `tbl_mk_keterangan_spk`
+  ADD PRIMARY KEY (`id_ket_spk`);
+
+--
 -- Indexes for table `tbl_mk_spk`
 --
 ALTER TABLE `tbl_mk_spk`
@@ -9178,6 +9204,12 @@ ALTER TABLE `tbl_kota`
   MODIFY `id_kota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `tbl_mk_keterangan_spk`
+--
+ALTER TABLE `tbl_mk_keterangan_spk`
+  MODIFY `id_ket_spk` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tbl_mk_spk`
 --
 ALTER TABLE `tbl_mk_spk`
@@ -9223,7 +9255,7 @@ ALTER TABLE `tbl_wh_detail_estimasi_penawaran`
 -- AUTO_INCREMENT for table `tbl_wh_detail_estimasi_penawaran_note`
 --
 ALTER TABLE `tbl_wh_detail_estimasi_penawaran_note`
-  MODIFY `id_detail_note` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_note` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_wh_detail_opname`

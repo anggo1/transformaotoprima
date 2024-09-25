@@ -18,7 +18,7 @@ class Spk extends MY_Controller
 		$data['judul'] 		= "SPK";
 		$this->load->helper('url');
 		$data['dataCustomer'] = $this->Mod_spk->select_customer();
-        //echo show_my_modal('marketing/modals/modal_keterangan_estimasi', 'tambah-keterangan', $data);
+        echo show_my_modal('marketing/modals/modal_keterangan', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'marketing/spk', $data);
 	}
 public function showPart()
@@ -90,7 +90,7 @@ public function showPart()
 		$data['dataPo'] = $this->Mod_spk->update_detailPo($id,$jml_part,$hrg_part);
 		//$this->load->view('body_repair/detail_estimasi', $data);
 	}
-	public function updateRemark()
+	public function updateKeterangan()
 	{
         $id = $_POST['id'];
         $remark = $_POST['remark'];
