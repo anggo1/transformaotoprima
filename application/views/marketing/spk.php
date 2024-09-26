@@ -143,32 +143,34 @@
 
 
                             <?php
-						$date = date("y-m");
+						$date = date("Y-m");
 						$ci_kons = get_instance();
-						$query = "SELECT max(no_spk) AS maxKode FROM tbl_mk_spk WHERE no_spk LIKE '%$date%'";
+						$query = "SELECT max(no_urut) AS maxKode FROM tbl_mk_spk WHERE no_urut LIKE '%$date%'";
 						$hasil = $ci_kons->db->query($query)->row_array();
 						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 5, 4);
+						$noUrut = (int)substr($noOrder, 8, 3);
 						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
-						$kode_ref = 'TOP-'.$bulan.'/SBY/'.$tahun.'/'.sprintf("%03s", $noUrut);
+						$tahun = substr($date, 0, 4);
+						$bulan = substr($date, 5, 2);
+						$kode_po  = $tahun.'-'.$bulan.'-'.sprintf("%03s", $noUrut);
+						$kode_ref = 'TOP-'.sprintf("%03s", $noUrut).'-'.$bulan.'-SBY-'.$tahun;
 						?>
-                            <form id="formPo" name="formPo" method="POST">
+                            <form id="formSpk" name="formSpk" method="POST">
                                 <div class="row">
 
-                                    <input type="hidden" name="id_estimasi_penawaran" id="id_estimasi_penawaran"
-                                        value="<?php echo $kode_po ?>" class="form-control">
-                                    <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
+                                    <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>"class="form-control">
                                     <input type="hidden" name="user" id="user"
                                         value="<?php echo $this->session->userdata['full_name']; ?>"
                                         class="form-control">
 
-                                    <div class="col-3">
-                                        <label class="col-form-label">No Reff</label>
+                                    <div class="col-2">
+                                        <label class="col-form-label">Nomor</label>
                                         <input type="text" name="no_ref" id="no_ref" value="<?php echo $kode_ref ?>"
-                                            class="form-control" placeholder="Nomor Referensi">
+                                            class="form-control" placeholder="Nomor Referensi" readonly>
+                                    </div>
+                                    <div class="col-1">
+                                        <label class="col-form-label">Kode</label>
+                                        <input type="text" name="kode" id="kode" class="form-control" placeholder="Kode">
                                     </div>
                                     <div class="col-3">
                                         <label class="col-form-label">Nama Pemesan</label>
@@ -244,17 +246,17 @@
                             <div class="row">
                                 <div class="col-3">
                                     <label class="col-form-label">Nama BPKB/STNK</label>
-                                    <input type="text" name="nama_bpkb " id="nama_bpkb " value="" class="form-control"
+                                    <input type="text" name="nama_bpkb" id="nama_bpkb" value="" class="form-control"
                                         placeholder="Nama BPKB / STNK">
                                 </div>
                                 <div class="col-3">
                                     <label class="col-form-label">No KTP/No TDP</label>
-                                    <input type="text" name="no_ktp " id="no_ktp " value="" class="form-control"
+                                    <input type="text" name="no_ktp" id="no_ktp" value="" class="form-control"
                                         placeholder="Nomor KTP">
                                 </div>
                                 <div class="col-6">
                                     <label class="col-form-label">Alamat</label>
-                                    <input type="text" name="alamat_faktur " id="alamat_faktur " value="" class="form-control"
+                                    <input type="text" name="alamat_faktur" id="alamat_faktur" value="" class="form-control"
                                         placeholder="Received by">
                                 </div>
                             </div>
@@ -339,8 +341,8 @@
 
                                         <div class="col-12">
                                             <label class="col-form-label">Jumlah Unit</label>
-                                            <input type="text" name="jml_unit" id="jml_unit" value="" class="form-control"
-                                                placeholder="Julah Unit">
+                                            <input type="text" name="jml_unit" id="jml_unit" value="" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
+                                                placeholder="Jumlah Unit">
                                         </div>
                                         <div class="col-12">
                                             <label class="col-form-label">Kategori</label>
@@ -375,13 +377,15 @@
                                         <div class="col-12">
                                             <label class="col-form-label">Harga Off The Road</label>
                                             <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="0"
-                                                onkeyup="formatNumber(this)" onchange="formatNumber(this);"
+                                            onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
+                                            
+                                                
                                                 class="form-control" placeholder="0" style="text-align:right;">
                                         </div>
                                         <div class="col-12">
                                             <label class="col-form-label">Biaya BBN</label>
                                             <input type="text" name="biaya_bbn" id="biaya_bbn" value="0"
-                                                onkeyup="formatNumber(this)" onchange="formatNumber(this);"
+                                                onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
                                                 class="form-control" placeholder="Biaya BBN"
                                                 style="text-align:right;">
                                                 <p></p>
@@ -396,9 +400,9 @@
                                             <div class="form-group row">
                                                 <div class="col-12">
                                                     <label class="col-form-label">Harga On The Road</label>
-                                                    <input type="text" name="biaya_bbn" id="biaya_bbn" value="0"
+                                                    <input type="text" name="hrg_on_the_road" id="hrg_on_the_road" value="0"
                                                         onkeyup="formatNumber(this)" onchange="formatNumber(this);"
-                                                        class="form-control" placeholder="Bea Pengiriman Barang"
+                                                        class="form-control" placeholder="Bea Pengiriman Barang" readonly
                                                         style="text-align:right;">
                                                 </div>
                                                 <div class="col-6">
@@ -454,14 +458,14 @@
                                                     <input type="text" name="hrg_jual_perunit" id="hrg_jual_perunit"
                                                         value="0" onkeyup="formatNumber(this)"
                                                         onchange="formatNumber(this);" class="form-control"
-                                                        placeholder="Total Harga Jual" style="text-align:right;">
+                                                        placeholder="Total Harga Jual" style="text-align:right;" readonly>
                                                 </div>
                                                 <div class="col-6">
                                                     <label class="col-form-label">Total Harga Jual</label>
                                                     <input type="text" name="total_harga_jual" id="total_harga_jual"
                                                         value="0" onkeyup="formatNumber(this)"
                                                         onchange="formatNumber(this);" class="form-control"
-                                                        placeholder="Total Harga Jual" style="text-align:right;">
+                                                        placeholder="Total Harga Jual" style="text-align:right;" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -576,63 +580,6 @@ $('#tgl_deadline1').datetimepicker({
     date: moment()
 });
 
-$(document).ready(function() {
-    table = $('#table-part').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
-        "serverSide": true,
-        "pageLength": 10, // Defaults number of rows to display in table
-        "order": [],
-        "ajax": {
-            "url": "<?php echo site_url('EstimasiPenawaran/ajax_list') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "orderable": false,
-        }, ]
-    });
-});
-
-$(document).ready(function() {
-    var table = $('#table-part').DataTable();
-    var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-    var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-
-    $('#table-part tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var id_part = data[0];
-        var no_part = data[1];
-        var nama_part = data[2];
-        var satuan = data[3];
-        var stok = data[4];
-        var harga_baru = data[5];
-        var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-        var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-        $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/prosesDetailPo'); ?>',
-            data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-                "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-                "&id_part=" + id_part +
-                "&no_part=" + no_part +
-                "&nama_part=" + nama_part +
-                "&satuan=" + satuan +
-                "&stok=" + stok +
-                "&harga_baru=" + harga_baru
-        })
-        tampilDetail();
-        document.getElementById("simpan").hidden = false;
-        $('#modal_form').modal('hide');
-        tampilDetail();
-        tampilKeterangan();
-    });
-});
 var MyTable = $('#list-po').dataTable({
     "responsive": true,
     "paging": true,
@@ -653,28 +600,47 @@ var tableKeterangan = $('#list-keterangan').dataTable({
     "pageLength": 5
 });
 
-function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
-    var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-    var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
 
-    $.ajax({
-        method: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/prosesDetailPo'); ?>',
-        data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-            "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-            "&id_part=" + id_part +
-            "&no_part=" + no_part +
-            "&nama_part=" + nama_part +
-            "&satuan=" + satuan +
-            "&stok=" + stok +
-            "&harga_baru=" + harga_baru
-    })
 
-    tampilDetail(id_estimasi_penawaran);
+function NilaiRupiah(jumlah) 
+{ 
+    var titik = ",";
+    var nilai = new String(jumlah); 
+    var pecah = []; 
+    while(nilai.length > 3) 
+    { 
+        var asd = nilai.substr(nilai.length-3); 
+        pecah.unshift(asd); 
+        nilai = nilai.substr(0, nilai.length-3); 
+    } 
 
-    $('#modal_form').modal('hide');
-
+    if(nilai.length > 0) { pecah.unshift(nilai); } 
+    nilai = pecah.join(titik);
+    return nilai; 
 }
+
+function startCalculate(){
+interval=setInterval("Calculate()",10);
+}
+
+//function ganti(",");
+function Calculate(){
+			  
+              var a = document.formSpk.jml_unit.value;
+              var b = document.formSpk.hrg_off_the_road.value.replace(/\D/g, '');
+              var c = document.formSpk.biaya_bbn.value.replace(/\D/g, '');
+              var d = document.formSpk.hrg_tambahan_1.value.replace(/\D/g, '');
+              var e = document.formSpk.hrg_tambahan_2.value.replace(/\D/g, '');
+              var f = document.formSpk.hrg_tambahan_3.value.replace(/\D/g, '');
+              var g = document.formSpk.hrg_tambahan_4.value.replace(/\D/g, '');
+              document.formSpk.hrg_on_the_road.value=NilaiRupiah(((b*1)+(c*1))*a);
+              document.formSpk.hrg_jual_perunit.value=NilaiRupiah((((b*1)+(c*1))*a)+(d*1)+(e*1)+(f*1)+(g*1));
+              document.formSpk.total_harga_jual.value=NilaiRupiah((((b*1)+(c*1))*a)+(d*1)+(e*1)+(f*1)+(g*1));
+              
+              }
+              function stopCalc(){
+              clearInterval(startCalculate);
+              }
 
 function next(dataPo, dataRef) {
     document.getElementById('id_estimasi_penawaran').value = dataPo;
@@ -694,26 +660,11 @@ function refresh() {
     MyTable = $('#list-po').dataTable();
 }
 
-function tampilDetail() {
-    //var out = jQuery.parseJSON(data);
-    //var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilDetail'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            //MyTable.fnDestroy();
-            $('#data-po').html(hasil);
-        }
-    });
-}
-
 function insertNote() {
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tambahNote'); ?>',
+        url: '<?php echo base_url('Spk/tambahNote'); ?>',
         data: 'id=' + id_estimasi_penawaran,
         success: function(hasil) {
             tampilKeterangan()
@@ -722,11 +673,11 @@ function insertNote() {
 }
 
 function tampilKeterangan() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    var no_urut = document.getElementById('no_urut').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+        url: '<?php echo base_url('Spk/tampilKeterangan'); ?>',
+        data: 'no_urut=' + no_urut,
         success: function(hasil) {
             tableKeterangan.fnDestroy();
             $('#data-keterangan').html(hasil);
@@ -738,12 +689,13 @@ function tampilKeterangan() {
 
 $('#form-keterangan').submit(function(e) {
     var data = $(this).serialize();
-    var id = document.getElementById('id_estimasi_penawaran').value;
+    var id = document.getElementById('no_urut').value;
+    var no_spk = document.getElementById('no_ref').value;
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/tambahKeterangan'); ?>',
-            data: data + "&id=" + id
+            url: '<?php echo base_url('Spk/tambahKeterangan'); ?>',
+            data: data + "&id=" + id+ "&no_spk=" + no_spk
         })
         .done(function(data) {
             tampilKeterangan();
@@ -821,12 +773,12 @@ function tampilDetailCache(dataPo) {
         }
     });
 }
-$('#formPo').submit(function(e) {
+$('#formSpk').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/prosesPo'); ?>',
+            url: '<?php echo base_url('Spk/prosesSpk'); ?>',
             data: data
         })
         .done(function(data) {
@@ -846,22 +798,14 @@ $('#formPo').submit(function(e) {
                 $('.msg').html(out.msg);
                 $('.dataPo').html(out.dataPo);
                 //tampilDetail(out.dataPo)
-                document.getElementById("formPo"); //reset()	
-                $('#tgl_estimasi_penawaran').attr('readonly', 'readonly');
-                $('#top').attr('readonly', 'readonly');
-                $('#status').attr('readonly', 'readonly');
-                $('#supplier').attr('readonly', 'readonly');
-                $('#keterangan').attr('readonly', 'readonly');
-                $('#ppn').attr('readonly', 'readonly');
+                document.getElementById("formSpk").reset();
 
                 var d = document.getElementById("cetak");
                 d.setAttribute('data-id', out.dataPo);
                 document.getElementById("cetak").hidden = false;
                 document.getElementById("tambah").hidden = false;
-                document.getElementById("tambah-part").hidden = true;
                 document.getElementById("data-po").hidden = true;
                 document.getElementById("simpan").hidden = true;
-                tampilDetailCache(out.dataPo);
 
                 Swal.fire({
                     position: 'center',
@@ -884,7 +828,7 @@ $(document).on("click", ".cetak-po", function() {
     //var id = document.getElementById('next_proses').value=datakode;
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/cetak'); ?>",
+            url: "<?php echo base_url('Spk/cetak'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -893,31 +837,6 @@ $(document).on("click", ".cetak-po", function() {
         })
 })
 
-var data_id;
-$(document).on("click", ".delete-detail", function() {
-    data_id = $(this).attr("data-id");
-})
-$(document).on("click", ".delete-detail", function() {
-    var id = data_id;
-
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/deleteDetail'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-            if (out.status != 'form') {
-                //$('.msg').html(out.msg);
-                $('#hapusDetail').modal('hide');
-                var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-                //next(next_proses);
-                tampilDetail(id_estimasi_penawaran);
-            }
-        })
-})
-
-
 $(document).on("click", ".delete-keterangan", function() {
     data_id = $(this).attr("data-id");
 })
@@ -926,7 +845,7 @@ $(document).on("click", ".delete-keterangan", function() {
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/deleteKeterangan'); ?>",
+            url: "<?php echo base_url('Spk/deleteKeterangan'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -934,9 +853,9 @@ $(document).on("click", ".delete-keterangan", function() {
             if (out.status != 'form') {
                 //$('.msg').html(out.msg);
                 $('#hapusKeterangan').modal('hide');
-                var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
+                var no_urut = document.formSpk.no_urut.value;
                 //next(next_proses);
-                tampilKeterangan(id_estimasi_penawaran);
+                tampilKeterangan(no_urut);
             }
         })
 })

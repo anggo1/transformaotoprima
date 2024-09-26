@@ -17,7 +17,6 @@ class Spk extends MY_Controller
 		$data['page'] 		= "Surat Pesanan Kendaraan";
 		$data['judul'] 		= "SPK";
 		$this->load->helper('url');
-		$data['dataCustomer'] = $this->Mod_spk->select_customer();
         echo show_my_modal('marketing/modals/modal_keterangan', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'marketing/spk', $data);
 	}
@@ -25,7 +24,7 @@ public function showPart()
     {
 		$sup = $_GET['sup'];
         $data['dataDetail'] = $this->Mod_spk->select_part($sup);
-        $this->load->view('warehouse/data_part_with_supplier', $data);
+        $this->load->view('marketing/data_part_with_supplier', $data);
     }
 	public function ajax_list()
 	{
@@ -99,58 +98,100 @@ public function showPart()
 	public function tambahKeterangan()
 	{
         $id = $_POST['id'];
-        $remark = $_POST['keterangan'];
-		$data['dataPo'] = $this->Mod_spk->insertRemark($id,$remark);
+        $no_spk = $_POST['no_spk'];
+        $keterangan = $_POST['keterangan'];
+		$data['dataPo'] = $this->Mod_spk->insertKEterangan($id,$no_spk,$keterangan);
 	}
 	public function tambahNote()
 	{
         $id = $_POST['id'];
 		$data['dataPo'] = $this->Mod_spk->insertNote($id);
 	}
-	public function prosesPo()
+	public function prosesSpk()
 	{
 		
 		$sekarang= date("Y-m");
-		$this->form_validation->set_rules('tgl_estimasi_penawaran', 'Tanggal Order', 'trim|required');
+		$this->form_validation->set_rules('nama_pemesan', 'Nama Pemesan', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
-			$kode_po = $data['id_estimasi_penawaran'];
-			$date2 = $data['tgl_estimasi_penawaran'];
 			
-			$bea=$data['bea_kirim'];
-			$bea_kirim =str_replace(",","", $bea);
+			$hrg_ofr=$data['hrg_off_the_road'];
+			$ofr =str_replace(",","", $hrg_ofr);
+			$bbn=$data['biaya_bbn'];
+			$h_bbn =str_replace(",","", $bbn);
+			$hrg_otr=$data['hrg_on_the_road'];
+			$otr =str_replace(",","", $hrg_otr);
+			
+			$t_1=$data['hrg_tambahan_1'];
+			$tambah1 =str_replace(",","", $t_1);
+			
+			$t_2=$data['hrg_tambahan_2'];
+			$tambah2 =str_replace(",","", $t_2);
+			
+			$t_3=$data['hrg_tambahan_3'];
+			$tambah3 =str_replace(",","", $t_3);
+			
+			$t_4=$data['hrg_tambahan_4'];
+			$tambah4 =str_replace(",","", $t_4);
+			
+			$hjp=$data['hrg_jual_perunit'];
+			$perunit =str_replace(",","", $hjp);
+			
+			$thp=$data['total_harga_jual'];
+			$total_harga =str_replace(",","", $thp);
 
-			$tgl2 = explode('-', $date2);
-			$tgl_po_fix = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
+			$no_spk1 = $data['no_ref'];
+			$ciri = $data['kode'];
+			if(empty($ciri)){
+				$no_spk = $no_spk1;
+			}else{
+				$no_spk= $no_spk1.'-'.$ciri;
+			}
 
 			$data = array(
-				'id_estimasi_penawaran'  	=> $kode_po,
-				'kode_estimasi_penawaran'   => $data['no_ref'],
-				'tgl_estimasi_penawaran'  	=> $tgl_po_fix,
-				'id_customer'	=> $data['id_customer'],
-				'no_reg'	=> $data['no_reg'],
-				'no_vin' => $data['no_vin'],
-				'sales_design' => $data['sales_design'],
-				'date_received' => $data['date_received'],
-				'millage' => $data['millage'],
-				'engine_no' => $data['engine_no'],
-				'acc_no' => $data['acc_no'],
-				'received_by' => $data['received_by'],
-				'routing_no' => $data['routing_no'],
-				'last_km' => $data['last_km'],
-				'date_of_regis' => $data['date_of_regis'],
-				'ppn' => $data['ppn'],
-				'bea_kirim' => $bea_kirim,
-				'user'   	=> $data['user'],
-				'status_po'	=> 'N'
+				'no_urut'  	=> $data['no_urut'],
+				'no_spk'   => $no_spk,
+				'tgl_spk'  	=> date("Y-m-d"),
+				'nama_pemesan'	=> $data['nama_pemesan'],
+				'alamat_pemesan'	=> $data['alamat_pemesan'],
+				'telp_pemesan' => $data['telp_pemesan'],
+				'faktur_pajak' => $data['faktur_pajak'],
+				'npwp_pemesan' => $data['npwp_pemesan'],
+				'nama_npwp_pemesan' => $data['nama_npwp_pemesan'],
+				'alamat_npwp' => $data['alamat_npwp'],
+				'contact_person' => $data['contact_person'],
+				'telp_contact_person' => $data['telp_contact_person'],
+				'nama_bpkb' => $data['nama_bpkb'],
+				'no_ktp' => $data['no_ktp'],
+				'alamat_faktur' => $data['alamat_faktur'],
+				'plat_kendaraan' => $data['plat_kendaraan'],
+				'type_body' =>$data['type_body'],
+				'jml_unit' => $data['jml_unit'],
+				'kategori' => $data['kategori'],
+				'type_kendaraan' => $data['type_kendaraan'],
+				'warna_tahun' => $data['warna_tahun'],
+				'hrg_off_the_road' => $ofr,
+				'biaya_bbn' => $h_bbn,
+				'hrg_on_the_road' => $otr,
+				'tambahan_1' => $data['tambahan_1'],
+				'hrg_tambahan_1' => $tambah1,
+				'tambahan_2' => $data['tambahan_2'],
+				'hrg_tambahan_2' => $tambah2,
+				'tambahan_3' => $data['tambahan_3'],
+				'hrg_tambahan_3' => $tambah3,
+				'tambahan_4' => $data['tambahan_4'],
+				'hrg_tambahan_4' => $tambah4,
+				'hrg_jual_perunit' => $perunit,
+				'total_hrg_jual' => $total_harga,
+				'user'   	=> $data['user']
 			);
-				$data['dataPo'] = $this->db->insert('tbl_wh_estimasi_penawaran', $data);
+				$data['dataPo'] = $this->db->insert('tbl_mk_spk', $data);
 				$data 	= $this->input->post();
 				
 			if ($result > 0) {
-				$out['dataRef'] = $data['no_ref'];
-				$out['dataPo'] = $kode_po;
+				$out['dataRef'] = $data['no_urut'];
+				$out['dataPo'] = $no_spk;
 				$out['status'] = '';
 				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
 			} else {
@@ -167,13 +208,13 @@ public function showPart()
 	{
 		$id 				= $_POST['id_estimasi_penawaran'];
 		$data['dataDetail'] = $this->Mod_spk->select_detail($id);
-		$this->load->view('warehouse/detail_estimasi_penawaran', $data);
+		$this->load->view('marketing/detail_estimasi_penawaran', $data);
 	}
 	public function tampilKeterangan()
 	{
-		$id 				= $_POST['id_estimasi_penawaran'];
+		$id 				= $_POST['no_urut'];
 		$data['dataKet'] = $this->Mod_spk->select_keterangan($id);
-		$this->load->view('warehouse/data_keterangan_estimasi', $data);
+		$this->load->view('marketing/data_keterangan_spk', $data);
 	}
 	public function view()
     {
@@ -182,34 +223,13 @@ public function showPart()
             $data['table'] = $table;
             $data['data_field'] = $this->db->field_data($table);
             $data['dataDetail'] = $this->Mod_userlevel->view($id)->result_array();
-            $this->load->view('warehouse/detail_estimasi_penawaran', $data);
+            $this->load->view('marketing/detail_estimasi_penawaran', $data);
         
     }
-	public function tampilDetailCache()
-	{
-		$id 				= $_GET['id_estimasi_penawaran'];
-		$data['dataDetail'] = $this->Mod_spk->select_detail($id);
-		$this->load->view('warehouse/detail_estimasi_penawaran_cache', $data);
-	}
-	public function deleteDetail()
-	{
-		$id = $_POST['id'];
-		$result = $this->Mod_spk->deleteDetail_po($id);
-		if ($result > 0) {
-			//$out['datakode']=$kodeBaru;
-			$out['status'] = '';
-			$out['msg'] = show_del_msg('Deleted', '10px');
-		} else {
-			$out['status'] = '';
-			$out['msg'] = show_err_msg('Filed !', '10px');
-		}
-		echo json_encode($out);
-	}
-	
 	public function deleteKeterangan()
 	{
 		$id = $_POST['id'];
-		$result = $this->Mod_spk->deleteKeterangan_po($id);
+		$result = $this->Mod_spk->deleteDetail_spk($id);
 		if ($result > 0) {
 			//$out['datakode']=$kodeBaru;
 			$out['status'] = '';
@@ -224,10 +244,9 @@ public function showPart()
 	{
 		$id 				= $_POST['id'];
 		$data['dataPo'] = $this->Mod_spk->select_by_id($id);
-		$data['detailPo'] = $this->Mod_spk->select_detail($id);
 		$data['detailKet'] = $this->Mod_spk->select_keterangan($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran', 'cetak-po', $data, ' modal-xl');
+		echo show_my_print('marketing/modals/modal_cetak_spk', 'cetak-po', $data, ' modal-xl');
 	}
 	public function cetak_int()
 	{
@@ -235,6 +254,6 @@ public function showPart()
 		$data['dataPo'] = $this->Mod_spk->select_by_id($id);
 		$data['detailPo'] = $this->Mod_spk->select_detail($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran_internal', 'cetak-po-int', $data, ' modal-xl');
+		echo show_my_print('marketing/modals/modal_cetak_spk_internal', 'cetak-po-int', $data, ' modal-xl');
 	}
 }
