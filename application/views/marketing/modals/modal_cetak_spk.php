@@ -78,21 +78,22 @@ th {
 .datatable2 th {
     border: 0px solid #000;
     height: 10px;
-}
-
-.datatable3 {
-    border-collapse: collapse;
-    font: bold;
-}
+} 
 
 .datatable3 td {
     padding: 2px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 8px;
-    font: bold;
+    font-size: 9px;
 }
 
 .datatable3 th {
+    border: 0px solid #000;
+    align-content: left;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    text-align: left;
+}
+.table-dalam th {
     border: 1px solid #000;
     font-display: block;
     align-content: center;
@@ -101,7 +102,39 @@ th {
     font-size: 10px;
     text-align: center;
 }
-
+.table-kwitansi td {
+    border: 0px solid #000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    text-align: left;
+    height: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.table-dalam td {
+    border: 1px solid #000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    text-align: left;
+    height: 5px;
+}
+.table-ttd th {
+    padding: 1px;
+    border: 0px solid #000;
+    font-display: block;
+    align-content: center;
+    font-weight: bolder;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    text-align: center;
+    height: 5px;
+}
+.table-ttd td {
+    padding: 1px;
+    border: 0px solid #000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    }
 .table-atas {
     border-collapse: collapse;
     font: bold;
@@ -172,7 +205,7 @@ th {
     <div class="modal-body">
         <tbody>
             <tr>
-                <td width="100%" style="padding: 15px;">
+              <td width="100%" style="padding: 15px;">
                     <?php
 	foreach ($dataPo as $k) {
   }
@@ -254,46 +287,27 @@ th {
                             <th height="37">SURAT PESANAN KENDARAAN</th>
                         </tr>
                     </table>
-                    <table width="100%" cellpadding="1" cellspacing="0" class="datatable2">
+                    <table width="100%" cellpadding="1" style="
+  border-bottom: 1px solid black;border-top: 1px solid black;" cellspacing="0" class="datatable2">
                         <tr>
                             <th width="13%" height="37">
                                 <font size="-2">Nama Perusahaan</font>
                             </th>
-                            <th width="42%">
-                                <div class="text1">
-                                    <font size="-2">Vin No</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
+                            <th width="42%">&nbsp;</th>
                             <th width="13%">
                                 <font size="-2">Nama BPKB/STNK</font>
                             </th>
-                            <th width="32%">
-                                <div class="text1">
-                                    <font size="-2">Date / time received</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
+                            <th width="32%">&nbsp;</th>
                         </tr>
                         <tr>
                             <th>
                                 <font size="-2">Alamat</font>
                             </th>
-                            <th>
-                                <div class="text1">
-                                    <font size="-2">Engine No.</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
+                            <th>&nbsp;</th>
                             <th>
                                 <font size="-2">No KTP/No TDP</font>
                             </th>
-                            <th>
-                                <div class="text1">
-                                    <font size="-2">Received By</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
+                            <th>&nbsp;</th>
                         </tr>
                         <tr>
                             <th>&nbsp;</th>
@@ -355,179 +369,420 @@ th {
                         </tr>
                         <tr>
                             <th>
-                                <div class="text1">
-                                    <font size="-2">No. Telepon/HP.</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
-                            <th>
-                                <div class="text1">
-                                    <font size="-2">Las Service date/Millage/km</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
-                            <th>
-                                <div class="text1">
-                                    <font size="-2">Date of 1st registration</font>
-                                </div>
-                                <div class="text2"></div>
-                            </th>
+                            <font size="-2">No. Telepon/HP.</font></th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
                             <th>&nbsp;</th>
                         </tr>
                     </table>
-                    <br>
-                    <table width="100%" border="1" cellpadding="3" cellspacing="0" class="datatable3">
-                        <thead>
+                    <table width="100%" cellpadding="3" cellspacing="0" class="datatable3">
                             <tr>
-                                <th width="3%" height="31">
-                                    <div align="center">No</div>
-                                </th>
-                                <th width="11%">
-                                    <div align="center">Part Number</div>
-                                </th>
-                                <th><strong>Description</strong></th>
-                                <th width="8%">Price</th>
-                                <th width="4%">
-                                    <div align="center">Pcs</div>
-                                </th>
-                                <th width="7%">
-                                    <div align="center">Amount</div>
-                                </th>
-                                <th width="14%">
-                                    <div align="center">Remarks</div>
-                                </th>
+                                <th height="31" colspan="4">KETERANGAN UNIT dan ESTIMASI HARGA</th>
+                                <th colspan="3">SYARAT dan KETENTUAN</th>
                             </tr>
                             <?php
         $no = 0;
         foreach ($dataPo as $d) : $no++;
           ?>
                             <tr>
-                                <td>
-                                    <div align="center"></div>
-                                </td>
-                                <td>
-                                    <div align="center">&nbsp;</div>
-                                </td>
-                                <td width="53%">
-                                    <div align="center"></div>
-                                </td>
-                                <td width="8%">
-                                    <div align="right">&nbsp;</div>
-                                </td>
-                                <td width="4%">
-                                    <div align="center">&nbsp;</div>
-                                </td>
-                                <td>
-                                    <div align="right"></div>
-                                </td>
-                                <td>
-                                    <div align="center"></div>
-                                </td>
+                                <td width="9%">Jumlah Unit</td>
+                                <td width="1%">:</td>
+                                <td width="30%">&nbsp;</td>
+                                <td width="9%">&nbsp;</td>
+                                <td width="1%">&nbsp;</td>
+                                <td width="1%">1.</td>
+                                <td width="49%"> Harga yang tercantum dalam surat pesanan ini tidak mengikat &amp; tidak berlaku jika terjadi force majour</td>
                             </tr>
 
-                            <?php $no + 1;
-        endforeach ?>
                             <tr>
+                                <td>Kategori</td>
+                                <td>:</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>2.</td>
+                                <td>Surat Pesanan ini dianggap SAH, apabila :</td>
                             </tr>
                             <tr>
+                                <td>Type</td>
+                                <td>:</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>a.  Telah di tandatangani oleh PEMESAN</td>
                             </tr>
                             <tr>
+                                <td>Warna/Tahun</td>
+                                <td>:</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>b. Telah ditandatangani oleh PEJABAT CABANG</td>
                             </tr>
                             <tr>
+                                <td>Harga Off The Road</td>
+                                <td>:</td>
+                                <td>&nbsp;</td>
+                                <td>/unit</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>c. Uang muka / DP 20% telah dibayarkan LUNAS oleh PEMESAN</td>
                             </tr>
-                            <?php
-        foreach ($detailKet as $c) :    ?>
                             <tr>
+                              <td>Biaya BBN</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>3.</td>
+                              <td> Pembayaran dengan Cek/biyel Giro / Transfer harus diatasnamakan PT. Transforma</td>
+                            </tr>
+                            <tr>
+                              <td>Harga Nett On The Road</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>Oto Prima dan dianggap sah apabila telah diterima direkening PT. Transforma Oto Prima</td>
+                            </tr>
+                            <tr>
+                              <td>PErlengkapan Tambahan</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>4.</td>
+                              <td>PT. Transforma Oto Prima tidak menerima pembayaran cash/tunai</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>5.</td>
+                              <td>Jika pesanan DIBATALKAN oleh PEMESAN dengan alasan / dalil apapun, maka surat pemesanan ini</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>harus dikembalikan dan uang muka yang sudah diterima seluruhnya menjadi HAK PT. Transforma Oto Prima</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>6.</td>
+                              <td>Faktur kendaraan diterbitkan setelah semua pembayaran lunas dan ada pemohon tertulis dan</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit +</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td> PEMESAN dan hanya berlaku 2(dua)  minggu dari tanggal terbit. Resiko dan biaya yang timbul</td>
+                            </tr>
+                            <tr>
+                              <td>Harga Jual per Unit</td>
+                              <td>:</td>
+                              <td>&nbsp;</td>
+                              <td>/unit</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td> sehubungan dengan faktur kendaraan yang melampaui masa berlaku akan menjadi tanggung  jawab PEMESAN.</td>
+                            </tr>
+                            <tr>
+                              <td>TPTAL HARGA JUAL</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>7.</td>
+                              <td>Apabila pembatal dari pihak Dealer dikarenakan unit yang dipesan oleh PEMESAN tidak</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" rowspan="9">
+                                 <table width="100%" border="1" cellpadding="3" cellspacing="0" class="table-dalam">
+                                  <tbody>
+                                    <tr>
+                                      <th width="6%">No</th>
+                                      <th width="94%">Keterangan</th>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>2</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>3</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>4</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>5</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>6</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>7</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>8</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>9</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td>10</td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                  </tbody>
+                                </table>  
+                              </td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>
-                                    <font size="-2">** </font>
-                                </td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td>tersedia dalam jangka waktu yang sudah disetujui oleh kedua belah pihak. Maka Dealer wajib</td>
                             </tr>
                             <?php endforeach ?>
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td> mengembalikan uang tanda jadi yang sudah masuk ke rekening PT. Transforma Oto Prima.</td>
                             </tr>
-                        </thead>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>8.</td>
+                              <td>Apabila unit yang di pesan oleh PEMESAN sudah terssedia, maka PEMESAN berkewajiban untuk</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>sepenuhnya membayar sisa pembayaran yang sudah di informasikan dalam waktu 2 (dua) minggu</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>jika pembayaran belum kami terima dalam waktu 2 (dua) minggu Dealer berhak membatalkan SPK</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>tanpa mengembalikan uang yang sudah masuk di rekening PT. Transforma Oto Prima</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>9.</td>
+                              <td>Biaya BBN tidak mengikat (termasuk jika ada biaya yang timbul aikbat kekurangan dokumen</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td>PEMESAN saat proses pengurusan) dan biaya pajak progresif menjadi tanggung jawab PEMESAN</td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td colspan="2" style="border: 1px solid #000; font-weight: bolder; ">PEMESAN berkewajiban membayar biaya / pajak kendaraan dalam hal terdapat penambahan biaya / pajak, karena berlakunya ketentuan Perundangan tentang pajak progresif atas pemilikan dan pendaftaran kendaraan bermotor atau karena adanya perubahan tarif pajak yang berlaku pada saat pendaftaran BBN</td>
+                            </tr>
 
                     </table>
-                    <table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0">
+                <table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0">
                         <tr>
-                            <td colspan="4">&nbsp;</td>
-                        </tr>
-                    </table>
-                    <table width="100%" border="0" cellpadding="5" cellspacing="0">
+                            <td colspan="4">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-bottom: 2px dashed black;" class="table-ttd">
                         <tr>
-                            <td width="25%">&nbsp;</td>
-                            <td width="25%">&nbsp;</td>
-                            <td width="25%">&nbsp;</td>
-                            <td width="25%">&nbsp;</td>
+                          <td colspan="3" style="text-decoration: underline; font-weight: bold;">Cara Pembayaran</td>
+                          <td>&nbsp;</td>
+                          <td style="text-align: center;">Wiraniaga</td>
+                          <td style="text-align: center;">Pemesan</td>
+                          <td style="text-align: center;">Supervisor</td>
+                          <td style="text-align: center;">Kepala Cabang</td>
                         </tr>
-                        <tr align="center">
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>Best Regard</td>
+                        <tr>
+                          <td style="border: 2px #000 solid; margin-bottom: 12px;margin-top: 12px;">&nbsp;</td>
+                          <td>Tunai / TOP</td>
+                          <td>: _______________________ Hari</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
                         </tr>
-                        <tr align="center">
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
+                        <tr>
+                          <td style="border: 2px #000 solid; margin-bottom: 15px;margin-top: 15px;">&nbsp;</td>
+                          <td>Kredit Via</td>
+                          <td>: _______________________</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
                         </tr>
-                        <tr align="center">
-                            <th height="61">&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td>Contact Peson</td>
+                          <td>: _______________________ </td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
                         </tr>
-                        <tr align="center">
-                            <td>........................................<br>
-                                Nama dan tanda tangan</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><?php echo $this->session->userdata['full_name'] ?></td>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td>Telepon / HP</td>
+                          <td>: _______________________ </td>
+                          <td>&nbsp;</td>
+                          <td style="text-align: center;">( ......................... )</td>
+                          <td style="text-align: center;">( ......................... )</td>
+                          <td style="text-align: center;">( ......................... )</td>
+                          <td style="text-align: center;">( ......................... )</td>
                         </tr>
-                    </table>
-                    <!--</table>-->
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td style="text-align: center;">Nama Jelas</td>
+                          <td style="text-align: center;">Nama Jelas</td>
+                          <td style="text-align: center;">Nama Jelas</td>
+                          <td style="text-align: center;">Nama Jelas</td>
+                        </tr>
+                        <tr>
+                            <td width="3%">&nbsp;</td>
+                            <td width="11%">&nbsp;</td>
+                            <td width="35%">&nbsp;</td>
+                            <td width="2%">&nbsp;</td>
+                            <td width="12%">Tgl</td>
+                            <td width="12%">Tgl</td>
+                            <td width="13%">Tgl</td>
+                            <td width="12%">Tgl</td>
+                        </tr>
+                    </table></td>
+                      </tr>
+                </table>
+                  <table width="100%" border="0" cellpadding="5" cellspacing="0" class="table-kwitansi">
+                      <tr>
+                          <td colspan="5">TANDA TERIMA JAMINAN PEMBELIAN ( SEMENTARA )</td>
+                          <td colspan="2" style="font-weight: bolder;text-align: center; font-size: 10px;"><?php echo  $apl1->nama_owner; ?></td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">No SPK</td>
+                        <td width="5%">:</td>
+                        <td width="12%">&nbsp;</td>
+                        <td width="17%">&nbsp;</td>
+                        <td colspan="2" style="font-size: 9px;">Head Offce : Jl. D.I Panjaitan No. 12 Jakarta Timur 13410, Indonesia . Phone : +62-21 8591377 Fax : +62-21 8561867</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">Tanggal</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td colspan="2" style="font-size: 9px;">Branch Office : Jl. Tambak Osowilangon 23 Surabaya, Indonesia. Phone : +62-31 99340505 / 0811 1560 073 </td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">Nama Pemesan</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td colspan="2" rowspan="4" style="border: 2px #000 dashed; margin-bottom: 12px;margin-top: 12px; text-align: center"><strong style="font-style: italic;">PERHATIAN ! Demi Keamanan pelanggan, Mohon diperhatikan hal sebagai berikut:</strong><br>
+                        &quot;Pembayaran dengan Bilyet Giro atau Cek harus diatasnamakan PT. Transforma Oto Prima <br>
+                        No Rekening Bank BCA Kelapa Gading 065-8775777 / Bank Danamon 008800202395 atas nama PT.Transforma Oto Prima<br>
+                        *Tukarkan segera Tanda Terima Jaminan  Pembelian (sementara)ini dengan KWITANSI ASLI selambatnya 5 hari kerja dari tanggal di terima ini.
+                        </td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">Alamat</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">&nbsp;</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">Sebesar</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">Terbilang</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>Yang Menyerahkan</td>
+                        <td>Yang Menerima</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="2">&nbsp;</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td width="33%">&nbsp;</td>
+                        <td width="25%">&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td colspan="4">Dengan Perincian Pembayaran :</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td width="2%" style="border: 2px #000 solid;">&nbsp;</td>
+                        <td colspan="3"> Tunai</td>
+                        <td>:</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr align="center">
+                        <td style="border: 2px #000 solid;">&nbsp;</td>
+                        <td colspan="3"> Transfer Via Bank / TglTransfer Via Bank / Tgl</td>
+                        <td>:</td>
+                        <td><span style="text-align: center;">( ......................... )</span></td>
+                        <td><span style="text-align: center;">( ......................... )</span></td>
+                      </tr>
+                      <tr align="center">
+                        <td style="border: 2px #000 solid;">&nbsp;</td>
+                        <td colspan="3"> BG/Cek Bank/No/Tgl</td>
+                        <td>:</td>
+                        <td>                              Nama Jelas</td>
+                        <td>Nama Jelas</td>
+                      </tr>
+                      <tr align="center">
+                          <td colspan="2">&nbsp;</td>
+                          <td colspan="2">&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                      </tr>
+                  </table>
+                  <!--</table>-->
 
     </div>
 
