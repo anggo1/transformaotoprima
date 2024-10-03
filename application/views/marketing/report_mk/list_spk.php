@@ -86,7 +86,7 @@
         });
     }
 
-    $(document).on("click", ".cetak-po", function() {
+    $(document).on("click", ".cetak-spk", function() {
 		var id = $(this).attr("data-id");
 		//var id = document.getElementById('next_proses').value=datakode;
 		$.ajax({

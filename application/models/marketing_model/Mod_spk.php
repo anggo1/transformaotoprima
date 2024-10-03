@@ -88,7 +88,7 @@ class Mod_spk extends CI_Model
     public function select_by_id($id)
     {
         $sql = "SELECT * FROM tbl_mk_spk 
-        WHERE id_spk ='{$id}'";
+        WHERE no_urut ='{$id}'";
 
         $data = $this->db->query($sql);
         return $data->result();

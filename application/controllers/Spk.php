@@ -191,7 +191,7 @@ public function showPart()
 				
 			if ($result > 0) {
 				$out['dataRef'] = $data['no_urut'];
-				$out['dataPo'] = $no_spk;
+				$out['dataPo'] = $data['no_urut'];
 				$out['status'] = '';
 				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
 			} else {
@@ -243,8 +243,8 @@ public function showPart()
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
-		$data['dataPo'] = $this->Mod_spk->select_by_id($id);
-		$data['detailKet'] = $this->Mod_spk->select_keterangan($id);
+		$data['dataSpk'] = $this->Mod_spk->select_by_id($id);
+		$data['detailSpk'] = $this->Mod_spk->select_keterangan($id);
 
 		echo show_my_print('marketing/modals/modal_cetak_spk', 'cetak-po', $data, ' modal-xl');
 	}

@@ -266,17 +266,17 @@
 
                                     <div class="radio-buttons">
                                         <label class="radio-button">
-                                            <input type="radio" name="plat_kendaraan" checked value="Kuning" />
+                                            <input type="radio" name="plat_kendaraan" checked value="K" />
                                             <span class="radio-tick-kuning"></span>
                                             Kuning
                                         </label>
                                         <label class="radio-button">
-                                            <input type="radio" name="plat_kendaraan" value="Hitam" />
+                                            <input type="radio" name="plat_kendaraan" value="H" />
                                             <span class="radio-tick"></span>
                                             Hitam
                                         </label>
                                         <label class="radio-button">
-                                            <input type="radio" name="plat_kendaraan" value="Merah" />
+                                            <input type="radio" name="plat_kendaraan" value="M" />
                                             <span class="radio-tick-merah"></span>Merah
                                         </label>
                                     </div>
@@ -286,7 +286,7 @@
 
                                     <div class="radio-buttons">
                                         <label class="radio-button">
-                                            <input type="radio" name="type_body" value="Los Bak" id="radio_t1">
+                                            <input type="radio" name="type_body" value="LosBak" id="radio_t1">
                                             <span class="radio-tick"></span>Los Bak
                                         </label>
                                         <label class="radio-button">
@@ -306,11 +306,11 @@
                                             <span class="radio-tick"></span> Mixer
                                         </label>
                                         <label class="radio-button">
-                                            <input type="radio" name="type_body" value="Tranctor Head" id="radio_t6">
+                                            <input type="radio" name="type_body" value="TranctorHead" id="radio_t6">
                                             <span class="radio-tick"></span> Tranctor Head
                                         </label>
                                         <label class="radio-button">
-                                            <input type="radio" name="type_body" value="Tangki Trailer" id="radio_t7">
+                                            <input type="radio" name="type_body" value="TangkiTrailer" id="radio_t7">
                                             <span class="radio-tick"></span> Tangki Trailer
                                         </label>
                                         <label class="radio-button">

@@ -24,7 +24,7 @@ foreach ($dataPo as $s) {
         <td><?php echo $s->type_kendaraan; ?></td>
 
         <td class="text-center">
-            <button class="btn btn-xs btn-outline-primary cetak-po" data-id="<?php echo $s->id_spk; ?>"><i class="fa fa-print"></i> Print</button>
+            <button class="btn btn-xs btn-outline-primary cetak-spk" data-id="<?php echo $s->no_urut; ?>"><i class="fa fa-print"></i> Print</button>
 			
     </td>
     </tr>
