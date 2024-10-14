@@ -12,8 +12,8 @@ class Chasis extends MY_Controller
 
 	public function index()
 	{
-		$data['page'] 		= "Daftar Bus / Kendaraan";
-		$data['judul'] 		= "Daftar Bus";
+		$data['page'] 		= "Daftar Chasis";
+		$data['judul'] 		= "Chasis";
 		$this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
 
@@ -26,11 +26,9 @@ class Chasis extends MY_Controller
             $id_sub=$idnye->id_submenu;
         }
         $data['viewLevel']  = $this->Mod_chasis->select_by_level($idlevel, $id_sub);
-        $data['dataKl'] = $this->Mod_chasis->select_kelas();
-        $data['dataPool'] = $this->Mod_chasis->select_pool();
         
-		echo show_my_modal('body_repair/modals/modal_tambah_body', 'tambah-body', $data, ' modal-xl');
-        $this->template->load('layoutbackend','body_repair/data_body', $data);
+		echo show_my_modal('marketing/modals/modal_tambah_chasis', 'tambah-chasis', $data, ' modal-lg');
+        $this->template->load('layoutbackend','marketing/data_chasis', $data);
 		
 	}
 
@@ -55,34 +53,29 @@ class Chasis extends MY_Controller
         $list = $this->Mod_chasis->get_datatables();
         $data = array();
         $no = $_POST['start'];
-        foreach ($list as $bd) {
+        foreach ($list as $cs) {
             $no++;
-            if($bd->status == 'AKTIF'){
-                $status_body='<button class="tombol-success Blink-warning btn-lg pull-right">A</button>';
-            }else{
-                $status_body='<button class="tombol-warning Blink-warning btn-lg pull-right">P</button>';
-            }
             $row = array();
             $row[] = $no;
-            $row[] = $bd->no_body.'&nbsp'.$status_body;
-            $row[] = $bd->no_pol;
-            $row[] = $bd->type;
-            $row[] = $bd->merk;
-            $row[] = $bd->nama_pool;
-            $row[] = $bd->rute_aktif;
-            $row[] = $bd->karoseri;
-            $row[] = $bd->warna;
-            $row[] = $bd->kelas;
-            $row[] = $bd->strip;
+            $row[] = $cs->tgl_masuk;
+            $row[] = $cs->retail;
+            $row[] = $cs->type;
+            $row[] = $cs->no_rangka;
+            $row[] = $cs->no_mesin;
+            $row[] = $cs->sales;
+            $row[] = $cs->gesekan;
+            $row[] = $cs->thn_produksi;
+            $row[] = $cs->nama_customer;
+            $row[] = $cs->pengiriman;
             if($b->edit_level=="Y" && $b->delete_level=="Y"){
                 $row[]='
-                <button class="btn btn-sm btn-outline-success update-body" title="Edit" data-id="'.$bd->no_body.'">
-                <i class="fa fa-edit"></i></button><button class="btn btn-sm btn-outline-danger delete-body" title="Delete" data-toggle="modal" data-target="#hapusBody" data-id="'.$bd->no_body.'"><i class="fa fa-trash"></i>
+                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->id_chasis.'">
+                <i class="fa fa-edit"></i></button><button class="btn btn-sm btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="'.$cs->id_chasis.'"><i class="fa fa-trash"></i>
                 </button>';
             }
             if($b->edit_level=="Y" && $b->delete_level=="N"){
                 $row[]='
-                <button class="btn btn-sm btn-outline-success update-body" title="Edit" data-id="'.$bd->no_body.'"><i class="fa fa-edit"></i>
+                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->id_chasis.'"><i class="fa fa-edit"></i>
                 </button>';
             }else{
                 $row[]='';
@@ -100,21 +93,13 @@ class Chasis extends MY_Controller
         echo json_encode($output);
     }
 
-    public function viewbody()
+    public function prosesTchasis()
     {
-        $id = $this->input->post('id_barang');
-        $data['data_table'] = $this->Mod_chasis->view_body($id);
-
-        $this->load->view('body_repair/view', $data);
-    }
-
-    public function prosesTbody()
-    {
-        $this->form_validation->set_rules('no_body', 'No Body', 'trim|required');
+        $this->form_validation->set_rules('type', 'Type', 'trim|required');
 
         $data     = $this->input->post();
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_chasis->insertBody($data);
+            $result = $this->Mod_chasis->insertChasis($data);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -130,22 +115,21 @@ class Chasis extends MY_Controller
 
         echo json_encode($out);
     }
-    public function updateBody() {
+    public function updateChasis() {
 		$id 				= trim($_POST['id']);
-		$data['dataBody'] = $this->Mod_chasis->select_by_id_body($id);
-        $data['dataKl'] = $this->Mod_chasis->select_kelas();
-        $data['dataPool'] = $this->Mod_chasis->select_pool();
+		$data['dataChasis'] = $this->Mod_chasis->select_by_id_chasis($id);
+        //echo json_encode($data);
 
-		echo show_my_modal('body_repair/modals/modal_tambah_body', 'update-body', $data, ' modal-xl');
+		echo show_my_modal('marketing/modals/modal_tambah_chasis', 'update-chasis', $data, ' modal-lg');
 	}
 
-	public function prosesUbody() {
+	public function prosesUchasis() {
 		
-		$this->form_validation->set_rules('no_body', 'No Body', 'trim|required');
+		$this->form_validation->set_rules('type', 'Type', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_chasis->updateBody($data);
+			$result = $this->Mod_chasis->updateChasis($data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -162,10 +146,10 @@ class Chasis extends MY_Controller
 		echo json_encode($out);
 	}
 
-    public function deleteBody()
+    public function deleteChasis()
     {
         $id = $_POST['id'];
-        $result = $this->Mod_chasis->deleteBody($id);
+        $result = $this->Mod_chasis->deleteChasis($id);
 
         if ($result > 0) {
             $out['status'] = '';

@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Mod_chasis extends CI_Model
 {
 	var $table = 'tbl_mk_chasis';
-	var $column_search = array('a.no_body','a.no_pol','a.type','a.merk','b.nama_pool','a.rute_aktif','a.karoseri','a.warna','a.kelas','a.strip'); 
-	var $column_order = array('null','a.no_body','a.no_pol','a.type','a.merk','b.nama_pool','a.rute_aktif','a.karoseri','a.warna','a.kelas','a.strip');
-	var $order = array('no_body' => 'desc'); 
+	var $column_search = array('tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman'); 
+	var $column_order = array('null','tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman');
+	var $order = array('id_chasis' => 'desc'); 
 	function __construct()
 	{
 		parent::__construct();
@@ -16,8 +16,7 @@ class Mod_chasis extends CI_Model
 		private function _get_datatables_query()
 	{
 		
-		$this->db->from('tbl_mk_chasis AS a');
-        $this->db->join('tbl_br_pool AS b','b.kode_pool=a.pool','left');
+		$this->db->from('tbl_mk_chasis');
 		$i = 0;
 
 	foreach ($this->column_search as $item) // loop column 
@@ -100,70 +99,53 @@ class Mod_chasis extends CI_Model
 		$data = $this->db->get();
 		return $data->result();
 	}
-	function select_by_id_body($id)
+	function select_by_id_chasis($id)
     {
         $this->db->select('*');
         $this->db->from('tbl_mk_chasis');
-        $this->db->where('tbl_mk_chasis.no_body=',$id);
+        $this->db->where('tbl_mk_chasis.id_chasis=',$id);
         $data = $this->db->get();
         return $data->result();
     }
-	function insertBody($data)
+	function insertChasis($data)
     {
+	$tgl_input = date('Y-m-d H:i:s');
+	$tgl_masuk = $data['tgl_masuk'];
+    $tgl1 = explode('-', $tgl_masuk);
+    $tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         $sql = "INSERT INTO tbl_mk_chasis SET
-        no_body		='".$data['no_body']."',
-        type 		='".$data['type']."',
-        no_pol 		='".$data['no_pol']."',
-        merk 		='".$data['merk']."',
-        thn_rangka  ='".$data['thn_rangka']."',
-        thn_pembuatan='".$data['thn_pembuatan']."',
-        karoseri    ='".$data['karoseri']."',
-        warna		='".$data['warna']."',
-        kelas	    ='".$data['kelas']."',
-        strip       ='".$data['strip']."',
-        keterangan  ='".$data['keterangan']."',
-        kondisi  	='".$data['kondisi']."',
-        status  	='".$data['status']."',
-        pool 	 	='".$data['pool']."',
-        no_rangka  	='".$data['no_rangka']."',
-        no_mesin  	='".$data['no_mesin']."',
-        rute_asli  	='".$data['rute_asli']."',
-        rute_aktif 	='".$data['rute_aktif']."',
-        kode_trayek	='".$data['kode_trayek']."',
-        seat_daya 	='".$data['seat_daya']."',
-        jns_pelayanan	='".$data['jns_pelayanan']."',
-        imei_gps 	='".$data['imei_gps']."'
+        tgl_masuk		='".$tgl_masuknya."',
+        retail 			='".$data['retail']."',
+        type 			='".$data['type']."',
+        no_rangka 		='".$data['no_rangka']."',
+        no_mesin  		='".$data['no_mesin']."',
+        sales			='".$data['sales']."',
+        gesekan    		='".$data['gesekan']."',
+        thn_produksi	='".$data['thn_produksi']."',
+        nama_customer	='".$data['nama_customer']."',
+        pengiriman      ='".$data['pengiriman']."',
+        status_chasis  	='S',
+        tgl_input  		='".$tgl_input."',
+        user  			='".$data['user']."'
 		";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
-    function updateBody( $data)
+    function updateChasis( $data)
     {
         $sql = "UPDATE tbl_mk_chasis SET
-        type 		='".$data['type']."',
-        no_pol 		='".$data['no_pol']."',
-        merk 		='".$data['merk']."',
-        thn_rangka  ='".$data['thn_rangka']."',
-        thn_pembuatan='".$data['thn_pembuatan']."',
-        karoseri    ='".$data['karoseri']."',
-        warna		='".$data['warna']."',
-        kelas	    ='".$data['kelas']."',
-        strip       ='".$data['strip']."',
-        keterangan  ='".$data['keterangan']."',
-        kondisi  	='".$data['kondisi']."',
-        status  	='".$data['status']."',
-		pool 	 	='".$data['pool']."',
-        no_rangka  	='".$data['no_rangka']."',
-        no_mesin  	='".$data['no_mesin']."',
-        rute_asli  	='".$data['rute_asli']."',
-        rute_aktif 	='".$data['rute_aktif']."',
-        kode_trayek	='".$data['kode_trayek']."',
-        seat_daya 	='".$data['seat_daya']."',
-        jns_pelayanan	='".$data['jns_pelayanan']."',
-        imei_gps 	='".$data['imei_gps']."'
-        WHERE no_body='".$data['no_body']."'";
+        retail 			='".$data['retail']."',
+        type 			='".$data['type']."',
+        no_rangka 		='".$data['no_rangka']."',
+        no_mesin  		='".$data['no_mesin']."',
+        sales			='".$data['sales']."',
+        gesekan    		='".$data['gesekan']."',
+        thn_produksi	='".$data['thn_produksi']."',
+        nama_customer	='".$data['nama_customer']."',
+        pengiriman      ='".$data['pengiriman']."'
+        WHERE id_chasis='".$data['id_chasis']."'";
 
 		$this->db->query($sql);
 
@@ -176,9 +158,9 @@ class Mod_chasis extends CI_Model
         return $this->db->get('tbl_mk_chasis')->row();
     }
 
-	function deleteBody($id)
+	function deleteChasis($id)
     {
-        $sql = "DELETE FROM tbl_mk_chasis WHERE no_body='{$id}'";
+        $sql = "DELETE FROM tbl_mk_chasis WHERE id_chasis='{$id}'";
 
 		$this->db->query($sql);
 

@@ -104,6 +104,7 @@ $apl = $this->db->get("aplikasi")->row();
                with font-awesome or any other icon font library -->
       <?php
             // data main menu
+            
       $idlevel  = $this->session->userdata['id_level'];
       $main_menu = $this->db->select('b.nama_menu,b.icon,b.link,b.id_menu');
       $main_menu =$this->db->join('tbl_menu b', 'a.id_menu=b.id_menu');
