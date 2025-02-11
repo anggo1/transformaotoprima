@@ -172,7 +172,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <th><?php echo $d->no_part ?></th>
             <th><?php echo $d->nama_part ?></th>
             <th><?php echo $d->jumlah ?></th>
-            <th><?php echo $d->nama_satuan ?></th>
+            <th><?php echo $d->satuan ?></th>
           </tr>
         <?php $no + 1;
         endforeach ?>

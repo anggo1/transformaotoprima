@@ -147,10 +147,10 @@ table.dataTable td {
                                     {
                                     ?>
                                     <th>Total Stok</th>
-                                    <th>Stok Jkt</th>
-                                    <th>Lokasi JKT</th>
-                                    <th>Stok Cbt</th>
+                                    <th>Stok CBT</th>
                                     <th>Lokasi CBT</th>
+                                    <th>Stok JKT</th>
+                                    <th>Lokasi JKT</th>
                                     <th>Stok SBY</th>
                                     <th>Lokasi SBY</th>
                                     <?php } else { if($idlevel ='1'or $idlevel!='12')?>                                        

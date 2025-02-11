@@ -249,6 +249,9 @@ class Mod_estimasi_penawaran extends CI_Model
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         $ppn       = $d_data['ppn'];
+        if(empty($ppn)){
+            $ppn = 0;
+        }
         $total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_estimasi_penawaran SET

@@ -36,7 +36,7 @@ public function showPart()
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "<button class='btn btn-sm btn-outline-success' onClick=s=selectPart('$pel->id_part')>$no</button>";
+			$row[] = "$no";
 			$row[] = $pel->no_part;
                 $row[] = $pel->nama_part;
                 $row[] = $pel->satuan;

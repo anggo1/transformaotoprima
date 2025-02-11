@@ -2,7 +2,7 @@
 <div class="card card-default">
 					<div class="modal-content text-blue">
 						<div class="modal-header text-blue">
-							<h5 style="display:block; text-align:center;"><span class="ion-android-alert ion-lg text-blue"></span>&nbsp; Detail Purchase Order</h5>
+							<h5 style="display:block; text-align:center;"><span class="ion-android-alert ion-lg text-blue"></span>&nbsp; Detail Estimasi Penawaran</h5>
 							<div class="text-right">
 							</div>
 						</div>

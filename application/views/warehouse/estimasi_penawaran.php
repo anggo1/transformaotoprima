@@ -163,8 +163,7 @@
                                             class="fa fa-save"></span>
                                         Simpan Data</button>
                                     <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
-                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Part
-                                        Order</button>
+                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Estimasi Penawaran</button>
                                 </div>
                             </form>
                             <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"

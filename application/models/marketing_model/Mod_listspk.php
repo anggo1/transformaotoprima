@@ -73,7 +73,7 @@ class Mod_listspk extends CI_Model
         return $this->db->count_all_results();
     }
 	
-    function cari_spk($ttmp1 =null,$ttmp2=null)
+    function cari_spk($ttmp1,$ttmp2)
     {
 		$this->db->select('tbl_mk_spk.*', FALSE);
         $this->db->from('tbl_mk_spk');
@@ -204,7 +204,7 @@ class Mod_listspk extends CI_Model
     }
       /** End PerKategori */
       //** Report Masuk */
-    function cari_masuk($ttmp1 =null,$ttmp2=null,$status_po)
+    function cari_masuk($ttmp1,$ttmp2,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
         a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.harga_baru) AS total', FALSE);
@@ -218,7 +218,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_masuk_status($ttmp1 =null,$ttmp2=null,$status_po,$status)
+    function cari_masuk_status($ttmp1,$ttmp2,$status_po,$status)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
         a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.harga_baru) AS total', FALSE);
@@ -233,7 +233,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_masuk_npo($ttmp1 =null,$ttmp2=null,$status_po)
+    function cari_masuk_npo($ttmp1,$ttmp2,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
         a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.hrg_awal) AS total', FALSE);
@@ -248,7 +248,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_masuk_detail($ttmp1 =null,$ttmp2=null,$status_po)
+    function cari_masuk_detail($ttmp1,$ttmp2,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.id_masuk,b.status_part,b.nama_part,b.no_part,b.jumlah,c.nama_sup', FALSE);
         $this->db->from('tbl_wh_part_masuk as a');
@@ -260,7 +260,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_detail_masuk($ttmp1 =null,$ttmp2=null,$status_po,$status)
+    function cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status)
     {
             $query = 'SET @dense_rank = 0;';
             $this->db->query($query);
@@ -281,7 +281,7 @@ class Mod_listspk extends CI_Model
             $query_result = $this->db->get();
             return $data = $query_result->result();
     }
-    function cari_detail_masuk_po($ttmp1 =null,$ttmp2=null,$status_po)
+    function cari_detail_masuk_po($ttmp1,$ttmp2,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
         a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.hrg_awal) AS total', FALSE);
@@ -295,7 +295,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_detail_masuk_npo($ttmp1 =null,$ttmp2=null,$status_po)
+    function cari_detail_masuk_npo($ttmp1,$ttmp2,$status_po)
     {
         $this->db->select('a.tgl_masuk,a.kode_masuk,a.id_masuk,a.status_po,b.status_part,a.status,d.nama_sup AS nama_supplier,
         a.no_po,a.no_sj_sup,a.no_inv_sup,b.jumlah,sum(b.jumlah * c.hrg_awal) AS total', FALSE);
@@ -496,7 +496,7 @@ class Mod_listspk extends CI_Model
 		return $this->db->affected_rows();
 	}
       /** End Perbarang */
-    function cari_partpk($ttmp1 =null,$ttmp2=null)
+    function cari_partpk($ttmp1,$ttmp2)
         {
 		$this->db->select('tbl_wh_part_keluar.*', FALSE);
 		$this->db->select('tbl_wh_detail_part_keluar.*', FALSE);
@@ -508,7 +508,7 @@ class Mod_listspk extends CI_Model
         $query_result = $this->db->get();
 		return $data = $query_result->result();
     }
-    function cari_partnon($ttmp1 =null,$ttmp2=null)
+    function cari_partnon($ttmp1,$ttmp2)
     {
 		$this->db->select('tbl_wh_part_keluar.*', FALSE);
 		$this->db->select('tbl_wh_detail_part_keluar.*', FALSE);

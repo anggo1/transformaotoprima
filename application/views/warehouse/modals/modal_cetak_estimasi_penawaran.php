@@ -287,9 +287,15 @@ font-family:Georgia, "Times New Roman", Times, serif;
         $no = 0;
         $grand_total = 0;
         foreach ($detailPo as $d) : $no++;
+        $ppn = $k->ppn;
+        if(empty($ppn)){
+          $k->ppn = 0;
+        }
           $ppnnya = $k->ppn;
+        
           $grand_total += $d->total_harga;
           $ppn = $grand_total * $k->ppn / 100;
+
           ?>
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>

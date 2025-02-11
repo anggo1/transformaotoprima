@@ -7,7 +7,7 @@ class Part_keluar extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('Mod_part_keluar'));
+		$this->load->model(array('warehouse/Mod_part_keluar'));
 		$this->load->helper('tgl_indo_helper');
 	}
 
