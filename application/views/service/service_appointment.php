@@ -69,22 +69,22 @@
                                     </div>
                                 </div>
                                 <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-2 col-form-label">Cases Rep</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
+                                        <input type="text" name="cases_rep" id="cases_rep" value=""
+                                            class="form-control" placeholder="Cases Rep">
                                     </div>
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-2 col-form-label">VIN</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
+                                        <input type="text" name="vin" id="vin" value=""
+                                            class="form-control" placeholder="VIN">
                                     </div>
                                 </div>                                
                                 <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-2 col-form-label">Licence Plate</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
+                                        <input type="text" name="licence_plate" id="licence_plate" value=""
+                                            class="form-control" placeholder="Licence Plate">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Keterangan</label>
                                     <div class="col-sm-4">
@@ -93,15 +93,28 @@
                                     </div>
                                 </div>
                                 <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-2 col-form-label">Vehicle Type</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
+                                        <input type="text" name="vehicle_type" id="vehicle_type" value=""
+                                            class="form-control" placeholder="Vehicle Type">
                                     </div>
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
+                                    <label class="col-sm-2 col-form-label">Storing</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
+                                        <input type="text" name="storing" id="storing" value=""
+                                            class="form-control" placeholder="Storing">
+                                    </div>
+                                </div>
+                                
+                                <div class="row form-group row">
+                                    <label class="col-sm-2 col-form-label">Service Start</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="service_start" id="service_start" value=""
+                                            class="form-control" placeholder="Service Start">
+                                    </div>
+                                    <label class="col-sm-2 col-form-label">Service End</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="service_end" id="service_end" value=""
+                                            class="form-control" placeholder="Service End">
                                     </div>
                                 </div>
                                 
