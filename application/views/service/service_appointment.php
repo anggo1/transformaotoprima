@@ -8,30 +8,31 @@
             <div class="col-md-12">
                 <div class="card card-default">
                     <!-- /.card-header -->
+                     
+
+                            <?php
+						$date = date("my");
+						$ci_kons = get_instance();
+						$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_salles WHERE wo_no LIKE '%$date%'";
+						$hasil = $ci_kons->db->query($query)->row_array();
+						$noOrder = $hasil['maxKode'];
+						$noUrut = substr($noOrder, 0, 5);
+						$noUrut++;
+						$tahun = substr($date, 2, 2);
+						$bulan = substr($date, 0, 2);
+						$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
+						$kode_po2  = sprintf("%05s", $noUrut);
+						?>
                     <div class="modal-content">
                         <div class="modal-header text-blue">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5>
+                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5> No : <?php echo $kode_po ?>
                             <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
                                 onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
                                 BARU</button>
                         </div>
                         <div class="modal-body">
-
-                            <?php
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 6, 5);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%05s", $noUrut);
-						$kode_po2  = sprintf("%05s", $noUrut);
-						?>
                             <form id="formPo" name="formPo" method="POST">
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Tanggal</label>
@@ -356,7 +357,6 @@ $('#formPo').submit(function(e) {
                 d.setAttribute('data-id', out.dataPo);
                 document.getElementById("cetak").hidden = false;
                 document.getElementById("tambah").hidden = false;
-                document.getElementById("tambah-part").hidden = true;
                 document.getElementById("data-po").hidden = true;
                 document.getElementById("simpan").hidden = true;
                 tampilDetailCache(out.dataPo);

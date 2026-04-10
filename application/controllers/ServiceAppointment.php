@@ -61,12 +61,12 @@ public function showPart()
         $remark = $_POST['remark'];
 		$data['dataPo'] = $this->Mod_partorder->update_remark($id,$remark);
 	}
-	public function prosesPo()
+	public function prosesSA()
 	{
 		
 		$sekarang= date("Y-m");
 		$this->form_validation->set_rules('tgl_part_order', 'Tanggal Order', 'trim|required');
-		$this->form_validation->set_rules('supplier', 'Data Supplier', 'trim|required');
+		$this->form_validation->set_rules('customer', 'Data Customer', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();

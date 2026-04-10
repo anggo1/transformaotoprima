@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `db_after_salles`
 --
 
-CREATE TABLE `db_after_salles` (
+CREATE TABLE `tbl_after_salles` (
   `id` int(11) NOT NULL,
   `wo_no` int(9) NOT NULL,
   `claim_no` varchar(25) NOT NULL,
@@ -69,9 +69,9 @@ CREATE TABLE `db_after_salles` (
 --
 
 --
--- Indexes for table `db_after_salles`
+-- Indexes for table `tbl_after_salles`
 --
-ALTER TABLE `db_after_salles`
+ALTER TABLE `tbl_after_salles`
   ADD PRIMARY KEY (`id`);
 
 --
