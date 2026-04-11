@@ -1,185 +1,109 @@
-<?php if (!empty($dataPart)) {
-	foreach ($dataPart as $part) {
-	}
-} ?>
+<style>
+
+#modal-kotak{
+	margin:5% 30% 30% 30%;
+	width: 500px;	
+	height: 200px;
+	position: absolute;
+	position:fixed;
+	z-index:1002;
+	display: none;
+	background: white;	
+}
+#atas{
+	font-size: 15pt;
+	padding: 20px;	
+	height: 80%;
+}
+#bawah{
+	background: #fff;
+}
+ 
+#tombol-tutup{	
+	background: #e74c3c;
+}
+#tombol-tutup,#tombol{
+	height: 30px;
+	width: 100px;
+	color: #fff;
+	border: 0px;
+}
+#bg{
+	opacity:.80;
+	position: absolute;
+	display: none;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	z-index:1001;
+	opacity: 0.8;
+}
+#tombol{
+	background: #e74c3c;        
+}
+.table.DataTable {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+}
+
+table.dataTable td {
+    padding-bottom: 5px;
+}
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card card-default">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title"><i class="fa fa-list text-blue"></i> &nbsp; List Data </h3>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-appointment" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
+						</div>
+                    </div>
                     <!-- /.card-header -->
-                     
-
-                            <?php
-						$date = date("my");
-						$ci_kons = get_instance();
-						$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_salles WHERE wo_no LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = substr($noOrder, 0, 5);
-						$noUrut++;
-						$tahun = substr($date, 2, 2);
-						$bulan = substr($date, 0, 2);
-						$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
-						$kode_po2  = sprintf("%05s", $noUrut);
-						?>
-                    <div class="modal-content">
-                        <div class="modal-header text-blue">
-
-                            <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5> No : <?php echo $kode_po ?>
-                            <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
-                                onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
-                                BARU</button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formPo" name="formPo" method="POST">
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Tanggal</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-
-                                            <input type="text" name="tgl_part_order" id="tgl_part_order" value=""
-                                                class="form-control tgl_part_order datetimepicker"
-                                                data-toggle="datetimepicker" data-target=".tgl_part_order"
-                                                data-format="yyy-mm-dd" required>
-
-                                            <div class="input-group-append" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <label class="col-sm-2 col-form-label">Customer</label>
-                                    <div class="col-sm-4">
-                                        <select name="customer" id="customer" class="form-control">
-                                            <option value="">Customer...
-                                            </option>
-                                            <?php
-											if (!empty($dataCus)) {
-												foreach ($dataCus as $sp) {   ?>
-                                            <option value="<?php echo $sp->kode_cus; ?>">
-                                                <?php echo $sp->nama_cus; ?>
-                                            </option>
-                                            <?php
-												}
-											}
-											?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Cases Rep</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="cases_rep" id="cases_rep" value=""
-                                            class="form-control" placeholder="Cases Rep">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">VIN</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="vin" id="vin" value=""
-                                            class="form-control" placeholder="VIN">
-                                    </div>
-                                </div>                                
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Licence Plate</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="licence_plate" id="licence_plate" value=""
-                                            class="form-control" placeholder="Licence Plate">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
-                                    </div>
-                                </div>
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Vehicle Type</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="vehicle_type" id="vehicle_type" value=""
-                                            class="form-control" placeholder="Vehicle Type">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Storing</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="storing" id="storing" value=""
-                                            class="form-control" placeholder="Storing">
-                                    </div>
-                                </div>
-                                
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Service Start</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="service_start" id="service_start" value=""
-                                            class="form-control" placeholder="Service Start">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Service End</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="service_end" id="service_end" value=""
-                                            class="form-control" placeholder="Service End">
-                                    </div>
-                                </div>
-                                
-                                <input type="hidden" name="id_part_order" id="id_part_order"
-                                    value="<?php echo $kode_po ?>" class="form-control">
-                                <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
-                                <input type="hidden" name="user" id="user"
-                                    value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
-                                <div class="modal-footer right-content-between">
-                                    <button class="btn btn-primary" id="simpan" type="submit"><span
-                                            class="fa fa-save"></span> Simpan Data</button>
-                                    <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
-                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Part
-                                        Order</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-body">
-                            <div id="modal-po"></div>
-                            <div id="data-po"></div>
-                            <div id="data-po-cache"></div>
-                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
-                                title="Add Part" data-toggle="modal" data-target="#modal_form"><i
-                                    class="fas fa-plus"></i> Tambah Barang PO</button>
-                        </div>
+                    <div class="card-body">
+                        <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>No WO</th>
+                                    <th>SA</th>
+                                    <th>Customer</th>
+                                    <th>Kasus</th>
+                                    <th>Vin</th>
+                                    <th>Licence Plate</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Storing</th>
+                                    <th>Date Start</th>
+                                    <th>Clock In</th>
+                                    <th>Date End</th>
+                                    <th>Clock Out</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="modal fade" id="modal_form" role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body form">
-                                    <div class="card card-first card-outline">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table width="100%" class="table no-wrap table-hover nowrap"
-                                                    id="table-part">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>No Part</th>
-                                                            <th>Nama Part</th>
-                                                            <th>Satuan</th>
-                                                            <th>Stok</th>
-                                                            <th>Harga</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                    <tfoot></tfoot>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="tempat-modal"></div>
+                    <div id="modal-label"></div>
+                                <div id="modal-part"></div>
                 </div>
             </div>
+        </div>
+    </div>
 </section>
-<?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
+<?php
+show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+?>
 
-</section><!-- /.modal-content -->
 <script type="text/javascript">
-function fn(o) {
+    function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
 $('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
@@ -187,153 +111,101 @@ $('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
     date: moment()
 });
 $(document).ready(function() {
-    table = $('#table-part').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
+
+    //datatables
+    table = $("#tabel-appointment").DataTable({
+        "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
+    "<'row'<'col-sm-12'tr>>" +
+    "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+        "buttons": [
+            {
+                extend: 'copyHtml5',
+                text: '<i class="fas fa-copy"></i> Copy',
+                titleAttr: 'Copy',
+                title: 'Data Barang',
+                className: 'btn btn-sm  btn-outline-secondary',init: function (api, node, config) {
+                $(node).removeClass('btn-secondary') }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                titleAttr: 'Excel',
+                title: 'Data Barang',
+                className: 'btn btn-outline-secondary',init: function (api, node, config) {
+                $(node).removeClass('btn-secondary') }
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fas fa-file-pdf"></i> PDF',
+                titleAttr: 'PDF',
+                title: 'Data Barang',
+                className: 'btn btn-outline-secondary',init: function (api, node, config) {
+                $(node).removeClass('btn-secondary') }
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Cetak',
+                titleAttr: 'Print',
+                title: 'Data Barang',
+                className: 'btn btn-outline-secondary',init: function (api, node, config) {
+                $(node).removeClass('btn-secondary') },
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                }
+            },
+            {
+                extend: 'colvis',
+                text: '<i class="fas fa-eye"></i> Tampilan',
+                titleAttr: 'Costum Tampilan',
+                className: 'btn btn-outline-secondary',init: function (api, node, config) {
+                $(node).removeClass('btn-secondary') }
+            }
+ 
+        ],
+    
+			"responsive": true,
+			"paging": true,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+			"searching": true,
+			"ordering": true,
+			"info": true,
+        "autoWidth": false,
+        
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
         "serverSide": true,
-        "pageLength": 10, // Defaults number of rows to display in table
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
         "order": [],
+
+        // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('PartOrder/ajax_list') ?>",
+            "url": "<?php echo site_url('ServiceAppointment/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0],
+            "targets": [0,10],
             "orderable": false,
-        }, ]
-    });
-});
+        }, ],
 
-$(document).ready(function() {
-    var table = $('#table-part').DataTable();
-    var tgl_part_order = document.formPo.tgl_part_order.value;
-    var id_part_order = document.formPo.id_part_order.value;
-
-    $('#table-part tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var id_part = data[0];
-        var no_part = data[1];
-        var nama_part = data[2];
-        var satuan = data[3];
-        var stok = data[4];
-        var harga_baru = data[5];
-        var tgl_part_order = document.formPo.tgl_part_order.value;
-        var id_part_order = document.formPo.id_part_order.value;
-        $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
-            data: "tgl_part_order=" + tgl_part_order +
-                "&id_part_order=" + id_part_order +
-                "&id_part=" + id_part +
-                "&no_part=" + no_part +
-                "&nama_part=" + nama_part +
-                "&satuan=" + satuan +
-                "&stok=" + stok +
-                "&harga_baru=" + harga_baru
-        })
-        tampilDetail();
-        $('#modal_form').modal('hide');
-        tampilDetail();
-    });
-});
-var MyTable = $('#list-po').dataTable({
-    "responsive": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true
-});
-
-function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
-    var tgl_part_order = document.formPo.tgl_part_order.value;
-    var id_part_order = document.formPo.id_part_order.value;
-
-    $.ajax({
-        method: 'POST',
-        url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
-        data: "tgl_part_order=" + tgl_part_order +
-            "&id_part_order=" + id_part_order +
-            "&id_part=" + id_part +
-            "&no_part=" + no_part +
-            "&nama_part=" + nama_part +
-            "&satuan=" + satuan +
-            "&stok=" + stok +
-            "&harga_baru=" + harga_baru
     })
 
-    tampilDetail(id_part_order);
-
-    $('#modal_form').modal('hide');
-
-}
-
-function next(dataPo, dataRef) {
-    document.getElementById('id_part_order').value = dataPo;
-    document.getElementById('kode_ref').value = dataRef;
-    var d = document.getElementById("cetak");
-    d.setAttribute('data-id', dataPo);
-
-    document.getElementById("cetak").hidden = false;
-    //document.getElementById("alamat").readonly = true;
-}
-
-function nextref(dataRef) {
-    document.getElementById('kode_ref').value = dataRef;
-}
-
-function refresh() {
-    MyTable = $('#list-po').dataTable();
-}
-
-function tampilDetail() {
-    //var out = jQuery.parseJSON(data);
-    //var id_part_order = document.getElementById('id_part_order').value = dataPo;
-    var id_part_order = document.getElementById('id_part_order').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('PartOrder/tampilDetail'); ?>',
-        data: 'id_part_order=' + id_part_order,
-        success: function(hasil) {
-            //MyTable.fnDestroy();
-            $('#data-po').html(hasil);
-        }
-    });
-}
-
-function tampilDetailCache(dataPo) {
-    //var out = jQuery.parseJSON(data);
-    var id_part_order = document.getElementById('id_part_order').value = dataPo;
-    $.ajax({
-        type: 'GET',
-        url: '<?php echo base_url('PartOrder/tampilDetailCache'); ?>?id_part_order=' + id_part_order,
-        data: 'id_part_order=' + id_part_order,
-        success: function(hasil) {
-            MyTable.fnDestroy();
-            $('#data-po-cache').html(hasil);
-            refresh();
-        }
-    });
-}
-$('#formPo').submit(function(e) {
+});
+$('#form-tambah-appointment').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('PartOrder/prosesPo'); ?>',
+            url: '<?php echo base_url('ServiceAppointment/prosesTappointment'); ?>',
             data: data
         })
         .done(function(data) {
             var out = jQuery.parseJSON(data);
 
             if (out.status == 'form') {
-                //toastr.error(out.msg);
-                $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
@@ -342,25 +214,10 @@ $('#formPo').submit(function(e) {
                     timer: 1500
                 })
             } else {
+                document.getElementById("form-tambah-appointment").reset();
+                $('#tambah-appointment').modal('hide');
                 $('.msg').html(out.msg);
-                $('.dataPo').html(out.dataPo);
-                //tampilDetail(out.dataPo)
-                document.getElementById("formPo"); //reset()	
-                $('#tgl_part_order').attr('readonly', 'readonly');
-                $('#top').attr('readonly', 'readonly');
-                $('#status').attr('readonly', 'readonly');
-                $('#supplier').attr('readonly', 'readonly');
-                $('#keterangan').attr('readonly', 'readonly');
-                $('#ppn').attr('readonly', 'readonly');
-
-                var d = document.getElementById("cetak");
-                d.setAttribute('data-id', out.dataPo);
-                document.getElementById("cetak").hidden = false;
-                document.getElementById("tambah").hidden = false;
-                document.getElementById("data-po").hidden = true;
-                document.getElementById("simpan").hidden = true;
-                tampilDetailCache(out.dataPo);
-
+                table.ajax.reload();
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -374,78 +231,91 @@ $('#formPo').submit(function(e) {
     e.preventDefault();
 });
 
-function cetakPo(datakode) {}
-
-
-$(document).on("click", ".cetak-po", function() {
+$(document).on("click", ".update-appointment", function() {
     var id = $(this).attr("data-id");
-    //var id = document.getElementById('next_proses').value=datakode;
+
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PartOrder/cetak'); ?>",
+            url: "<?php echo base_url('ServiceAppointment/updateAppointment'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
-            $('#modal-po').html(data);
-            $('#cetak-po').modal('show');
+            $('#tempat-modal').html(data);
+            $('#update-appointment').modal('show');
         })
 })
-var data_id;
-$(document).on("click", ".delete-detail", function() {
-    data_id = $(this).attr("data-id");
-})
-$(document).on("click", ".delete-detail", function() {
-    var id = data_id;
+$(document).on('submit', '#form-update-appointment', function(e) {
+    var data = $(this).serialize();
 
     $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('PartOrder/deleteDetail'); ?>",
-            data: "id=" + id
+            method: 'POST',
+            url: '<?php echo base_url('ServiceAppointment/prosesUappointment'); ?>',
+            data: data
         })
         .done(function(data) {
             var out = jQuery.parseJSON(data);
+
+            table.ajax.reload();
+            if (out.status == 'form') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                document.getElementById("form-update-appointment").reset();
+                $('#update-appointment').modal('hide');
+                $('.msg').html(out.msg);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+    e.preventDefault();
+});
+
+$('#tambah-appointment').on('hidden.bs.modal', function() {
+    $('.form-msg').html('');
+})
+
+$('#update-appointment').on('hidden.bs.modal', function() {
+    $('.form-msg').html('');
+})
+$(document).on("click", ".delete-appointment", function() {
+    id_appointment = $(this).attr("data-id");
+})
+$(document).on("click", ".hapus-appointment", function() {
+    var id = id_appointment;
+
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('ServiceAppointment/deleteAppointment'); ?>",
+            data: "id=" + id
+        })
+
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+            table.ajax.reload();
+            $('.msg').html(out.msg);
+            $('#hapusAppointment').modal('hide');
             if (out.status != 'form') {
-                //$('.msg').html(out.msg);
-                $('#hapusDetail').modal('hide');
-                var id_part_order = document.formPo.id_part_order.value;
-                //next(next_proses);
-                tampilDetail(id_part_order);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1200
+                })
             }
         })
 })
 
-function startHitung() {
-    interval = setInterval("Hitung()", 10);
-}
 
-function Hitung() {
-
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    document.formPo.total_harga.value = (a * b);
-}
-
-function stopHitung() {
-    clearInterval(startHitung);
-}
-
-function startDiskon() {
-    interval = setInterval("Diskon()", 10);
-}
-
-function Diskon() {
-
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    var c = document.formPo.diskon.value;
-    document.formPo.total_diskon.value = (a * b) * c / 100;
-}
-
-function stopDiskon() {
-    clearInterval(startDiskon);
-}
-
-function startPpn() {
-    interval = setInterval("Ppn()", 10);
-}
 </script>

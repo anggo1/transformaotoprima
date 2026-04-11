@@ -18,7 +18,7 @@ table.dataTable td {
                         <div class="modal-header text-blue">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Surat Jalanw
+                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Surat Jalan
                             </h5>
                             <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
                                 onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> Data
