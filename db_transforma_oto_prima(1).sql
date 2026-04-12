@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2026 at 09:47 AM
+-- Generation Time: Apr 12, 2026 at 06:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -476,17 +476,19 @@ INSERT INTO `tbl_acc_type` (`id_type`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_after_salles`
+-- Table structure for table `tbl_after_sales`
 --
 
-CREATE TABLE `tbl_after_salles` (
+CREATE TABLE `tbl_after_sales` (
   `id` int(11) NOT NULL,
   `wo_no` varchar(9) NOT NULL,
+  `sa_name` varchar(50) NOT NULL,
   `claim_no` varchar(25) NOT NULL,
   `vin` varchar(35) NOT NULL,
   `fin` varchar(35) NOT NULL,
   `engine_no` varchar(35) NOT NULL,
   `no_pol` varchar(35) NOT NULL,
+  `storing` enum('N','Y') NOT NULL,
   `date_open_wo` date NOT NULL,
   `clockin` time NOT NULL,
   `date_close_wo` date NOT NULL,
@@ -513,15 +515,55 @@ CREATE TABLE `tbl_after_salles` (
   `keterangan` varchar(150) NOT NULL,
   `catatan` varchar(150) NOT NULL,
   `no_inv` varchar(35) NOT NULL,
-  `tgl_fu` date NOT NULL
+  `tgl_fu` date NOT NULL,
+  `status` enum('N','Y','P') NOT NULL,
+  `pembuat` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_after_salles`
+-- Dumping data for table `tbl_after_sales`
 --
 
-INSERT INTO `tbl_after_salles` (`id`, `wo_no`, `claim_no`, `vin`, `fin`, `engine_no`, `no_pol`, `date_open_wo`, `clockin`, `date_close_wo`, `clockout`, `mileage`, `model`, `type`, `customer`, `location`, `remarks`, `customer_complain`, `category`, `part_number`, `sold_labor_time`, `productive_hour_a`, `productive_hour_b`, `amount_labor`, `part_turn_over`, `technical_1`, `technical_2`, `note`, `ket`, `time_work`, `keterangan`, `catatan`, `no_inv`, `tgl_fu`) VALUES
-(1, '000010426', '', '', '', '', '', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00');
+INSERT INTO `tbl_after_sales` (`id`, `wo_no`, `sa_name`, `claim_no`, `vin`, `fin`, `engine_no`, `no_pol`, `storing`, `date_open_wo`, `clockin`, `date_close_wo`, `clockout`, `mileage`, `model`, `type`, `customer`, `location`, `remarks`, `customer_complain`, `category`, `part_number`, `sold_labor_time`, `productive_hour_a`, `productive_hour_b`, `amount_labor`, `part_turn_over`, `technical_1`, `technical_2`, `note`, `ket`, `time_work`, `keterangan`, `catatan`, `no_inv`, `tgl_fu`, `status`, `pembuat`) VALUES
+(7, '000070426', 'saya', '', '23423', '', '', '234234', '', '2026-04-12', '11:18:00', '0000-00-00', '00:00:00', '', '', 'teste', 'SP-0002', '', '', 'test', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', 'N', 'Administrator'),
+(8, '000080426', 'test', '', 'test', '', '', 'test', 'Y', '2026-04-12', '11:19:00', '0000-00-00', '00:00:00', '', '', 'test', 'SP-0002', '', '', 'test', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', 'N', 'Administrator');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_after_sales_detail_pre`
+--
+
+CREATE TABLE `tbl_after_sales_detail_pre` (
+  `id_detail` int(11) NOT NULL,
+  `pre_id` varchar(15) NOT NULL,
+  `wo_no` varchar(20) NOT NULL,
+  `operation` varchar(150) NOT NULL,
+  `hours` varchar(10) NOT NULL,
+  `type_of_work` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_after_sales_pre_order`
+--
+
+CREATE TABLE `tbl_after_sales_pre_order` (
+  `pre_id` int(11) NOT NULL,
+  `wo_no` varchar(9) NOT NULL,
+  `leakage` enum('N','Y') NOT NULL,
+  `abnormal_noise` enum('N','Y') NOT NULL,
+  `error_code` enum('N','Y') NOT NULL,
+  `brake` enum('N','Y') NOT NULL,
+  `vtk` enum('N','Y') NOT NULL,
+  `fak` enum('N','Y') NOT NULL,
+  `spare_kit` enum('N','Y') NOT NULL,
+  `stnk` enum('N','Y') NOT NULL,
+  `manual` enum('N','Y') NOT NULL,
+  `vehicle_type` enum('TRUCK','BUS') NOT NULL,
+  `pembuat` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -9415,10 +9457,22 @@ ALTER TABLE `tbl_acc_type`
   ADD PRIMARY KEY (`id_type`);
 
 --
--- Indexes for table `tbl_after_salles`
+-- Indexes for table `tbl_after_sales`
 --
-ALTER TABLE `tbl_after_salles`
+ALTER TABLE `tbl_after_sales`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_after_sales_detail_pre`
+--
+ALTER TABLE `tbl_after_sales_detail_pre`
+  ADD PRIMARY KEY (`id_detail`);
+
+--
+-- Indexes for table `tbl_after_sales_pre_order`
+--
+ALTER TABLE `tbl_after_sales_pre_order`
+  ADD PRIMARY KEY (`pre_id`);
 
 --
 -- Indexes for table `tbl_akses_menu`
@@ -9749,10 +9803,22 @@ ALTER TABLE `tbl_acc_type`
   MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `tbl_after_salles`
+-- AUTO_INCREMENT for table `tbl_after_sales`
 --
-ALTER TABLE `tbl_after_salles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `tbl_after_sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_after_sales_detail_pre`
+--
+ALTER TABLE `tbl_after_sales_detail_pre`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_after_sales_pre_order`
+--
+ALTER TABLE `tbl_after_sales_pre_order`
+  MODIFY `pre_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_akses_menu`
