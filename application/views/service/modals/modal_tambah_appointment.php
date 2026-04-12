@@ -1,47 +1,43 @@
+
 <section class="content">
         <div class="row">
-            <div class="col-md-12">
-                            <?php
-						$date = date("my");
-						$ci_kons = get_instance();
-						$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = substr($noOrder, 0, 5);
-						$noUrut++;
-						$tahun = substr($date, 2, 2);
-						$bulan = substr($date, 0, 2);
-						$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
-						$kode_po2  = sprintf("%05s", $noUrut);
-						?>
                     <div class="modal-content">
                         <div class="modal-header text-blue">
 
                             <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5> No : <?php echo $kode_po ?>
+                                    class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5>
                             <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
                                 onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
                                 BARU</button>
                         </div>
                         <div class="modal-body">
-                            <form id="formPo" name="formPo" method="POST">
+                            <form id="form-tambah-appointment" name="form-tambah-appointment" method="POST">
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Tanggal</label>
                                     <div class="col-sm-4">
                                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
 
-                                            <input type="text" name="tgl_part_order" id="tgl_part_order" value=""
-                                                class="form-control tgl_part_order datetimepicker"
-                                                data-toggle="datetimepicker" data-target=".tgl_part_order"
+                                            <input type="text" name="date_open_wo" id="date_open_wo" value=""
+                                                class="form-control date_open_wo datetimepicker"
+                                                data-toggle="datetimepicker" data-target=".date_open_wo"
                                                 data-format="yyy-mm-dd" required>
 
                                             <div class="input-group-append" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div></div>
+                                    <label class="col-sm-2 col-form-label">Clock In</label>
+                                    <div class="col-sm-4">
+                                     <div class="input-group date" id="timepicker" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"
+                                        name="clockin" id="clockin" value="" data-toggle="datetimepicker"
+                                        data-target="#timepicker" data-format="HH:mm"/> 
                                     </div>
+                                    </div>
+                                </div>
                                     
+                                <div class="row form-group row">
                                     <label class="col-sm-2 col-form-label">Customer</label>
                                     <div class="col-sm-4">
                                         <select name="customer" id="customer" class="form-control">
@@ -59,29 +55,22 @@
 											?>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Cases Rep</label>
+                                    <label class="col-sm-2 col-form-label">Complain</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="cases_rep" id="cases_rep" value=""
-                                            class="form-control" placeholder="Cases Rep">
-                                    </div>
+                                        <input type="text" name="customer_complain" id="customer_complain" value=""
+                                            class="form-control" placeholder="Customer Complain">
+                                    </div> 
+                                </div>   
+                                <div class="row form-group row">
                                     <label class="col-sm-2 col-form-label">VIN</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="vin" id="vin" value=""
                                             class="form-control" placeholder="VIN">
-                                    </div>
-                                </div>                                
-                                <div class="row form-group row">
+                                    </div>               
                                     <label class="col-sm-2 col-form-label">Licence Plate</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="licence_plate" id="licence_plate" value=""
                                             class="form-control" placeholder="Licence Plate">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Keterangan</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="keterangan" id="keterangan" value=""
-                                            class="form-control" placeholder="Keterangan">
                                     </div>
                                 </div>
                                 <div class="row form-group row">
@@ -91,29 +80,29 @@
                                             class="form-control" placeholder="Vehicle Type">
                                     </div>
                                     <label class="col-sm-2 col-form-label">Storing</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="storing" id="storing" value=""
-                                            class="form-control" placeholder="Storing">
-                                    </div>
+                                    <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="customRadio1" value="Y" name="storing" >
+                                    <label for="customRadio1" class="custom-control-label">Ya</label>
+                                </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="customRadio2" value="N" name="storing" checked>
+                                    <label for="customRadio2" class="custom-control-label">Tidak</label>
+                                </div>
                                 </div>
                                 
                                 <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Service Start</label>
+                                    <label class="col-sm-2 col-form-label">Remarks</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="service_start" id="service_start" value=""
-                                            class="form-control" placeholder="Service Start">
+                                        <input type="text" name="remark" id="remark" value=""
+                                            class="form-control" placeholder="Komentar">
                                     </div>
-                                    <label class="col-sm-2 col-form-label">Service End</label>
+                                    <label class="col-sm-2 col-form-label">Service Advisor</label>
                                     <div class="col-sm-4">
-                                        <input type="text" name="service_end" id="service_end" value=""
-                                            class="form-control" placeholder="Service End">
+                                        <input type="text" name="sa_name" id="sa_name" value=""
+                                            class="form-control" placeholder="Service Advisor">
                                     </div>
                                 </div>
-                                
-                                <input type="hidden" name="id_part_order" id="id_part_order"
-                                    value="<?php echo $kode_po ?>" class="form-control">
-                                <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
-                                <input type="hidden" name="user" id="user"
+                                <input type="hidden" name="pembuat" id="pembuat"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                                 <div class="modal-footer right-content-between">
                                     <button class="btn btn-primary" id="simpan" type="submit"><span
@@ -122,9 +111,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
-</section>
-<?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">

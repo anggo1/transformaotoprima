@@ -17,7 +17,7 @@ class ServiceAppointment extends MY_Controller
 		$data['page'] 		= "Service Appointment";
 		$data['judul'] 		= "S A";
 		$this->load->helper('url');
-		//$data['dataCus'] = $this->Mod_service_appointment->select_customer();
+		$data['dataCus'] = $this->Mod_service_appointment->select_customer();
 		echo show_my_modal('service/modals/modal_tambah_appointment', 'tambah-appointment', $data, ' modal-lg');
 		$this->template->load('layoutbackend', 'service/service_appointment', $data);
 	}
@@ -48,33 +48,25 @@ class ServiceAppointment extends MY_Controller
                 $row[] = $no;
                 $row[] = $p->wo_no;
                 $row[] = $p->sa_name;
-                $row[] = $p->claim_no;
+                $row[] = $p->customer;
+                $row[] = $p->customer_complain;
                 $row[] = $p->vin;
                 $row[] = $p->no_pol;
                 $row[] = $p->type;
                 $row[] = $p->storing;
-                $row[] = $p->date_open_wo;
+                $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
-                $row[] = $p->date_close_wo;
-                $row[] = $p->clockout;
-                $row[] = $p->status;
                 $row[] = $p->pembuat;
-                if($pel1->edit_level=="Y"){
-                    $edit='                    
-                    <button class="btn btn-sm btn-outline-success update-sparepart" title="Edit" data-id="'.$p->id.'"><i class="fa fa-edit"></i>
-                    </button>';
-                }                
+                //if($pel1->edit_level=="Y"){
+                //    $edit='                    
+                //    <button class="btn btn-sm btn-outline-success update-appointment" title="Edit" data-id="'.$p->id.'"><i class="fa fa-edit"></i>
+                 //   </button>';
+                //}                
                 if($pel1->delete_level=="Y"){
                     $delete='
-                    <button class="btn btn-sm btn-outline-danger delete-part" title="Delete" data-toggle="modal" data-target="#hapusPart" data-id="'.$p->id.'">
+                    <button class="btn btn-sm btn-outline-danger delete-appointment" title="Delete" data-toggle="modal" data-target="#hapusAppointment" data-id="'.$p->id.'">
                     <i class="fa fa-trash"></i></button>';
                 }
-                if($pel1->upload_level=="Y"){
-                    $upload='
-                    <button class="btn btn-sm btn-outline-info update-stok" title="Edit" data-id="'.$p->id.'"><i class="fa fa-random"></i>
-                    </button>
-                    ';
-				}
                 if($pel1->delete_level=="N"){
                     $delete='';
                 }
@@ -84,7 +76,7 @@ class ServiceAppointment extends MY_Controller
                 if($pel1->upload_level=="N"){
                     $upload='';
                 }
-                $akses_system=$edit.$delete.$upload;
+                $akses_system=$delete;
                 $row[] = $akses_system;
                 $data[] = $row;
             }
@@ -99,10 +91,9 @@ class ServiceAppointment extends MY_Controller
         echo json_encode($output);
     }
 
-	public function prosesTapointment()
+	public function prosesTappointment()
     {
-        $this->form_validation->set_rules('no_part', 'Nomor Part', 'trim|required');
-        $this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
+        $this->form_validation->set_rules('customer', 'customer', 'trim|required');
 
         $data     = $this->input->post();
 		//$kategori = trim($_POST['kategori']);
@@ -110,13 +101,8 @@ class ServiceAppointment extends MY_Controller
         //$kdKat = $kat[1];
         //$idKat = $kat[0];
 
-		//$kelompok = trim($_POST['kelompok']);
-        //$kel = explode('|', $kelompok);
-        //$kdKel = $kel[1];
-        //$idKel = $kel[0];
-
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_service_appointment->insertSparepart($data);
+            $result = $this->Mod_service_appointment->insertAppointment($data);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -132,31 +118,21 @@ class ServiceAppointment extends MY_Controller
 
         echo json_encode($out);
     }
-    public function updateSparepart() {
+    public function updateAppointment() {
 		$id 				= trim($_POST['id']);
         $data['apl'] = $this->db->get("aplikasi")->row();
-        $data['dataSatuan'] = $this->Mod_service_appointment->select_satuan();
-        $data['dataType'] = $this->Mod_service_appointment->select_type();
-        $data['dataKategori'] = $this->Mod_service_appointment->select_kategori();
-        $data['dataKelompok'] = $this->Mod_service_appointment->select_kelompok();
-        $data['dataSupplier'] = $this->Mod_service_appointment->select_supplier();
-		$data['dataPart'] = $this->Mod_service_appointment->select_by_id_part($id);
+		$data['dataCus'] = $this->Mod_service_appointment->select_customer();
 
-		echo show_my_modal('warehouse/modals/modal_tambah_part', 'update-sparepart', $data, ' modal-lg');
+		echo show_my_modal('service/modals/modal_tambah_appointment', 'update-appointment', $data, ' modal-lg');
 	}
 
-	public function prosesUsparepart() {
+	public function prosesUappointment() {
 		
-		$this->form_validation->set_rules('no_part', 'no Part', 'trim|required');
-		$this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
+		$this->form_validation->set_rules('customer', 'Customer', 'trim|required');
 
 		$data 	= $this->input->post();
-        //$kategori = trim($_POST['kategori']);
-        //$kat = explode('|', $kategori);
-        //$kdKat = $kat[1];
-        //$idKat = $kat[0];
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_service_appointment->updateSparepart($data);
+			$result = $this->Mod_service_appointment->updateAppointment($data);
 
 			if ($result > 0) {
 				$out['status'] = '';
@@ -172,41 +148,11 @@ class ServiceAppointment extends MY_Controller
 
 		echo json_encode($out);
 	}
-    public function updateStok() {
-		$id 				= trim($_POST['id']);
-        $data['apl'] = $this->db->get("aplikasi")->row();
-        $data['dataSatuan'] = $this->Mod_service_appointment->select_satuan();
-        $data['dataType'] = $this->Mod_service_appointment->select_type();
-        $data['dataKategori'] = $this->Mod_service_appointment->select_kategori();
-        $data['dataKelompok'] = $this->Mod_service_appointment->select_kelompok();
-        $data['dataSupplier'] = $this->Mod_service_appointment->select_supplier();
-		$data['dataPart'] = $this->Mod_service_appointment->select_by_id_part($id);
 
-		echo show_my_modal('warehouse/modals/modal_stok_manual', 'update-stok', $data, ' modal-md');
-	}
-
-	public function prosesUstok() 
-    {
-		
-		$data 	= $this->input->post();
-			$result = $this->Mod_service_appointment->updateStok($data);
-
-			if ($result > 0) {
-				$out['status'] = '';
-				$out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
-			} else {
-				$out['status'] = '';
-				$out['msg'] = show_err_msg('Data Gagal diupdate', '20px');
-			}
-		echo json_encode($out);
-		
-	}
-
-
-    public function deleteSparepart()
+    public function deleteAppointment()
     {
         $id = $_POST['id'];
-        $result = $this->Mod_service_appointment->deletePart($id);
+        $result = $this->Mod_service_appointment->deleteAppointment($id);
 
         if ($result > 0) {
             $out['status'] = '';

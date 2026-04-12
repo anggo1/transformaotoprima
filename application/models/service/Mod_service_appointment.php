@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_service_appointment extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','claim_no','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
-    var $column_order = array('null','wo_no','sa_name','claim_no','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
+    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -16,7 +16,7 @@ class Mod_service_appointment extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,claim_no,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
         $this->db->from('tbl_after_sales');
         $i = 0;
 
@@ -166,78 +166,71 @@ class Mod_service_appointment extends CI_Model
 
         return $data->result();
     }
-    function insertSparepart($data)
+    public function select_customer()
+    {
+        $sql = " SELECT * FROM tbl_customer";
+
+        $data = $this->db->query($sql);
+
+        return $data->result();
+    }
+    function insertAppointment($data)
     {
         
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
+        
+		$date_wo = $data['date_open_wo'];
+		$tgl2 = explode('-', $date_wo);
+		$date_open_wo= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
+		
+        $date = date("my");
+		$ci_kons = get_instance();
+		$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%$date%'";
+		$hasil = $ci_kons->db->query($query)->row_array();
+		$noOrder = $hasil['maxKode'];
+		$noUrut = substr($noOrder, 0, 5);
+		$noUrut++;
+		$tahun = substr($date, 2, 2);
+		$bulan = substr($date, 0, 2);
+		$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
 
-        $sql = "INSERT INTO tbl_wh_barang SET
-        id_part   ='',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lokasi      ='".$data['lokasi']."',
-        stok        ='".$data['stok']."',
-        harga_baru  ='".$harga_baru."',
-        ket         ='".$data['ket']."',
-        std_pakai   ='".$data['std_pakai']."'";
+        $sql = "INSERT INTO tbl_after_sales SET
+        id   ='',
+        wo_no     ='".$kode_po."',
+        sa_name   ='".$data['sa_name']."',
+        customer  ='".$data['customer']."',
+        customer_complain  ='".$data['customer_complain']."',
+        vin       ='".$data['vin']."',
+        no_pol    ='".$data['licence_plate']."',
+        type      ='".$data['vehicle_type']."',
+        storing   ='".$data['storing']."',
+        date_open_wo  ='".$date_open_wo."',
+        clockin   ='".$data['clockin']."',
+        status    ='N',
+        pembuat   ='".$data['pembuat']."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
-    function updateSparepart($data)
+    function updateAppointment($data)
     {
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
-        $sql = "UPDATE tbl_wh_barang SET
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lokasi      ='".$data['lokasi']."',
-        stok        ='".$data['stok']."',
-        harga_baru  ='".$harga_baru."',
-        ket         ='".$data['ket']."',
-        std_pakai   ='".$data['std_pakai']."'
-        WHERE id_part='".$data['id_part']."'";
+        $sql = "UPDATE tbl_after_sales SET
+        wo_no     ='".$data['wo_no']."',
+        sa_name   ='".$data['sa_name']."',
+        customer  ='".$data['customer']."',
+        customer_complain  ='".$data['customer_complain']."',
+        vin       ='".$data['vin']."',
+        no_pol    ='".$data['licence_plate']."',
+        type      ='".$data['vehicle_type']."',
+        storing   ='".$data['storing']."',
+        date_open_wo  ='".$data['date_open_wo']."',
+        clockin   ='".$data['clockin']."' WHERE id='".$data['id']."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
-    }
-    function updateStok($data)
-    {
-        $id = $data['id_part'];
-
-        $sql = "UPDATE tbl_wh_barang SET
-        stok_jkt  ='".$data['stok_jkt']."',
-        lok_jkt  ='".$data['lok_jkt']."',
-        stok_cbt  ='".$data['stok_cbt']."',
-        lok_cbt  ='".$data['lok_cbt']."',
-        stok_sby  ='".$data['stok_sby']."',
-        lok_sby  ='".$data['lok_sby']."'
-        WHERE id_part='".$data['id_part']."'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
-    }
-
-    function get_sparepart($id)
-    {
-        $this->db->where('id_part', $id);
-        return $this->db->get('tbl_wh_barang')->row();
     }
 
     function edit_submenu($id)
@@ -258,9 +251,9 @@ class Mod_service_appointment extends CI_Model
         return $insert;
     }
 
-    function deletePart($id)
+    function deleteAppointment($id)
     {
-        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales WHERE id='{$id}'";
 
 		$this->db->query($sql);
 

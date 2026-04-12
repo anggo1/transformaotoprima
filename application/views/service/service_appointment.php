@@ -10,43 +10,10 @@
 	display: none;
 	background: white;	
 }
-#atas{
-	font-size: 15pt;
-	padding: 20px;	
-	height: 80%;
-}
-#bawah{
-	background: #fff;
-}
- 
-#tombol-tutup{	
-	background: #e74c3c;
-}
-#tombol-tutup,#tombol{
-	height: 30px;
-	width: 100px;
-	color: #fff;
-	border: 0px;
-}
-#bg{
-	opacity:.80;
-	position: absolute;
-	display: none;
-	position: fixed;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: #000;
-	z-index:1001;
-	opacity: 0.8;
-}
-#tombol{
-	background: #e74c3c;        
-}
+
 .table.DataTable {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 table.dataTable td {
@@ -73,15 +40,13 @@ table.dataTable td {
                                     <th>No WO</th>
                                     <th>SA</th>
                                     <th>Customer</th>
-                                    <th>Kasus</th>
+                                    <th>Complain</th>
                                     <th>Vin</th>
-                                    <th>Licence Plate</th>
-                                    <th>Vehicle Type</th>
+                                    <th>LcPlate</th>
+                                    <th>VcType</th>
                                     <th>Storing</th>
-                                    <th>Date Start</th>
-                                    <th>Clock In</th>
-                                    <th>Date End</th>
-                                    <th>Clock Out</th>
+                                    <th>DateStart</th>
+                                    <th>C.In</th>
                                     <th>User</th>
                                     <th>Action</th>
                                 </tr>
@@ -91,8 +56,6 @@ table.dataTable td {
                         </table>
                     </div>
                     <div id="tempat-modal"></div>
-                    <div id="modal-label"></div>
-                                <div id="modal-part"></div>
                 </div>
             </div>
         </div>
@@ -106,10 +69,15 @@ show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya,
     function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
-$('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
+$('#date_open_wo,#tgl_awal,#tgl_akhir').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
+$(function () {
+  $('#timepicker').datetimepicker({
+    format: 'LT'
+  })
+})
 $(document).ready(function() {
 
     //datatables
@@ -150,7 +118,7 @@ $(document).ready(function() {
                 className: 'btn btn-outline-secondary',init: function (api, node, config) {
                 $(node).removeClass('btn-secondary') },
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                 }
             },
             {
@@ -187,7 +155,7 @@ $(document).ready(function() {
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0,10],
+            "targets": [0,12], //first column / numbering column
             "orderable": false,
         }, ],
 
