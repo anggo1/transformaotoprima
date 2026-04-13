@@ -27,24 +27,23 @@ table.dataTable td {
                 <div class="card">
                     <div class="card-header bg-light">
                         <h3 class="card-title"><i class="fa fa-list text-blue"></i> &nbsp; List Data </h3>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-customer" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
+						</div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
+                        <table id="tabel-customer" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No WO</th>
-                                    <th>SA</th>
-                                    <th>Customer</th>
-                                    <th>Complain</th>
-                                    <th>Vin</th>
-                                    <th>LcPlate</th>
-                                    <th>VcType</th>
-                                    <th>Storing</th>
-                                    <th>DateStart</th>
-                                    <th>C.In</th>
-                                    <th>User</th>
+                                    <th>Kode</th>
+                                    <th>Kode Nama</th>
+                                    <th>Nama</th>
+                                    <th>Detail</th>
+                                    <th>Alamat</th>
+                                    <th>Telp</th>
+                                    <th>PIC</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -59,26 +58,17 @@ table.dataTable td {
     </div>
 </section>
 <?php
-show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusCustomer', 'hapus-customer', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 
 <script type="text/javascript">
     function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
-$('#date_open_wo,#tgl_awal,#tgl_akhir').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-$(function () {
-  $('#timepicker').datetimepicker({
-    format: 'LT'
-  })
-})
 $(document).ready(function() {
 
     //datatables
-    table = $("#tabel-appointment").DataTable({
+    table = $("#tabel-customer").DataTable({
     
 			"responsive": true,
 			"paging": true,
@@ -100,23 +90,23 @@ $(document).ready(function() {
 
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('PreOrder/ajax_list') ?>",
+            "url": "<?php echo site_url('Customer/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0,12], //first column / numbering column
+            "targets": [0,7], //first column / numbering column
             "orderable": false,
         }, ],
 
     })
 
 });
-$('#form-tambah-appointment').submit(function(e) {
+$('#form-tambah-customer').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesTappointment'); ?>',
+            url: '<?php echo base_url('Customer/prosesTcustomer'); ?>',
             data: data
         })
         .done(function(data) {
@@ -131,8 +121,8 @@ $('#form-tambah-appointment').submit(function(e) {
                     timer: 1500
                 })
             } else {
-                document.getElementById("form-tambah-appointment").reset();
-                $('#tambah-appointment').modal('hide');
+                document.getElementById("form-tambah-customer").reset();
+                $('#tambah-customer').modal('hide');
                 $('.msg').html(out.msg);
                 table.ajax.reload();
                 Swal.fire({
@@ -148,25 +138,25 @@ $('#form-tambah-appointment').submit(function(e) {
     e.preventDefault();
 });
 
-$(document).on("click", ".process-pre-order", function() {
+$(document).on("click", ".update-customer", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PreOrder/processPreOrder'); ?>",
+            url: "<?php echo base_url('Customer/updateCustomer'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
             $('#tempat-modal').html(data);
-            $('#process-pre-order').modal('show');
+            $('#update-customer').modal('show');
         })
 })
-$(document).on('submit', '#form-update-appointment', function(e) {
+$(document).on('submit', '#form-update-customer', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesUappointment'); ?>',
+            url: '<?php echo base_url('Customer/prosesUcustomer'); ?>',
             data: data
         })
         .done(function(data) {
@@ -182,8 +172,8 @@ $(document).on('submit', '#form-update-appointment', function(e) {
                     timer: 1500
                 })
             } else {
-                document.getElementById("form-update-appointment").reset();
-                $('#update-appointment').modal('hide');
+                document.getElementById("form-update-customer").reset();
+                $('#update-customer').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -198,22 +188,22 @@ $(document).on('submit', '#form-update-appointment', function(e) {
     e.preventDefault();
 });
 
-$('#tambah-appointment').on('hidden.bs.modal', function() {
+$('#tambah-customer').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 
-$('#update-appointment').on('hidden.bs.modal', function() {
+$('#update-customer').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
-$(document).on("click", ".delete-appointment", function() {
-    id_appointment = $(this).attr("data-id");
+$(document).on("click", ".delete-customer", function() {
+    id_customer = $(this).attr("data-id");
 })
-$(document).on("click", ".hapus-appointment", function() {
-    var id = id_appointment;
+$(document).on("click", ".hapus-customer", function() {
+    var id = id_customer;
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('ServiceAppointment/deleteAppointment'); ?>",
+            url: "<?php echo base_url('Customer/deleteCustomer'); ?>",
             data: "id=" + id
         })
 
@@ -221,7 +211,7 @@ $(document).on("click", ".hapus-appointment", function() {
             var out = jQuery.parseJSON(data);
             table.ajax.reload();
             $('.msg').html(out.msg);
-            $('#hapusAppointment').modal('hide');
+            $('#hapusCustomer').modal('hide');
             if (out.status != 'form') {
                 Swal.fire({
                     position: 'center',
@@ -234,29 +224,5 @@ $(document).on("click", ".hapus-appointment", function() {
         })
 })
 
-function insertNote() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tambahNote'); ?>',
-        data: 'id=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            tampilKeterangan()
-        }
-    });
-}
-
-function tampilKeterangan() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            tableKeterangan.fnDestroy();
-            $('#data-keterangan').html(hasil);
-        }
-    });
-}
 
 </script>

@@ -156,20 +156,22 @@ class Mod_pre_order extends CI_Model
 
         return $data->result();
     }
+    function select_customer($kode_cus)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_customer');
+        $this->db->where('kode_cus',$kode_cus);
+
+         $data = $this->db->get();
+
+        return $data->result();
+    }
     function cetak_sparepart()
     {
         $this->db->select('a.*');
         $this->db->from('tbl_wh_barang as a');
 
         $data = $this->db->get();
-
-        return $data->result();
-    }
-    public function select_customer()
-    {
-        $sql = " SELECT * FROM tbl_customer";
-
-        $data = $this->db->query($sql);
 
         return $data->result();
     }

@@ -181,7 +181,10 @@ class Mod_service_appointment extends CI_Model
 		$date_wo = $data['date_open_wo'];
 		$tgl2 = explode('-', $date_wo);
 		$date_open_wo= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-		
+		$nama_customer = trim($_POST['customer']);
+        $kat = explode('|', $nama_customer);
+        $nama_cus = $kat[1];
+        $kode_cus = $kat[0];
         $date = date("my");
 		$ci_kons = get_instance();
 		$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%$date%'";
@@ -197,7 +200,8 @@ class Mod_service_appointment extends CI_Model
         id   ='',
         wo_no     ='".$kode_po."',
         sa_name   ='".$data['sa_name']."',
-        customer  ='".$data['customer']."',
+        customer  ='".$kode_cus."',
+        customer_name  ='".$nama_cus."',
         customer_complain  ='".$data['customer_complain']."',
         vin       ='".$data['vin']."',
         no_pol    ='".$data['licence_plate']."',

@@ -30,7 +30,7 @@
                                     <label class="col-sm-2 col-form-label">Clock In</label>
                                     <div class="col-sm-4">
                                      <div class="input-group date" id="timepicker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"
+                                    <input type="text" class="form-control datetimepicker-input"
                                         name="clockin" id="clockin" value="" data-toggle="datetimepicker"
                                         data-target="#timepicker" data-format="HH:mm"/> 
                                     </div>
@@ -46,7 +46,7 @@
                                             <?php
 											if (!empty($dataCus)) {
 												foreach ($dataCus as $sp) {   ?>
-                                            <option value="<?php echo $sp->kode_cus; ?>">
+                                            <option value="<?php echo $sp->kode_cus . '|' . $sp->nama_cus; ?>">
                                                 <?php echo $sp->nama_cus; ?>
                                             </option>
                                             <?php

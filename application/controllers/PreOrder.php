@@ -58,7 +58,7 @@ class PreOrder extends MY_Controller
                 $row[] = $p->clockin;
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'">process
+                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">process
                   </button>';
                 $akses_system=$edit;
                 $row[] = $akses_system;
@@ -103,9 +103,14 @@ class PreOrder extends MY_Controller
         echo json_encode($out);
     }
     public function processPreOrder() {
-		$id 				= trim($_POST['id']);
+        $idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $kode_cus = $kat[1];
+        $id = $kat[0];
+
         $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataSa'] = $this->Mod_pre_order->select_sa($id);
+		$data['dataCus'] = $this->Mod_pre_order->select_customer($kode_cus);
 
 		echo show_my_modal('service/modals/modal_tambah_pre_order', 'process-pre-order', $data, ' modal-xl');
 	}
