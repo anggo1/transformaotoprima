@@ -75,9 +75,9 @@ class PreOrder extends MY_Controller
         echo json_encode($output);
     }
 
-	public function prosesTappointment()
+	public function prosesToperation()
     {
-        $this->form_validation->set_rules('customer', 'customer', 'trim|required');
+        $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
 
         $data     = $this->input->post();
 		//$kategori = trim($_POST['kategori']);
@@ -86,7 +86,7 @@ class PreOrder extends MY_Controller
         //$idKat = $kat[0];
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_pre_order->insertPreOrder($data);
+            $result = $this->Mod_pre_order->insertOperation($data);
 
             if ($result > 0) {
                 $out['status'] = '';

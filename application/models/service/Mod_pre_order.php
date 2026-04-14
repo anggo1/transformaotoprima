@@ -175,39 +175,15 @@ class Mod_pre_order extends CI_Model
 
         return $data->result();
     }
-    function insertAppointment($data)
+    function insertOperation($data)
     {
-        
-        
-		$date_wo = $data['date_open_wo'];
-		$tgl2 = explode('-', $date_wo);
-		$date_open_wo= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-		
-        $date = date("my");
-		$ci_kons = get_instance();
-		$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%$date%'";
-		$hasil = $ci_kons->db->query($query)->row_array();
-		$noOrder = $hasil['maxKode'];
-		$noUrut = substr($noOrder, 0, 5);
-		$noUrut++;
-		$tahun = substr($date, 2, 2);
-		$bulan = substr($date, 0, 2);
-		$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
-
-        $sql = "INSERT INTO tbl_after_sales SET
-        id   ='',
-        wo_no     ='".$kode_po."',
-        sa_name   ='".$data['sa_name']."',
-        customer  ='".$data['customer']."',
-        customer_complain  ='".$data['customer_complain']."',
-        vin       ='".$data['vin']."',
-        no_pol    ='".$data['licence_plate']."',
-        type      ='".$data['vehicle_type']."',
-        storing   ='".$data['storing']."',
-        date_open_wo  ='".$date_open_wo."',
-        clockin   ='".$data['clockin']."',
-        status    ='N',
-        pembuat   ='".$data['pembuat']."'";
+        $sql = "INSERT INTO tbl_after_sales_operation SET
+        id_detail   ='',
+        pre_id      ='".$data['pre_id']."',
+        wo_no       ='".$data['wo_no']."',
+        operation   ='".$data['operation']."',
+        hours       ='".$data['hours']."',
+        type_of_work  ='".$data['type_of_work']."'";
 
 		$this->db->query($sql);
 

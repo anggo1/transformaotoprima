@@ -47,7 +47,7 @@
                         <th width="25%"><?php echo $s->wo_no; ?></th>
                     </tr>
                     <tr>
-                      <th>Tax Cod</th>
+                      <th>Tax Code</th>
                       <th>:</th>
                       <th>&nbsp;</th>
                       <th>&nbsp;</th>
@@ -68,16 +68,29 @@
                 </tbody>
             </table>
             </div>
-            <div class="card-body">
                 <form id="form-tambah-appointment" name="form-tambah-appointment" method="POST">
-                    <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Operation</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="operation" id="operation" value=""
+            <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-4 col-form-label">Operation</label>
+                        <div class="col-sm-12">
+                            <input type="text" name="operation" id="operation" value=""
                                             class="form-control" placeholder="Operation">
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-success" id="tambah" onclick="window.location.reload();"
+                        </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-4 col-form-label">Type Of Work</label>
+                        <div class="col-sm-12">
+                            <input type="text" name="type_of_work" id="type_of_work" value=""
+                                            class="form-control" placeholder="Type Of Work">
+                        </div>
+                    </div>
+              </div>
+              </div>
+                <button type="button" class="btn btn-success" id="tambah" onclick="window.location.reload();"
                     title="Add Data"><i class="fas fa-plus"></i> Add data</button>
                     </div>
                     
