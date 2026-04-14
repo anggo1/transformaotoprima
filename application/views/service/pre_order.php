@@ -259,4 +259,54 @@ function tampilKeterangan() {
     });
 }
 
+function save()
+{
+    $('#btnSave').text('saving...'); //change button text
+    $('#btnSave').attr('disabled',true); //set button disable 
+    var url = "<?php echo site_url('aplikasi/update')?>";
+    var formdata = new FormData($('#form')[0]);
+    // ajax adding data to database
+    $.ajax({
+        url : url,
+        type: "POST",
+        data: formdata,
+        dataType: "JSON",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data)
+        {
+
+            if(data.status) //if success close modal and reload ajax table
+            {
+                $('#modal_form').modal('hide');
+                reload_table();
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success!!.'
+                });
+            }
+            else
+            {
+                for (var i = 0; i < data.inputerror.length; i++) 
+                {
+                    $('[name="'+data.inputerror[i]+'"]').addClass('is-invalid');
+                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]).addClass('invalid-feedback');
+                }
+            }
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+
+        }
+    });
+}
+
 </script>
