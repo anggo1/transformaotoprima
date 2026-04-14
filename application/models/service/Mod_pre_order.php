@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_pre_order extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
+    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -16,7 +16,7 @@ class Mod_pre_order extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,pembuat');
         $this->db->from('tbl_after_sales');
         $i = 0;
 
@@ -106,46 +106,6 @@ class Mod_pre_order extends CI_Model
         $data = $this->db->get();
         return $data->result();
     }
-    public function select_satuan()
-    {
-        $sql = " SELECT * FROM tbl_wh_satuan";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
-    public function select_kategori()
-    {
-        $sql = " SELECT * FROM tbl_wh_kategori";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
-    public function select_type()
-    {
-        $sql = " SELECT * FROM tbl_wh_type_mesin";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
-    public function select_kelompok()
-    {
-        $sql = " SELECT * FROM tbl_wh_kelompok";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
-    public function select_supplier()
-    {
-        $sql = " SELECT * FROM tbl_wh_supplier";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
     function select_sa($id)
     {
        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
@@ -166,6 +126,26 @@ class Mod_pre_order extends CI_Model
 
         return $data->result();
     }
+    function select_operation_detail($wo_no)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_detail_pre');
+        $this->db->where('wo_no',$wo_no);
+
+        $data = $this->db->get();
+
+        return $data->result();
+    }
+    function select_pre_order($wo_no)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_pre_order');
+        $this->db->where('wo_no',$wo_no);
+
+        $data = $this->db->get();
+
+        return $data->result();
+    }
     function cetak_sparepart()
     {
         $this->db->select('a.*');
@@ -175,62 +155,56 @@ class Mod_pre_order extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($data)
+    function insertOperation($wo_no, $operation, $hours, $type_of_work)
     {
-        $sql = "INSERT INTO tbl_after_sales_operation SET
+        $sql = "INSERT INTO tbl_after_sales_detail_pre SET
         id_detail   ='',
-        pre_id      ='".$data['pre_id']."',
-        wo_no       ='".$data['wo_no']."',
-        operation   ='".$data['operation']."',
-        hours       ='".$data['hours']."',
-        type_of_work  ='".$data['type_of_work']."'";
+        wo_no       ='".$wo_no."',
+        operation   ='".$operation."',
+        hours       ='".$hours."',
+        type_of_work  ='".$type_of_work."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
-    function updateAppointment($data)
+    function inputPreOrder($data)
     {
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
-        $sql = "UPDATE tbl_after_sales SET
+        
+        $leakage=""; if ($data['leakage']=='Y'){ $leakage=$data['leakage']; }else { $leakage='N'; }
+        $abnormal_noise=""; if ($data['abnormal_noise']=='Y'){ $abnormal_noise=$data['abnormal_noise']; }else { $abnormal_noise='N'; }
+        $error_code=""; if ($data['error_code']=='Y'){ $error_code=$data['error_code']; }else { $error_code='N'; }
+        $brake=""; if ($data['brake']=='Y'){ $brake=$data['brake']; }else { $brake='N'; }
+        $vtk=""; if ($data['vtk']=='Y'){ $vtk=$data['vtk']; }else { $vtk='N'; }
+        $fak=""; if ($data['fak']=='Y'){ $fak=$data['fak']; }else { $fak='N'; }
+        $spare_kit=""; if ($data['spare_kit']=='Y'){ $spare_kit=$data['spare_kit']; }else { $spare_kit='N'; }
+        $stnk=""; if ($data['stnk']=='Y'){ $stnk=$data['stnk']; }else { $stnk='N'; }
+
+        $sql = "INSERT INTO tbl_after_sales_pre_order SET
         wo_no     ='".$data['wo_no']."',
-        sa_name   ='".$data['sa_name']."',
-        customer  ='".$data['customer']."',
-        customer_complain  ='".$data['customer_complain']."',
-        vin       ='".$data['vin']."',
-        no_pol    ='".$data['licence_plate']."',
-        type      ='".$data['vehicle_type']."',
-        storing   ='".$data['storing']."',
-        date_open_wo  ='".$data['date_open_wo']."',
-        clockin   ='".$data['clockin']."' WHERE id='".$data['id']."'";
+        leakage   ='$leakage',
+        abnormal_noise  ='$abnormal_noise',
+        error_code  ='$error_code',
+        brake       ='$brake',
+        vtk    ='$vtk',
+        fak      ='$fak',
+        spare_kit   ='$spare_kit',
+        stnk  ='$stnk',
+        vehicle_type  ='".$data['vehicle_type']."',
+        pembuat   ='".$data['pembuat']."'";
 
 		$this->db->query($sql);
 
+        $sql2 = "UPDATE tbl_after_sales SET
+        pre_order     ='".$data['wo_no']."' WHERE wo_no='".$data['wo_no']."'";
+
+		$this->db->query($sql2);
+
 		return $this->db->affected_rows();
     }
-
-    function edit_submenu($id)
+    function deleteOperation($id)
     {
-        $this->db->where('nip', $id);
-        return $this->db->get('tbl_pegawai');
-    }
-
-    function insertsubmenu($tabel, $data)
-    {
-        $insert = $this->db->insert($tabel, $data);
-        return $insert;
-    }
-
-    function insert_akses_submenu($tbl_akses_submenu, $data)
-    {
-        $insert = $this->db->insert($tbl_akses_submenu, $data);
-        return $insert;
-    }
-
-    function deleteAppointment($id)
-    {
-        $sql = "DELETE FROM tbl_after_sales WHERE id='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales_detail_pre WHERE id_detail='{$id}'";
 
 		$this->db->query($sql);
 

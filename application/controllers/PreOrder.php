@@ -56,11 +56,15 @@ class PreOrder extends MY_Controller
                 $row[] = $p->storing;
                 $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
+                $row[] = empty($p->pre_order) ? 'Not Processed' : 'On Process';
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">process
+                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
                   </button>';
-                $akses_system=$edit;
+                  $print='                    
+                    <button class="btn btn-sm btn-outline-info cetak-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
+                  </button>';
+                $akses_system= empty ($p->pre_order) ? $edit : $print;
                 $row[] = $akses_system;
                 $data[] = $row;
             }
@@ -75,18 +79,19 @@ class PreOrder extends MY_Controller
         echo json_encode($output);
     }
 
-	public function prosesToperation()
+	public function tambahOperation()
     {
         $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
 
-        $data     = $this->input->post();
-		//$kategori = trim($_POST['kategori']);
-        //$kat = explode('|', $kategori);
-        //$kdKat = $kat[1];
-        //$idKat = $kat[0];
+        //$data     = $this->input->post();
+        $wo_no = $this->input->post('wo_no');
+        $operation = $this->input->post('operation');
+        $hours = $this->input->post('hours');
+        $type_of_work = $this->input->post('type_of_work');
+
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_pre_order->insertOperation($data);
+            $result = $this->Mod_pre_order->insertOperation($wo_no, $operation, $hours, $type_of_work);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -102,6 +107,13 @@ class PreOrder extends MY_Controller
 
         echo json_encode($out);
     }
+    public function tampilOperationDetail()
+	{
+		$wo_no = $_POST['wo_no'];
+		$data['dataDetail'] = $this->Mod_pre_order->select_operation_detail($wo_no);
+		$this->load->view('service/detail_pre_operation', $data);
+	}
+
     public function processPreOrder() {
         $idS = trim($_POST['id']);
         $kat = explode('|', $idS);
@@ -115,20 +127,20 @@ class PreOrder extends MY_Controller
 		echo show_my_modal('service/modals/modal_tambah_pre_order', 'process-pre-order', $data, ' modal-xl');
 	}
 
-	public function prosesUpre_order() {
+	public function inputPreOrder() {
 		
-		$this->form_validation->set_rules('customer', 'Customer', 'trim|required');
+		$this->form_validation->set_rules('vehicle_type', 'Vehicle Type', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_pre_order->updatePreOrder($data);
+			$result = $this->Mod_pre_order->inputPreOrder($data);
 
 			if ($result > 0) {
 				$out['status'] = '';
-				$out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
+				$out['msg'] = show_ok_msg('Data Berhasil ditambahkan', '20px');
 			} else {
 				$out['status'] = '';
-				$out['msg'] = show_err_msg('Data Batal diupdate', '20px');
+				$out['msg'] = show_err_msg('Data Gagal ditambahkan', '20px');
 			}
 		} else {
 			$out['status'] = 'form';
@@ -138,10 +150,10 @@ class PreOrder extends MY_Controller
 		echo json_encode($out);
 	}
 
-    public function deletePreOrder()
+    public function deleteOperation()
     {
         $id = $_POST['id'];
-        $result = $this->Mod_pre_order->deletePreOrder($id);
+        $result = $this->Mod_pre_order->deleteOperation($id);
 
         if ($result > 0) {
             $out['status'] = '';
@@ -152,4 +164,19 @@ class PreOrder extends MY_Controller
         }
         echo json_encode($out);
     }
+    public function cetak_pre_order()
+	{
+        $idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $kode_cus = $kat[1];
+        $id = $kat[0];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
+		$data['dataSa'] = $this->Mod_pre_order->select_sa($id);
+		$data['detailKet'] = $this->Mod_pre_order->select_operation_detail($id);
+		$data['dataCus'] = $this->Mod_pre_order->select_customer($kode_cus);
+		$data['dataPre'] = $this->Mod_pre_order->select_pre_order($id);
+
+		echo show_my_print('service/modals/modal_cetak_pre_order', 'cetak-pre-order', $data, ' modal-xl');
+	}
 }

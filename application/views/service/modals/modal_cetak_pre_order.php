@@ -141,8 +141,10 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <tr>
       <td width="100%" style="padding: 15px;">
         <?php
-	foreach ($dataPo as $k) {
-  }
+			if (!empty($dataCus)) {
+			foreach ($dataCus as $c)
+                if (!empty($dataSa)) {
+                foreach ($dataSa as $s)  {{}}}} 
     $lokasi = $this->session->userdata['lokasi'];
 	$apl1 = $this->db->get("aplikasi where lokasi='".$lokasi."'")->row();
     $tgl_sekarang =date("Y-m-d");
@@ -157,48 +159,48 @@ font-family:Georgia, "Times New Roman", Times, serif;
   <table width="100%" border="0" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="datatable1">
     <thead>
       <tr>
-        <th colspan="2"><div align="left"></div></th>
+        <th colspan="2"><div align="left"><font size="2">Pre Order</font></div></th>
         <th>&nbsp;</th>
         <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th colspan="2"><div align="left">Estimasi Penawaran Sparepart</div></th>
+        <th colspan="2"><div align="left"></div></th>
         <th>&nbsp;</th>
         <th><div align="left"><?php echo  $apl1->nama_owner; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Customer Name</div></th>
-        <th><div align="left">: <?php echo $k->nama_cus; ?></div></th>
+        <th><div align="left">: <?php echo $c->nama_cus; ?></div></th>
         <th width="138">&nbsp;</th>
         <th width="513"><div align="left"><?php echo  $apl1->status; ?></div></th>
         <th width="71">&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Address</div></th>
-        <th><div align="left">: <?php echo $k->alamat ?></div></th>
+        <th><div align="left">: <?php echo $c->alamat ?></div></th>
         <th>&nbsp;</th>
         <th><div align="left"><?php echo  $apl1->alamat; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th height="20"><div align="left">City</div></th>
-        <th height="20"><div align="left">: <?php echo $k->kota ?></div></th>
+        <th height="20"><div align="left">: <?php echo $c->kota ?></div></th>
         <th>&nbsp;</th>
         <th><div align="left"><?php echo  $apl1->kota.' '.$apl1->kode_pos; ?> Indonesia</div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th height="20"><div align="left">Up</div></th>
-        <th height="20"><div align="left">: <?php echo $k->tlp_person ?></div></th>
+        <th height="20"><div align="left">: <?php echo $c->tlp_person ?></div></th>
         <th>&nbsp;</th>
         <th><div align="left"><?php echo  $apl1->tlp; ?></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th height="20"><div align="left">Telp or Mobile no</div></th>
-        <th height="20"><div align="left">: <?php echo $k->no_tlp ?></div></th>
+        <th height="20"><div align="left">: <?php echo $c->no_tlp ?></div></th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -224,14 +226,15 @@ font-family:Georgia, "Times New Roman", Times, serif;
       <tr align="center">
         <th colspan="3">For Reference please quote the following no</th>
         </tr>
-      <tr align="center">
-        <th colspan="3"><?php echo $k->kode_estimasi_penawaran ?></th>
+      <tr>
+        <th height="36">Order No:</th>
+        <th colspan="2" align="center"><?php echo $s->wo_no ?></th>
         </tr>
       <tr>
         <th width="30%" height="36"><font size="-2">Date :</font><br>
-          <?php echo tglIndoSedang($k->tgl_estimasi_penawaran) ?></br></th>
+          <?php echo tglIndoSedang($s->date_open_wo) ?></br></th>
         <th width="30%" align="center"><font size="-2">Customer No.</font><br>
-          <?php echo $k->kode_cus ?></br></th>
+          <?php echo $s->customer ?></br></th>
         <th width="30%"><font size="-2">Page<br></font></th>
       </tr>
     </thead>
@@ -243,132 +246,104 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="1" cellpadding="1" cellspacing="0" class="datatable2">
         <tr>
             <th height="37"><div class="text1"><font size="-2">Registration No</font></div>
-          <div class="text2"><?php echo $k->tgl_estimasi_penawaran ?></div></th>
+          <div class="text2"><?php echo $s->wo_no ?></div></th>
           <th><div class="text1"><font size="-2">Vin No</font></div>
-            <div class="text2"><?php echo $k->no_vin ?></div></th>
+            <div class="text2"><?php echo $s->vin ?></div></th>
           <th><div class="text1"><font size="-2">Sales designation</font></div>
-            <div class="text2"><?php echo $k->sales_design ?></div></th>
-          <th><div class="text1"><font size="-2">Date / time received</font></div>
-            <div class="text2"><?php echo $k->date_received ?></div></th>
+            <div class="text2"></div></th>
+          <th><div class="text1"><font size="-2">Reception date/time</font></div>
+            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
         </tr>
         <tr>
-          <th><div class="text1"><font size="-2">Millage/Km</font></div>
-            <div class="text2"><?php echo $k->millage ?></div></th>
+          <th><div class="text1"><font size="-2">Mileage/Km</font></div>
+            <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Engine No.</font></div>
-            <div class="text2"><?php echo $k->engine_no ?></div></th>
-          <th><div class="text1"><font size="-2">Account No.</font></div>
-            <div class="text2"><?php echo $k->acc_no?></div></th>
+            <div class="text2"></div></th>
+          <th><div class="text1"><font size="-2">Active reception</font></div>
+            <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Received By</font></div>
-            <div class="text2"><?php echo $k->received_by ?></div></th>
+            <div class="text2"><?php echo $s->sa_name ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Routing No.</font></div>
-            <div class="text2"><?php echo $k->routing_no ?></div></th>
+            <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
-            <div class="text2"><?php echo $k->last_km ?></div></th>
+            <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <div class="text2"><?php echo $k->date_of_regis ?></div></th>
+            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
           <th>&nbsp;</th>
         </tr>
         </table>
-    <br>
+    Is this vehicle related to campaign □ No □ Yes Mobility Service □ No □ Yes<br>
     <table width="100%" border="1" cellpadding="3" cellspacing="0" class="datatable3">
       <thead>
         <tr>
-          <th width="3%" height="31"><div align="center">No</div></th>
-          <th width="11%"><div align="center">Part Number</div></th>
-          <th ><strong>Description</strong></th>
-          <th width="8%">Price</th>
-          <th width="4%"><div align="center">Pcs</div></th>
-          <th width="7%"><div align="center">Amount</div></th>
-          <th width="14%"><div align="center">Remarks</div></th>
-        </tr>
+          <th width="9%" height="31"><div align="center">Item</div></th>
+          <th width="20%"><div align="center">Operation No.</div></th>
+          <th ><strong>Hours</strong></th>
+          <th width="63%">Type Of Work</th>
+          </tr>
         <?php
-        $no = 0;
-        $grand_total = 0;
-        foreach ($detailPo as $d) : $no++;
-        $ppn = $k->ppn;
-        if(empty($ppn)){
-          $k->ppn = 0;
-        }
-          $ppnnya = $k->ppn;
-        
-          $grand_total += $d->total_harga;
-          $ppn = $grand_total * $k->ppn / 100;
-
+        if(!empty($detailKet)){
+        foreach ($detailKet as $d) { 
+            $no=1;
           ?>
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>
-            <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
-            <td width="53%"><div align="center"><?php echo $d->nama_part ?></div></td>
-            <td width="8%"><div align="right">&nbsp;<?php echo "Rp. " .number_format($d->harga_net,0,",",".") ?></div></td>
-            <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
-            <td><div align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></div></td>
-            <td><div align="center"><?php echo $d->remark ?></div></td>
-          </tr>
+            <td><div align="center"><?php echo $d->operation; ?>&nbsp;</div></td>
+            <td width="8%"><div align="center"><?php echo $d->hours; ?></div></td>
+            <td width="63%"><?php echo $d->type_of_work ?>&nbsp;</td>
+            </tr>
           
         <?php $no + 1;
-        endforeach ?>
+        }} ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <?php
         foreach ($detailKet as $c) :    ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-              <td><font size="-2">** <?php echo $c->remark; ?></font></td>
+              <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
           <?php endforeach ?>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
+            </tr>
       </thead>
 
   </table>
+
+        <?php
+        if(!empty($dataPre)){
+        foreach ($dataPre as $p) { }}
+          ?>
 <table width="100%" cellpadding="1" cellspacing="0" class="data1"
                         style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
                         <thead>
@@ -381,61 +356,51 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                 <td>&nbsp;</td>
                             </tr>
                             <tr>
-                                <td height="30" colspan="3"
-                                    style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                    Standard Checking</td>
+                                <td height="30">&nbsp;</td>
+                                <td height="30">Standard Checking</td>
+                                <td height="30">&nbsp;</td>
                                 <td width="3%">&nbsp;</td>
-                                <td colspan="2"
-                                    style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
+                                <td colspan="2">
                                     Valuable Item Missing</td>
                             </tr>
                             <tr>
                                 <td width="38%">X : Stone chipping</td>
                                 <td width="14%">Lekage</td>
                                 <td width="5%">
-                                    <input type="hidden" id="leakage" name="leakage" value="N">
-                                    <input type="checkbox" id="leakage" name="leakage" value="Y"></td>
+                                    <input type="checkbox" id="leakage" name="leakage" <?php echo ($p->leakage == 'Y') ? 'checked' : ''; ?>></td>
                                 <td width="3%">&nbsp;</td>
                                 <td width="30%">First Air Kit</td>
-                                <td><input type="hidden" id="fak" name="fak" value="N">
-                                    <input type="checkbox" id="fak" name="fak" value="Y"></td>
+                                <td><input type="checkbox" id="fak" name="fak" <?php echo ($p->fak == 'Y') ? 'checked' : ''; ?>></td>
                             </tr>
                             <tr>
                                 <td>O : Dent</td>
                                 <td>Abnormal Noise</td>
                                 <td>
-                                    <input type="hidden" id="abnormal_noise" name="abnormal_noise" value="N">
-                                    <input type="checkbox" id="abnormal_noise" name="abnormal_noise" value="Y"></td>
+                                    <input type="checkbox" id="abnormal_noise" name="abnormal_noise" <?php echo ($p->abnormal_noise == 'Y') ? 'checked' : ''; ?>></td>
                                 <td>&nbsp;</td>
                                 <td>Spare Kit</td>
-                                <td><input type="hidden" id="spare_kit" name="spare_kit" value="N">
-                                    <input type="checkbox" id="spare_kit" name="spare_kit" value="Y"></td>
+                                <td><input type="checkbox" id="spare_kit" name="spare_kit" <?php echo ($p->spare_kit == 'Y') ? 'checked' : ''; ?>></td>
                             </tr>
                             <tr>
                                 <td>&and; : Scrathes</td>
                                 <td>Error Code/ Indicator</td>
-                                <td><input type="hidden" id="error_code" name="error_code" value="N">
-                                    <input type="checkbox" id="error_code" name="error_code" value="Y"></td>
+                                <td><input type="checkbox" id="error_code" name="error_code" <?php echo ($p->error_code == 'Y') ? 'checked' : ''; ?>></td>
                                 <td>&nbsp;</td>
                                 <td>STNK</td>
-                                <td><input type="hidden" id="stnk" name="stnk" value="N">
-                                    <input type="checkbox" id="stnk" name="stnk" value="Y"></td>
+                                <td><input type="checkbox" id="stnk" name="stnk" <?php echo ($p->stnk == 'Y') ? 'checked' : ''; ?>></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>Brake,Clutch &amp; Tire 10 Minutes Cyle Check</td>
-                                <td><input type="hidden" id="brake" name="brake" value="N">
-                                    <input type="checkbox" id="brake" name="brake" value="Y"></td>
+                                <td><input type="checkbox" id="brake" name="brake" <?php echo ($p->brake == 'Y') ? 'checked' : ''; ?>></td>
                                 <td>&nbsp;</td>
                                 <td>Operational Manual</td>
-                                <td width="10%"><input type="hidden" id="manual" name="manual" value="N">
-                                    <input type="checkbox" id="manual" name="manual" value="Y"></td>
+                                <td width="10%"><input type="checkbox" id="manual" name="manual" <?php echo ($p->manual == 'Y') ? 'checked' : ''; ?>></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>Vehicle Tool Kit</td>
-                                <td><input type="hidden" id="vtk" name="vtk" value="N">
-                                    <input type="checkbox" id="vtk" name="vtk" value="Y"></td>
+                                <td><input type="checkbox" id="vtk" name="vtk" <?php echo ($p->vtk == 'Y') ? 'checked' : ''; ?>></td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
@@ -449,12 +414,33 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                 <td>&nbsp;</td>
                             </tr>
                     </table>
+<table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
+        <tr>
+          <td width="23%" rowspan="6"><img src="<?php echo base_url(); echo ($p->vehicle_type == 'BUS') ? 'assets\foto\logo\bustop.png' : 'assets\foto\logo\trucktop.png'; ?>" width="100%"></td>
+          <td width="77%">Others Please Specify </td>
+          </tr>
+        <tr align="center">
+          <td style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;</td>
+          </tr>
+                    <tr align="center">
+                      <th style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <th height="28" style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <td style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;</td>
+                    </tr>
+                    <tr align="center">
+                      <td>&nbsp;</td>
+                    </tr>
+      </table>
 <table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0">
         <tr>
           <td colspan="4">&nbsp;</td>
         </tr>
     </table>
-      <table width="100%" border="0" cellpadding="5" cellspacing="0">
+      <table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
         <tr>
           <td width="25%">&nbsp;</td>
           <td width="25%">&nbsp;</td>
@@ -462,10 +448,10 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <td width="25%">&nbsp;</td>
         </tr>
         <tr align="center">
+          <td>This order is placed in accordance with our general terms of business Customer's signature and name</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>Service Ad</td>
+          <td>Service Adviser's signature and name</td>
         </tr>
                     <tr align="center">
                       <th>&nbsp;</th>

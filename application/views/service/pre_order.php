@@ -1,14 +1,13 @@
 <style>
-
-#modal-kotak{
-	margin:5% 30% 30% 30%;
-	width: 500px;	
-	height: 200px;
-	position: absolute;
-	position:fixed;
-	z-index:1002;
-	display: none;
-	background: white;	
+#modal-kotak {
+    margin: 5% 30% 30% 30%;
+    width: 500px;
+    height: 200px;
+    position: absolute;
+    position: fixed;
+    z-index: 1002;
+    display: none;
+    background: white;
 }
 
 .table.DataTable {
@@ -44,6 +43,7 @@ table.dataTable td {
                                     <th>Storing</th>
                                     <th>DateStart</th>
                                     <th>C.In</th>
+                                    <th>Pre Order</th>
                                     <th>User</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,41 +53,45 @@ table.dataTable td {
                         </table>
                     </div>
                     <div id="tempat-modal"></div>
+                    <div id="cetak-pre-modal"></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <?php
-show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusOperation', 'hapus-operation', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 
 <script type="text/javascript">
-    function fn(o) {
+function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
 $('#date_open_wo,#tgl_awal,#tgl_akhir').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
-$(function () {
-  $('#timepicker').datetimepicker({
-    format: 'LT'
-  })
+$(function() {
+    $('#timepicker').datetimepicker({
+        format: 'LT'
+    })
 })
 $(document).ready(function() {
 
     //datatables
     table = $("#tabel-appointment").DataTable({
-    
-			"responsive": true,
-			"paging": true,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-			"searching": true,
-			"ordering": true,
-			"info": true,
+
+        "responsive": true,
+        "paging": true,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        "searching": true,
+        "ordering": true,
+        "info": true,
         "autoWidth": false,
-        
+
         "language": {
             "sEmptyTable": "Data Service Appointment Belum Ada"
         },
@@ -104,48 +108,12 @@ $(document).ready(function() {
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0,12], //first column / numbering column
+            "targets": [0, 12], //first column / numbering column
             "orderable": false,
         }, ],
 
     })
 
-});
-$('#form-tambah-appointment').submit(function(e) {
-    var data = $(this).serialize();
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesTappointment'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-
-            if (out.status == 'form') {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } else {
-                document.getElementById("form-tambah-appointment").reset();
-                $('#tambah-appointment').modal('hide');
-                $('.msg').html(out.msg);
-                table.ajax.reload();
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-
-    e.preventDefault();
 });
 
 $(document).on("click", ".process-pre-order", function() {
@@ -161,18 +129,18 @@ $(document).on("click", ".process-pre-order", function() {
             $('#process-pre-order').modal('show');
         })
 })
-$(document).on('submit', '#form-update-appointment', function(e) {
+$(document).on('submit', '#form-pre-order', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesUappointment'); ?>',
+            url: '<?php echo base_url('PreOrder/inputPreOrder'); ?>',
             data: data
         })
         .done(function(data) {
             var out = jQuery.parseJSON(data);
 
-            table.ajax.reload();
+            //table.ajax.reload();
             if (out.status == 'form') {
                 Swal.fire({
                     position: 'center',
@@ -182,8 +150,9 @@ $(document).on('submit', '#form-update-appointment', function(e) {
                     timer: 1500
                 })
             } else {
-                document.getElementById("form-update-appointment").reset();
-                $('#update-appointment').modal('hide');
+                table.ajax.reload();
+                //document.getElementById("process-pre-order").reset();
+                $('#process-pre-order').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -205,15 +174,15 @@ $('#tambah-appointment').on('hidden.bs.modal', function() {
 $('#update-appointment').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
-$(document).on("click", ".delete-appointment", function() {
-    id_appointment = $(this).attr("data-id");
+$(document).on("click", ".delete-operation", function() {
+    idS = $(this).attr("data-id");
 })
-$(document).on("click", ".hapus-appointment", function() {
-    var id = id_appointment;
+$(document).on("click", ".delete-operation", function() {
+    var id = idS;
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('ServiceAppointment/deleteAppointment'); ?>",
+            url: "<?php echo base_url('PreOrder/deleteOperation'); ?>",
             data: "id=" + id
         })
 
@@ -221,92 +190,83 @@ $(document).on("click", ".hapus-appointment", function() {
             var out = jQuery.parseJSON(data);
             table.ajax.reload();
             $('.msg').html(out.msg);
-            $('#hapusAppointment').modal('hide');
+            $('#hapusOperation').modal('hide');            
+            tampilKeterangan()
             if (out.status != 'form') {
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
                     title: out.msg,
                     showConfirmButton: false,
-                    timer: 1200
+                    timer: 500
                 })
             }
         })
 })
 
-function insertNote() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+function showOperationForm() {
+    document.getElementById("operation-body").hidden = false;
+            tampilKeterangan();
+    //document.getElementById("alamat").readonly = true;
+}
+
+function insertOperation() {
+    var wo_no = document.getElementById('wo_no').value;
+    var operation = document.getElementById('operation').value;
+    var hours = document.getElementById('hours').value;
+    var type_of_work = document.getElementById('type_of_work').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tambahNote'); ?>',
-        data: 'id=' + id_estimasi_penawaran,
+        url: '<?php echo base_url('PreOrder/tambahOperation'); ?>',
+        data: {
+            'wo_no': wo_no,
+            'operation': operation,
+            'hours': hours,
+            'type_of_work': type_of_work
+        },
         success: function(hasil) {
             tampilKeterangan()
+            document.getElementById("operation-body").hidden = true;
+            operation = document.getElementById('operation').value = '';
+            hours = document.getElementById('hours').value = '';
+            type_of_work = document.getElementById('type_of_work').value = '';
+                Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Data Berhasil Ditambahkan',
+                        showConfirmButton: false,
+                        timer: 500
+                    })
         }
     });
 }
-
 function tampilKeterangan() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    var wo_no = document.getElementById('wo_no').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+        url: '<?php echo base_url('PreOrder/tampilOperationDetail'); ?>',
+        data: 'wo_no=' + wo_no,
         success: function(hasil) {
-            tableKeterangan.fnDestroy();
-            $('#data-keterangan').html(hasil);
+            //tableKeterangan.fnDestroy();
+            $('#data-detail-pre').html(hasil);
         }
     });
 }
 
-function save()
-{
-    $('#btnSave').text('saving...'); //change button text
-    $('#btnSave').attr('disabled',true); //set button disable 
-    var url = "<?php echo site_url('aplikasi/update')?>";
-    var formdata = new FormData($('#form')[0]);
-    // ajax adding data to database
+function cetakPo(datakode) {}
+
+
+$(document).on("click", ".cetak-pre-order", function() {
+    var id = $(this).attr("data-id");
+    //var id = document.getElementById('next_proses').value=datakode;
     $.ajax({
-        url : url,
-        type: "POST",
-        data: formdata,
-        dataType: "JSON",
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(data)
-        {
-
-            if(data.status) //if success close modal and reload ajax table
-            {
-                $('#modal_form').modal('hide');
-                reload_table();
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Success!!.'
-                });
-            }
-            else
-            {
-                for (var i = 0; i < data.inputerror.length; i++) 
-                {
-                    $('[name="'+data.inputerror[i]+'"]').addClass('is-invalid');
-                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]).addClass('invalid-feedback');
-                }
-            }
-            $('#btnSave').text('save'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable 
-
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error adding / update data');
-            $('#btnSave').text('save'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable 
-
-        }
-    });
-}
-
+            method: "POST",
+            url: "<?php echo base_url('PreOrder/cetak_pre_order'); ?>",
+            data: "id=" + id
+        })
+        .done(function(data) {
+            $('#cetak-pre-modal').html(data);
+            $('#cetak-pre-order').modal('show');
+        })
+})
 </script>
