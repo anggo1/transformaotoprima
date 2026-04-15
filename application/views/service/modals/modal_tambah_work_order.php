@@ -4,7 +4,7 @@
             <div class="modal-header text-blue">
 
                 <h5 style="display:block; text-align:center;"><span
-                        class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5>
+                        class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Work Order</h5>
 
             </div>
             <?php
@@ -111,104 +111,13 @@
                 </div>
             </div>
             <div class="card-body">
-                <div id="data-detail-pre"></div>
+                <div id="data-detail-wo"></div>
             </div>
 
-            <form id="form-pre-order" name="form-pre-order" method="POST">
+            <form id="form-work-order" name="form-work-order" method="POST">
                 <div class="card-body">
-
-                    <label class="col-sm-2 col-form-label" require>Vehicle Type</label>
-                    <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
+                <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
                         placeholder="Operation">
-                    <div class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" id="vehicleTypeBus" value="BUS"
-                            name="vehicle_type" required>
-                        <label for="vehicleTypeBus" class="custom-control-label"><span class="fa fa-bus"></span>
-                            BUS</label>
-                    </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" id="vehicleTypeTruck" value="TRUCK"
-                            name="vehicle_type">
-                        <label for="vehicleTypeTruck" class="custom-control-label"><span class="fa fa-truck"></span>
-                            TRUCK</label>
-                    </div>
-                    <table width="100%" cellpadding="1" cellspacing="0" class="data1"
-                        style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                        <thead>
-                        <tbody>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td height="30" colspan="2"
-                                    style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                    Standard Checking</td>
-                                <td width="20%">&nbsp;</td>
-                                <td colspan="2"
-                                    style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                    Valuable Item Missing</td>
-                            </tr>
-                            <tr>
-                                <td width="30%">Lekage</td>
-                                <td width="10%">
-                                    <input type="hidden" id="leakage" name="leakage" value="N">
-                                    <input type="checkbox" id="leakage" name="leakage" value="Y"></td>
-                                <td width="20%">&nbsp;</td>
-                                <td width="30%">First Air Kit</td>
-                                <td><input type="hidden" id="fak" name="fak" value="N">
-                                    <input type="checkbox" id="fak" name="fak" value="Y"></td>
-                            </tr>
-                            <tr>
-                                <td>Abnormal Noise</td>
-                                <td>
-                                    <input type="hidden" id="abnormal_noise" name="abnormal_noise" value="N">
-                                    <input type="checkbox" id="abnormal_noise" name="abnormal_noise" value="Y"></td>
-                                <td>&nbsp;</td>
-                                <td>Spare Kit</td>
-                                <td><input type="hidden" id="spare_kit" name="spare_kit" value="N">
-                                    <input type="checkbox" id="spare_kit" name="spare_kit" value="Y"></td>
-                            </tr>
-                            <tr>
-                                <td>Error Code/ Indicator</td>
-                                <td><input type="hidden" id="error_code" name="error_code" value="N">
-                                    <input type="checkbox" id="error_code" name="error_code" value="Y"></td>
-                                <td>&nbsp;</td>
-                                <td>STNK</td>
-                                <td><input type="hidden" id="stnk" name="stnk" value="N">
-                                    <input type="checkbox" id="stnk" name="stnk" value="Y"></td>
-                            </tr>
-                            <tr>
-                                <td>Brake,Clutch &amp; Tire 10 Minutes Cyle Check</td>
-                                <td><input type="hidden" id="brake" name="brake" value="N">
-                                    <input type="checkbox" id="brake" name="brake" value="Y"></td>
-                                <td>&nbsp;</td>
-                                <td>Operational Manual</td>
-                                <td width="10%"><input type="hidden" id="manual" name="manual" value="N">
-                                    <input type="checkbox" id="manual" name="manual" value="Y"></td>
-                            </tr>
-                            <tr>
-                                <td>Vehicle Tool Kit</td>
-                                <td><input type="hidden" id="vtk" name="vtk" value="N">
-                                    <input type="checkbox" id="vtk" name="vtk" value="Y"></td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td height="21">&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <td height="2">
-                                </thead>
-                        </tbody>
-                    </table>
 
                     <input type="hidden" name="pembuat" id="pembuat"
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">

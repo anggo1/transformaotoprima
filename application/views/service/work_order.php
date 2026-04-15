@@ -43,7 +43,7 @@ table.dataTable td {
                                     <th>Storing</th>
                                     <th>DateStart</th>
                                     <th>C.In</th>
-                                    <th>Pre Order</th>
+                                    <th>Work Order</th>
                                     <th>User</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,7 +53,7 @@ table.dataTable td {
                         </table>
                     </div>
                     <div id="tempat-modal"></div>
-                    <div id="cetak-pre-modal"></div>
+                    <div id="cetak-wo-modal"></div>
                 </div>
             </div>
         </div>
@@ -64,6 +64,7 @@ show_my_confirm('hapusOperation', 'hapus-operation', 'Hapus Data Ini?', 'Ya, Hap
 ?>
 
 <script type="text/javascript">
+
 function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
@@ -104,7 +105,7 @@ $(document).ready(function() {
 
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('PreOrder/ajax_list') ?>",
+            "url": "<?php echo site_url('WorkOrder/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
@@ -116,25 +117,26 @@ $(document).ready(function() {
 
 });
 
-$(document).on("click", ".process-pre-order", function() {
+$(document).on("click", ".process-work-order", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PreOrder/processPreOrder'); ?>",
+            url: "<?php echo base_url('WorkOrder/processWorkOrder'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
             $('#tempat-modal').html(data);
-            $('#process-pre-order').modal('show');
+            $('#process-work-order').modal('show');
+            tampilKeterangan();
         })
 })
-$(document).on('submit', '#form-pre-order', function(e) {
+$(document).on('submit', '#form-work-order', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('PreOrder/inputPreOrder'); ?>',
+            url: '<?php echo base_url('WorkOrder/inputWorkOrder'); ?>',
             data: data
         })
         .done(function(data) {
@@ -152,7 +154,7 @@ $(document).on('submit', '#form-pre-order', function(e) {
             } else {
                 table.ajax.reload();
                 //document.getElementById("process-pre-order").reset();
-                $('#process-pre-order').modal('hide');
+                $('#process-work-order').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -182,7 +184,7 @@ $(document).on("click", ".delete-operation", function() {
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PreOrder/deleteOperation'); ?>",
+            url: "<?php echo base_url('WorkOrder/deleteOperation'); ?>",
             data: "id=" + id
         })
 
@@ -190,7 +192,7 @@ $(document).on("click", ".delete-operation", function() {
             var out = jQuery.parseJSON(data);
             table.ajax.reload();
             $('.msg').html(out.msg);
-            $('#hapusOperation').modal('hide');            
+            $('#hapusOperation').modal('hide');
             tampilKeterangan()
             if (out.status != 'form') {
                 Swal.fire({
@@ -206,7 +208,7 @@ $(document).on("click", ".delete-operation", function() {
 
 function showOperationForm() {
     document.getElementById("operation-body").hidden = false;
-            tampilKeterangan();
+    tampilKeterangan();
     //document.getElementById("alamat").readonly = true;
 }
 
@@ -217,7 +219,7 @@ function insertOperation() {
     var type_of_work = document.getElementById('type_of_work').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('PreOrder/tambahOperation'); ?>',
+        url: '<?php echo base_url('WorkOrder/tambahOperation'); ?>',
         data: {
             'wo_no': wo_no,
             'operation': operation,
@@ -230,25 +232,26 @@ function insertOperation() {
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';
-                Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Data Berhasil Ditambahkan',
-                        showConfirmButton: false,
-                        timer: 500
-                    })
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 500
+            })
         }
     });
 }
+
 function tampilKeterangan() {
     var wo_no = document.getElementById('wo_no').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('PreOrder/tampilOperationDetail'); ?>',
+        url: '<?php echo base_url('WorkOrder/tampilOperationDetail'); ?>',
         data: 'wo_no=' + wo_no,
         success: function(hasil) {
             //tableKeterangan.fnDestroy();
-            $('#data-detail-pre').html(hasil);
+            $('#data-detail-wo').html(hasil);
         }
     });
 }
@@ -256,17 +259,17 @@ function tampilKeterangan() {
 function cetakPo(datakode) {}
 
 
-$(document).on("click", ".cetak-pre-order", function() {
+$(document).on("click", ".cetak-work-order", function() {
     var id = $(this).attr("data-id");
     //var id = document.getElementById('next_proses').value=datakode;
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('PreOrder/cetak_pre_order'); ?>",
+            url: "<?php echo base_url('WorkOrder/cetak_work_order'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
-            $('#cetak-pre-modal').html(data);
-            $('#cetak-pre-order').modal('show');
+            $('#cetak-wo-modal').html(data);
+            $('#cetak-work-order').modal('show');
         })
 })
 </script>
