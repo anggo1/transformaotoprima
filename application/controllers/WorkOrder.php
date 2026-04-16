@@ -63,6 +63,14 @@ class WorkOrder extends MY_Controller
                   </button>';
                   $print='                    
                     <button class="btn btn-sm btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
+                  </button>
+                  <button class="btn btn-sm btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Edit
+                  </button>
+                  <button class="btn btn-sm btn-success process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Start
+                  </button>
+                  <button class="btn btn-sm btn-warning process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Pause
+                  </button>
+                  <button class="btn btn-sm btn-danger process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Close
                   </button>';
                 $akses_system= empty ($p->work_order) ? $edit : $print;
                 $row[] = $akses_system;

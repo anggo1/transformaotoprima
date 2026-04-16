@@ -12,7 +12,7 @@
 
 .table.DataTable {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 table.dataTable td {
