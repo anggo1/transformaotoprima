@@ -6,7 +6,7 @@ class WorkOrder extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('service/Mod_work_order', 'Mod_menu'));
+		$this->load->model(array('service/Mod_work_order', 'service/Mod_operation_time', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 		$this->load->model('Mod_aplikasi');
@@ -56,11 +56,12 @@ class WorkOrder extends MY_Controller
                 $row[] = $p->storing;
                 $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
-                $row[] = empty($p->work_order) ? 'Not Processed' : 'WO Process';
+                $row[] = empty($p->work_order) ? 'Not Processed' : 'On Process';
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-sm btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Wo Process
+                    <button class="btn btn-sm btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
                   </button>';
+                  
                   $print='                    
                     <button class="btn btn-sm btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
                   </button>
@@ -87,7 +88,53 @@ class WorkOrder extends MY_Controller
         echo json_encode($output);
     }
 
-	public function tambahOperation()
+
+    //Cari Operation
+    public function list_operation()
+    {
+        $link=$this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $idlokasi = $this->session->userdata['lokasi'];
+        $get_id = $this->Mod_operation_time->get_by_nama($link);
+        foreach ($get_id as $idnye){
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub=$idnye->id_submenu;
+        }
+        $viewLevel = $this->Mod_operation_time->select_by_level($idlevel, $id_sub);
+
+        foreach ($viewLevel as $pel1) {
+            $row1 = array();
+            $row1[] = $pel1->id_submenu;
+            $data1[] = $row1;
+
+            $list = $this->Mod_operation_time->get_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $p) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $p->code;
+                $row[] = $p->duration;
+                $row[] = $p->description;
+                
+                $data[] = $row;
+            }
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_operation_time->count_all(),
+            "recordsFiltered" => $this->Mod_operation_time->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+    //end cari operation
+
+    
+	public function tambahXot()
     {
         $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
 
@@ -138,7 +185,7 @@ class WorkOrder extends MY_Controller
 
 	public function inputWorkOrder() {
 		
-		$this->form_validation->set_rules('pembuat', 'Pembuat', 'trim|required');
+		$this->form_validation->set_rules('vehicle_type', 'Vehicle Type', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {

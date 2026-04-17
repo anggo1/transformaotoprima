@@ -1,20 +1,4 @@
-<style>
-.table.dataTable {
-    font-size: 12px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
 
-table.dataTable td {
-    padding: 5px 5px 5px 5px;
-}
-
-.inEdit {
-    background-color: #FFFFFF;
-    border: 0px solid #000;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.94);
-}
-</style>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover nowrap dataTable" id="list-po">
                     <thead>

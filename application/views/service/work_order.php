@@ -1,14 +1,4 @@
 <style>
-#modal-kotak {
-    margin: 5% 30% 30% 30%;
-    width: 500px;
-    height: 200px;
-    position: absolute;
-    position: fixed;
-    z-index: 1002;
-    display: none;
-    background: white;
-}
 
 .table.DataTable {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -16,7 +6,7 @@
 }
 
 table.dataTable td {
-    padding-bottom: 5px;
+    padding-bottom: 9px;
 }
 </style>
 
@@ -118,6 +108,9 @@ $(document).ready(function() {
 
 });
 
+//cari operation
+
+//end cari operation
 $(document).on("click", ".process-work-order", function() {
     var id = $(this).attr("data-id");
 
@@ -221,7 +214,7 @@ function insertOperation() {
     var no_work_order = document.getElementById('no_work_order').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('WorkOrder/tambahOperation'); ?>',
+        url: '<?php echo base_url('WorkOrder/tambahXot'); ?>',
         data: {
             'wo_no': wo_no,
             'operation': operation,
@@ -275,4 +268,34 @@ $(document).on("click", ".cetak-work-order", function() {
             $('#cetak-work-order').modal('show');
         })
 })
+
+function selectPart3(id_barang, no_part, nama_part, stok, stok_a, stok_p, hrg_awal) {
+    var no_body = document.formKeluar.no_body.value;
+    var id_pk = document.formKeluar.id_pk.value;
+    var id_lapor = document.formKeluar.id_lapor.value;
+    var status_part = document.formKeluar.status_part.value;
+    var jumlah = document.formKeluar.jumlah.value;
+    var user = document.formKeluar.user.value;
+    $.ajax({
+        method: 'POST',
+        url: '<?php echo base_url('PartPk/prosesKeluar'); ?>',
+        data: "&id_pk=" + id_pk +
+            "&id_lapor=" + id_lapor +
+            "&no_body=" + no_body +
+            "&id_barang=" + id_barang +
+            "&no_part=" + no_part +
+            "&nama_part=" + nama_part +
+            "&status_part=" + status_part +
+            "&stok=" + stok +
+            "&stok_a=" + stok_a +
+            "&stok_p=" + stok_p +
+            "&hrg_awal=" + hrg_awal +
+            "&jumlah=" + jumlah +
+            "&user=" + user
+    })
+    showDetail(id_pk);
+    $('#modal_form').modal('hide');
+}
+
+
 </script>

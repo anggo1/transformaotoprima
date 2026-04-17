@@ -1,3 +1,4 @@
+
 <section class="content">
     <div class="row">
         <div class="modal-content">
@@ -100,24 +101,29 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label">Hours</label>
+                            <div class="col-sm-12 input-group">
+                                <input type="text" name="hours" id="hours" value="" class="form-control"
+                                    placeholder="Hours">
+                                   
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="col-sm-4 col-form-label">Type Of Work</label>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 input-group" >
                                 <input type="text" name="type_of_work" id="type_of_work" value="" class="form-control"
                                     placeholder="Type Of Work">
+                                    <span class="input-group-append">
+                    <button type="button" class="btn btn-warning btn-flat" data-toggle="modal" data-target="#modal-operation">Cari!</button>
+                  </span> 
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Hours</label>
-                            <div class="col-sm-12">
-                                <input type="text" name="hours" id="hours" value="" class="form-control"
-                                    placeholder="Hours">
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="modal-footer right-content-between">
@@ -145,8 +151,89 @@
             </form>
         </div>
     </div>
-
+<div class="modal fade" id="modal-operation">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content bg-gray-light">
+            <div class="modal-header">
+              <h4 class="modal-title">Xentry Operation Time</h4>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+ 				<div class="card-body">
+                    <div class="table-responsive">
+               <!-- <table class="table table-head-fixed text-nowrap" id="table-kons">-->
+            <table class="table table-bordered table-hover dt-responsive nowrap" id="tabel-operation">
+                        <thead>          
+							<tr>
+						  		<th>No</th>
+								<th>Code</th>
+								<th>Hours</th>
+								<th>Type of Work</th>
+							</tr>
+					 </thead>
+							<tbody></tbody>
+    </table>
+                    </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 </section><!-- /.modal-content -->
 <script type="text/javascript">
+$(document).ready(function() {
 
+    //datatables
+    table = $("#tabel-operation").DataTable({
+
+        "responsive": false,
+	"paging": true,
+    "lengthChange": false,
+    "searching": true,
+    "ordering": false,
+    "info": false,
+    "processing": true,
+    "serverSide": true,
+        "pageLength": 5,   
+        "autoWidth": false,
+    
+
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('WorkOrder/list_operation') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 3], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+
+});
+    $('#tabel-operation tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        var code = data[1];
+        var hours = data[2];
+        var operation = data[3];
+       
+				document.getElementById('operation').value=code;
+				document.getElementById('hours').value=hours;
+				document.getElementById('type_of_work').value=operation;
+				$ ('#modal-operation'). modal ('hide');
+      
+
+        //e.preventDefault();
+        //showDetail(id_pk);
+        //showDetail(id_pk);
+    });
 </script>
