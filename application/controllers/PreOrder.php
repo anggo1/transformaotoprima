@@ -86,12 +86,11 @@ class PreOrder extends MY_Controller
         //$data     = $this->input->post();
         $wo_no = $this->input->post('wo_no');
         $operation = $this->input->post('operation');
-        $hours = $this->input->post('hours');
-        $type_of_work = $this->input->post('type_of_work');
+        $no_pre_order = $this->input->post('no_pre_order');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_pre_order->insertOperation($wo_no, $operation, $hours, $type_of_work);
+            $result = $this->Mod_pre_order->insertOperation($wo_no, $operation,$no_pre_order);
 
             if ($result > 0) {
                 $out['status'] = '';

@@ -28,26 +28,19 @@ table.dataTable td {
                     <div class="card-header bg-light">
                         <h3 class="card-title"><i class="fa fa-list text-blue"></i> &nbsp; List Data </h3>
                         <div class="text-right">
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-appointment" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-operation-time" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
 						</div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
+                        <table id="tabel-operation-time" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No WO</th>
-                                    <th>SA</th>
-                                    <th>Customer</th>
-                                    <th>Complain</th>
-                                    <th>Vin</th>
-                                    <th>LcPlate</th>
-                                    <th>VcType</th>
-                                    <th>Storing</th>
-                                    <th>DateStart</th>
-                                    <th>C.In</th>
-                                    <th>User</th>
+                                    <th>Code</th>
+                                    <th>Duration/H</th>
+                                    <th>IM</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -62,74 +55,17 @@ table.dataTable td {
     </div>
 </section>
 <?php
-show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('hapusOperationTime', 'hapus-operation-time', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 
 <script type="text/javascript">
     function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
-$('#date_open_wo,#last_service_date,#dead_line').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-$(function () {
-  $('#timepicker').datetimepicker({
-    format: 'LT'
-  })
-})
 $(document).ready(function() {
 
     //datatables
-    table = $("#tabel-appointment").DataTable({
-        "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
-    "<'row'<'col-sm-12'tr>>" +
-    "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
-        "buttons": [
-            {
-                extend: 'copyHtml5',
-                text: '<i class="fas fa-copy"></i> Copy',
-                titleAttr: 'Copy',
-                title: 'Data Barang',
-                className: 'btn btn-sm  btn-outline-secondary',init: function (api, node, config) {
-                $(node).removeClass('btn-secondary') }
-            },
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel"></i> Excel',
-                titleAttr: 'Excel',
-                title: 'Data Barang',
-                className: 'btn btn-outline-secondary',init: function (api, node, config) {
-                $(node).removeClass('btn-secondary') }
-            },
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
-                titleAttr: 'PDF',
-                title: 'Data Barang',
-                className: 'btn btn-outline-secondary',init: function (api, node, config) {
-                $(node).removeClass('btn-secondary') }
-            },
-            {
-                extend: 'print',
-                text: '<i class="fas fa-print"></i> Cetak',
-                titleAttr: 'Print',
-                title: 'Data Barang',
-                className: 'btn btn-outline-secondary',init: function (api, node, config) {
-                $(node).removeClass('btn-secondary') },
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                }
-            },
-            {
-                extend: 'colvis',
-                text: '<i class="fas fa-eye"></i> Tampilan',
-                titleAttr: 'Costum Tampilan',
-                className: 'btn btn-outline-secondary',init: function (api, node, config) {
-                $(node).removeClass('btn-secondary') }
-            }
- 
-        ],
+    table = $("#tabel-operation-time").DataTable({
     
 			"responsive": true,
 			"paging": true,
@@ -151,23 +87,23 @@ $(document).ready(function() {
 
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('ServiceAppointment/ajax_list') ?>",
+            "url": "<?php echo site_url('OperationTime/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0,12], //first column / numbering column
+            "targets": [0,4], //first column / numbering column
             "orderable": false,
         }, ],
 
     })
 
 });
-$('#form-tambah-appointment').submit(function(e) {
+$('#form-tambah-operation-time').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesTappointment'); ?>',
+            url: '<?php echo base_url('OperationTime/prosesToperation_time'); ?>',
             data: data
         })
         .done(function(data) {
@@ -182,8 +118,8 @@ $('#form-tambah-appointment').submit(function(e) {
                     timer: 1500
                 })
             } else {
-                document.getElementById("form-tambah-appointment").reset();
-                $('#tambah-appointment').modal('hide');
+                document.getElementById("form-tambah-operation-time").reset();
+                $('#tambah-operation-time').modal('hide');
                 $('.msg').html(out.msg);
                 table.ajax.reload();
                 Swal.fire({
@@ -199,25 +135,25 @@ $('#form-tambah-appointment').submit(function(e) {
     e.preventDefault();
 });
 
-$(document).on("click", ".update-appointment", function() {
+$(document).on("click", ".update-operation-time", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('ServiceAppointment/updateAppointment'); ?>",
+            url: "<?php echo base_url('OperationTime/updateOperationTime'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
             $('#tempat-modal').html(data);
-            $('#update-appointment').modal('show');
+            $('#update-operation-time').modal('show');
         })
 })
-$(document).on('submit', '#form-update-appointment', function(e) {
+$(document).on('submit', '#form-update-operation-time', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('ServiceAppointment/prosesUappointment'); ?>',
+            url: '<?php echo base_url('OperationTime/prosesUoperation_time'); ?>',
             data: data
         })
         .done(function(data) {
@@ -233,8 +169,8 @@ $(document).on('submit', '#form-update-appointment', function(e) {
                     timer: 1500
                 })
             } else {
-                document.getElementById("form-update-appointment").reset();
-                $('#update-appointment').modal('hide');
+                document.getElementById("form-update-operation-time").reset();
+                $('#update-operation-time').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -249,22 +185,22 @@ $(document).on('submit', '#form-update-appointment', function(e) {
     e.preventDefault();
 });
 
-$('#tambah-appointment').on('hidden.bs.modal', function() {
+$('#tambah-operation-time').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 
-$('#update-appointment').on('hidden.bs.modal', function() {
+$('#update-operation-time').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
-$(document).on("click", ".delete-appointment", function() {
-    id_appointment = $(this).attr("data-id");
+$(document).on("click", ".delete-operation-time", function() {
+    id_operation_time = $(this).attr("data-id");
 })
-$(document).on("click", ".hapus-appointment", function() {
-    var id = id_appointment;
+$(document).on("click", ".hapus-operation-time", function() {
+    var id = id_operation_time;
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('ServiceAppointment/deleteAppointment'); ?>",
+            url: "<?php echo base_url('OperationTime/deleteOpTime'); ?>",
             data: "id=" + id
         })
 
@@ -272,7 +208,7 @@ $(document).on("click", ".hapus-appointment", function() {
             var out = jQuery.parseJSON(data);
             table.ajax.reload();
             $('.msg').html(out.msg);
-            $('#hapusAppointment').modal('hide');
+            $('#hapusOperationTime').modal('hide');
             if (out.status != 'form') {
                 Swal.fire({
                     position: 'center',

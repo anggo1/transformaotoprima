@@ -96,10 +96,11 @@ class WorkOrder extends MY_Controller
         $operation = $this->input->post('operation');
         $hours = $this->input->post('hours');
         $type_of_work = $this->input->post('type_of_work');
+        $no_work_order = $this->input->post('no_work_order');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_work_order->insertOperation($wo_no, $operation, $hours, $type_of_work);
+            $result = $this->Mod_work_order->insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order);
 
             if ($result > 0) {
                 $out['status'] = '';

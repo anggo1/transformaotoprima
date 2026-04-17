@@ -19,6 +19,7 @@ table.dataTable td {
     padding-bottom: 5px;
 }
 </style>
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -217,6 +218,7 @@ function insertOperation() {
     var operation = document.getElementById('operation').value;
     var hours = document.getElementById('hours').value;
     var type_of_work = document.getElementById('type_of_work').value;
+    var no_work_order = document.getElementById('no_work_order').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('WorkOrder/tambahOperation'); ?>',
@@ -224,7 +226,8 @@ function insertOperation() {
             'wo_no': wo_no,
             'operation': operation,
             'hours': hours,
-            'type_of_work': type_of_work
+            'type_of_work': type_of_work,
+            'no_work_order': no_work_order
         },
         success: function(hasil) {
             tampilKeterangan()

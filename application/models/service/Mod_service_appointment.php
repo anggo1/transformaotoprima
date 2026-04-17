@@ -16,7 +16,7 @@ class Mod_service_appointment extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
         $this->db->from('tbl_after_sales');
         $i = 0;
 
@@ -179,8 +179,14 @@ class Mod_service_appointment extends CI_Model
         
         
 		$date_wo = $data['date_open_wo'];
-		$tgl2 = explode('-', $date_wo);
-		$date_open_wo= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
+		$tgl1 = explode('-', $date_wo);
+		$date_open_wo= $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
+		$date_last = $data['last_service_date'];
+		$tgl2 = explode('-', $date_last);
+		$date_last_service= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
+		$date_dead = $data['dead_line'];
+		$tgl3 = explode('-', $date_dead);
+		$date_dead_line= $tgl3[2] . "-" . $tgl3[1] . "-" . $tgl3[0] . "";
 		$nama_customer = trim($_POST['customer']);
         $kat = explode('|', $nama_customer);
         $nama_cus = $kat[1];
@@ -195,15 +201,26 @@ class Mod_service_appointment extends CI_Model
 		$tahun = substr($date, 2, 2);
 		$bulan = substr($date, 0, 2);
 		$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
+        
+        $data_sa='';
+        if(empty($data['sa_name'])){
+            $data_sa = $data['pembuat'];
+        }else{
+            $data_sa = $data['sa_name'];
+        }   
 
         $sql = "INSERT INTO tbl_after_sales SET
         id   ='',
         wo_no     ='".$kode_po."',
-        sa_name   ='".$data['sa_name']."',
+        sa_name   ='".$data_sa."',
         customer  ='".$kode_cus."',
         customer_name  ='".$nama_cus."',
         customer_complain  ='".$data['customer_complain']."',
         vin       ='".$data['vin']."',
+        engine_no ='".$data['engine_no']."',
+        last_service_date ='".$date_last_service."',
+        dead_line ='".$date_dead_line."',
+        mileage   ='".$data['mileage']."',
         no_pol    ='".$data['licence_plate']."',
         type      ='".$data['vehicle_type']."',
         storing   ='".$data['storing']."',
@@ -218,14 +235,24 @@ class Mod_service_appointment extends CI_Model
     }
     function updateAppointment($data)
     {
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
+        $tgl1 = explode('-', $date_wo);
+		$date_open_wo= $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
+		$date_last = $data['last_service_date'];
+		$tgl2 = explode('-', $date_last);
+		$date_last_service= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
+		$date_dead = $data['dead_line'];
+		$tgl3 = explode('-', $date_dead);
+		$date_dead_line= $tgl3[2] . "-" . $tgl3[1] . "-" . $tgl3[0] . "";
         $sql = "UPDATE tbl_after_sales SET
         wo_no     ='".$data['wo_no']."',
         sa_name   ='".$data['sa_name']."',
         customer  ='".$data['customer']."',
         customer_complain  ='".$data['customer_complain']."',
         vin       ='".$data['vin']."',
+        engine_no ='".$data['engine_no']."',
+        last_service_date ='".$date_last_service."',
+        dead_line ='".$date_dead_line."',
+        mileage   ='".$data['mileage']."',
         no_pol    ='".$data['licence_plate']."',
         type      ='".$data['vehicle_type']."',
         storing   ='".$data['storing']."',

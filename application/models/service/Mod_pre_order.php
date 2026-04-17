@@ -108,7 +108,7 @@ class Mod_pre_order extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+       $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,mileage,engine_no,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,last_service_date,dead_line,pembuat');
         $this->db->from('tbl_after_sales');
          $this->db->where('wo_no',$id);
 
@@ -155,14 +155,13 @@ class Mod_pre_order extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($wo_no, $operation, $hours, $type_of_work)
+    function insertOperation($wo_no, $operation,$no_pre_order)
     {
         $sql = "INSERT INTO tbl_after_sales_detail_pre SET
         id_detail   ='',
         wo_no       ='".$wo_no."',
-        operation   ='".$operation."',
-        hours       ='".$hours."',
-        type_of_work  ='".$type_of_work."'";
+        no_pre_order     ='".$no_pre_order."',
+        operation   ='".$operation."'";
 
 		$this->db->query($sql);
 
@@ -182,6 +181,7 @@ class Mod_pre_order extends CI_Model
 
         $sql = "INSERT INTO tbl_after_sales_pre_order SET
         wo_no     ='".$data['wo_no']."',
+        no_pre_order     ='".$data['no_pre_order']."',
         leakage   ='$leakage',
         abnormal_noise  ='$abnormal_noise',
         error_code  ='$error_code',
@@ -196,7 +196,7 @@ class Mod_pre_order extends CI_Model
 		$this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        pre_order     ='".$data['wo_no']."' WHERE wo_no='".$data['wo_no']."'";
+        pre_order     ='".$data['no_pre_order']."' WHERE wo_no='".$data['wo_no']."'";
 
 		$this->db->query($sql2);
 

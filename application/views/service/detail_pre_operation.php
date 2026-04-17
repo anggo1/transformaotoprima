@@ -21,8 +21,6 @@ table.dataTable td {
                         <tr>
                             <th>No</th>
                             <th>Operation</th>
-                            <th>Hours</th>
-                            <th>Type Of Work</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -35,8 +33,6 @@ table.dataTable td {
 
                             <td><?php echo $no; ?></td>
                             <td><?php echo $s->operation; ?></td>
-                            <td><?php echo $s->hours; ?></td>
-                            <td><?php echo $s->type_of_work; ?></td>
                            
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-danger delete-operation ion-android-delete"

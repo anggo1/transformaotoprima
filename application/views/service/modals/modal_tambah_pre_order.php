@@ -8,6 +8,20 @@
 
             </div>
             <?php
+			$kd='PRE-';
+			$tgl_keluar = date("y-m-d");
+			$date = date("ym");
+			$ci_kons = get_instance();
+			$query = "SELECT max(no_pre_order) AS maxKode FROM tbl_after_sales_pre_order WHERE no_pre_order LIKE '%$date%'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+			$noOrder = $hasil['maxKode'];
+			$noUrut = (int)substr($noOrder, 4, 5);
+			$noUrut++;
+			$tahun = substr($date, 0, 2);
+			$bulan = substr($date, 2, 2);
+
+			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
+			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 foreach ($dataSa as $s)  {{}}} ?>
@@ -67,6 +81,8 @@
                         </thead>
                     </tbody>
                 </table>
+                <input type="hidden" name="no_pre_order" id="no_pre_order" value="<?php echo $kode_keluar; ?>"
+                    class="form-control" placeholder="Operation">
 
                 <button type="button" class="btn btn-success" id="tambah" onclick="showOperationForm()"
                     title="Add Data"><i class="fas fa-plus"></i> Add data</button>
@@ -81,24 +97,6 @@
                                     class="form-control" placeholder="Operation">
                                 <input type="text" name="operation" id="operation" value="" class="form-control"
                                     placeholder="Operation">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Type Of Work</label>
-                            <div class="col-sm-12">
-                                <input type="text" name="type_of_work" id="type_of_work" value="" class="form-control"
-                                    placeholder="Type Of Work">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Hours</label>
-                            <div class="col-sm-12">
-                                <input type="text" name="hours" id="hours" value="" class="form-control"
-                                    placeholder="Hours">
                             </div>
                         </div>
                     </div>
@@ -120,6 +118,8 @@
                     <label class="col-sm-2 col-form-label" require>Vehicle Type</label>
                     <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
                         placeholder="Operation">
+                    <input type="hidden" name="no_pre_order" id="no_pre_order" value="<?php echo $kode_keluar; ?>"
+                        class="form-control" placeholder="Operation">
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" type="radio" id="vehicleTypeBus" value="BUS"
                             name="vehicle_type" required>
@@ -156,44 +156,53 @@
                                 <td width="30%">Lekage</td>
                                 <td width="10%">
                                     <input type="hidden" id="leakage" name="leakage" value="N">
-                                    <input type="checkbox" id="leakage" name="leakage" value="Y"></td>
+                                    <input type="checkbox" id="leakage" name="leakage" value="Y">
+                                </td>
                                 <td width="20%">&nbsp;</td>
                                 <td width="30%">First Air Kit</td>
                                 <td><input type="hidden" id="fak" name="fak" value="N">
-                                    <input type="checkbox" id="fak" name="fak" value="Y"></td>
+                                    <input type="checkbox" id="fak" name="fak" value="Y">
+                                </td>
                             </tr>
                             <tr>
                                 <td>Abnormal Noise</td>
                                 <td>
                                     <input type="hidden" id="abnormal_noise" name="abnormal_noise" value="N">
-                                    <input type="checkbox" id="abnormal_noise" name="abnormal_noise" value="Y"></td>
+                                    <input type="checkbox" id="abnormal_noise" name="abnormal_noise" value="Y">
+                                </td>
                                 <td>&nbsp;</td>
                                 <td>Spare Kit</td>
                                 <td><input type="hidden" id="spare_kit" name="spare_kit" value="N">
-                                    <input type="checkbox" id="spare_kit" name="spare_kit" value="Y"></td>
+                                    <input type="checkbox" id="spare_kit" name="spare_kit" value="Y">
+                                </td>
                             </tr>
                             <tr>
                                 <td>Error Code/ Indicator</td>
                                 <td><input type="hidden" id="error_code" name="error_code" value="N">
-                                    <input type="checkbox" id="error_code" name="error_code" value="Y"></td>
+                                    <input type="checkbox" id="error_code" name="error_code" value="Y">
+                                </td>
                                 <td>&nbsp;</td>
                                 <td>STNK</td>
                                 <td><input type="hidden" id="stnk" name="stnk" value="N">
-                                    <input type="checkbox" id="stnk" name="stnk" value="Y"></td>
+                                    <input type="checkbox" id="stnk" name="stnk" value="Y">
+                                </td>
                             </tr>
                             <tr>
                                 <td>Brake,Clutch &amp; Tire 10 Minutes Cyle Check</td>
                                 <td><input type="hidden" id="brake" name="brake" value="N">
-                                    <input type="checkbox" id="brake" name="brake" value="Y"></td>
+                                    <input type="checkbox" id="brake" name="brake" value="Y">
+                                </td>
                                 <td>&nbsp;</td>
                                 <td>Operational Manual</td>
                                 <td width="10%"><input type="hidden" id="manual" name="manual" value="N">
-                                    <input type="checkbox" id="manual" name="manual" value="Y"></td>
+                                    <input type="checkbox" id="manual" name="manual" value="Y">
+                                </td>
                             </tr>
                             <tr>
                                 <td>Vehicle Tool Kit</td>
                                 <td><input type="hidden" id="vtk" name="vtk" value="N">
-                                    <input type="checkbox" id="vtk" name="vtk" value="Y"></td>
+                                    <input type="checkbox" id="vtk" name="vtk" value="Y">
+                                </td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>

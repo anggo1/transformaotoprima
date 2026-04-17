@@ -8,6 +8,20 @@
 
             </div>
             <?php
+            $kd='PWO-';
+			$tgl_keluar = date("y-m-d");
+			$date = date("ym");
+			$ci_kons = get_instance();
+			$query = "SELECT max(no_work_order) AS maxKode FROM tbl_after_sales_work_order WHERE no_work_order LIKE '%$date%'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+			$noOrder = $hasil['maxKode'];
+			$noUrut = (int)substr($noOrder, 4, 5);
+			$noUrut++;
+			$tahun = substr($date, 0, 2);
+			$bulan = substr($date, 2, 2);
+
+			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
+			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 foreach ($dataSa as $s)  {{}}} ?>
@@ -67,6 +81,8 @@
                         </thead>
                     </tbody>
                 </table>
+                
+                <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
 
                 <button type="button" class="btn btn-success" id="tambah" onclick="showOperationForm()"
                     title="Add Data"><i class="fas fa-plus"></i> Add data</button>

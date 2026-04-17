@@ -155,11 +155,12 @@ class Mod_work_order extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($wo_no, $operation, $hours, $type_of_work)
+    function insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order)
     {
         $sql = "INSERT INTO tbl_after_sales_detail_wo SET
         id_detail   ='',
         wo_no       ='".$wo_no."',
+        no_work_order       ='".$no_work_order."',
         operation   ='".$operation."',
         hours       ='".$hours."',
         type_of_work  ='".$type_of_work."'";

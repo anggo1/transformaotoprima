@@ -213,23 +213,20 @@ function showOperationForm() {
 function insertOperation() {
     var wo_no = document.getElementById('wo_no').value;
     var operation = document.getElementById('operation').value;
-    var hours = document.getElementById('hours').value;
-    var type_of_work = document.getElementById('type_of_work').value;
+    var no_pre_order = document.getElementById('no_pre_order').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('PreOrder/tambahOperation'); ?>',
         data: {
             'wo_no': wo_no,
             'operation': operation,
-            'hours': hours,
-            'type_of_work': type_of_work
+            'no_pre_order': no_pre_order
         },
         success: function(hasil) {
             tampilKeterangan()
             document.getElementById("operation-body").hidden = true;
             operation = document.getElementById('operation').value = '';
-            hours = document.getElementById('hours').value = '';
-            type_of_work = document.getElementById('type_of_work').value = '';
+            no_pre_order = document.getElementById('no_pre_order').value = '';
                 Swal.fire({
                         position: 'center',
                         icon: 'success',

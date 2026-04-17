@@ -250,15 +250,15 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th><div class="text1"><font size="-2">Vin No</font></div>
             <div class="text2"><?php echo $s->vin ?></div></th>
           <th><div class="text1"><font size="-2">Sales designation</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"></div><?php echo $s->sa_name ?></th>
           <th><div class="text1"><font size="-2">Reception date/time</font></div>
-            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
+            <div class="text2"><?php echo tglIndoSedang($s->date_open_wo) ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Mileage/Km</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"></div><?php echo $s->mileage ?></th>
           <th><div class="text1"><font size="-2">Engine No.</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"></div><?php echo $s->vin ?></th>
           <th><div class="text1"><font size="-2">Active reception</font></div>
             <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Received By</font></div>
@@ -268,9 +268,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th><div class="text1"><font size="-2">Routing No.</font></div>
             <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"></div><?php echo tglIndoSedang($s->last_service_date) ?></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
+            <div class="text2"><?php echo tglIndoSedang($s->date_open_wo) ?></div></th>
           <th>&nbsp;</th>
         </tr>
         </table>
