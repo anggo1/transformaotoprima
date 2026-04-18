@@ -180,7 +180,8 @@ class Mod_work_order extends CI_Model
 		$this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        work_order     ='".$data['wo_no']."' WHERE wo_no='".$data['wo_no']."'";
+        work_order     ='".$data['wo_no']."',
+        status     ='P' WHERE wo_no='".$data['wo_no']."'";
 
 		$this->db->query($sql2);
 

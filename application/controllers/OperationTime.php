@@ -143,7 +143,7 @@ class OperationTime extends MY_Controller
 
         echo json_encode($out);
     }
-    public function deleteOperationTime()
+    public function deleteOpTime()
     {
         $id = $_POST['id'];
         $result = $this->Mod_operation_time->deleteOpTime($id);

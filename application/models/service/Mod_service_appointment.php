@@ -18,6 +18,7 @@ class Mod_service_appointment extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
         $this->db->from('tbl_after_sales');
+        $this->db->where('status','N');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

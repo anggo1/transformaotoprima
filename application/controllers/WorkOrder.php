@@ -56,7 +56,7 @@ class WorkOrder extends MY_Controller
                 $row[] = $p->storing;
                 $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
-                $row[] = empty($p->work_order) ? 'Not Processed' : 'On Process';
+                $row[] = empty($p->work_order) ? 'Not Processed' : 'Active';
                 $row[] = $p->pembuat;
                     $edit='                    
                     <button class="btn btn-sm btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
@@ -185,7 +185,7 @@ class WorkOrder extends MY_Controller
 
 	public function inputWorkOrder() {
 		
-		$this->form_validation->set_rules('vehicle_type', 'Vehicle Type', 'trim|required');
+		$this->form_validation->set_rules('no_work_order', 'No Work Order', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {

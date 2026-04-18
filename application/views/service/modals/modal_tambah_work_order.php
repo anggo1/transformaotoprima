@@ -141,6 +141,7 @@
                 <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
                         placeholder="Operation">
 
+                <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
                     <input type="hidden" name="pembuat" id="pembuat"
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                     <div class="modal-footer right-content-between">

@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" placeholder="Code No" value="<?php
                                                                                     if (!empty($dataOpTime->code)) {
                                                                                       echo $dataOpTime->code;
-                                                                                    } else { echo $kode_op_time; }
+                                                                                    } else { echo ''; }
                                                                                     ?>" name="code"
                     aria-describedby="sizing-addon2">
             </div>

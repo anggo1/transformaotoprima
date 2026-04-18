@@ -146,9 +146,10 @@ $(document).on('submit', '#form-work-order', function(e) {
                     timer: 1500
                 })
             } else {
-                table.ajax.reload();
                 //document.getElementById("process-pre-order").reset();
                 $('#process-work-order').modal('hide');
+                //table.ajax.reload();
+                $('#tabel-appointment').DataTable().ajax.reload();
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
