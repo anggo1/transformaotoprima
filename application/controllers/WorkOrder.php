@@ -171,7 +171,8 @@ class WorkOrder extends MY_Controller
 	}
     public function tambahLabor()
     {
-        $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
+        $this->form_validation->set_rules('nik', 'NIK', 'trim|required');
+        $this->form_validation->set_rules('nama', 'Nama', 'trim|required');
 
         //$data     = $this->input->post();
         $wo_no = $this->input->post('wo_no');
@@ -197,16 +198,28 @@ class WorkOrder extends MY_Controller
 
         echo json_encode($out);
     }
+    //start insert data mechanic
     public function tampilLabor() {
 		$idL = $_POST['id'];
 
         $data['apl'] = $this->db->get("aplikasi")->row();
-		$data['dataLabor'] = $this->Mod_work_order->select_labor($idL);
+		$data['dataMechanic'] = $this->Mod_work_order->select_labor_detail($idL);
         
-		$this->load->view('service/detail_labor', $data);
+		$this->load->view('service/add_mechanic', $data);
 
 		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
 	}
+    
+    public function tampilMechanic() {
+		$idX = $_POST['no_work_order'];
+		$data['dataM'] = $this->Mod_work_order->select_labor_mechanic($idX);
+        
+		$this->load->view('service/detail_mechanic', $data);
+
+		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+	}
+
+    //end insert data mechanic
     public function processWorkOrder() {
         $idS = trim($_POST['id']);
         $kat = explode('|', $idS);
@@ -224,7 +237,7 @@ class WorkOrder extends MY_Controller
 
 	public function inputWorkOrder() {
 		
-		$this->form_validation->set_rules('no_work_order', 'No Work Order', 'trim|required');
+		$this->form_validation->set_rules('no_wo', 'No Work Order', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {

@@ -247,7 +247,6 @@ function insertOperation() {
     var operation = document.getElementById('operation').value;
     var hours = document.getElementById('hours').value;
     var type_of_work = document.getElementById('type_of_work').value;
-    var no_work_order = document.getElementById('no_work_order').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('WorkOrder/tambahXot'); ?>',
@@ -255,15 +254,14 @@ function insertOperation() {
             'wo_no': wo_no,
             'operation': operation,
             'hours': hours,
-            'type_of_work': type_of_work,
-            'no_work_order': no_work_order
+            'type_of_work': type_of_work
         },
         success: function(hasil) {
             tampilKeterangan();
 
             //$('#tabel-operation').DataTable().ajax.reload();
             //$('#tabel-operation').DataTable();
-            document.getElementById("operation-body").hidden = true;
+            //document.getElementById("operation-body").hidden = true;
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';
@@ -279,11 +277,11 @@ function insertOperation() {
 }
 
 
-function insertLabor() {
+function insertMechanic() {
     var wo_no = document.getElementById('wo_no').value;
+    var no_work_order = document.getElementById('no_work_order').value;
     var nik = document.getElementById('nik').value;
     var nama = document.getElementById('nama').value;
-    var no_work_order = document.getElementById('no_work_order').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('WorkOrder/tambahLabor'); ?>',
@@ -294,15 +292,9 @@ function insertLabor() {
             'no_work_order': no_work_order
         },
         success: function(hasil) {
-            tampilLabor();
-
-            //$('#tabel-operation').DataTable().ajax.reload();
-            //$('#tabel-operation').DataTable();
-            document.getElementById("operation-body").hidden = true;
+            tampilMechanic();
             nik = document.getElementById('nik').value = '';
             nama = document.getElementById('nama').value = '';
-            wo_no = document.getElementById('wo_no').value = '';
-            no_work_order = document.getElementById('no_work_order').value = '';
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -326,6 +318,18 @@ function tampilKeterangan() {
         }
     });
 }
+function tampilMechanic() {
+    var no_work_order = document.getElementById('no_work_order').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/tampilMechanic'); ?>',
+        data: 'no_work_order=' + no_work_order,
+        success: function(hasil) {
+            //tableKeterangan.fnDestroy();
+            $('#data-daftar-mechanic').html(hasil);
+        }
+    });
+}
 
 function tampilLabor() {
     var wo_no = document.getElementById('wo_no').value;
@@ -340,22 +344,17 @@ function tampilLabor() {
     });
 }
 
+
 $(document).on("click", ".add-mechanic", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('WorkOrder/cariMechanic'); ?>',
+        url: '<?php echo base_url('WorkOrder/tampilLabor'); ?>',
         data: 'id=' + id,
         success: function(hasil) {
-            //$('#id_lapor').val(id);
-            //MyTable.fnDestroy();
-
-            //$('#tabel-operation').DataTable();
-            $('#data-proses-pk').html(hasil);
-            document.getElementById("card-detail-labor").hidden = false;
-            //$("a[href='#tab-pk']").tab('show');
-    tampilLabor();
+            $('#data-proses-mechanic').html(hasil);
+            tampilMechanic();
             //refresh();
         }
     });
@@ -421,7 +420,7 @@ $(document).on("click", ".process-work-order", function() {
             $("a[href='#tab-pk']").tab('show');
     panggilTabel();
     tampilKeterangan();
-    tampilLabor();
+    //tampilLabor();
             //refresh();
         }
     });

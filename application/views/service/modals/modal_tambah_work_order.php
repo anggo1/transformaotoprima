@@ -1,18 +1,4 @@
 <?php
-            $kd='PWO-';
-			$tgl_keluar = date("y-m-d");
-			$date = date("ym");
-			$ci_kons = get_instance();
-			$query = "SELECT max(no_work_order) AS maxKode FROM tbl_after_sales_work_order WHERE no_work_order LIKE '%$date%'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-			$noOrder = $hasil['maxKode'];
-			$noUrut = (int)substr($noOrder, 4, 5);
-			$noUrut++;
-			$tahun = substr($date, 0, 2);
-			$bulan = substr($date, 2, 2);
-
-			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
-			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 foreach ($dataSa as $s)  {{}}} ?>
@@ -86,7 +72,6 @@
                 </tbody>
             </table>
 
-            <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
             <div id="operation-body" >
                 <div class="row">
                     <div class="col-md-4">
@@ -138,7 +123,6 @@
                     <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
                         placeholder="Operation">
 
-                    <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
                     <input type="hidden" name="pembuat" id="pembuat"
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                     <div class="modal-footer right-content-between">
@@ -149,54 +133,7 @@
         </div>
 
 
-        <div class="col-lg-4">
-            <div class="card" id="card-detail-labor">
-                    <div class="card-header card-dark card-outline">
-                        <h3 class="card-title" id="card-title" title="Operation" text><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
-                            Data Mekanik</h3>
-                    </div>
-                    
-            <div id="operation-body" >
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-form-label">NIK</label>
-                            <div class="col-sm-12">
-                                <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>"
-                                    class="form-control" placeholder="Operation">
-                                <input type="text" name="operation" id="operation" value="" class="form-control"
-                                    placeholder="Operation">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Nama</label>
-                            <div class="col-sm-12 input-group">
-                                <input type="text" name="hours" id="hours" value="" class="form-control"
-                                    placeholder="Hours">
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer right-content-between">
-                    <button class="btn btn-info" id="simpan-operation" onclick="insertOperation()" type="button"><span
-                            class="fa fa-save"></span>
-                        Save Detail</button>
-                </div>
-            </div>
-
-                    <div class="col-12">
-                        <p></p>
-                        
-                <div id="data-detail-labor"></div>
-                    </div>
-                    <div id="modal-keterangan"></div>
-            </div>
-        </div>
+        <div id="data-proses-mechanic"></div>
     </div>
 </div>
 
@@ -228,71 +165,3 @@
         </div>
         <script type="text/javascript">
         </script>
-
-
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 20, 2026 at 11:08 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `db_transforma_oto_prima`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_after_sales_labor`
---
-
-CREATE TABLE `tbl_after_sales_labor` (
-  `id_labor` int(11) NOT NULL,
-  `wo_no` varchar(25) NOT NULL,
-  `no_work_order` varchar(25) NOT NULL,
-  `nik` varchar(25) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `date_start` date DEFAULT NULL,
-  `time_start` time NOT NULL,
-  `date_end` date NOT NULL,
-  `time_end` time NOT NULL,
-  `keterangan` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tbl_after_sales_labor`
---
-ALTER TABLE `tbl_after_sales_labor`
-  ADD PRIMARY KEY (`id_labor`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbl_after_sales_labor`
---
-ALTER TABLE `tbl_after_sales_labor`
-  MODIFY `id_labor` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

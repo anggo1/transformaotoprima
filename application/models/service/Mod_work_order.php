@@ -136,11 +136,21 @@ class Mod_work_order extends CI_Model
 
         return $data->result();
     }
-    function select_labor_detail($no_work_order)
+    function select_labor_detail($idL)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_labor');
-        $this->db->where('no_work_order',$no_work_order);
+        $this->db->from('tbl_after_sales_detail_wo');
+        $this->db->where('no_work_order',$idL);
+
+        $data = $this->db->get();
+
+        return $data->result();
+    }
+    function select_labor_mechanic($idX)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_labor');
+        $this->db->where('no_work_order',$idX);
 
         $data = $this->db->get();
 
@@ -167,10 +177,25 @@ class Mod_work_order extends CI_Model
     }
     function insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order)
     {
+        $kd='SPK';
+			$tgl_keluar = date("y-m-d");
+			$date = date("ym");
+			$ci_kons = get_instance();
+			$query = "SELECT max(no_work_order) AS maxKode FROM tbl_after_sales_detail_wo WHERE no_work_order LIKE '%$date%'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+			$noOrder = $hasil['maxKode'];
+			$noUrut = (int)substr($noOrder, 8, 4);
+			$noUrut++;
+			$tahun = substr($date, 0, 2);
+			$bulan = substr($date, 2, 2);
+
+			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
+			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+
         $sql = "INSERT INTO tbl_after_sales_detail_wo SET
         id_detail   ='',
         wo_no       ='".$wo_no."',
-        no_work_order       ='".$no_work_order."',
+        no_work_order       ='".$kode_keluar."',
         operation   ='".$operation."',
         hours       ='".$hours."',
         type_of_work  ='".$type_of_work."'";
@@ -183,7 +208,7 @@ class Mod_work_order extends CI_Model
     function insertLabor($wo_no, $nik, $nama, $no_work_order)
     {
         $sql = "INSERT INTO tbl_after_sales_labor SET
-        id_detail   ='',
+        id_labor  ='',
         wo_no       ='".$wo_no."',
         no_work_order       ='".$no_work_order."',
         nik         ='".$nik."',
