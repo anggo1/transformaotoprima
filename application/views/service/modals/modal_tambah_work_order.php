@@ -1,14 +1,4 @@
-
-<section class="content">
-    <div class="row">
-        <div class="modal-content">
-            <div class="modal-header text-blue">
-
-                <h5 style="display:block; text-align:center;"><span
-                        class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Work Order</h5>
-
-            </div>
-            <?php
+<?php
             $kd='PWO-';
 			$tgl_keluar = date("y-m-d");
 			$date = date("ym");
@@ -26,69 +16,78 @@
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 foreach ($dataSa as $s)  {{}}} ?>
-            <div class="card-body">
-                <table width="100%" cellpadding="1" cellspacing="0" class="data1"
-                    style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                    <thead>
-                    <tbody>
-                        <tr>
-                            <th width="15%">Customer name</th>
-                            <th width="1%">: </th>
-                            <th width="20%"><?php echo $c->nama_cus; ?></th>
-                            <th width="20%">&nbsp;</th>
-                            <th colspan="3">PT Transforma Oto Prima</th>
-                        </tr>
-                        <tr>
-                            <th>Address</th>
-                            <th>&nbsp;</th>
-                            <th><?php echo $c->alamat; ?></th>
-                            <th>&nbsp;</th>
-                            <th colspan="3">Authorized Dealer of Mercedes-Benz Truck &amp; Bus in Indonesia</th>
-                        </tr>
-                        <tr>
-                            <th>City</th>
-                            <th>&nbsp;</th>
-                            <th><?php echo $c->kota; ?></th>
-                            <th>&nbsp;</th>
-                            <th colspan="3">&nbsp;</th>
-                        </tr>
-                        <tr>
-                            <th>Telp</th>
-                            <th>&nbsp;</th>
-                            <th><?php echo $c->no_tlp; ?></th>
-                            <th>&nbsp;</th>
-                            <th width="20%">Order No</th>
-                            <th width="11">:</th>
-                            <th width="25%"><?php echo $s->wo_no; ?></th>
-                        </tr>
-                        <tr>
-                            <th>Tax Code</th>
-                            <th>:</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>Date</th>
-                            <th>:</th>
-                            <th><?php echo tglIndoSedang($s->date_open_wo); ?></th>
-                        </tr>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        </thead>
-                    </tbody>
-                </table>
-                
-                <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
-
-                <button type="button" class="btn btn-success" id="tambah" onclick="showOperationForm()"
-                    title="Add Data"><i class="fas fa-plus"></i> Add data</button>
+<div class="card-body">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card-header card-dark card-outline">
+                <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
+                    Work Order</h3>
+                <div class="text-right">
+                    <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i class="fas fa-plus"></i>
+                        Standart Keterangan</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                        data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
+                        Add</button>
+                </div>
             </div>
-            <div class="card-body" id="operation-body" hidden="true">
+            <table width="100%" cellpadding="1" cellspacing="0" class="data1"
+                style="border-bottom:1px solid #8d8989;">
+                <thead>
+                <tbody>
+                    <tr>
+                        <th width="15%">Customer name</th>
+                        <th width="1%">: </th>
+                        <th width="20%"><?php echo $c->nama_cus; ?></th>
+                        <th width="20%">&nbsp;</th>
+                        <th colspan="3">PT Transforma Oto Prima</th>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <th>&nbsp;</th>
+                        <th><?php echo $c->alamat; ?></th>
+                        <th>&nbsp;</th>
+                        <th colspan="3">Authorized Dealer of Mercedes-Benz Truck &amp; Bus in Indonesia</th>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <th>&nbsp;</th>
+                        <th><?php echo $c->kota; ?></th>
+                        <th>&nbsp;</th>
+                        <th colspan="3">&nbsp;</th>
+                    </tr>
+                    <tr>
+                        <th>Telp</th>
+                        <th>&nbsp;</th>
+                        <th><?php echo $c->no_tlp; ?></th>
+                        <th>&nbsp;</th>
+                        <th width="20%">Order No</th>
+                        <th width="11">:</th>
+                        <th width="25%"><?php echo $s->wo_no; ?></th>
+                    </tr>
+                    <tr>
+                        <th>Tax Code</th>
+                        <th>:</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>Date</th>
+                        <th>:</th>
+                        <th><?php echo tglIndoSedang($s->date_open_wo); ?></th>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                </tbody>
+            </table>
+
+            <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
+            <div id="operation-body" >
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -107,134 +106,193 @@
                             <div class="col-sm-12 input-group">
                                 <input type="text" name="hours" id="hours" value="" class="form-control"
                                     placeholder="Hours">
-                                   
+
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="col-sm-4 col-form-label">Type Of Work</label>
-                            <div class="col-sm-12 input-group" >
+                            <div class="col-sm-12 input-group">
                                 <input type="text" name="type_of_work" id="type_of_work" value="" class="form-control"
                                     placeholder="Type Of Work">
-                                    <span class="input-group-append">
-                    <button type="button" class="btn btn-warning btn-flat" data-toggle="modal" data-target="#modal-operation">Cari!</button>
-                  </span> 
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-warning btn-flat" data-toggle="modal"
+                                        data-target="#modal-operation">Cari!</button>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="modal-footer right-content-between">
                     <button class="btn btn-info" id="simpan-operation" onclick="insertOperation()" type="button"><span
                             class="fa fa-save"></span>
-                        Save</button>
+                        Save Detail</button>
                 </div>
             </div>
-            <div class="card-body">
                 <div id="data-detail-wo"></div>
-            </div>
 
-            <form id="form-work-order" name="form-work-order" method="POST">
-                <div class="card-body">
-                <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
+                <form id="form-work-order" name="form-work-order" method="POST">
+                    <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
                         placeholder="Operation">
 
-                <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
+                    <input type="hidden" name="no_work_order" id="no_work_order" value="<?php echo $kode_keluar; ?>">
                     <input type="hidden" name="pembuat" id="pembuat"
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                     <div class="modal-footer right-content-between">
                         <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
-                            Save Data</button>
+                            Save All Data</button>
                     </div>
-                </div>
             </form>
         </div>
-    </div>
-<div class="modal fade" id="modal-operation">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content bg-gray-light">
-            <div class="modal-header">
-              <h4 class="modal-title">Xentry Operation Time</h4>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
- 				<div class="card-body">
-                    <div class="table-responsive">
-               <!-- <table class="table table-head-fixed text-nowrap" id="table-kons">-->
-            <table class="table table-bordered table-hover dt-responsive nowrap" id="tabel-operation">
-                        <thead>          
-							<tr>
-						  		<th>No</th>
-								<th>Code</th>
-								<th>Hours</th>
-								<th>Type of Work</th>
-							</tr>
-					 </thead>
-							<tbody></tbody>
-    </table>
+
+
+        <div class="col-lg-4">
+            <div class="card" id="card-detail-labor">
+                    <div class="card-header card-dark card-outline">
+                        <h3 class="card-title" id="card-title" title="Operation" text><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
+                            Data Mekanik</h3>
                     </div>
-          </div>
-          <!-- /.modal-content -->
+                    
+            <div id="operation-body" >
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label">NIK</label>
+                            <div class="col-sm-12">
+                                <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>"
+                                    class="form-control" placeholder="Operation">
+                                <input type="text" name="operation" id="operation" value="" class="form-control"
+                                    placeholder="Operation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label">Nama</label>
+                            <div class="col-sm-12 input-group">
+                                <input type="text" name="hours" id="hours" value="" class="form-control"
+                                    placeholder="Hours">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer right-content-between">
+                    <button class="btn btn-info" id="simpan-operation" onclick="insertOperation()" type="button"><span
+                            class="fa fa-save"></span>
+                        Save Detail</button>
+                </div>
+            </div>
+
+                    <div class="col-12">
+                        <p></p>
+                        
+                <div id="data-detail-labor"></div>
+                    </div>
+                    <div id="modal-keterangan"></div>
+            </div>
         </div>
-        <!-- /.modal-dialog -->
-      </div>
-</section><!-- /.modal-content -->
-<script type="text/javascript">
-$(document).ready(function() {
+    </div>
+</div>
 
-    //datatables
-    table = $("#tabel-operation").DataTable({
 
-        "responsive": false,
-	"paging": true,
-    "lengthChange": false,
-    "searching": true,
-    "ordering": false,
-    "info": false,
-    "processing": true,
-    "serverSide": true,
-        "pageLength": 5,   
-        "autoWidth": false,
-    
+<div class="modal fade" id="modal-operation">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-gray-light">
+            <div class="modal-header">
+                <h4 class="modal-title">Xentry Operation Time</h4>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <!-- <table class="table table-head-fixed text-nowrap" id="table-kons">-->
+                    <table class="table table-bordered table-hover dt-responsive nowrap" id="tabel-operation">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Code</th>
+                                <th>Hours</th>
+                                <th>Type of Work</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <script type="text/javascript">
+        </script>
 
-        "language": {
-            "sEmptyTable": "Data Service Appointment Belum Ada"
-        },
-        "processing": true, //Feature control the processing indicator.
-        "serverSide": true,
-        "language": {
-            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
-        },
-        "order": [],
 
-        // Load data for the table's content from an Ajax source
-        "ajax": {
-            "url": "<?php echo site_url('WorkOrder/list_operation') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0, 3], //first column / numbering column
-            "orderable": false,
-        }, ],
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 20, 2026 at 11:08 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
-    })
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-});
-    $('#tabel-operation tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var code = data[1];
-        var hours = data[2];
-        var operation = data[3];
-       
-				document.getElementById('operation').value=code;
-				document.getElementById('hours').value=hours;
-				document.getElementById('type_of_work').value=operation;
-				$ ('#modal-operation'). modal ('hide');
-      
 
-        //e.preventDefault();
-        //showDetail(id_pk);
-        //showDetail(id_pk);
-    });
-</script>
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_transforma_oto_prima`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_after_sales_labor`
+--
+
+CREATE TABLE `tbl_after_sales_labor` (
+  `id_labor` int(11) NOT NULL,
+  `wo_no` varchar(25) NOT NULL,
+  `no_work_order` varchar(25) NOT NULL,
+  `nik` varchar(25) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `date_start` date DEFAULT NULL,
+  `time_start` time NOT NULL,
+  `date_end` date NOT NULL,
+  `time_end` time NOT NULL,
+  `keterangan` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_after_sales_labor`
+--
+ALTER TABLE `tbl_after_sales_labor`
+  ADD PRIMARY KEY (`id_labor`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_after_sales_labor`
+--
+ALTER TABLE `tbl_after_sales_labor`
+  MODIFY `id_labor` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

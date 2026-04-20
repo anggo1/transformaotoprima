@@ -59,19 +59,19 @@ class WorkOrder extends MY_Controller
                 $row[] = empty($p->work_order) ? 'Not Processed' : 'Active';
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-sm btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
+                    <button class="btn btn-xs btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-chalkboard"></i> Process
                   </button>';
                   
                   $print='                    
-                    <button class="btn btn-sm btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
+                    <button class="btn btn-xs btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>
-                  <button class="btn btn-sm btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Edit
+                  <button class="btn btn-xs btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>
-                  <button class="btn btn-sm btn-success process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Start
+                  <button class="btn btn-xs btn-success process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Start
                   </button>
-                  <button class="btn btn-sm btn-warning process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Pause
+                  <button class="btn btn-xs btn-warning process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-pause"></i> Pause
                   </button>
-                  <button class="btn btn-sm btn-danger process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Close
+                  <button class="btn btn-xs btn-danger process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-times"></i>Close
                   </button>';
                 $akses_system= empty ($p->work_order) ? $edit : $print;
                 $row[] = $akses_system;
@@ -169,7 +169,44 @@ class WorkOrder extends MY_Controller
 		$data['dataDetail'] = $this->Mod_work_order->select_operation_detail($wo_no);
 		$this->load->view('service/detail_work_order', $data);
 	}
+    public function tambahLabor()
+    {
+        $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
 
+        //$data     = $this->input->post();
+        $wo_no = $this->input->post('wo_no');
+        $no_work_order = $this->input->post('no_work_order');
+        $nik   = $this->input->post('nik');
+        $nama = $this->input->post('nama');
+
+
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_work_order->insertLabor($wo_no, $nik, $nama, $no_work_order);
+
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Success', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Filed !', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
+
+        echo json_encode($out);
+    }
+    public function tampilLabor() {
+		$idL = $_POST['id'];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
+		$data['dataLabor'] = $this->Mod_work_order->select_labor($idL);
+        
+		$this->load->view('service/detail_labor', $data);
+
+		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+	}
     public function processWorkOrder() {
         $idS = trim($_POST['id']);
         $kat = explode('|', $idS);
@@ -179,8 +216,10 @@ class WorkOrder extends MY_Controller
         $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataSa'] = $this->Mod_work_order->select_sa($id);
 		$data['dataCus'] = $this->Mod_work_order->select_customer($kode_cus);
+        
+		$this->load->view('service/modals/modal_tambah_work_order', $data);
 
-		echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
 	}
 
 	public function inputWorkOrder() {

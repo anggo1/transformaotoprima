@@ -136,6 +136,16 @@ class Mod_work_order extends CI_Model
 
         return $data->result();
     }
+    function select_labor_detail($no_work_order)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_detail_labor');
+        $this->db->where('no_work_order',$no_work_order);
+
+        $data = $this->db->get();
+
+        return $data->result();
+    }
     function select_work_order($wo_no)
     {
         $this->db->select('*');
@@ -164,6 +174,20 @@ class Mod_work_order extends CI_Model
         operation   ='".$operation."',
         hours       ='".$hours."',
         type_of_work  ='".$type_of_work."'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+    }
+    
+    function insertLabor($wo_no, $nik, $nama, $no_work_order)
+    {
+        $sql = "INSERT INTO tbl_after_sales_labor SET
+        id_detail   ='',
+        wo_no       ='".$wo_no."',
+        no_work_order       ='".$no_work_order."',
+        nik         ='".$nik."',
+        nama        ='".$nama."'";
 
 		$this->db->query($sql);
 

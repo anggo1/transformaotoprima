@@ -1,5 +1,4 @@
 <style>
-
 .table.DataTable {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 9px;
@@ -11,40 +10,77 @@ table.dataTable td {
 </style>
 
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-light">
-                        <h3 class="card-title"><i class="fa fa-list text-blue"></i> &nbsp; List Data </h3>
+    <div class="card-body card-outline">
+        <div class="card card-primary card-outline card-outline-tabs">
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs " id="custom-content-above-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tab-work-order" data-toggle="pill" href="#tab-wo" role="tab">
+                            <i class="fa fa-bus"></i>
+                            Work Order List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" hidden="hidden" id="tab-proses-tab" data-toggle="pill" href="#tab-proses"
+                            role="tab">
+                            <i class="fas fa-luggage-cart"></i>
+                            Estimasi Perbaikan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" hidden="hidden" id="tab-pk-tab" data-toggle="pill" href="#tab-pk"
+                            role="tab">
+                            <i class="fas fa-retweet"></i>
+                            Detail Wo Process</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="custom-content-below-tabContent">
+
+                    <div class="tab-pane fade show active" id="tab-wo" role="tabpanel" aria-labelledby="tab-work-order">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No WO</th>
+                                        <th>SA</th>
+                                        <th>Customer</th>
+                                        <th>Complain</th>
+                                        <th>Vin</th>
+                                        <th>LcPlate</th>
+                                        <th>VcType</th>
+                                        <th>Storing</th>
+                                        <th>DateStart</th>
+                                        <th>C.In</th>
+                                        <th>Work Order</th>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tempat-modal"></div>
+                        <div id="cetak-wo-modal"></div>
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>No WO</th>
-                                    <th>SA</th>
-                                    <th>Customer</th>
-                                    <th>Complain</th>
-                                    <th>Vin</th>
-                                    <th>LcPlate</th>
-                                    <th>VcType</th>
-                                    <th>Storing</th>
-                                    <th>DateStart</th>
-                                    <th>C.In</th>
-                                    <th>Work Order</th>
-                                    <th>User</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+
+                    <div class="tab-pane show" id="tab-pk" role="tabpanel" aria-labelledby="tab-pk-tab">
+
+                        <div class="card-body">
+                            <div class="col-md-12">
+
+                                <div id="data-proses-pk"></div>
+
+                                <div id="modal-pk"></div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div id="data-pk-mulai"></div>
+
+                            </div>
+                        </div>
                     </div>
-                    <div id="tempat-modal"></div>
-                    <div id="cetak-wo-modal"></div>
                 </div>
             </div>
         </div>
@@ -55,7 +91,6 @@ show_my_confirm('hapusOperation', 'hapus-operation', 'Hapus Data Ini?', 'Ya, Hap
 ?>
 
 <script type="text/javascript">
-
 function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
@@ -111,7 +146,7 @@ $(document).ready(function() {
 //cari operation
 
 //end cari operation
-$(document).on("click", ".process-work-order", function() {
+$(document).on("click", ".process-work-order1", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
@@ -203,7 +238,7 @@ $(document).on("click", ".delete-operation", function() {
 
 function showOperationForm() {
     document.getElementById("operation-body").hidden = false;
-    tampilKeterangan();
+    panggilTabel();
     //document.getElementById("alamat").readonly = true;
 }
 
@@ -224,11 +259,50 @@ function insertOperation() {
             'no_work_order': no_work_order
         },
         success: function(hasil) {
-            tampilKeterangan()
+            tampilKeterangan();
+
+            //$('#tabel-operation').DataTable().ajax.reload();
+            //$('#tabel-operation').DataTable();
             document.getElementById("operation-body").hidden = true;
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 500
+            })
+        }
+    });
+}
+
+
+function insertLabor() {
+    var wo_no = document.getElementById('wo_no').value;
+    var nik = document.getElementById('nik').value;
+    var nama = document.getElementById('nama').value;
+    var no_work_order = document.getElementById('no_work_order').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/tambahLabor'); ?>',
+        data: {
+            'wo_no': wo_no,
+            'nik': nik,
+            'nama': nama,
+            'no_work_order': no_work_order
+        },
+        success: function(hasil) {
+            tampilLabor();
+
+            //$('#tabel-operation').DataTable().ajax.reload();
+            //$('#tabel-operation').DataTable();
+            document.getElementById("operation-body").hidden = true;
+            nik = document.getElementById('nik').value = '';
+            nama = document.getElementById('nama').value = '';
+            wo_no = document.getElementById('wo_no').value = '';
+            no_work_order = document.getElementById('no_work_order').value = '';
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -253,6 +327,39 @@ function tampilKeterangan() {
     });
 }
 
+function tampilLabor() {
+    var wo_no = document.getElementById('wo_no').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/tampilLabor'); ?>',
+        data: 'wo_no=' + wo_no,
+        success: function(hasil) {
+            //tableKeterangan.fnDestroy();
+            $('#data-detail-labor').html(hasil);
+        }
+    });
+}
+
+$(document).on("click", ".add-mechanic", function() {
+    var id = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/cariMechanic'); ?>',
+        data: 'id=' + id,
+        success: function(hasil) {
+            //$('#id_lapor').val(id);
+            //MyTable.fnDestroy();
+
+            //$('#tabel-operation').DataTable();
+            $('#data-proses-pk').html(hasil);
+            document.getElementById("card-detail-labor").hidden = false;
+            //$("a[href='#tab-pk']").tab('show');
+    tampilLabor();
+            //refresh();
+        }
+    });
+})
 function cetakPo(datakode) {}
 
 
@@ -297,6 +404,82 @@ function selectPart3(id_barang, no_part, nama_part, stok, stok_a, stok_p, hrg_aw
     showDetail(id_pk);
     $('#modal_form').modal('hide');
 }
+$(document).on("click", ".process-work-order", function() {
+    var id = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/processWorkOrder'); ?>',
+        data: 'id=' + id,
+        success: function(hasil) {
+            //$('#id_lapor').val(id);
+            //MyTable.fnDestroy();
+
+            //$('#tabel-operation').DataTable();
+            $('#data-proses-pk').html(hasil);
+            document.getElementById("tab-pk-tab").hidden = false;
+            $("a[href='#tab-pk']").tab('show');
+    panggilTabel();
+    tampilKeterangan();
+    tampilLabor();
+            //refresh();
+        }
+    });
+})
+//$(document).ready(function() {
+function panggilTabel() {
+    //datatables
+    table = $("#tabel-operation").DataTable({
+
+        "responsive": false,
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": false,
+        "info": false,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 5,
+        "autoWidth": false,
 
 
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('WorkOrder/list_operation') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 3], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+    $('#tabel-operation tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        var code = data[1];
+        var hours = data[2];
+        var operation = data[3];
+
+        document.getElementById('operation').value = code;
+        document.getElementById('hours').value = hours;
+        document.getElementById('type_of_work').value = operation;
+        $('#modal-operation').modal('hide');
+
+
+        //e.preventDefault();
+        //showDetail(id_pk);
+        //showDetail(id_pk);
+    });
+
+};
 </script>

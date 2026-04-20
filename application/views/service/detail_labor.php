@@ -1,31 +1,29 @@
 <div class="table-responsive">
-    <table class="table table-striped table-bordered table-hover nowrap dataTable" id="list-po">
+    <table class="table table-striped table-bordered table-hover nowrap dataTable" id="list-labor">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Operation</th>
-                <th>Hours</th>
-                <th>Type Of Work</th>
+                <th>No WO</th>
+                <th>NIK</th>
+                <th>Nama</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php
                   $no = 1;
-                  foreach ($dataDetail as $s) {
+                  foreach ($dataLabor as $l) {
                   ?>
             <tr>
 
                 <td><?php echo $no; ?></td>
-                <td><?php echo $s->operation; ?></td>
-                <td><?php echo $s->hours; ?></td>
-                <td><?php echo $s->type_of_work; ?></td>
+                <td><?php echo $l->wo_no; ?></td>
+                <td><?php echo $l->nik; ?></td>
+                <td><?php echo $l->nama; ?></td>
 
                 <td class="text-center">
-                    <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"
-                        data-id="<?php echo $s->no_work_order; ?>"> Add Mechanic</button>
                     <button class="btn btn-xs btn-outline-danger delete-operation ion-android-delete"
-                        data-id="<?php echo $s->id_detail; ?>"> Delete</button>
+                        data-id="<?php echo $l->id_labor; ?>"> Delete</button>
                 </td>
             </tr>
             <?php
@@ -38,7 +36,7 @@
 </div>
 
 <script language="javascript">
-var MyTable = $('#list-po').dataTable({
+var MyTable = $('#list-labor').dataTable({
     "responsive": false,
     "paging": false,
     "lengthChange": false,
