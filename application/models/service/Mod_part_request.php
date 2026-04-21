@@ -16,9 +16,9 @@ class Mod_part_request extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,part_request,pembuat');
         $this->db->from('tbl_after_sales');
-        $this->db->where('status','N');
+        $this->db->where('status','P');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

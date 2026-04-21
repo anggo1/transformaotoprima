@@ -262,6 +262,8 @@ function insertOperation() {
             //$('#tabel-operation').DataTable().ajax.reload();
             //$('#tabel-operation').DataTable();
             //document.getElementById("operation-body").hidden = true;
+            $('.nav-tabs a[href="#tab-wo"]').tab('show');
+            window.location.reload() ;
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';

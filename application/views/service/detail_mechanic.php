@@ -20,7 +20,7 @@
                 <td><?php echo $m->nama; ?></td>
 
                 <td class="text-center">
-                    <button class="btn btn-xs btn-outline-danger delete-operation ion-android-delete"
+                    <button class="btn btn-xs btn-outline-danger delete-mechanic ion-android-delete"
                         data-id="<?php echo $m->id_labor; ?>"> Delete</button>
                 </td>
             </tr>

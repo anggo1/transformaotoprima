@@ -16,8 +16,7 @@
                         Add</button>
                 </div>
             </div>
-            <table width="100%" cellpadding="1" cellspacing="0" class="data1"
-                style="border-bottom:1px solid #8d8989;">
+            <table width="100%" cellpadding="1" cellspacing="0" class="data1" style="border-bottom:1px solid #8d8989;">
                 <thead>
                 <tbody>
                     <tr>
@@ -72,7 +71,7 @@
                 </tbody>
             </table>
 
-            <div id="operation-body" >
+            <div id="operation-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -117,18 +116,18 @@
                         Save Detail</button>
                 </div>
             </div>
-                <div id="data-detail-wo"></div>
+            <div id="data-detail-wo"></div>
 
-                <form id="form-work-order" name="form-work-order" method="POST">
-                    <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
-                        placeholder="Operation">
+            <form id="form-work-order" name="form-work-order" method="POST">
+                <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>" class="form-control"
+                    placeholder="Operation">
 
-                    <input type="hidden" name="pembuat" id="pembuat"
-                        value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
-                    <div class="modal-footer right-content-between">
-                        <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
-                            Save All Data</button>
-                    </div>
+                <input type="hidden" name="pembuat" id="pembuat"
+                    value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
+                <div class="modal-footer right-content-between">
+                    <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
+                        Save All Data</button>
+                </div>
             </form>
         </div>
 
@@ -163,5 +162,7 @@
             </div>
             <!-- /.modal-content -->
         </div>
-        <script type="text/javascript">
-        </script>
+    </div>
+</div>
+<script type="text/javascript">
+</script>

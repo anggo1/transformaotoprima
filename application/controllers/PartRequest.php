@@ -6,7 +6,7 @@ class PartRequest extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('service/Mod_part_request', 'Mod_menu'));
+		$this->load->model(array('service/Mod_part_request','Mod_sparepart', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 		$this->load->model('Mod_aplikasi');
@@ -19,7 +19,7 @@ class PartRequest extends MY_Controller
 		$this->load->helper('url');
 		//$data['dataCus'] = $this->Mod_part_request->select_customer();
 		//echo show_my_modal('service/modals/modal_tambah_pre_order', 'tambah-pre-order', $data, ' modal-lg');
-		$this->template->load('layoutbackend', 'service/pre_order', $data);
+		$this->template->load('layoutbackend', 'service/part_request', $data);
 	}
 	public function ajax_list()
     {
@@ -58,13 +58,16 @@ class PartRequest extends MY_Controller
                 $row[] = $p->clockin;
                 $row[] = empty($p->pre_order) ? 'Not Processed' : 'On Process';
                 $row[] = $p->pembuat;
-                    $edit='                    
-                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
+                    $process='                    
+                    <button class="btn btn-xs btn-success process-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-cogs"></i> Process
+                  </button>';
+                  $edit='                    
+                    <button class="btn btn-xs btn-primary edit-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>';
                   $print='                    
-                    <button class="btn btn-sm btn-outline-info cetak-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
+                    <button class="btn btn-xs btn-info cetak-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>';
-                $akses_system= empty ($p->pre_order) ? $edit : $print;
+                $akses_system= ($p->part_request=='N') ? $process : $print.$edit;
                 $row[] = $akses_system;
                 $data[] = $row;
             }
@@ -78,6 +81,30 @@ class PartRequest extends MY_Controller
         //output to json format
         echo json_encode($output);
     }
+    //Cari Part
+    public function list_parts()
+    {
+            $list = $this->Mod_sparepart->get_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $p) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $p->no_part;
+                $row[] = $p->nama_part;                
+                $data[] = $row;
+            }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_sparepart->count_all(),
+            "recordsFiltered" => $this->Mod_sparepart->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+    //end cari Part
 
 	public function tambahRequest()
     {
@@ -110,10 +137,10 @@ class PartRequest extends MY_Controller
 	{
 		$wo_no = $_POST['wo_no'];
 		$data['dataDetail'] = $this->Mod_part_request->select_operation_detail($wo_no);
-		$this->load->view('service/detail_pre_operation', $data);
+		$this->load->view('service/detail_part_request', $data);
 	}
 
-    public function processPreOrder() {
+    public function processPart_request() {
         $idS = trim($_POST['id']);
         $kat = explode('|', $idS);
         $kode_cus = $kat[1];
@@ -123,7 +150,7 @@ class PartRequest extends MY_Controller
 		$data['dataSa'] = $this->Mod_part_request->select_sa($id);
 		$data['dataCus'] = $this->Mod_part_request->select_customer($kode_cus);
 
-		echo show_my_modal('service/modals/modal_tambah_pre_order', 'process-pre-order', $data, ' modal-xl');
+		echo show_my_modal('service/modals/modal_tambah_part_request', 'process-part-request', $data, ' modal-xl');
 	}
 
 	public function inputPreOrder() {

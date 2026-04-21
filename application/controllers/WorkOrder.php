@@ -237,7 +237,7 @@ class WorkOrder extends MY_Controller
 
 	public function inputWorkOrder() {
 		
-		$this->form_validation->set_rules('no_wo', 'No Work Order', 'trim|required');
+		$this->form_validation->set_rules('wo_no', 'No Work Order', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
