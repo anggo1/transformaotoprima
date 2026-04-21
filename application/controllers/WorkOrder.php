@@ -272,6 +272,20 @@ class WorkOrder extends MY_Controller
         }
         echo json_encode($out);
     }
+    public function deleteMechanic()
+    {
+        $id = $_POST['id'];
+        $result = $this->Mod_work_order->deleteMechanic($id);
+
+        if ($result > 0) {
+            $out['status'] = '';
+            $out['msg'] = show_del_msg('Deleted', '20px');
+        } else {
+            $out['status'] = '';
+            $out['msg'] = show_err_msg('Filed !', '20px');
+        }
+        echo json_encode($out);
+    }
     public function cetak_work_order()
 	{
         $idS = trim($_POST['id']);

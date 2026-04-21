@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Mod_work_order extends CI_Model
+class Mod_part_request extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
+    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -16,8 +16,9 @@ class Mod_work_order extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,pembuat');
         $this->db->from('tbl_after_sales');
+        $this->db->where('status','N');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -108,7 +109,7 @@ class Mod_work_order extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+       $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,mileage,engine_no,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,last_service_date,dead_line,pembuat');
         $this->db->from('tbl_after_sales');
          $this->db->where('wo_no',$id);
 
@@ -129,37 +130,17 @@ class Mod_work_order extends CI_Model
     function select_operation_detail($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_wo');
+        $this->db->from('tbl_after_sales_detail_pre');
         $this->db->where('wo_no',$wo_no);
 
         $data = $this->db->get();
 
         return $data->result();
     }
-    function select_labor_detail($idL)
+    function select_pre_order($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_wo');
-        $this->db->where('no_work_order',$idL);
-
-        $data = $this->db->get();
-
-        return $data->result();
-    }
-    function select_labor_mechanic($idX)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_after_sales_labor');
-        $this->db->where('no_work_order',$idX);
-
-        $data = $this->db->get();
-
-        return $data->result();
-    }
-    function select_work_order($wo_no)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_after_sales_work_order');
+        $this->db->from('tbl_after_sales_pre_order');
         $this->db->where('wo_no',$wo_no);
 
         $data = $this->db->get();
@@ -175,62 +156,48 @@ class Mod_work_order extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order)
+    function insertOperation($wo_no, $operation,$no_pre_order)
     {
-        $kd='SPK';
-			$tgl_keluar = date("y-m-d");
-			$date = date("ym");
-			$ci_kons = get_instance();
-			$query = "SELECT max(no_work_order) AS maxKode FROM tbl_after_sales_detail_wo WHERE no_work_order LIKE '%$date%'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-			$noOrder = $hasil['maxKode'];
-			$noUrut = (int)substr($noOrder, 8, 4);
-			$noUrut++;
-			$tahun = substr($date, 0, 2);
-			$bulan = substr($date, 2, 2);
-
-			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
-			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
-
-        $sql = "INSERT INTO tbl_after_sales_detail_wo SET
+        $sql = "INSERT INTO tbl_after_sales_detail_pre SET
         id_detail   ='',
         wo_no       ='".$wo_no."',
-        no_work_order       ='".$kode_keluar."',
-        operation   ='".$operation."',
-        hours       ='".$hours."',
-        type_of_work  ='".$type_of_work."'";
+        no_pre_order     ='".$no_pre_order."',
+        operation   ='".$operation."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
-    
-    function insertLabor($wo_no, $nik, $nama, $no_work_order)
-    {
-        $sql = "INSERT INTO tbl_after_sales_labor SET
-        id_labor  ='',
-        wo_no       ='".$wo_no."',
-        no_work_order       ='".$no_work_order."',
-        nik         ='".$nik."',
-        nama        ='".$nama."'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
-    }
-    function inputWorkOrder($data)
+    function inputPreOrder($data)
     {
         
-        $sql = "INSERT INTO tbl_after_sales_work_order SET
+        $leakage=""; if ($data['leakage']=='Y'){ $leakage=$data['leakage']; }else { $leakage='N'; }
+        $abnormal_noise=""; if ($data['abnormal_noise']=='Y'){ $abnormal_noise=$data['abnormal_noise']; }else { $abnormal_noise='N'; }
+        $error_code=""; if ($data['error_code']=='Y'){ $error_code=$data['error_code']; }else { $error_code='N'; }
+        $brake=""; if ($data['brake']=='Y'){ $brake=$data['brake']; }else { $brake='N'; }
+        $vtk=""; if ($data['vtk']=='Y'){ $vtk=$data['vtk']; }else { $vtk='N'; }
+        $fak=""; if ($data['fak']=='Y'){ $fak=$data['fak']; }else { $fak='N'; }
+        $spare_kit=""; if ($data['spare_kit']=='Y'){ $spare_kit=$data['spare_kit']; }else { $spare_kit='N'; }
+        $stnk=""; if ($data['stnk']=='Y'){ $stnk=$data['stnk']; }else { $stnk='N'; }
+
+        $sql = "INSERT INTO tbl_after_sales_pre_order SET
         wo_no     ='".$data['wo_no']."',
-        wo_date   ='".date('Y-m-d')."',
+        no_pre_order     ='".$data['no_pre_order']."',
+        leakage   ='$leakage',
+        abnormal_noise  ='$abnormal_noise',
+        error_code  ='$error_code',
+        brake       ='$brake',
+        vtk    ='$vtk',
+        fak      ='$fak',
+        spare_kit   ='$spare_kit',
+        stnk  ='$stnk',
+        vehicle_type  ='".$data['vehicle_type']."',
         pembuat   ='".$data['pembuat']."'";
 
 		$this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        work_order     ='".$data['wo_no']."',
-        status     ='P' WHERE wo_no='".$data['wo_no']."'";
+        pre_order     ='".$data['no_pre_order']."' WHERE wo_no='".$data['wo_no']."'";
 
 		$this->db->query($sql2);
 
@@ -238,15 +205,7 @@ class Mod_work_order extends CI_Model
     }
     function deleteOperation($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
-    }
-    function deleteMechanic($id)
-    {
-        $sql = "DELETE FROM tbl_after_sales_labor WHERE id_labor='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales_detail_pre WHERE id_detail='{$id}'";
 
 		$this->db->query($sql);
 
