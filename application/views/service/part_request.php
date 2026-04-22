@@ -59,15 +59,13 @@ table.dataTable td {
         </div>
     </div>
 </section>
-<?php
-show_my_confirm('hapusOperation', 'hapus-operation', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
-?>
 
 <script type="text/javascript">
-    function onload() {
-        dataPart();
-}
 $(document).ready(function() {
+
+    // $('#tempat-modal').on('shown.bs.modal', function () {
+    //   dataPart();
+    //});
 
     //datatables
     table = $("#tabel-appointment").DataTable({
@@ -115,9 +113,9 @@ $(document).on("click", ".process-part", function() {
             data: "id=" + id
         })
         .done(function(data) {
-            dataPart();
             $('#tempat-modal').html(data);
             $('#process-part-request').modal('show');
+            showPartRequestDetail();
         })
 })
 
@@ -168,4 +166,111 @@ function dataPart() {
     });
 
 };
+
+function insertRequest() {
+    var wo_no = document.getElementById('wo_no').value;
+    var no_part = document.getElementById('no_part').value;
+    var nama_part = document.getElementById('nama_part').value;
+    var jumlah = document.getElementById('jumlah').value;
+    var keterangan = document.getElementById('keterangan').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('PartRequest/tambahPart'); ?>',
+        data: {
+            'wo_no': wo_no,
+            'no_part': no_part,
+            'nama_part': nama_part,
+            'jumlah': jumlah,
+            'keterangan': keterangan
+        },
+        success: function(hasil) {
+            $('#tabel-part-request').DataTable().destroy();
+            showPartRequestDetail();
+           // $('#modal-part').modal('hide');
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Data Berhasil Ditambahkan',
+                showConfirmButton: false,
+                timer: 500
+            });
+            no_part = document.getElementById('no_part').value = '';
+            nama_part = document.getElementById('nama_part').value = '';
+            jumlah = document.getElementById('jumlah').value = '';
+            keterangan = document.getElementById('keterangan').value = '';
+            //dataPart();
+        }
+    });
+}
+
+$(document).on('submit', '#form-part-request', function(e) {
+    var data = $(this).serialize();
+
+    $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('PartRequest/inputPartRequest'); ?>',
+            data: data
+        })
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+
+            //table.ajax.reload();
+            if (out.status == 'form') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                //document.getElementById("process-pre-order").reset();
+                $('#process-part-request').modal('hide');
+                //table.ajax.reload();
+                $('#tabel-appointment').DataTable().ajax.reload();
+                $('.msg').html(out.msg);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+    e.preventDefault();
+});
+
+function showPartRequestDetail() {
+    var wo_no = document.getElementById('wo_no').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('PartRequest/tampilRequestDetail'); ?>',
+        data: 'wo_no=' + wo_no,
+        success: function(hasil) {
+            //tableKeterangan.fnDestroy();
+            $('#data-detail-request').html(hasil);
+        }
+    });
+}
+$(document).on("click", ".delete-request", function() {
+    idS = $(this).attr("data-id");
+})
+$(document).on("click", ".delete-request", function() {
+    var id = idS;
+
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('PartRequest/deleteRequest'); ?>",
+            data: "id=" + id
+        })
+
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+            table.ajax.reload();
+            $('.msg').html(out.msg);
+            showPartRequestDetail();
+        })
+})
 </script>

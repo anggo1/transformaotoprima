@@ -127,20 +127,10 @@ class Mod_part_request extends CI_Model
 
         return $data->result();
     }
-    function select_operation_detail($wo_no)
+    function select_part_request($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_pre');
-        $this->db->where('wo_no',$wo_no);
-
-        $data = $this->db->get();
-
-        return $data->result();
-    }
-    function select_pre_order($wo_no)
-    {
-        $this->db->select('*');
-        $this->db->from('tbl_after_sales_pre_order');
+        $this->db->from('tbl_after_sales_part_request');
         $this->db->where('wo_no',$wo_no);
 
         $data = $this->db->get();
@@ -156,56 +146,33 @@ class Mod_part_request extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($wo_no, $operation,$no_pre_order)
+    function insertPart($wo_no, $no_part, $nama_part, $jumlah, $keterangan)
     {
-        $sql = "INSERT INTO tbl_after_sales_detail_pre SET
-        id_detail   ='',
+        $sql = "INSERT INTO tbl_after_sales_part_request SET
+        id_request   ='',
         wo_no       ='".$wo_no."',
-        no_pre_order     ='".$no_pre_order."',
-        operation   ='".$operation."'";
+        no_part     ='".$no_part."',
+        nama_part   ='".$nama_part."',
+        jumlah      ='".$jumlah."',
+        keterangan  ='".$keterangan."'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
-    function inputPreOrder($data)
+    function updatePart($data)
     {
-        
-        $leakage=""; if ($data['leakage']=='Y'){ $leakage=$data['leakage']; }else { $leakage='N'; }
-        $abnormal_noise=""; if ($data['abnormal_noise']=='Y'){ $abnormal_noise=$data['abnormal_noise']; }else { $abnormal_noise='N'; }
-        $error_code=""; if ($data['error_code']=='Y'){ $error_code=$data['error_code']; }else { $error_code='N'; }
-        $brake=""; if ($data['brake']=='Y'){ $brake=$data['brake']; }else { $brake='N'; }
-        $vtk=""; if ($data['vtk']=='Y'){ $vtk=$data['vtk']; }else { $vtk='N'; }
-        $fak=""; if ($data['fak']=='Y'){ $fak=$data['fak']; }else { $fak='N'; }
-        $spare_kit=""; if ($data['spare_kit']=='Y'){ $spare_kit=$data['spare_kit']; }else { $spare_kit='N'; }
-        $stnk=""; if ($data['stnk']=='Y'){ $stnk=$data['stnk']; }else { $stnk='N'; }
-
-        $sql = "INSERT INTO tbl_after_sales_pre_order SET
-        wo_no     ='".$data['wo_no']."',
-        no_pre_order     ='".$data['no_pre_order']."',
-        leakage   ='$leakage',
-        abnormal_noise  ='$abnormal_noise',
-        error_code  ='$error_code',
-        brake       ='$brake',
-        vtk    ='$vtk',
-        fak      ='$fak',
-        spare_kit   ='$spare_kit',
-        stnk  ='$stnk',
-        vehicle_type  ='".$data['vehicle_type']."',
-        pembuat   ='".$data['pembuat']."'";
-
-		$this->db->query($sql);
-
         $sql2 = "UPDATE tbl_after_sales SET
-        pre_order     ='".$data['no_pre_order']."' WHERE wo_no='".$data['wo_no']."'";
+        part_request     ='Y'
+        WHERE wo_no='".$data['wo_no']."'";
 
 		$this->db->query($sql2);
 
 		return $this->db->affected_rows();
     }
-    function deleteOperation($id)
+    function deleteRequest($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_detail_pre WHERE id_detail='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales_part_request WHERE id_request='{$id}'";
 
 		$this->db->query($sql);
 

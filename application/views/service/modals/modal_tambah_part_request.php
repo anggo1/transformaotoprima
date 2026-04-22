@@ -137,19 +137,19 @@
                 </div>
 
                 <div class="modal-footer right-content-between">
-                    <button class="btn btn-info" id="simpan-part" onclick="insertPart()" type="button"><span
+                    <button class="btn btn-info" id="simpan-request" onclick="insertRequest()" type="button"><span
                             class="fa fa-save"></span>
                         Save List</button>
                 </div>
             </div>
             <div class="card-body">
-                <div id="data-detail-part"></div>
+                <div id="data-detail-request"></div>
             </div>
 
-            <form id="form-pre-order" name="form-pre-order" method="POST">
+            <form id="form-part-request" name="form-part-request" method="POST">
                 <div class="card-body">
 
-                    <input type="hidden" name="no_pre_order" id="no_pre_order" value="<?php echo $kode_keluar; ?>"
+                    <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no ?>"
                         class="form-control" placeholder="Operation">
                     <input type="hidden" name="pembuat" id="pembuat"
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
@@ -187,3 +187,7 @@
         </div>
     </div>
 </div>
+<script language="javascript">
+
+            //$('#tabel-part-request').DataTable().fnDestroy();
+</script>

@@ -105,19 +105,46 @@ class PartRequest extends MY_Controller
         echo json_encode($output);
     }
     //end cari Part
-
-	public function tambahRequest()
+    public function inputPartRequest()
     {
-        $this->form_validation->set_rules('operation', 'Operation', 'trim|required');
-
-        //$data     = $this->input->post();
+        $this->form_validation->set_rules('wo_no', 'No WO', 'trim|required');
+        
         $wo_no = $this->input->post('wo_no');
-        $operation = $this->input->post('operation');
-        $no_pre_order = $this->input->post('no_pre_order');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_part_request->insertRequest($wo_no, $operation,$no_pre_order);
+            $result = $this->Mod_part_request->updatePart(['wo_no' => $wo_no]);
+
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Success', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Filed !', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
+
+        echo json_encode($out);
+    }
+    
+	public function tambahPart()
+    {
+        $this->form_validation->set_rules('no_part', 'No Part', 'trim|required');
+        $this->form_validation->set_rules('nama_part', 'Nama Part', 'trim|required');
+
+        //$data     = $this->input->post();
+        $wo_no = $this->input->post('wo_no');
+        $no_part = $this->input->post('no_part');
+        $nama_part = $this->input->post('nama_part');
+        $jumlah = $this->input->post('jumlah');
+        $keterangan = $this->input->post('keterangan');
+
+
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_part_request->insertPart($wo_no, $nama_part, $jumlah, $no_part, $keterangan);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -136,7 +163,7 @@ class PartRequest extends MY_Controller
     public function tampilRequestDetail()
 	{
 		$wo_no = $_POST['wo_no'];
-		$data['dataDetail'] = $this->Mod_part_request->select_operation_detail($wo_no);
+		$data['dataDetail'] = $this->Mod_part_request->select_part_request($wo_no);
 		$this->load->view('service/detail_part_request', $data);
 	}
 
@@ -153,33 +180,11 @@ class PartRequest extends MY_Controller
 		echo show_my_modal('service/modals/modal_tambah_part_request', 'process-part-request', $data, ' modal-xl');
 	}
 
-	public function inputPreOrder() {
-		
-		$this->form_validation->set_rules('vehicle_type', 'Vehicle Type', 'trim|required');
-
-		$data 	= $this->input->post();
-		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_part_request->inputPreOrder($data);
-
-			if ($result > 0) {
-				$out['status'] = '';
-				$out['msg'] = show_ok_msg('Data Berhasil ditambahkan', '20px');
-			} else {
-				$out['status'] = '';
-				$out['msg'] = show_err_msg('Data Gagal ditambahkan', '20px');
-			}
-		} else {
-			$out['status'] = 'form';
-			$out['msg'] = show_err_msg(validation_errors());
-		}
-
-		echo json_encode($out);
-	}
-
-    public function deleteOperation()
+	
+    public function deleteRequest()
     {
         $id = $_POST['id'];
-        $result = $this->Mod_part_request->deleteOperation($id);
+        $result = $this->Mod_part_request->deleteRequest($id);
 
         if ($result > 0) {
             $out['status'] = '';

@@ -184,6 +184,9 @@ $(document).on('submit', '#form-work-order', function(e) {
                 //document.getElementById("process-pre-order").reset();
                 $('#process-work-order').modal('hide');
                 //table.ajax.reload();
+
+                $("a[href='#tab-pk']").tab('hide');
+                $('.nav-tabs a[href="#tab-wo"]').tab('show');
                 $('#tabel-appointment').DataTable().ajax.reload();
                 $('.msg').html(out.msg);
                 Swal.fire({
@@ -262,8 +265,8 @@ function insertOperation() {
             //$('#tabel-operation').DataTable().ajax.reload();
             //$('#tabel-operation').DataTable();
             //document.getElementById("operation-body").hidden = true;
-            $('.nav-tabs a[href="#tab-wo"]').tab('show');
-            window.location.reload() ;
+            //$('.nav-tabs a[href="#tab-wo"]').tab('show');
+            //window.location.reload() ;
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';
@@ -320,6 +323,7 @@ function tampilKeterangan() {
         }
     });
 }
+
 function tampilMechanic() {
     var no_work_order = document.getElementById('no_work_order').value;
     $.ajax({
@@ -361,6 +365,7 @@ $(document).on("click", ".add-mechanic", function() {
         }
     });
 })
+
 function cetakPo(datakode) {}
 
 
@@ -420,9 +425,9 @@ $(document).on("click", ".process-work-order", function() {
             $('#data-proses-pk').html(hasil);
             document.getElementById("tab-pk-tab").hidden = false;
             $("a[href='#tab-pk']").tab('show');
-    panggilTabel();
-    tampilKeterangan();
-    //tampilLabor();
+            panggilTabel();
+            tampilKeterangan();
+            //tampilLabor();
             //refresh();
         }
     });
