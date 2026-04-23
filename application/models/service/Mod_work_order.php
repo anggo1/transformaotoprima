@@ -285,6 +285,7 @@ class Mod_work_order extends CI_Model
 
     function end_work($id_detail,$no_work_order,$total)
     {
+	    $tgl_jam_sekarang  = date("Y-m-d H:i:s");
         $waktu_input='';
             $ci_kons = get_instance();
 			$query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
@@ -292,7 +293,8 @@ class Mod_work_order extends CI_Model
 		    $pause = $hasil['total_pause'];
             empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
-        total_pause     ='".$waktu_input."',
+        end_date    ='".$tgl_jam_sekarang."',
+        total_time    ='".$waktu_input."',
         status     ='F' WHERE id_detail='".$id_detail."'";
 
 		$this->db->query($sql2);
