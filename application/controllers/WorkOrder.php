@@ -67,9 +67,7 @@ class WorkOrder extends MY_Controller
                   </button>
                   <button class="btn btn-xs btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>
-                  <button class="btn btn-xs btn-success process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Start
-                  </button>
-                  <button class="btn btn-xs btn-warning process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-pause"></i> Pause
+                  <button class="btn btn-xs btn-success process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Start
                   </button>
                   <button class="btn btn-xs btn-danger process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-times"></i>Close
                   </button>';
@@ -301,4 +299,34 @@ class WorkOrder extends MY_Controller
 
 		echo show_my_print('service/modals/modal_cetak_work_order', 'cetak-work-order', $data, ' modal-xl');
 	}
-}
+
+    //start process start work order
+    public function processStartWorkOrder() {
+        $idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $kode_cus = $kat[1];
+        $id = $kat[0];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
+        $data['dataSa'] = $this->Mod_work_order->select_sa($id);
+        $data['dataCus'] = $this->Mod_work_order->select_customer($kode_cus);
+        
+        $this->load->view('service/modals/process_start_work', $data);
+
+        //echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+    }
+    public function tampilStartDetail()
+	{
+		$wo_no = $_POST['wo_no'];
+		$data['dataDetail'] = $this->Mod_work_order->select_operation_detail($wo_no);
+		$this->load->view('service/detail_start_work_order', $data);
+	}
+    public function updateDetailPo()
+	{
+        $id_detail = $_POST['id_detail'];
+        $no_work_order = $_POST['no_work_order'];
+		$data['dataPo'] = $this->Mod_po_masuk->update_detailPo($id_detail,$no_work_order);
+		//$this->load->view('body_repair/detail_estimasi', $data);
+	}
+    //end process start work order
+}   

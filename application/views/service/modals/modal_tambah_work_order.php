@@ -8,13 +8,6 @@
             <div class="card-header card-dark card-outline">
                 <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
                     Work Order</h3>
-                <div class="text-right">
-                    <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i class="fas fa-plus"></i>
-                        Standart Keterangan</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                        data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
-                        Add</button>
-                </div>
             </div>
             <table width="100%" cellpadding="1" cellspacing="0" class="data1" style="border-bottom:1px solid #8d8989;">
                 <thead>

@@ -20,13 +20,13 @@ table.dataTable td {
                             Work Order List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" hidden="hidden" id="tab-proses-tab" data-toggle="pill" href="#tab-proses"
+                        <a class="nav-link" hidden="hidden" id="tab-pk-tab" data-toggle="pill" href="#tab-pk"
                             role="tab">
                             <i class="fas fa-luggage-cart"></i>
-                            Estimasi Perbaikan</a>
+                            Work Order Process</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" hidden="hidden" id="tab-pk-tab" data-toggle="pill" href="#tab-pk"
+                        <a class="nav-link" hidden="hidden" id="tab-start-tab" data-toggle="pill" href="#tab-start"
                             role="tab">
                             <i class="fas fa-retweet"></i>
                             Detail Wo Process</a>
@@ -77,6 +77,22 @@ table.dataTable td {
                             <div class="col-md-6">
 
                                 <div id="data-pk-mulai"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane show" id="tab-start" role="tabpanel" aria-labelledby="tab-start-tab">
+
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div id="data-start-work"></div>
+
+                                <div id="data-proses-start"></div>
+
+                                <div id="modal-pk"></div>
+                            </div>
+                            <div class="col-md-6">
+
 
                             </div>
                         </div>
@@ -146,20 +162,6 @@ $(document).ready(function() {
 //cari operation
 
 //end cari operation
-$(document).on("click", ".process-work-order1", function() {
-    var id = $(this).attr("data-id");
-
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('WorkOrder/processWorkOrder'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#tempat-modal').html(data);
-            $('#process-work-order').modal('show');
-            tampilKeterangan();
-        })
-})
 $(document).on('submit', '#form-work-order', function(e) {
     var data = $(this).serialize();
 
@@ -181,12 +183,9 @@ $(document).on('submit', '#form-work-order', function(e) {
                     timer: 1500
                 })
             } else {
-                //document.getElementById("process-pre-order").reset();
-                $('#process-work-order').modal('hide');
-                //table.ajax.reload();
-
-                $("a[href='#tab-pk']").tab('hide');
-                $('.nav-tabs a[href="#tab-wo"]').tab('show');
+                document.getElementById('tab-work-order').click();
+                document.getElementById("tab-pk-tab").hidden = true;
+                document.getElementById("tab-work-order").active = true;
                 $('#tabel-appointment').DataTable().ajax.reload();
                 $('.msg').html(out.msg);
                 Swal.fire({
@@ -196,6 +195,8 @@ $(document).on('submit', '#form-work-order', function(e) {
                     showConfirmButton: false,
                     timer: 1500
                 })
+
+                //window.location.reload() ;
             }
         })
 
@@ -488,4 +489,42 @@ function panggilTabel() {
     });
 
 };
+
+//proses start work order
+$(document).on("click", ".process-start", function() {
+    var id = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/processStartWorkOrder'); ?>',
+        data: 'id=' + id,
+        success: function(hasil) {
+            //$('#id_lapor').val(id);
+            //MyTable.fnDestroy();
+
+            //$('#tabel-operation').DataTable();
+            $('#data-start-work').html(hasil);
+            document.getElementById("tab-start-tab").hidden = false;
+            $("a[href='#tab-start']").tab('show');
+            panggilTabel();
+            tampilPekerjaan();
+            //tampilLabor();
+            //refresh();
+        }
+    });
+})
+function tampilPekerjaan() {
+    var wo_no = document.getElementById('wo_no').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/tampilStartDetail'); ?>',
+        data: 'wo_no=' + wo_no,
+        success: function(hasil) {
+            //tableKeterangan.fnDestroy();
+            $('#data-proses-start').html(hasil);
+        }
+    });
+}
+
+// end proses start work order
 </script>

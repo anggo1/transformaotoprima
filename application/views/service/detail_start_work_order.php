@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-striped table-bordered table-hover nowrap dataTable" id="list-start-work">
+    <table class="table table-striped table-bordered table-hover nowrap dataTable" id="list-po">
         <thead>
             <tr>
                 <th>No</th>
@@ -25,9 +25,14 @@
 
                 <td class="text-center">
                     <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"
-                        data-id="<?php echo $s->no_work_order; ?>"> Add Mechanic</button>
-                    <button class="btn btn-xs btn-outline-danger delete-operation ion-android-delete"
-                        data-id="<?php echo $s->id_detail; ?>"> Delete</button>
+                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                        Start</button>
+                    <button class="btn btn-xs btn-outline-warning pause-operation ion-android-delete"
+                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                        Pause</button>
+                    <button class="btn btn-xs btn-outline-danger complete-operation ion-android-delete"
+                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                        Complete</button>
                 </td>
             </tr>
             <?php
@@ -40,7 +45,7 @@
 </div>
 
 <script language="javascript">
-var MyTable = $('#list-start-work').dataTable({
+var MyTable = $('#list-po').dataTable({
     "responsive": false,
     "paging": false,
     "lengthChange": false,
@@ -48,4 +53,19 @@ var MyTable = $('#list-start-work').dataTable({
     "ordering": false,
     "info": false
 });
+
+function Start(id_detail, no_work_order) {
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url('WorkOrder/StartWork')?>",
+        data: {
+            'id_detail': id_detail,
+            'no_work_order': no_work_order
+        },
+        success: function(response) {
+
+            tampilPekerjaan();
+        }
+    });
+}
 </script>
