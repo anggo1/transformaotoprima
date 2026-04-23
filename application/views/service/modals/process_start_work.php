@@ -4,7 +4,7 @@
                 foreach ($dataSa as $s)  {{}}} ?>
 <div class="card-body">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card-header card-dark card-outline">
                 <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
                     Status Proses Work Order</h3>

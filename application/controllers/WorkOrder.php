@@ -321,12 +321,47 @@ class WorkOrder extends MY_Controller
 		$data['dataDetail'] = $this->Mod_work_order->select_operation_detail($wo_no);
 		$this->load->view('service/detail_start_work_order', $data);
 	}
-    public function updateDetailPo()
+    public function StartWork()
 	{
         $id_detail = $_POST['id_detail'];
         $no_work_order = $_POST['no_work_order'];
-		$data['dataPo'] = $this->Mod_po_masuk->update_detailPo($id_detail,$no_work_order);
-		//$this->load->view('body_repair/detail_estimasi', $data);
+		$data['dataPo'] = $this->Mod_work_order->start_work($id_detail,$no_work_order);
+	}
+    public function PauseWork()
+	{
+        date_default_timezone_set('Asia/Jakarta');
+        $id_detail = $_POST['id_detail'];
+        $no_work_order = $_POST['no_work_order'];
+	    $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+	    $tgl_jam_mulai  = $_POST['start_date'];
+
+        $start = new DateTime($tgl_jam_mulai);
+        $end = new DateTime($tgl_jam_sekarang);
+        $interval = $start->diff($end);
+
+        $jam = $interval->format('%h');
+        $menit = $interval->format('%i');
+        $total=$jam.'.'.$menit;
+
+
+		$data['dataPo'] = $this->Mod_work_order->pause_work($id_detail,$no_work_order,$total);
+	}
+    public function EndWork()
+	{
+        $id_detail = $_POST['id_detail'];
+        $no_work_order = $_POST['no_work_order'];
+	    $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+	    $tgl_jam_mulai  = $_POST['start_date'];
+
+        $start = new DateTime($tgl_jam_mulai);
+        $end = new DateTime($tgl_jam_sekarang);
+        $interval = $start->diff($end);
+
+        $jam = $interval->format('%h');
+        $menit = $interval->format('%i');
+        $total=$jam.'.'.$menit;
+        
+		$data['dataPo'] = $this->Mod_work_order->end_work($id_detail,$no_work_order,$total);
 	}
     //end process start work order
 }   

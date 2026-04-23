@@ -6,6 +6,7 @@
                 <th>SPK</th>
                 <th>Operation</th>
                 <th>Hours</th>
+                <th>Start Date</th>
                 <th>Type Of Work</th>
                 <th>Aksi</th>
             </tr>
@@ -21,18 +22,21 @@
                 <td><?php echo $s->no_work_order; ?></td>
                 <td><?php echo $s->operation; ?></td>
                 <td><?php echo $s->hours; ?></td>
+                <td><?php echo $s->start_date; ?></td>
                 <td><?php echo $s->type_of_work; ?></td>
-
                 <td class="text-center">
-                    <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"
+                    <?php if($s->status=='N' or $s->status=='P') {?>
+                    <button class="btn btn-xs btn-outline-success add-mechanic ion-android-play"
                         onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
                         Start</button>
-                    <button class="btn btn-xs btn-outline-warning pause-operation ion-android-delete"
-                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                        <?php }if($s->status=='R') {?>
+                    <button class="btn btn-xs btn-outline-warning pause-operation ion-android-pause"
+                        onclick="Pause('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>', '<?php echo $s->start_date; ?>')">
                         Pause</button>
-                    <button class="btn btn-xs btn-outline-danger complete-operation ion-android-delete"
-                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                    <button class="btn btn-xs btn-outline-danger complete-operation ion-android-stop"
+                        onclick="End('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>', '<?php echo $s->start_date; ?>')">
                         Complete</button>
+                    <?php } if($s->status=='F') { echo 'Finish';}?> 
                 </td>
             </tr>
             <?php
@@ -61,6 +65,36 @@ function Start(id_detail, no_work_order) {
         data: {
             'id_detail': id_detail,
             'no_work_order': no_work_order
+        },
+        success: function(response) {
+
+            tampilPekerjaan();
+        }
+    });
+}
+function Pause(id_detail, no_work_order,start_date) {
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url('WorkOrder/PauseWork')?>",
+        data: {
+            'id_detail': id_detail,
+            'no_work_order': no_work_order,
+            'start_date': start_date
+        },
+        success: function(response) {
+
+            tampilPekerjaan();
+        }
+    });
+}
+function End(id_detail, no_work_order,start_date) {
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url('WorkOrder/EndWork')?>",
+        data: {
+            'id_detail': id_detail,
+            'no_work_order': no_work_order,
+            'start_date': start_date
         },
         success: function(response) {
 

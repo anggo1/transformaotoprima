@@ -191,3 +191,19 @@ if(!function_exists('hash_verified'))
 		}     		
 		return $hasil;
 	}
+	function hitungTotalKerja($jamMasuk, $jamKeluar, $istirahatMenit = 60) {
+    $mulai = new DateTime($jamMasuk);
+    $selesai = new DateTime($jamKeluar);
+    
+    $interval = $mulai->diff($selesai);
+    
+    // Total menit = (jam * 60) + menit
+    $totalMenit = ($interval->h * 60) + $interval->i;
+    $jamKerjaBersih = $totalMenit - $istirahatMenit;
+    
+    // Konversi kembali ke jam dan menit
+    $jam = floor($jamKerjaBersih / 60);
+    $menit = $jamKerjaBersih % 60;
+    
+    return $jam . "." . $menit;
+}

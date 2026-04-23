@@ -252,6 +252,53 @@ class Mod_work_order extends CI_Model
 
 		return $this->db->affected_rows();
     }
+    function start_work($id_detail,$no_work_order)
+    {
+	    $tgl_mulai  = date('Y-m-d H:i:s');
+	    $jam_mulai  = date("H:i:s");
+        $sql2 = "UPDATE tbl_after_sales_detail_wo SET
+        start_date     = NOW(),
+        status     ='R' WHERE id_detail='".$id_detail."'";
+
+		$this->db->query($sql2);
+
+		return $this->db->affected_rows();
+    }
+    //total_pause     ='".$menit.",".$detik."',
+    function pause_work($id_detail,$no_work_order,$total)
+    {
+        $waktu_input='';
+            $ci_kons = get_instance();
+			$query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+		    $pause = $hasil['total_pause'];
+            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+
+        $sql2 = "UPDATE tbl_after_sales_detail_wo SET
+        total_pause     ='".$waktu_input."',
+        status     ='P' WHERE id_detail='".$id_detail."'";
+
+		$this->db->query($sql2);
+
+		return $this->db->affected_rows();
+    }
+
+    function end_work($id_detail,$no_work_order,$total)
+    {
+        $waktu_input='';
+            $ci_kons = get_instance();
+			$query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+		    $pause = $hasil['total_pause'];
+            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+        $sql2 = "UPDATE tbl_after_sales_detail_wo SET
+        total_pause     ='".$waktu_input."',
+        status     ='F' WHERE id_detail='".$id_detail."'";
+
+		$this->db->query($sql2);
+
+		return $this->db->affected_rows();
+    }
 }
 
 /* End of file Mod_service_appointment.php */
