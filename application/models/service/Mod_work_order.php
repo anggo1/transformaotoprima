@@ -18,6 +18,7 @@ class Mod_work_order extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,pembuat');
         $this->db->from('tbl_after_sales');
+        $this->db->where('status !=', 'F');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -298,6 +299,19 @@ class Mod_work_order extends CI_Model
         status     ='F' WHERE id_detail='".$id_detail."'";
 
 		$this->db->query($sql2);
+
+		return $this->db->affected_rows();
+    }
+    function finish_work($wo_no)
+    {
+	    $tgl_sekarang  = date("Y-m-d");
+	    $jam_sekarang  = date("H:i:s");
+        $sql = "UPDATE tbl_after_sales SET        
+        date_close_wo    ='".$tgl_sekarang."',
+        clockout    ='".$jam_sekarang."',
+        status     ='F' WHERE wo_no='".$wo_no."'";
+
+		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }

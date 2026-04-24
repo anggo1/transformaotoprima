@@ -104,6 +104,7 @@ table.dataTable td {
 </section>
 <?php
 show_my_confirm('hapusOperation', 'hapus-operation', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
+show_my_confirm('finishWorkOrder', 'hapusWorkOder', 'Selesaikan Pekerjaan Ini?', 'Ya, Selesaikan', 'Batal');
 ?>
 
 <script type="text/javascript">
@@ -525,6 +526,34 @@ function tampilPekerjaan() {
         }
     });
 }
+$(document).on("click", ".hapus-work-order", function() {
+    var id = $(this).attr("data-id");
+            $('#finishWorkOrder').modal('show');
+$(document).on("click", ".hapusWorkOder", function() {
+    var wo_no = id;
 
-// end proses start work order
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('WorkOrder/finishWorkOrder'); ?>",
+            data: "wo_no=" + wo_no
+        })
+
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+            $('#tabel-appointment').DataTable().ajax.reload();
+            $('.msg').html(out.msg);
+            $('#finishWorkOrder').modal('hide');
+            if (out.status != 'form') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1200
+                })
+            }
+        })
+})
+})
+
 </script>

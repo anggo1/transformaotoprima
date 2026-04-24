@@ -67,9 +67,9 @@ class WorkOrder extends MY_Controller
                   </button>
                   <button class="btn btn-xs btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>
-                  <button class="btn btn-xs btn-success process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Start
+                  <button class="btn btn-xs btn-success process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Detail
                   </button>
-                  <button class="btn btn-xs btn-danger process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-times"></i>Close
+                  <button class="btn btn-xs btn-danger hapus-work-order" title="Edit" data-id="'.$p->wo_no.'"><i class="fa fa-times"></i>Finish
                   </button>';
                 $akses_system= empty ($p->work_order) ? $edit : $print;
                 $row[] = $akses_system;
@@ -152,7 +152,7 @@ class WorkOrder extends MY_Controller
                 $out['msg'] = show_ok_msg('Success', '20px');
             } else {
                 $out['status'] = '';
-                $out['msg'] = show_err_msg('Filed !', '20px');
+                $out['msg'] = show_err_msg('Failed !', '20px');
             }
         } else {
             $out['status'] = 'form';
@@ -187,7 +187,7 @@ class WorkOrder extends MY_Controller
                 $out['msg'] = show_ok_msg('Success', '20px');
             } else {
                 $out['status'] = '';
-                $out['msg'] = show_err_msg('Filed !', '20px');
+                $out['msg'] = show_err_msg('Failed !', '20px');
             }
         } else {
             $out['status'] = 'form';
@@ -266,7 +266,7 @@ class WorkOrder extends MY_Controller
             $out['msg'] = show_del_msg('Deleted', '20px');
         } else {
             $out['status'] = '';
-            $out['msg'] = show_err_msg('Filed !', '20px');
+            $out['msg'] = show_err_msg('Failed !', '20px');
         }
         echo json_encode($out);
     }
@@ -280,7 +280,7 @@ class WorkOrder extends MY_Controller
             $out['msg'] = show_del_msg('Deleted', '20px');
         } else {
             $out['status'] = '';
-            $out['msg'] = show_err_msg('Filed !', '20px');
+            $out['msg'] = show_err_msg('Failed !', '20px');
         }
         echo json_encode($out);
     }
@@ -362,6 +362,20 @@ class WorkOrder extends MY_Controller
         $total=$jam.'.'.$menit;
         
 		$data['dataPo'] = $this->Mod_work_order->end_work($id_detail,$no_work_order,$total);
+	}
+    public function finishWorkOrder()
+	{
+        $wo_no = $_POST['wo_no'];
+        
+        $result = $this->Mod_work_order->finish_work($wo_no);
+         if ($result > 0) {
+            $out['status'] = '';
+            $out['msg'] = show_del_msg('Finished', '20px');
+        } else {
+            $out['status'] = '';
+            $out['msg'] = show_err_msg('Failed !', '20px');
+        }
+        echo json_encode($out);
 	}
     //end process start work order
 }   
