@@ -65,7 +65,7 @@ class PartRequest extends MY_Controller
                     <button class="btn btn-xs btn-primary edit-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>';
                   $print='                    
-                    <button class="btn btn-xs btn-info cetak-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
+                    <button class="btn btn-xs btn-info cetak-part-request" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>';
                 $akses_system= ($p->part_request=='N') ? $process : $print.$edit;
                 $row[] = $akses_system;
@@ -93,6 +93,7 @@ class PartRequest extends MY_Controller
                 $row[] = $no;
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;                
+                $row[] = $p->harga_baru;                
                 $data[] = $row;
             }
         $output = array(
@@ -139,12 +140,14 @@ class PartRequest extends MY_Controller
         $wo_no = $this->input->post('wo_no');
         $no_part = $this->input->post('no_part');
         $nama_part = $this->input->post('nama_part');
+        $harga = $this->input->post('harga');
         $jumlah = $this->input->post('jumlah');
+        $total = $harga * $jumlah;
         $keterangan = $this->input->post('keterangan');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_part_request->insertPart($wo_no, $nama_part, $jumlah, $no_part, $keterangan);
+            $result = $this->Mod_part_request->insertPart($wo_no, $no_part, $nama_part, $harga, $jumlah, $total, $keterangan);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -195,7 +198,7 @@ class PartRequest extends MY_Controller
         }
         echo json_encode($out);
     }
-    public function cetak_pre_order()
+    public function cetak_part_request()
 	{
         $idS = trim($_POST['id']);
         $kat = explode('|', $idS);
@@ -204,10 +207,9 @@ class PartRequest extends MY_Controller
 
         $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataSa'] = $this->Mod_part_request->select_sa($id);
-		$data['detailKet'] = $this->Mod_part_request->select_operation_detail($id);
 		$data['dataCus'] = $this->Mod_part_request->select_customer($kode_cus);
-		$data['dataPre'] = $this->Mod_part_request->select_pre_order($id);
+		$data['dataPart'] = $this->Mod_part_request->select_part_request($id);
 
-		echo show_my_print('service/modals/modal_cetak_pre_order', 'cetak-pre-order', $data, ' modal-xl');
+		echo show_my_print('service/modals/modal_cetak_part', 'cetak-part-request', $data, ' modal-xl');
 	}
 }

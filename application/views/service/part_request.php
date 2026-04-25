@@ -53,7 +53,7 @@ table.dataTable td {
                         </table>
                     </div>
                     <div id="tempat-modal"></div>
-                    <div id="cetak-pre-modal"></div>
+                    <div id="cetak-part"></div>
                 </div>
             </div>
         </div>
@@ -159,9 +159,11 @@ function dataPart() {
         var data = table.row(this).data();
         var no_part = data[1];
         var nama_part = data[2];
+        var harga = data[3];
 
         document.getElementById('no_part').value = no_part;
         document.getElementById('nama_part').value = nama_part;
+        document.getElementById('harga').value = harga;
         $('#modal-part').modal('hide');
     });
 
@@ -171,6 +173,7 @@ function insertRequest() {
     var wo_no = document.getElementById('wo_no').value;
     var no_part = document.getElementById('no_part').value;
     var nama_part = document.getElementById('nama_part').value;
+    var harga = document.getElementById('harga').value;
     var jumlah = document.getElementById('jumlah').value;
     var keterangan = document.getElementById('keterangan').value;
     $.ajax({
@@ -180,6 +183,7 @@ function insertRequest() {
             'wo_no': wo_no,
             'no_part': no_part,
             'nama_part': nama_part,
+            'harga': harga,
             'jumlah': jumlah,
             'keterangan': keterangan
         },
@@ -196,6 +200,7 @@ function insertRequest() {
             });
             no_part = document.getElementById('no_part').value = '';
             nama_part = document.getElementById('nama_part').value = '';
+            harga = document.getElementById('harga').value = '';
             jumlah = document.getElementById('jumlah').value = '';
             keterangan = document.getElementById('keterangan').value = '';
             //dataPart();
@@ -271,6 +276,19 @@ $(document).on("click", ".delete-request", function() {
             table.ajax.reload();
             $('.msg').html(out.msg);
             showPartRequestDetail();
+        })
+})
+$(document).on("click", ".cetak-part-request", function() {
+    var id = $(this).attr("data-id");
+    //var id = document.getElementById('next_proses').value=datakode;
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('PartRequest/cetak_part_request'); ?>",
+            data: "id=" + id
+        })
+        .done(function(data) {
+            $('#cetak-part').html(data);
+            $('#cetak-part-request').modal('show');
         })
 })
 </script>

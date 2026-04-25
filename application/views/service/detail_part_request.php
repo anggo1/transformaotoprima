@@ -5,7 +5,9 @@
                 <th>No</th>
                 <th>No Part</th>
                 <th>Nama Part</th>
+                <th>Harga</th>
                 <th>Jumlah</th>
+                <th>Total</th>
                 <th>Keterangan</th>
                 <th>Aksi</th>
             </tr>
@@ -20,7 +22,9 @@
                 <td><?php echo $no; ?></td>
                 <td><?php echo $s->no_part; ?></td>
                 <td><?php echo $s->nama_part; ?></td>
+                <td><?php echo number_format($s->harga, 0, ',', '.'); ?></td>
                 <td><?php echo $s->jumlah; ?></td>
+                <td><?php echo number_format($s->total, 0, ',', '.'); ?></td>
                 <td><?php echo $s->keterangan; ?></td>
 
                 <td class="text-center">

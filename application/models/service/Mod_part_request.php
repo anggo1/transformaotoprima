@@ -146,14 +146,16 @@ class Mod_part_request extends CI_Model
 
         return $data->result();
     }
-    function insertPart($wo_no, $no_part, $nama_part, $jumlah, $keterangan)
+    function insertPart($wo_no, $no_part, $nama_part, $harga, $jumlah, $total, $keterangan)
     {
         $sql = "INSERT INTO tbl_after_sales_part_request SET
         id_request   ='',
         wo_no       ='".$wo_no."',
         no_part     ='".$no_part."',
         nama_part   ='".$nama_part."',
+        harga       ='".$harga."',
         jumlah      ='".$jumlah."',
+        total       ='".$total."',
         keterangan  ='".$keterangan."'";
 
 		$this->db->query($sql);
