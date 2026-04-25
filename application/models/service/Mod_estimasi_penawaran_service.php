@@ -115,7 +115,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     public function deleteDetail_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
 
         $this->db->query($sql);
 
@@ -123,7 +123,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     public function deleteKeterangan_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_detail_note='" . $id . "'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran_note WHERE id_detail_note='" . $id . "'";
 
         $this->db->query($sql);
 
@@ -131,7 +131,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     public function insertNote($id)
     {        
-        $sql_detil = "INSERT INTO tbl_wh_detail_estimasi_penawaran_note (id_estimasi_penawaran,remark) 
+        $sql_detil = "INSERT INTO tbl_af_detail_estimasi_penawaran_note (id_estimasi_penawaran,remark) 
         VALUES ('".$id."','Masa berlaku 7 hari'), 
         ('".$id."','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
         ('".$id."','Harga dapat berubah sewaktu-waktu'),
@@ -152,7 +152,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $id=$data['id_estimasi_penawaran'];
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
-        $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
+        $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             id_detail       ='',
             id_estimasi_penawaran           ='" . $data['id_estimasi_penawaran'] . "',
             no_part     ='" . $data['no_part'] . "',
@@ -171,7 +171,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
 		$total=$hrg_part * $jml_diskon / 100;
         $harga_asli = $hrg_part;
         $totalnya = $harga_asli - $total;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
 
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -180,20 +180,20 @@ class Mod_estimasi_penawaran_service extends CI_Model
 		{			
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
 
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function update_remark($id,$remark)
 		{
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function insertRemark($id,$remark)
 		{
-			$sql_update = "INSERT tbl_wh_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '$id', remark ='$remark'";
+			$sql_update = "INSERT tbl_af_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '$id', remark ='$remark'";
             $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -214,7 +214,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
             $total_harga = $data['total_harga'] - $data['total_diskon'];
         }
         $datenow = date("Y-m-d");
-        $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
+        $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             id_detail       ='',
             id_estimasi_penawaran   ='" . $kodenya . "',
             kode_po         ='" . $koderefnya . "',
@@ -243,7 +243,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     public function select_detail($id)
     {
         $ci = get_instance();
-                $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_estimasi_penawaran as a 
+                $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_af_detail_estimasi_penawaran as a 
                     LEFT JOIN tbl_wh_estimasi_penawaran as b ON b.id_estimasi_penawaran=a.id_estimasi_penawaran
                     WHERE a.id_estimasi_penawaran='{$id}'";
         $d_data = $ci->db->query($query)->row_array();
@@ -263,7 +263,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
-        FROM tbl_wh_detail_estimasi_penawaran AS a
+        FROM tbl_af_detail_estimasi_penawaran AS a
         WHERE a.id_estimasi_penawaran ='{$id}' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
@@ -272,7 +272,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     public function select_keterangan($id)
     {
-        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='{$id}' ORDER BY id_detail_note ASC";
+        $sql = "SELECT * FROM tbl_af_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='{$id}' ORDER BY id_detail_note ASC";
 
         $data = $this->db->query($sql);
         return $data->result();

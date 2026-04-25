@@ -19,7 +19,7 @@ class EstimasiPenawaranService extends MY_Controller
 		$this->load->helper('url');
 		$data['dataCustomer'] = $this->Mod_estimasi_penawaran_service->select_customer();
         echo show_my_modal('service/modals/modal_keterangan_estimasi', 'tambah-keterangan', $data);
-		$this->template->load('layoutbackend', 'serialize/estimasi_penawaran_service', $data);
+		$this->template->load('layoutbackend', 'service/estimasi_penawaran_service', $data);
 	}
 public function showPart()
     {
@@ -145,7 +145,7 @@ public function showPart()
 				'user'   	=> $data['user'],
 				'status_po'	=> 'N'
 			);
-				$data['dataPo'] = $this->db->insert('tbl_wh_estimasi_penawaran', $data);
+				$data['dataPo'] = $this->db->insert('tbl_af_estimasi_penawaran', $data);
 				$data 	= $this->input->post();
 				
 			if ($result > 0) {
