@@ -41,6 +41,7 @@ table.dataTable td {
                                     <th>Duration/H</th>
                                     <th>IM</th>
                                     <th>Description</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

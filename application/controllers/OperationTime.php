@@ -53,6 +53,7 @@ class OperationTime extends MY_Controller
                 $row[] = $p->duration;
                 $row[] = $p->im;
                 $row[] = $p->description;
+                $row[] = 'Rp. ' . number_format($p->price, 0, ',', '.');
                 if($pel1->edit_level=="Y"){
                     $edit='                    
                     <button class="btn btn-sm btn-outline-success update-operation-time" title="Edit" data-id="'.$p->id_x.'"><i class="fa fa-edit"></i>

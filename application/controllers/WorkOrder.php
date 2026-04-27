@@ -65,6 +65,8 @@ class WorkOrder extends MY_Controller
                   $print='                    
                     <button class="btn btn-xs btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>
+                    <button class="btn btn-xs btn-secondary estimasi-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-list"></i> Estimasi
+                  </button>
                   <button class="btn btn-xs btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>
                   <button class="btn btn-xs btn-success process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Detail

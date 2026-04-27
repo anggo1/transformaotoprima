@@ -107,7 +107,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     public function select_customer()
     {
-        $sql = " SELECT * FROM tbl_wh_customer";
+        $sql = " SELECT * FROM tbl_customer";
 
         $data = $this->db->query($sql);
 
@@ -160,7 +160,9 @@ class Mod_estimasi_penawaran_service extends CI_Model
             satuan      ='" . $data['satuan'] . "',
             harga       ='" . $harga_baru. "',
             harga_net   ='" . $harga_baru. "',
-            stok_akhir  ='" . $data['stok'] . "'";
+            jumlah   ='1',
+            stok_akhir  ='" . $data['stok'] . "',
+            validasi_jenis = '" . $data['jenis'] . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();

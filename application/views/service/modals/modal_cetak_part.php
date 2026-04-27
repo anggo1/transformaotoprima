@@ -159,7 +159,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
   <table width="100%" border="0" cellpadding="1" style="font-size: 14px;" cellspacing="0" class="datatable1">
     <thead>
       <tr>
-        <th colspan="3"><div align="left"><font size="2">Work Order Form</font></div></th>
+        <th colspan="3"><div align="left"><font size="2">Part Requuest Form</font></div></th>
         <th colspan="2">Dealer Name</th>
         <th><div align="left"><?php echo  $apl1->nama_owner; ?></div></th>
         <th>&nbsp;</th>
@@ -193,17 +193,17 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th height="20">&nbsp;</th>
         <th><div align="left">Engine No</div></th>
         <th><span class="text2"><?php echo $s->vin ?></span></th>
-        <th><div align="left">received by</div></th>
+        <th><div align="left"><font size="2">R</font>eceived by</div></th>
         <th><div align="left">: <span class="text2"><?php echo $s->sa_name ?></span></div></th>
       </tr>
       <tr>
         <th height="20">&nbsp;</th>
         <th height="20"><div align="left">Car Registration no</div></th>
-        <th height="20"><div align="left">: <?php echo $c->tlp_person ?></div></th>
+        <th height="20"><div align="left">: <?php echo $s->no_pol ?></div></th>
         <th><div align="left">Date of 1st registration</div></th>
-        <th><span class="text2"><?php echo tglIndoPendek($s->date_open_wo) ?></span></th>
+        <th>&nbsp;</th>
         <th><div align="left">Issued on</div></th>
-        <th><div align="left">: <?php echo $s->customer_complain; ?></div></th>
+        <th><div align="left">: <?php echo $s->customer_complain; ?> ( Jenis Service )</div></th>
       </tr>
       <tr>
         <th height="20">&nbsp;</th>
@@ -243,23 +243,26 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th colspan="2">Total Price</th>
           </tr>
         <?php
+            $no=1;
         if(!empty($dataPart)){
         foreach ($dataPart as $d) { 
-            $no=1;
+          $total_ppn= $d->total * 0.11;
+          $total_dengan_ppn = $d->total + $total_ppn;
+
           ?>
           <tr>
-            <td><div align="center"><?php echo $no ?></div></td>
+            <td><div align="center"><?php echo $no ++ ?></div></td>
             <td><div align="center"><?php echo $d->no_part; ?>&nbsp;</div></td>
             <td>&nbsp;</td>
             <td width="4%"><div align="center"></div></td>
             <td width="13%"><div align="center"><?php echo $d->jumlah; ?></div></td>
-            <td width="28%"><div align="center"><?php echo $d->keterangan; ?>&nbsp;</div></td>
+            <td width="28%"><div align="center"><?php echo $d->nama_part; ?>&nbsp;</div></td>
             <td width="11%"><div align="center"><?php echo number_format($d->harga, 0, ',', '.'); ?>&nbsp;</div></td>
             <td width="9%"><div align="center"><?php echo 'Rp. '.number_format($d->total, 0, ',', '.'); ?>&nbsp;</div></td>
-            <td width="12%"><div align="center"><?php echo 'Rp. '.number_format($d->total, 0, ',', '.'); ?>&nbsp;</div></td>
+            <td width="12%"><div align="center"><?php echo 'Rp. '.number_format($total_dengan_ppn, 0, ',', '.'); ?>&nbsp;</div></td>
             </tr>
           
-        <?php $no + 1;
+        <?php 
         }} ?>
           <tr>
             <td>&nbsp;</td>

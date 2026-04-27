@@ -169,6 +169,9 @@
                             <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
                                 title="Add Part" data-toggle="modal" data-target="#modal_form"><i
                                     class="fas fa-plus"></i> Tambah Barang</button>
+                                    <button type="button" class="btn btn-xl bg-gradient-info" id="tambah-jasa" onclick="panggilTabel()"
+                                title="Add Part" data-toggle="modal" data-target="#modal_operation"><i
+                                    class="fas fa-plus"></i> Tambah Jasa</button>
                         </div>
                     </div>
                 </div>
@@ -241,11 +244,48 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="modal fade" id="modal_operation" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body form">
+                        <div class="card card-first card-outline">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-operation">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Code</th>
+                                                <th>Hours</th>
+                                                <th>Type of Work</th>
+                                                <th>Harga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot></tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">
+$('#modal_operation').on('hidden.bs.modal', function () {
+    if ($.fn.DataTable.isDataTable('#tabel-operation')) {
+        $('#tabel-operation').DataTable().destroy();
+        $('#tabel-operation tbody').empty();
+    }
+});
+
 function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }
@@ -280,7 +320,7 @@ $(document).ready(function() {
         "pageLength": 10, // Defaults number of rows to display in table
         "order": [],
         "ajax": {
-            "url": "<?php echo site_url('EstimasiPenawaran/ajax_list') ?>",
+            "url": "<?php echo site_url('EstimasiPenawaranService/ajax_list') ?>",
             "type": "POST"
         },
         "columnDefs": [{
@@ -303,11 +343,12 @@ $(document).ready(function() {
         var satuan = data[3];
         var stok = data[4];
         var harga_baru = data[5];
+        var jenis = 'P';
         var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
         var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
         $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/prosesDetailPo'); ?>',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
             data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
                 "&id_estimasi_penawaran=" + id_estimasi_penawaran +
                 "&id_part=" + id_part +
@@ -315,16 +356,16 @@ $(document).ready(function() {
                 "&nama_part=" + nama_part +
                 "&satuan=" + satuan +
                 "&stok=" + stok +
-                "&harga_baru=" + harga_baru
+                "&harga_baru=" + harga_baru +
+                "&jenis=" + jenis
         })
         tampilDetail();
         document.getElementById("simpan").hidden = false;
         $('#modal_form').modal('hide');
-        tampilDetail();
         tampilKeterangan();
     });
 });
-var MyTable = $('#list-po').dataTable({
+var MyTable = $('#list-po').DataTable({
     "responsive": true,
     "paging": true,
     "lengthChange": true,
@@ -332,7 +373,80 @@ var MyTable = $('#list-po').dataTable({
     "ordering": true,
     "info": true
 });
+function panggilTabel() {
+    //datatables
+    table = $("#tabel-operation").DataTable({
 
+        "responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 5,
+        "autoWidth": false,
+
+
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('EstimasiPenawaranService/list_operation') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 3], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+            
+    $('#tabel-operation tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        var id_x = data[0];
+        var code = data[1];
+        var hours = 'Hours';
+        var operation = data[3];
+        var stok_operation = '0';
+        var harga = data[4];
+        var jenis = 'S';
+        var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
+        var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
+        $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
+            data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
+                "&id_estimasi_penawaran=" + id_estimasi_penawaran +
+                "&id_part=" + id_x +
+                "&no_part=" + code +
+                "&nama_part=" + operation +
+                "&satuan=" + hours +
+                "&stok=" + stok_operation +
+                "&harga_baru=" + harga +
+                "&jenis=" + jenis
+        })
+        tampilDetail();
+        document.getElementById("simpan").hidden = false;
+        $('#modal_operation').modal('hide');
+        tampilKeterangan();
+
+
+        //e.preventDefault();
+        //showDetail(id_pk);
+        //showDetail(id_pk);
+    });
+
+};
 var tableKeterangan = $('#list-keterangan').dataTable({
            "responsive": false,
            "paging": true,
@@ -350,7 +464,7 @@ function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
 
     $.ajax({
         method: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/prosesDetailPo'); ?>',
+        url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
         data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
             "&id_estimasi_penawaran=" + id_estimasi_penawaran +
             "&id_part=" + id_part +
@@ -391,7 +505,7 @@ function tampilDetail() {
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilDetail'); ?>',
+        url: '<?php echo base_url('EstimasiPenawaranService/tampilDetail'); ?>',
         data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
         success: function(hasil) {
             //MyTable.fnDestroy();
@@ -404,7 +518,7 @@ function insertNote() {
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tambahNote'); ?>',
+        url: '<?php echo base_url('EstimasiPenawaranService/tambahNote'); ?>',
         data: 'id=' + id_estimasi_penawaran,
         success: function(hasil) {
             tampilKeterangan()
@@ -416,7 +530,7 @@ function tampilKeterangan() {
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
     $.ajax({
         type: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilKeterangan'); ?>',
+        url: '<?php echo base_url('EstimasiPenawaranService/tampilKeterangan'); ?>',
         data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
         success: function(hasil) {
             tableKeterangan.fnDestroy();
@@ -433,7 +547,7 @@ $('#form-keterangan').submit(function(e) {
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/tambahKeterangan'); ?>',
+            url: '<?php echo base_url('EstimasiPenawaranService/tambahKeterangan'); ?>',
             data: data + "&id=" + id
         })
         .done(function(data) {
@@ -502,7 +616,7 @@ function tampilDetailCache(dataPo) {
     var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilDetailCache'); ?>?id_estimasi_penawaran=' +
+        url: '<?php echo base_url('EstimasiPenawaranService/tampilDetailCache'); ?>?id_estimasi_penawaran=' +
             id_estimasi_penawaran,
         data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
         success: function(hasil) {
@@ -517,7 +631,7 @@ $('#formPo').submit(function(e) {
 
     $.ajax({
             method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaran/prosesPo'); ?>',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesPo'); ?>',
             data: data
         })
         .done(function(data) {
@@ -575,7 +689,7 @@ $(document).on("click", ".cetak-po", function() {
     //var id = document.getElementById('next_proses').value=datakode;
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/cetak'); ?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/cetak'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -593,7 +707,7 @@ $(document).on("click", ".delete-detail", function() {
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/deleteDetail'); ?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/deleteDetail'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -617,7 +731,7 @@ $(document).on("click", ".delete-keterangan", function() {
 
     $.ajax({
             method: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/deleteKeterangan'); ?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/deleteKeterangan'); ?>",
             data: "id=" + id
         })
         .done(function(data) {
@@ -666,4 +780,5 @@ function stopDiskon() {
 function startPpn() {
     interval = setInterval("Ppn()", 10);
 }
+
 </script>

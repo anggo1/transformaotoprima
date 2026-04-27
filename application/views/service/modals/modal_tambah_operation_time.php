@@ -59,6 +59,15 @@
                                                                                     ?>" name="description"
                     aria-describedby="sizing-addon2" required>
             </div>
+            <div class="form-group">
+                <label class="control-label">Price</label>
+                <input type="text" class="form-control" placeholder="Price" value="<?php
+                                                                                    if (!empty($dataOpTime->price)) {
+                                                                                      echo $dataOpTime->price;
+                                                                                    }
+                                                                                    ?>" name="price"
+                    aria-describedby="sizing-addon2" required>
+            </div>
 
     </div>
     <div class="modal-footer bg-whitesmoke br">

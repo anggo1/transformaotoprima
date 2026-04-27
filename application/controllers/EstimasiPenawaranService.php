@@ -7,7 +7,7 @@ class EstimasiPenawaranService extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('service/Mod_estimasi_penawaran_service', 'Mod_menu'));
+		$this->load->model(array('service/Mod_estimasi_penawaran_service','service/Mod_operation_time', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 	}
@@ -61,6 +61,48 @@ public function showPart()
 		//output to json format
 		echo json_encode($output);
 	}
+	public function list_operation()
+    {
+        $link=$this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $get_id = $this->Mod_operation_time->get_by_nama($link);
+        foreach ($get_id as $idnye){
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub=$idnye->id_submenu;
+        }
+        $viewLevel = $this->Mod_operation_time->select_by_level($idlevel, $id_sub);
+
+        foreach ($viewLevel as $pel1) {
+            $row1 = array();
+            $row1[] = $pel1->id_submenu;
+            $data1[] = $row1;
+
+            $list = $this->Mod_operation_time->get_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $p) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $p->code;
+                $row[] = $p->duration;
+                $row[] = $p->description;
+                $row[] = $p->price;
+                
+                $data[] = $row;
+            }
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_operation_time->count_all(),
+            "recordsFiltered" => $this->Mod_operation_time->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
+    //end cari operation
 	public function cariKode($id)
 	{
 		$data = $this->Mod_estimasi_penawaran_service->get_part($id);

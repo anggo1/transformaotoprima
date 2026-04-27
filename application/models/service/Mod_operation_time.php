@@ -112,7 +112,8 @@ class Mod_operation_time extends CI_Model
 	$sql = "INSERT INTO tbl_after_sales_operation_time SET code='" . $data['code'] . "',
 	duration='" . $data['duration'] . "',
 	im='" . $data['im'] . "',
-	description='" . $data['description'] . "'";
+	description='" . $data['description'] . "',
+    price='" . $data['price'] . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -122,7 +123,8 @@ class Mod_operation_time extends CI_Model
 		$sql = "UPDATE tbl_after_sales_operation_time SET code='" . $data['code'] . "',
 	duration='" . $data['duration'] . "',
 	im='" . $data['im'] . "',
-	description='" . $data['description'] . "'
+	description='" . $data['description'] . "',
+    price='" . $data['price'] . "'
         WHERE id_x='" . $data['id_x'] . "'";
 
 		$this->db->query($sql);
