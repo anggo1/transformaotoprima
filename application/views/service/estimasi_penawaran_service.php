@@ -68,6 +68,68 @@ table.dataTable td {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal_part" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body form">
+                            <div class="card card-first card-outline">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-part">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No Part</th>
+                                                    <th>Nama Part</th>
+                                                    <th>Satuan</th>
+                                                    <th>Stok</th>
+                                                    <th>Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal_operation" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body form">
+                            <div class="card card-first card-outline">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table no-wrap table-hover nowrap"
+                                            id="tabel-operation">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Code</th>
+                                                    <th>Hours</th>
+                                                    <th>Type of Work</th>
+                                                    <th>Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
@@ -77,6 +139,12 @@ $('#modal_operation').on('hidden.bs.modal', function() {
     if ($.fn.DataTable.isDataTable('#tabel-operation')) {
         $('#tabel-operation').DataTable().destroy();
         $('#tabel-operation tbody').empty();
+    }
+});
+$('#modal_part').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#tabel-part')) {
+        $('#tabel-part').DataTable().destroy();
+        $('#tabel-part tbody').empty();
     }
 });
 
@@ -161,8 +229,8 @@ $(document).ready(function() {
 
 });
 
-$(document).ready(function() {
-    table = $('#table-part').dataTable({
+function panggilPart() {
+    table = $('#tabel-part').dataTable({
         "responsive": false,
         "paging": true,
         "lengthChange": true,
@@ -182,43 +250,42 @@ $(document).ready(function() {
             "orderable": false,
         }, ]
     });
-});
 
-$(document).ready(function() {
-    var table = $('#table-part').DataTable();
-    var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-    var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
 
-    $('#table-part tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var id_part = data[0];
-        var no_part = data[1];
-        var nama_part = data[2];
-        var satuan = data[3];
-        var stok = data[4];
-        var harga_baru = data[5];
-        var jenis = 'P';
+    $(document).ready(function() {
+        var table = $('#tabel-part').DataTable();
         var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
         var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-        $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
-            data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-                "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-                "&id_part=" + id_part +
-                "&no_part=" + no_part +
-                "&nama_part=" + nama_part +
-                "&satuan=" + satuan +
-                "&stok=" + stok +
-                "&harga_baru=" + harga_baru +
-                "&jenis=" + jenis
-        })
-        tampilDetail();
-        document.getElementById("simpan").hidden = false;
-        $('#modal_form').modal('hide');
-        tampilKeterangan();
+
+        $('#tabel-part tbody').on('click', 'tr', function() {
+            var data = table.row(this).data();
+            var no_part = data[1];
+            var nama_part = data[2];
+            var satuan = data[3];
+            var stok = data[4];
+            var harga_baru = data[5];
+            var jenis = 'P';
+            var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
+            var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
+            $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
+                data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
+                    "&id_estimasi_penawaran=" + id_estimasi_penawaran +
+                    "&no_part=" + no_part +
+                    "&nama_part=" + nama_part +
+                    "&satuan=" + satuan +
+                    "&stok=" + stok +
+                    "&harga_baru=" + harga_baru +
+                    "&jenis=" + jenis
+            })
+            tampilDetail();
+            document.getElementById("simpan").hidden = false;
+            $('#modal_part').modal('hide');
+            tampilKeterangan();
+        });
     });
-});
+}
 var MyTable = $('#list-po').DataTable({
     "responsive": true,
     "paging": true,
@@ -268,7 +335,6 @@ function panggilTabel() {
 
     $('#tabel-operation tbody').on('click', 'tr', function() {
         var data = table.row(this).data();
-        var id_x = data[0];
         var code = data[1];
         var hours = 'Hours';
         var operation = data[3];
@@ -282,7 +348,6 @@ function panggilTabel() {
             url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
             data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
                 "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-                "&id_part=" + id_x +
                 "&no_part=" + code +
                 "&nama_part=" + operation +
                 "&satuan=" + hours +
@@ -313,28 +378,6 @@ var tableKeterangan = $('#list-keterangan').dataTable({
     "pageLength": 5
 });
 
-function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
-    var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-    var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-
-    $.ajax({
-        method: 'POST',
-        url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
-        data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-            "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-            "&id_part=" + id_part +
-            "&no_part=" + no_part +
-            "&nama_part=" + nama_part +
-            "&satuan=" + satuan +
-            "&stok=" + stok +
-            "&harga_baru=" + harga_baru
-    })
-
-    tampilDetail(id_estimasi_penawaran);
-
-    $('#modal_form').modal('hide');
-
-}
 
 function next(dataPo, dataRef) {
     document.getElementById('id_estimasi_penawaran').value = dataPo;

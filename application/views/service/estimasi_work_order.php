@@ -148,8 +148,8 @@
                                 Penawaran</button>
                         </div>
                     </form>
-                    <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part" title="Add Part"
-                        data-toggle="modal" data-target="#modal_form"><i class="fas fa-plus"></i> Tambah
+                    <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part" onclick="panggilPart()" title="Add Part"
+                        data-toggle="modal" data-target="#modal_part"><i class="fas fa-plus"></i> Tambah
                         Barang</button>
                     <button type="button" class="btn btn-xl bg-gradient-info" id="tambah-jasa" onclick="panggilTabel()"
                         title="Add Part" data-toggle="modal" data-target="#modal_operation"><i class="fas fa-plus"></i>
@@ -196,66 +196,6 @@
             <div id="modal-po"></div>
             <div id="data-po"></div>
             <div id="data-po-cache"></div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modal_form" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body form">
-                <div class="card card-first card-outline">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table width="100%" class="table no-wrap table-hover nowrap" id="table-part">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>No Part</th>
-                                        <th>Nama Part</th>
-                                        <th>Satuan</th>
-                                        <th>Stok</th>
-                                        <th>Harga</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot></tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="modal fade" id="modal_operation" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body form">
-                <div class="card card-first card-outline">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-operation">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Code</th>
-                                        <th>Hours</th>
-                                        <th>Type of Work</th>
-                                        <th>Harga</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot></tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

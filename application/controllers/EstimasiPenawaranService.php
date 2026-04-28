@@ -110,18 +110,12 @@ public function showPart()
 		foreach ($list as $pel) {
 			$no++;
 			$row = array();
-			$row[] = "$no";
+			$row[] = $no;
 			$row[] = $pel->no_part;
                 $row[] = $pel->nama_part;
                 $row[] = $pel->satuan;
                 $row[] = $pel->stok;
                 $row[] = number_format($pel->harga_baru);
-                $row[] = $pel->diskon;
-                $row[] = number_format($pel->harga_net);
-                $row[] = number_format($pel->harga_rata);
-                $row[] = $pel->ppn;
-                $row[] = number_format($pel->harga_valid);
-                $row[] = $pel->ket_harga;
 			$data[] = $row;
 		}
 

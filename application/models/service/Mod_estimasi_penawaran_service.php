@@ -16,7 +16,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('a.*');
+        $this->db->select('id_part,no_part,nama_part,satuan,harga_baru,stok');
         $this->db->from('tbl_wh_barang as a');
         $i = 0;
 
