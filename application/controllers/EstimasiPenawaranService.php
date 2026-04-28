@@ -7,7 +7,7 @@ class EstimasiPenawaranService extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('service/Mod_estimasi_penawaran_service','service/Mod_operation_time', 'Mod_menu'));
+		$this->load->model(array('service/Mod_estimasi_penawaran_service','service/Mod_operation_time', 'service/Mod_work_order', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 	}
@@ -17,10 +17,83 @@ class EstimasiPenawaranService extends MY_Controller
 		$data['page'] 		= "Estimasi Penawaran";
 		$data['judul'] 		= "Estimasi";
 		$this->load->helper('url');
-		$data['dataCustomer'] = $this->Mod_estimasi_penawaran_service->select_customer();
+		//$data['dataCustomer'] = $this->Mod_estimasi_penawaran_service->select_customer();
+		//$this->template->load('layoutbackend', 'service/estimasi_work_order', $data);
         echo show_my_modal('service/modals/modal_keterangan_estimasi', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'service/estimasi_penawaran_service', $data);
 	}
+	public function processEstimasi() {
+        $idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $kode_cus = $kat[1];
+        $id = $kat[0];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
+		$data['dataSa'] = $this->Mod_estimasi_penawaran_service->select_sa($id);
+		$data['dataCus'] = $this->Mod_estimasi_penawaran_service->select_customer($kode_cus);
+        
+		$this->load->view('service/estimasi_work_order', $data);
+
+		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+	}
+
+	public function ajax_estimasi()
+    {
+        $link=$this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $idlokasi = $this->session->userdata['lokasi'];
+        $get_id = $this->Mod_estimasi_penawaran_service->get_by_nama($link);
+        foreach ($get_id as $idnye){
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub=$idnye->id_submenu;
+        }
+        $viewLevel = $this->Mod_estimasi_penawaran_service->select_by_level($idlevel, $id_sub);
+
+        foreach ($viewLevel as $pel1) {
+            $row1 = array();
+            $row1[] = $pel1->id_submenu;
+            $data1[] = $row1;
+
+            $list = $this->Mod_estimasi_penawaran_service->get_datatables_estimasi();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $p) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = $p->wo_no;
+                $row[] = $p->sa_name;
+                $row[] = $p->customer;
+                $row[] = $p->customer_complain;
+                $row[] = $p->vin;
+                $row[] = $p->no_pol;
+                $row[] = $p->type;
+                $row[] = $p->storing;
+                $row[] = tglIndoPendek($p->date_open_wo);
+                $row[] = $p->clockin;
+                $row[] = $p->pembuat;
+                    $edit='                    
+                    <button class="btn btn-xs btn-dark process-estimasi" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-chalkboard"></i> Process
+                  </button>';
+                  
+                  $print='                    
+                    <button class="btn btn-xs btn-info cetak-estimasi" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
+                  </button>';
+                $akses_system= ($p->estimasi == 'N') ? $edit : $print;
+                $row[] = $akses_system;
+                $data[] = $row;
+            }
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_estimasi_penawaran_service->count_all_estimasi(),
+            "recordsFiltered" => $this->Mod_estimasi_penawaran_service->count_filtered_estimasi(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 public function showPart()
     {
 		$sup = $_GET['sup'];

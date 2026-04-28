@@ -1,285 +1,79 @@
-<?php if (!empty($dataPart)) {
-	foreach ($dataPart as $part) {
-	}
-} ?>
+<style>
+.table.DataTable {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 9px;
+}
+
+table.dataTable td {
+    padding-bottom: 9px;
+}
+</style>
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card card-dark card-outline">
-                    <!-- /.card-header -->
-                    <div class="modal-content">
-                        <div class="modal-header">
+    <div class="card-body card-outline">
+        <div class="card card-primary card-outline card-outline-tabs">
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs " id="custom-content-above-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tab-work-order" data-toggle="pill" href="#tab-wo" role="tab">
+                            <i class="fa fa-bus"></i>
+                            Work Order List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" hidden="hidden" id="tab-estimasi-tab" data-toggle="pill"
+                            href="#tab-estimasi" role="tab">
+                            <i class="fas fa-luggage-cart"></i>
+                            Proses Estimasi Penawaran</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="custom-content-below-tabContent">
 
-                            <h5 style="display:block; text-align:center;"><span
-                                    class="ion-soup-can-outline ion-lg"></span>&nbsp; Estimasi Penawaran Part
-                            </h5>
-                            <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
-                                onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> DATA
-                                BARU</button>
+                    <div class="tab-pane fade show active" id="tab-wo" role="tabpanel" aria-labelledby="tab-work-order">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="tabel-appointment" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No WO</th>
+                                        <th>SA</th>
+                                        <th>Customer</th>
+                                        <th>Complain</th>
+                                        <th>Vin</th>
+                                        <th>LcPlate</th>
+                                        <th>VcType</th>
+                                        <th>Storing</th>
+                                        <th>DateStart</th>
+                                        <th>C.In</th>
+                                        <th>User</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="modal-body">
-
-                        <?php
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 5, 4);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
-						$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
-						?>
-                            <form id="formPo" name="formPo" method="POST">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label">No Reff</label>
-                                        <input type="text" name="no_ref" id="no_ref"
-                                    value="<?php echo $kode_ref ?>"  class="form-control"
-                                            placeholder="Nomor Referensi">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Date</label>
-                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
-
-                                            <input type="text" name="tgl_estimasi_penawaran" id="tgl_estimasi_penawaran"
-                                                value="" class="form-control tgl_estimasi_penawaran datetimepicker"
-                                                data-toggle="datetimepicker" data-target=".tgl_estimasi_penawaran"
-                                                data-format="yyy-mm-dd" required>
-
-                                            <div class="input-group-append" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                </div>
-                                            </div>
+                        <div id="tempat-modal"></div>
+                        <div id="cetak-wo-modal"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-estimasi" role="tabpanel" aria-labelledby="tab-estimasi-tab">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body card-outline">
+                                        <div class="modal-body">
+                                            <div id="data-proses-estimasi"></div>
                                         </div>
                                     </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Customer No</label>
-                                        <select name="id_customer" id="id_customer" class="form-control">
-                                            <option value="">Customer...
-                                            </option>
-                                            <?php
-											if (!empty($dataCustomer)) {
-												foreach ($dataCustomer as $sp) {   ?>
-                                            <option value="<?php echo $sp->kode_cus; ?>">
-                                                <?php echo $sp->nama_cus; ?>
-                                            </option>
-                                            <?php
-												}
-											}
-											?>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Registration No</label>
-                                        <input type="text" name="no_reg" id="no_reg" value="" class="form-control"
-                                            placeholder="No Registration">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label">VIN No</label>
-                                        <input type="text" name="no_vin" id="no_vin" value="" class="form-control"
-                                            placeholder="VIN">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Sales designation</label>
-                                        <input type="text" name="sales_design" id="sales_design" value=""
-                                            class="form-control" placeholder="Sales designation">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Date/time received</label>
-                                        <input type="text" name="date_received" id="date_received" value=""
-                                            class="form-control" placeholder="Date Received">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Millage/Km</label>
-                                        <input type="text" name="millage" id="millage" value="" class="form-control"
-                                            placeholder="Millage / Km">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label">Engine No</label>
-                                        <input type="text" name="engine_no" id="engine_no" value="" class="form-control"
-                                            placeholder="Engine No">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Account No</label>
-                                        <input type="text" name="acc_no" id="acc_no" value="" class="form-control"
-                                            placeholder="Account No">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Received by</label>
-                                        <input type="text" name="received_by" id="received_by" value=""
-                                            class="form-control" placeholder="Received by">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Routing No</label>
-                                        <input type="text" name="routing_no" id="routing_no" value=""
-                                            class="form-control" placeholder="Routing No">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="col-form-label">Last Service date/millage/km</label>
-                                        <input type="text" name="last_km" id="last_km" value="" class="form-control"
-                                            placeholder="Last Service date/millage/km">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Date of 1st registration</label>
-                                        <input type="text" name="date_of_regis" id="date_of_regis" value=""
-                                            class="form-control" placeholder="Date of 1st registration">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">P P N</label>
-                                        <input type="text" name="ppn" id="ppn" value=""
-                                            class="form-control" placeholder="PPN">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="col-form-label">Bea Kirim</label>
-                                        <input type="text" name="bea_kirim" id="bea_kirim" value="0" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
-                                            class="form-control" placeholder="Bea Pengiriman Barang" style="text-align:right; color:red;">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group row">
-                                    <label for="Nama Konsumen" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-4">
-
-                                    </div>
-                                </div>
-                                <input type="hidden" name="id_estimasi_penawaran" id="id_estimasi_penawaran"
-                                    value="<?php echo $kode_po ?>" class="form-control">
-                                <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
-                                <input type="hidden" name="user" id="user"
-                                    value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
-                                <div class="modal-footer right-content-between">
-                                    <button class="btn btn-primary" id="simpan" type="submit"  hidden="hidden"><span
-                                            class="fa fa-save"></span>
-                                        Simpan Data</button>
-                                    <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden"
-                                        data-id="" title="Add Data"><i class="fas fa-print"></i> Cetak Estimasi Penawaran</button>
-                                </div>
-                            </form>
-                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
-                                title="Add Part" data-toggle="modal" data-target="#modal_form"><i
-                                    class="fas fa-plus"></i> Tambah Barang</button>
-                                    <button type="button" class="btn btn-xl bg-gradient-info" id="tambah-jasa" onclick="panggilTabel()"
-                                title="Add Part" data-toggle="modal" data-target="#modal_operation"><i
-                                    class="fas fa-plus"></i> Tambah Jasa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="modal-content">
-                        <div class="card-header card-dark card-outline">
-                            <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Keterangan</h3>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i class="fas fa-plus"></i>
-                                    Standart Keterangan</button>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
-                                    Add</button>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <p></p>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover nowrap" id="list-keterangan">
-                                    <thead>
-                                        <tr>
-                                            <th width="10%">No</th>
-                                            <th>Keterangan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="data-keterangan">
-                                    </tbody>
-                                    <tfoot></tfoot>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="modal-keterangan"></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div class="card">
-                <div id="modal-po"></div>
-                <div id="data-po"></div>
-                <div id="data-po-cache"></div>
-            </div>
-        <div class="modal fade" id="modal_form" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body form">
-                        <div class="card card-first card-outline">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table no-wrap table-hover nowrap" id="table-part">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>No Part</th>
-                                                <th>Nama Part</th>
-                                                <th>Satuan</th>
-                                                <th>Stok</th>
-                                                <th>Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        <tfoot></tfoot>
-                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="modal fade" id="modal_operation" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body form">
-                        <div class="card card-first card-outline">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-operation">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Code</th>
-                                                <th>Hours</th>
-                                                <th>Type of Work</th>
-                                                <th>Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        <tfoot></tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">
-$('#modal_operation').on('hidden.bs.modal', function () {
+$('#modal_operation').on('hidden.bs.modal', function() {
     if ($.fn.DataTable.isDataTable('#tabel-operation')) {
         $('#tabel-operation').DataTable().destroy();
         $('#tabel-operation tbody').empty();
@@ -305,6 +99,66 @@ $('#clear').click(function() {
 $('#tgl_deadline1').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
+});
+
+
+$(document).on("click", ".process-estimasi", function() {
+    var id = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('EstimasiPenawaranService/processEstimasi'); ?>',
+        data: 'id=' + id,
+        success: function(hasil) {
+            $('#data-proses-estimasi').html(hasil);
+            document.getElementById("tab-estimasi-tab").hidden = false;
+            $("a[href='#tab-estimasi']").tab('show');
+            //panggilTabel();
+            tampilKeterangan();
+            //tampilLabor();
+            //refresh();
+        }
+    });
+})
+
+$(document).ready(function() {
+
+    //datatables
+    table = $("#tabel-appointment").DataTable({
+
+        "responsive": true,
+        "paging": true,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('EstimasiPenawaranService/ajax_estimasi') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 12], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+
 });
 
 $(document).ready(function() {
@@ -373,6 +227,7 @@ var MyTable = $('#list-po').DataTable({
     "ordering": true,
     "info": true
 });
+
 function panggilTabel() {
     //datatables
     table = $("#tabel-operation").DataTable({
@@ -410,7 +265,7 @@ function panggilTabel() {
         }, ],
 
     })
-            
+
     $('#tabel-operation tbody').on('click', 'tr', function() {
         var data = table.row(this).data();
         var id_x = data[0];
@@ -448,15 +303,15 @@ function panggilTabel() {
 
 };
 var tableKeterangan = $('#list-keterangan').dataTable({
-           "responsive": false,
-           "paging": true,
-           "lengthChange": false,
-           "searching": false,
-           "ordering": false,
-           "info": false,
-           "autoWidth": true,
-           "pageLength": 5
-         });
+    "responsive": false,
+    "paging": true,
+    "lengthChange": false,
+    "searching": false,
+    "ordering": false,
+    "info": false,
+    "autoWidth": true,
+    "pageLength": 5
+});
 
 function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
     var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
@@ -552,15 +407,15 @@ $('#form-keterangan').submit(function(e) {
         })
         .done(function(data) {
             tampilKeterangan();
-                document.getElementById("form-keterangan").reset();
-                $('#tambah-keterangan').modal('hide');
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Mantap',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
+            document.getElementById("form-keterangan").reset();
+            $('#tambah-keterangan').modal('hide');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Mantap',
+                showConfirmButton: false,
+                timer: 1000
+            })
         })
 
     e.preventDefault();
@@ -780,5 +635,4 @@ function stopDiskon() {
 function startPpn() {
     interval = setInterval("Ppn()", 10);
 }
-
 </script>

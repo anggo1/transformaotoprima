@@ -3,16 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Mod_estimasi_penawaran_service extends CI_Model
 {
-    var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
-    var $order = array('id_part' => 'desc'); // default order 
-
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
     }
+    var $table = 'tbl_wh_barang';
+    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $order = array('id_part' => 'desc'); // default order 
+
     private function _get_datatables_query($term = '')
     {
 
@@ -73,6 +73,94 @@ class Mod_estimasi_penawaran_service extends CI_Model
         //$this->db->join('tbl_menu as b','a.id_menu=b.id_menu');
         return $this->db->count_all_results();
     }
+    //tabele work order
+    var $table_estimasi = 'tbl_after_sales';
+    var $column_search_estimasi = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_order_estimasi = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $order_estimasi = array('id' => 'asc'); // default order 
+
+    private function _get_datatables_query_estimasi($term = '')
+    {
+    $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,estimasi,pembuat');
+        $this->db->from('tbl_after_sales');
+        $this->db->where('estimasi !=', 'Y');
+        $this->db->where('status !=', 'F');
+        $i = 0;
+
+        foreach ($this->column_search_estimasi as $item) // loop column 
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->column_search_estimasi) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->column_order_estimasi[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->order_estimasi)) {
+            $order = $this->order_estimasi;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_datatables_estimasi()
+    {
+        $term = $_REQUEST['search']['value'];
+        $this->_get_datatables_query_estimasi($term);
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function count_filtered_estimasi()
+    {
+        $term = $_REQUEST['search']['value'];
+        $this->_get_datatables_query_estimasi($term);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_estimasi()
+    {
+
+        $this->db->from('tbl_after_sales');
+        //$this->db->join('tbl_menu as b','a.id_menu=b.id_menu');
+        return $this->db->count_all_results();
+    }
+    //end tabel work order
+    public function get_by_nama($link)
+    {
+        $this->db->select('id_submenu');
+        $this->db->from('tbl_submenu');
+        $this->db->where('link', $link);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    function select_by_level($idlevel, $id_sub)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_akses_submenu');
+        //$this->db->join('tbl_akses_submenu','tbl_akses_submenu.id_submenu=tbl_akses_menu.id_menu','inner');
+        $this->db->where('tbl_akses_submenu.id_level=',$idlevel);
+        $this->db->where('tbl_akses_submenu.id_submenu=',$id_sub);
+        $data = $this->db->get();
+        return $data->result();
+    }
+    
     function select_part($sup)
     {
         $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok');
@@ -105,14 +193,27 @@ class Mod_estimasi_penawaran_service extends CI_Model
 
         return $data->result();
     }
-    public function select_customer()
+    function select_sa($id)
     {
-        $sql = " SELECT * FROM tbl_customer";
+       $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+        $this->db->from('tbl_after_sales');
+         $this->db->where('wo_no',$id);
 
-        $data = $this->db->query($sql);
+        $data = $this->db->get();
 
         return $data->result();
     }
+    function select_customer($kode_cus)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_customer');
+        $this->db->where('kode_cus',$kode_cus);
+
+         $data = $this->db->get();
+
+        return $data->result();
+    }
+    
     public function deleteDetail_po($id)
     {
         $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
@@ -242,6 +343,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
         return $data->result();
         //return $data->row();
     }
+    
     public function select_detail($id)
     {
         $ci = get_instance();
@@ -281,7 +383,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     function updatePo($a, $b, $c, $d)
     {
-        $sql = "UPDATE tbl_wh_estimasi_penawaran SET
+        $sql = "UPDATE tbl_af_estimasi_penawaran SET
         t_ppn       ='$a',
         sub_total   ='$b',
         grand_total ='$c'
