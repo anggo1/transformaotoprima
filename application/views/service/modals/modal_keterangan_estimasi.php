@@ -17,11 +17,7 @@
     </p>
   </div>
   <div class="modal-body">
-    <form <?php if (empty($dataKet->id_detail_note)) {
-            echo 'id="form-keterangan"';
-          } else {
-            echo 'id="form-update-keterangan"';
-          } ?> method="POST">
+    <form id="form-keterangan" method="POST">
       <div class="form-group">
         <input type="hidden" name="id_detail_note" value="<?php if (!empty($dataKet->id_detail_note)) {
                                                         echo $dataKet->id_detail_note;

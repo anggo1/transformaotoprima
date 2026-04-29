@@ -54,6 +54,7 @@ table.dataTable td {
                         </div>
                         <div id="tempat-modal"></div>
                         <div id="cetak-wo-modal"></div>
+                        <div id="modal-po"></div>
                     </div>
                     <div class="tab-pane fade" id="tab-estimasi" role="tabpanel" aria-labelledby="tab-estimasi-tab">
                         <div class="container-fluid">
@@ -71,105 +72,12 @@ table.dataTable td {
                 </div>
             </div>
 
-            <div class="modal fade" id="modal_part" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-body form">
-                            <div class="card card-first card-outline">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-part">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>No Part</th>
-                                                    <th>Nama Part</th>
-                                                    <th>Satuan</th>
-                                                    <th>Stok</th>
-                                                    <th>Harga</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="modal fade" id="modal_operation" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-body form">
-                            <div class="card card-first card-outline">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table width="100%" class="table no-wrap table-hover nowrap"
-                                            id="tabel-operation">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Code</th>
-                                                    <th>Hours</th>
-                                                    <th>Type of Work</th>
-                                                    <th>Harga</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">
-$('#modal_operation').on('hidden.bs.modal', function() {
-    if ($.fn.DataTable.isDataTable('#tabel-operation')) {
-        $('#tabel-operation').DataTable().destroy();
-        $('#tabel-operation tbody').empty();
-    }
-});
-$('#modal_part').on('hidden.bs.modal', function() {
-    if ($.fn.DataTable.isDataTable('#tabel-part')) {
-        $('#tabel-part').DataTable().destroy();
-        $('#tabel-part tbody').empty();
-    }
-});
-
-function fn(o) {
-    o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
-}
-$('#tgl_estimasi_penawaran,#tgl_received,#tgl_regis').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-//var Date = 
-$('#tgl_deadline').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-})
-$('#clear').click(function() {
-    $('#tgl_deadline').data("DateTimePicker").clear()
-})
-
-$('#tgl_deadline1').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-
-
 $(document).on("click", ".process-estimasi", function() {
     var id = $(this).attr("data-id");
 
@@ -182,6 +90,7 @@ $(document).on("click", ".process-estimasi", function() {
             document.getElementById("tab-estimasi-tab").hidden = false;
             $("a[href='#tab-estimasi']").tab('show');
             //panggilTabel();
+            tampilDetail();
             tampilKeterangan();
             //tampilLabor();
             //refresh();
@@ -229,63 +138,6 @@ $(document).ready(function() {
 
 });
 
-function panggilPart() {
-    table = $('#tabel-part').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
-        "serverSide": true,
-        "pageLength": 10, // Defaults number of rows to display in table
-        "order": [],
-        "ajax": {
-            "url": "<?php echo site_url('EstimasiPenawaranService/ajax_list') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "orderable": false,
-        }, ]
-    });
-
-
-    $(document).ready(function() {
-        var table = $('#tabel-part').DataTable();
-        var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-        var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-
-        $('#tabel-part tbody').on('click', 'tr', function() {
-            var data = table.row(this).data();
-            var no_part = data[1];
-            var nama_part = data[2];
-            var satuan = data[3];
-            var stok = data[4];
-            var harga_baru = data[5];
-            var jenis = 'P';
-            var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-            var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-            $.ajax({
-                method: 'POST',
-                url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
-                data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-                    "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-                    "&no_part=" + no_part +
-                    "&nama_part=" + nama_part +
-                    "&satuan=" + satuan +
-                    "&stok=" + stok +
-                    "&harga_baru=" + harga_baru +
-                    "&jenis=" + jenis
-            })
-            tampilDetail();
-            document.getElementById("simpan").hidden = false;
-            $('#modal_part').modal('hide');
-            tampilKeterangan();
-        });
-    });
-}
 var MyTable = $('#list-po').DataTable({
     "responsive": true,
     "paging": true,
@@ -295,78 +147,6 @@ var MyTable = $('#list-po').DataTable({
     "info": true
 });
 
-function panggilTabel() {
-    //datatables
-    table = $("#tabel-operation").DataTable({
-
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
-        "serverSide": true,
-        "pageLength": 5,
-        "autoWidth": false,
-
-
-        "language": {
-            "sEmptyTable": "Data Service Appointment Belum Ada"
-        },
-        "processing": true, //Feature control the processing indicator.
-        "serverSide": true,
-        "language": {
-            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
-        },
-        "order": [],
-
-        // Load data for the table's content from an Ajax source
-        "ajax": {
-            "url": "<?php echo site_url('EstimasiPenawaranService/list_operation') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0, 3], //first column / numbering column
-            "orderable": false,
-        }, ],
-
-    })
-
-    $('#tabel-operation tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var code = data[1];
-        var hours = 'Hours';
-        var operation = data[3];
-        var stok_operation = '0';
-        var harga = data[4];
-        var jenis = 'S';
-        var tgl_estimasi_penawaran = document.formPo.tgl_estimasi_penawaran.value;
-        var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
-        $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
-            data: "tgl_estimasi_penawaran=" + tgl_estimasi_penawaran +
-                "&id_estimasi_penawaran=" + id_estimasi_penawaran +
-                "&no_part=" + code +
-                "&nama_part=" + operation +
-                "&satuan=" + hours +
-                "&stok=" + stok_operation +
-                "&harga_baru=" + harga +
-                "&jenis=" + jenis
-        })
-        tampilDetail();
-        document.getElementById("simpan").hidden = false;
-        $('#modal_operation').modal('hide');
-        tampilKeterangan();
-
-
-        //e.preventDefault();
-        //showDetail(id_pk);
-        //showDetail(id_pk);
-    });
-
-};
 var tableKeterangan = $('#list-keterangan').dataTable({
     "responsive": false,
     "paging": true,
@@ -400,11 +180,11 @@ function refresh() {
 function tampilDetail() {
     //var out = jQuery.parseJSON(data);
     //var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    var wo_no = document.getElementById('wo_no').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('EstimasiPenawaranService/tampilDetail'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+        data: 'wo_no=' + wo_no,
         success: function(hasil) {
             //MyTable.fnDestroy();
             $('#data-po').html(hasil);
@@ -413,11 +193,11 @@ function tampilDetail() {
 }
 
 function insertNote() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    var wo_no = document.getElementById('wo_no').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('EstimasiPenawaranService/tambahNote'); ?>',
-        data: 'id=' + id_estimasi_penawaran,
+        data: 'id=' + wo_no,
         success: function(hasil) {
             tampilKeterangan()
         }
@@ -425,11 +205,11 @@ function insertNote() {
 }
 
 function tampilKeterangan() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+    var wo_no = document.getElementById('wo_no').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('EstimasiPenawaranService/tampilKeterangan'); ?>',
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+        data: 'wo_no=' + wo_no,
         success: function(hasil) {
             tableKeterangan.fnDestroy();
             $('#data-keterangan').html(hasil);
@@ -441,7 +221,7 @@ function tampilKeterangan() {
 
 $('#form-keterangan').submit(function(e) {
     var data = $(this).serialize();
-    var id = document.getElementById('id_estimasi_penawaran').value;
+    var id = document.getElementById('wo_no').value;
 
     $.ajax({
             method: 'POST',
@@ -524,60 +304,6 @@ function tampilDetailCache(dataPo) {
         }
     });
 }
-$('#formPo').submit(function(e) {
-    var data = $(this).serialize();
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('EstimasiPenawaranService/prosesPo'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-
-            if (out.status == 'form') {
-                //toastr.error(out.msg);
-                $('.msg').html(out.msg);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } else {
-                $('.msg').html(out.msg);
-                $('.dataPo').html(out.dataPo);
-                //tampilDetail(out.dataPo)
-                document.getElementById("formPo"); //reset()	
-                $('#tgl_estimasi_penawaran').attr('readonly', 'readonly');
-                $('#top').attr('readonly', 'readonly');
-                $('#status').attr('readonly', 'readonly');
-                $('#supplier').attr('readonly', 'readonly');
-                $('#keterangan').attr('readonly', 'readonly');
-                $('#ppn').attr('readonly', 'readonly');
-
-                var d = document.getElementById("cetak");
-                d.setAttribute('data-id', out.dataPo);
-                document.getElementById("cetak").hidden = false;
-                document.getElementById("tambah").hidden = false;
-                document.getElementById("tambah-part").hidden = true;
-                document.getElementById("data-po").hidden = true;
-                document.getElementById("simpan").hidden = true;
-                tampilDetailCache(out.dataPo);
-
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-
-    e.preventDefault();
-});
 
 function cetakPo(datakode) {}
 
@@ -613,9 +339,9 @@ $(document).on("click", ".delete-detail", function() {
             if (out.status != 'form') {
                 //$('.msg').html(out.msg);
                 $('#hapusDetail').modal('hide');
-                var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
+                //var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
                 //next(next_proses);
-                tampilDetail(id_estimasi_penawaran);
+                tampilDetail();
             }
         })
 })
@@ -637,9 +363,8 @@ $(document).on("click", ".delete-keterangan", function() {
             if (out.status != 'form') {
                 //$('.msg').html(out.msg);
                 $('#hapusKeterangan').modal('hide');
-                var id_estimasi_penawaran = document.formPo.id_estimasi_penawaran.value;
                 //next(next_proses);
-                tampilKeterangan(id_estimasi_penawaran);
+                tampilKeterangan();
             }
         })
 })

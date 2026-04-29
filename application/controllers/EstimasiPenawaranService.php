@@ -78,7 +78,7 @@ class EstimasiPenawaranService extends MY_Controller
                   </button>';
                   
                   $print='                    
-                    <button class="btn btn-xs btn-info cetak-estimasi" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
+                    <button class="btn btn-xs btn-info cetak-po" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>';
                 $akses_system= ($p->estimasi == 'N') ? $edit : $print;
                 $row[] = $akses_system;
@@ -177,11 +177,28 @@ public function showPart()
 	}
 	public function prosesDetailPo()
 	{
+		$date = date("y-m");
+		$ci_kons = get_instance();
+		$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
+		$hasil = $ci_kons->db->query($query)->row_array();
+		$noOrder = $hasil['maxKode'];
+		$noUrut = (int)substr($noOrder, 5, 4);
+		$noUrut++;
+		$tahun = substr($date, 0, 2);
+		$bulan = substr($date, 3, 2);
+		$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
+		$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
 		
 		$data 	= $this->input->post();
-		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->insertDetailPo($data);
+		$result = $this->Mod_estimasi_penawaran_service->insertDetailPo($kode_po, $kode_ref, $data);
 		
-		echo json_encode($data);
+		if ($result > 0) {
+				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
+			} else {
+				$out['status'] = '';
+				$out['msg'] = show_del_msg('Filed !', '20px');
+			}
+		echo json_encode($out);
 	}
 	public function updateDiskon()
 	{
@@ -220,11 +237,22 @@ public function showPart()
 	{
 		
 		$sekarang= date("Y-m");
+		$date = date("y-m");
+		$ci_kons = get_instance();
+		$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_af_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
+		$hasil = $ci_kons->db->query($query)->row_array();
+		$noOrder = $hasil['maxKode'];
+		$noUrut = (int)substr($noOrder, 5, 4);
+		$noUrut++;
+		$tahun = substr($date, 0, 2);
+		$bulan = substr($date, 3, 2);
+		$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
+		$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
+
 		$this->form_validation->set_rules('tgl_estimasi_penawaran', 'Tanggal Order', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
-			$kode_po = $data['id_estimasi_penawaran'];
 			$date2 = $data['tgl_estimasi_penawaran'];
 			
 			$bea=$data['bea_kirim'];
@@ -235,9 +263,10 @@ public function showPart()
 
 			$data = array(
 				'id_estimasi_penawaran'  	=> $kode_po,
-				'kode_estimasi_penawaran'   => $data['no_ref'],
+				'wo_no'  	=> $data['wo_no'],
+				'kode_estimasi_penawaran'   => $kode_ref,
 				'tgl_estimasi_penawaran'  	=> $tgl_po_fix,
-				'id_customer'	=> $data['id_customer'],
+				'id_customer'	=> $data['kode_cus'],
 				'no_reg'	=> $data['no_reg'],
 				'no_vin' => $data['no_vin'],
 				'sales_design' => $data['sales_design'],
@@ -254,11 +283,13 @@ public function showPart()
 				'user'   	=> $data['user'],
 				'status_po'	=> 'N'
 			);
+			
+			$updateWo= $this->Mod_estimasi_penawaran_service->updateWo($data['wo_no']);
 				$data['dataPo'] = $this->db->insert('tbl_af_estimasi_penawaran', $data);
 				$data 	= $this->input->post();
 				
 			if ($result > 0) {
-				$out['dataRef'] = $data['no_ref'];
+				$out['dataRef'] = $kode_ref;
 				$out['dataPo'] = $kode_po;
 				$out['status'] = '';
 				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
@@ -274,13 +305,13 @@ public function showPart()
 	}
 	public function tampilDetail()
 	{
-		$id 				= $_POST['id_estimasi_penawaran'];
+		$id 				= $_POST['wo_no'];
 		$data['dataDetail'] = $this->Mod_estimasi_penawaran_service->select_detail($id);
 		$this->load->view('service/detail_estimasi_penawaran', $data);
 	}
 	public function tampilKeterangan()
 	{
-		$id 				= $_POST['id_estimasi_penawaran'];
+		$id 				= $_POST['wo_no'];
 		$data['dataKet'] = $this->Mod_estimasi_penawaran_service->select_keterangan($id);
 		$this->load->view('service/data_keterangan_estimasi', $data);
 	}
@@ -296,7 +327,7 @@ public function showPart()
     }
 	public function tampilDetailCache()
 	{
-		$id 				= $_GET['id_estimasi_penawaran'];
+		$id 				= $_GET['wo_no'];
 		$data['dataDetail'] = $this->Mod_estimasi_penawaran_service->select_detail($id);
 		$this->load->view('service/detail_estimasi_penawaran_cache', $data);
 	}
@@ -332,11 +363,17 @@ public function showPart()
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
+		$idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $kode_cus = $kat[1];
+        $id = $kat[0];
+
+		$data['dataCus'] = $this->Mod_estimasi_penawaran_service->select_customer($kode_cus);
 		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->select_by_id($id);
 		$data['detailPo'] = $this->Mod_estimasi_penawaran_service->select_detail($id);
 		$data['detailKet'] = $this->Mod_estimasi_penawaran_service->select_keterangan($id);
 
-		echo show_my_print('service/modals/modal_cetak_estimasi_penawaran', 'cetak-po', $data, ' modal-xl');
+		echo show_my_print('service/modals/modal_cetak_estimasi_penawaran_service', 'cetak-po', $data, ' modal-xl');
 	}
 	public function cetak_int()
 	{

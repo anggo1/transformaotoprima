@@ -7,26 +7,16 @@
                     <?php
                                             if (!empty($dataCus)) {
                                                 foreach ($dataCus as $a) {
-                                                 foreach ($dataCus as $b) {
+                                                 foreach ($dataSa as $b) {
                                                 }}}
 
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 5, 4);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
-						$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
+						
 						?>
                     <form id="formPo" name="formPo" method="POST">
                         <div class="row">
                             <div class="col-3">
-                                <label class="col-form-label">No Reff</label>
-                                <input type="text" name="no_ref" id="no_ref" value="<?php echo $kode_ref ?>"
+                                <label class="col-form-label">No WO</label>
+                                <input type="text" name="wo_no" id="wo_no" value="<?php echo $b->wo_no ?>"
                                     class="form-control" placeholder="Nomor Referensi">
                             </div>
                             <div class="col-3">
@@ -46,7 +36,7 @@
                             </div>
                             <div class="col-3">
                                 <label class="col-form-label">Customer No</label>
-                                <input type="text" name="kode_cus" id="kode_cus" value="<?php echo $a->kode_cus; ?>"
+                                <input type="hidden" name="kode_cus" id="kode_cus" value="<?php echo $a->kode_cus; ?>"
                                     class="form-control" placeholder="Customer No">
                                 <input type="text" name="nama_cus" id="nama_cus" value="<?php echo $a->nama_cus; ?>"
                                     class="form-control" placeholder="Customer Name">
@@ -134,27 +124,25 @@
 
                             </div>
                         </div>
-                        <input type="hidden" name="id_estimasi_penawaran" id="id_estimasi_penawaran"
-                            value="<?php echo $kode_po ?>" class="form-control">
-                        <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
                         <input type="hidden" name="user" id="user"
                             value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
-                        <div class="modal-footer right-content-between">
-                            <button class="btn btn-primary" id="simpan" type="submit" hidden="hidden"><span
-                                    class="fa fa-save"></span>
-                                Simpan Data</button>
-                            <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden" data-id=""
-                                title="Add Data"><i class="fas fa-print"></i> Cetak Estimasi
-                                Penawaran</button>
-                        </div>
-                    </form>
-                    <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part" onclick="panggilPart()" title="Add Part"
-                        data-toggle="modal" data-target="#modal_part"><i class="fas fa-plus"></i> Tambah
+                        <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
+                        onclick="panggilPart()" title="Add Part" data-toggle="modal" data-target="#modal_part"><i
+                            class="fas fa-plus"></i> Tambah
                         Barang</button>
                     <button type="button" class="btn btn-xl bg-gradient-info" id="tambah-jasa" onclick="panggilTabel()"
                         title="Add Part" data-toggle="modal" data-target="#modal_operation"><i class="fas fa-plus"></i>
                         Tambah
                         Jasa</button>
+                            <button class="btn btn-primary" id="simpan" type="submit" hidden="hidden"><span
+                                    class="fa fa-save"></span>
+                                Save All Data</button>
+                            <button type="button" class="btn btn-secondary cetak-po" id="cetak" hidden="hidden" data-id=""
+                                title="Add Data"><i class="fas fa-print"></i> Cetak Estimasi
+                                Penawaran</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -199,7 +187,309 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal_part" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body form">
+                            <div class="card card-first card-outline">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table no-wrap table-hover nowrap" id="tabel-part">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>No Part</th>
+                                                    <th>Nama Part</th>
+                                                    <th>Satuan</th>
+                                                    <th>Stok</th>
+                                                    <th>Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal_operation" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body form">
+                            <div class="card card-first card-outline">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table no-wrap table-hover nowrap"
+                                            id="tabel-operation">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Code</th>
+                                                    <th>Hours</th>
+                                                    <th>Type of Work</th>
+                                                    <th>Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
-</section><!-- /.modal-content -->
+<script type="text/javascript">
+    function fn(o) {
+    o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
+}
+$('#tgl_estimasi_penawaran,#tgl_received,#tgl_regis').datetimepicker({
+    format: 'DD-MM-YYYY',
+    date: moment()
+});
+//var Date = 
+$('#tgl_deadline').datetimepicker({
+    format: 'DD-MM-YYYY',
+    date: moment()
+})
+$('#clear').click(function() {
+    $('#tgl_deadline').data("DateTimePicker").clear()
+})
+
+$('#tgl_deadline1').datetimepicker({
+    format: 'DD-MM-YYYY',
+    date: moment()
+});
+    
+$('#modal_operation').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#tabel-operation')) {
+        $('#tabel-operation').DataTable().destroy();
+        $('#tabel-operation tbody').empty();
+    }
+});
+$('#modal_part').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#tabel-part')) {
+        $('#tabel-part').DataTable().destroy();
+        $('#tabel-part tbody').empty();
+    }
+});
+function panggilPart() {
+    //datatables
+    table = $("#tabel-part").DataTable({
+
+        "responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 5,
+
+
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('EstimasiPenawaranService/ajax_list') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 3], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+}
+    $('#tabel-part tbody').on('click', 'tr', function(e) {
+        var data = table.row(this).data();
+            var no_part = data[1];
+            var nama_part = data[2];
+            var satuan = data[3];
+            var stok = data[4];
+            var harga_baru = data[5];
+            var jenis = 'P';
+        var wo_no = document.getElementById('wo_no').value;
+        $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
+            data: "wo_no=" + wo_no +
+                "&no_part=" + no_part +
+                "&nama_part=" + nama_part +
+                "&satuan=" + satuan +
+                "&stok=" + stok +
+                "&harga_baru=" + harga_baru +
+                "&jenis=" + jenis
+        })
+        .done(function(data) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                class: 'bg-success', 
+                //title: 'Mantap',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        tampilDetail();
+        tampilKeterangan();
+        document.getElementById("simpan").hidden = false;
+        $('#modal_part').modal('hide');
+        })
+        e.preventDefault();
+    });
+
+
+function panggilTabel() {
+    //datatables
+    table = $("#tabel-operation").DataTable({
+
+        "responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "processing": true,
+        "serverSide": true,
+        "pageLength": 5,
+
+
+        "language": {
+            "sEmptyTable": "Data Service Appointment Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true,
+        "language": {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+        },
+        "order": [],
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('EstimasiPenawaranService/list_operation') ?>",
+            "type": "POST"
+        },
+        "columnDefs": [{
+            "targets": [0, 3], //first column / numbering column
+            "orderable": false,
+        }, ],
+
+    })
+}
+    $('#tabel-operation tbody').on('click', 'tr', function(e) {
+        var data = table.row(this).data();
+        var code = data[1];
+        var hours = 'Hours';
+        var operation = data[3];
+        var stok_operation = '0';
+        var harga = data[4];
+        var jenis = 'S';
+        var wo_no = document.getElementById('wo_no').value;
+        $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesDetailPo'); ?>',
+            data: "wo_no=" + wo_no +
+                "&no_part=" + code +
+                "&nama_part=" + operation +
+                "&satuan=" + hours +
+                "&stok=" + stok_operation +
+                "&harga_baru=" + harga +
+                "&jenis=" + jenis
+        })
+       .done(function(data) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                class: 'bg-success', 
+                //title: 'Mantap',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        tampilDetail();
+        tampilKeterangan();
+        document.getElementById("simpan").hidden = false;
+        $('#modal_operation').modal('hide');
+        })
+        e.preventDefault();
+    });
+$('#formPo').submit(function(e) {
+    var data = $(this).serialize();
+        var wo_no = document.getElementById('wo_no').value;
+        var kode_cus = document.getElementById('kode_cus').value;
+
+    $.ajax({
+            method: 'POST',
+            url: '<?php echo base_url('EstimasiPenawaranService/prosesPo'); ?>',
+            data: data
+        })
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+
+            if (out.status == 'form') {
+                //toastr.error(out.msg);
+                $('.msg').html(out.msg);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                $('.msg').html(out.msg);
+                $('.dataPo').html(out.dataPo);
+                //tampilDetail(out.dataPo)
+                /* document.getElementById("formPo"); //reset()	
+                $('#tgl_estimasi_penawaran').attr('readonly', 'readonly');
+                $('#top').attr('readonly', 'readonly');
+                $('#status').attr('readonly', 'readonly');
+                $('#supplier').attr('readonly', 'readonly');
+                $('#keterangan').attr('readonly', 'readonly');
+                $('#ppn').attr('readonly', 'readonly');
+
+                var d = document.getElementById("cetak");
+                d.setAttribute('data-id', wo_no + '|' + kode_cus);
+                document.getElementById("cetak").hidden = false;
+                //document.getElementById("tambah").hidden = false;
+                document.getElementById("tambah-part").hidden = true;
+                document.getElementById("data-po").hidden = true;
+                document.getElementById("simpan").hidden = true;
+                tampilDetailCache(wo_no);
+                */
+                document.getElementById('tab-work-order').click();
+                document.getElementById("tab-estimasi-tab").hidden = true;
+                document.getElementById("tab-work-order").active = true;
+                $('#tabel-appointment').DataTable().ajax.reload();
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: out.msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+
+    e.preventDefault();
+});
+
+</script>
