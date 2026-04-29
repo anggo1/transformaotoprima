@@ -51,12 +51,12 @@
                         <div class="row">
                             <div class="col-3">
                                 <label class="col-form-label">VIN No</label>
-                                <input type="text" name="no_vin" id="no_vin" value="" class="form-control"
+                                <input type="text" name="no_vin" id="no_vin" value="<?php echo $b->vin; ?>" class="form-control"
                                     placeholder="VIN">
                             </div>
                             <div class="col-3">
                                 <label class="col-form-label">Sales designation</label>
-                                <input type="text" name="sales_design" id="sales_design" value="" class="form-control"
+                                <input type="text" name="sales_design" id="sales_design" value="<?php echo $b->sa_name; ?>" class="form-control"
                                     placeholder="Sales designation">
                             </div>
                             <div class="col-3">
@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <label class="col-form-label">Engine No</label>
-                                <input type="text" name="engine_no" id="engine_no" value="" class="form-control"
+                                <input type="text" name="engine_no" id="engine_no" value="<?php echo $b->engine_no; ?>" class="form-control"
                                     placeholder="Engine No">
                             </div>
                             <div class="col-3">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-3">
                                 <label class="col-form-label">Received by</label>
-                                <input type="text" name="received_by" id="received_by" value="" class="form-control"
+                                <input type="text" name="received_by" id="received_by" value="<?php echo $b->sa_name; ?>" class="form-control"
                                     placeholder="Received by">
                             </div>
                             <div class="col-3">
@@ -270,7 +270,8 @@ $('#tgl_deadline1').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
-    
+   
+
 $('#modal_operation').on('hidden.bs.modal', function() {
     if ($.fn.DataTable.isDataTable('#tabel-operation')) {
         $('#tabel-operation').DataTable().destroy();

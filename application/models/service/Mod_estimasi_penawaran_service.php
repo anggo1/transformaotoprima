@@ -195,7 +195,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+       $this->db->select('*');
         $this->db->from('tbl_after_sales');
          $this->db->where('wo_no',$id);
 
