@@ -16,6 +16,7 @@
             <?php
                   $no = 1;
                   foreach ($dataDetail as $s) {
+                    $harga_total= $s->harga * $s->jumlah;
                   ?>
             <tr>
 
@@ -24,12 +25,12 @@
                 <td><?php echo $s->nama_part; ?></td>
                 <td><?php echo number_format($s->harga, 0, ',', '.'); ?></td>
                 <td><?php echo $s->jumlah; ?></td>
-                <td><?php echo number_format($s->total, 0, ',', '.'); ?></td>
-                <td><?php echo $s->keterangan; ?></td>
+                <td><?php echo number_format($harga_total, 0, ',', '.'); ?></td>
+                <td><?php echo $s->remark; ?></td>
 
                 <td class="text-center">
                     <button class="btn btn-xs btn-outline-danger delete-request ion-android-delete"
-                        data-id="<?php echo $s->id_request; ?>"> Delete</button>
+                        data-id="<?php echo $s->id_detail; ?>"> Delete</button>
                 </td>
             </tr>
             <?php

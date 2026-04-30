@@ -142,14 +142,33 @@
                         Save List</button>
                 </div>
             </div>
-            <div class="card-body">
-                <div id="data-detail-request"></div>
-            </div>
 
             <form id="form-part-request" name="form-part-request" method="POST">
                 <div class="card-body">
 
-                    <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no ?>"
+                    <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label">NIK</label>
+                            <dWiv class="col-sm-4">
+                                <input type="text" name="nik" id="nik" value="" class="form-control" placeholder="Nomor Induk Karyawan" required>
+                            </dWiv>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 col-form-label">Nama</label>
+                            <div class="col-sm-8 input-group">
+                                <input type="text" name="nama" id="nama" value="" class="form-control"
+                                    placeholder="Nama Karyawan" required>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="data-detail-request"></div>
+                        <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no ?>"
                         class="form-control" placeholder="Operation">
                     <input type="hidden" name="harga" id="harga" value=""
                         class="form-control" placeholder="Operation">
@@ -157,10 +176,13 @@
                         value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                     <div class="modal-footer right-content-between">
                         <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
-                            Save Data</button>
+                            Save All Data</button>
                     </div>
                 </div>
             </form>
+            
+            <div class="card-body">
+            </div>
         </div>
     </div>
 

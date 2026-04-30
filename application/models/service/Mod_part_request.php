@@ -18,7 +18,7 @@ class Mod_part_request extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,part_request,pembuat');
         $this->db->from('tbl_after_sales');
-        $this->db->where('status','P');
+        $this->db->where('estimasi','Y');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -130,10 +130,12 @@ class Mod_part_request extends CI_Model
     function select_part_request($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_part_request');
+        $this->db->from('tbl_af_detail_estimasi_penawaran');
         $this->db->where('wo_no',$wo_no);
+        $this->db->where('validasi_jenis','P');
+        $this->db->where('status_ok','Y');
 
-        $data = $this->db->get();
+         $data = $this->db->get();
 
         return $data->result();
     }
@@ -148,15 +150,15 @@ class Mod_part_request extends CI_Model
     }
     function insertPart($wo_no, $no_part, $nama_part, $harga, $jumlah, $total, $keterangan)
     {
-        $sql = "INSERT INTO tbl_after_sales_part_request SET
-        id_request   ='',
+        $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
+        id_detail   ='',
         wo_no       ='".$wo_no."',
         no_part     ='".$no_part."',
         nama_part   ='".$nama_part."',
         harga       ='".$harga."',
         jumlah      ='".$jumlah."',
-        total       ='".$total."',
-        keterangan  ='".$keterangan."'";
+        total_harga       ='".$total."',
+        remark  ='".$keterangan."'";
 
 		$this->db->query($sql);
 
@@ -164,6 +166,30 @@ class Mod_part_request extends CI_Model
     }
     function updatePart($data)
     {
+        $kd='PRQ';
+			$tgl_keluar = date("y-m-d");
+			$date = date("ym");
+			$ci_kons = get_instance();
+			$query = "SELECT max(kode_pr) AS maxKode FROM tbl_after_sales_part_request WHERE kode_pr LIKE '%$date%'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+			$noOrder = $hasil['maxKode'];
+			$noUrut = (int)substr($noOrder, 8, 4);
+			$noUrut++;
+			$tahun = substr($date, 0, 2);
+			$bulan = substr($date, 2, 2);
+
+			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
+			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+
+        $sql = "INSERT INTO tbl_after_sales_part_request SET
+        wo_no       ='".$data['wo_no']."',
+        kode_pr     ='".$kode_keluar."',
+        nik   ='".$data['nik']."',
+        nama       ='".$data['nama']."',
+        pembuat  ='".$data['pembuat']."'";
+
+		$this->db->query($sql);
+
         $sql2 = "UPDATE tbl_after_sales SET
         part_request     ='Y'
         WHERE wo_no='".$data['wo_no']."'";
@@ -174,7 +200,7 @@ class Mod_part_request extends CI_Model
     }
     function deleteRequest($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_part_request WHERE id_request='{$id}'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}'";
 
 		$this->db->query($sql);
 

@@ -253,6 +253,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $datenow = date("Y-m-d");
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
+        $grand_total = $harga_baru * $data['jumlah'];
         $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             wo_no     ='" . $data['wo_no'] . "',
             id_estimasi_penawaran   ='" . $kode_po . "',
@@ -262,6 +263,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
             satuan      ='" . $data['satuan'] . "',
             harga       ='" . $harga_baru. "',
             harga_net   ='" . $harga_baru. "',
+            total_harga   ='" . $grand_total. "',
             jumlah      ='1',
             stok_akhir  ='" . $data['stok'] . "',
             validasi_jenis = '" . $data['jenis'] . "'";
