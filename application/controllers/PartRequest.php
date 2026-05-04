@@ -61,9 +61,9 @@ class PartRequest extends MY_Controller
                     $process='                    
                     <button class="btn btn-xs btn-success process-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-cogs"></i> Process
                   </button>';
-                  $edit='                    
-                    <button class="btn btn-xs btn-primary edit-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
-                  </button>';
+                  $edit='';
+                    /* <button class="btn btn-xs btn-primary edit-part" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
+                  </button>'; */
                   $print='                    
                     <button class="btn btn-xs btn-info cetak-part-request" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>';
@@ -109,13 +109,9 @@ class PartRequest extends MY_Controller
     public function inputPartRequest()
     {
         $this->form_validation->set_rules('wo_no', 'No WO', 'trim|required');
-        
-        $wo_no = $this->input->post('wo_no');
-
-
-        if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_part_request->updatePart(['wo_no' => $wo_no]);
-
+		$data 	= $this->input->post();
+		if ($this->form_validation->run() == TRUE) {
+			$result = $this->Mod_part_request->updatePart($data);
             if ($result > 0) {
                 $out['status'] = '';
                 $out['msg'] = show_ok_msg('Success', '20px');
@@ -208,6 +204,7 @@ class PartRequest extends MY_Controller
         $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataSa'] = $this->Mod_part_request->select_sa($id);
 		$data['dataCus'] = $this->Mod_part_request->select_customer($kode_cus);
+		$data['dataPartA'] = $this->Mod_part_request->select_part_request_a($id);
 		$data['dataPart'] = $this->Mod_part_request->select_part_request($id);
 
 		echo show_my_print('service/modals/modal_cetak_part', 'cetak-part-request', $data, ' modal-xl');

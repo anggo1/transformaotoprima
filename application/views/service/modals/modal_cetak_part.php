@@ -165,7 +165,11 @@ th {
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 if (!empty($dataSa)) {
-                foreach ($dataSa as $s)  {{}}}} 
+                foreach ($dataSa as $s)  {
+                if (!empty($dataPartA)) {
+                foreach ($dataPartA as $a)  {
+                    {}}}}}}
+
     $lokasi = $this->session->userdata['lokasi'];
 	$apl1 = $this->db->get("aplikasi where lokasi='".$lokasi."'")->row();
     $tgl_sekarang =date("Y-m-d");
@@ -251,11 +255,11 @@ th {
                                 <th><span class="text2"><?php echo $s->vin ?></span></th>
                                 <th>
                                     <div align="left">
-                                        <font size="2">R</font>eceived by
+                                        <font size="2">Received by</font>
                                     </div>
                                 </th>
                                 <th>
-                                    <div align="left">: <span class="text2"><?php echo $s->sa_name ?></span></div>
+                                    <div align="left">: <span class="text2"><?php echo $a->nama ?></span></div>
                                 </th>
                             </tr>
                             <tr>
@@ -327,8 +331,9 @@ th {
             $no=1;
         if(!empty($dataPart)){
         foreach ($dataPart as $d) { 
-          $total_ppn= $d->total * 0.11;
-          $total_dengan_ppn = $d->total + $total_ppn;
+        $grandTotal = $d->jumlah * $d->harga;
+          $total_ppn= $grandTotal * 0.11;
+          $total_dengan_ppn = $grandTotal + $total_ppn;
 
           ?>
                             <tr>
@@ -353,7 +358,7 @@ th {
                                 </td>
                                 <td width="9%">
                                     <div align="center">
-                                        <?php echo 'Rp. '.number_format($d->total, 0, ',', '.'); ?>&nbsp;</div>
+                                        <?php echo 'Rp. '.number_format($grandTotal, 0, ',', '.'); ?>&nbsp;</div>
                                 </td>
                                 <td width="12%">
                                     <div align="center">

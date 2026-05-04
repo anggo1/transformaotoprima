@@ -127,6 +127,16 @@ class Mod_part_request extends CI_Model
 
         return $data->result();
     }
+    function select_part_request_a($wo_no)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_part_request');
+         $this->db->where('wo_no',$wo_no);
+
+         $data = $this->db->get();
+
+        return $data->result();
+    }
     function select_part_request($wo_no)
     {
         $this->db->select('*');
