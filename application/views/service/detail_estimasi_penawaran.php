@@ -35,7 +35,7 @@ table.dataTable td {
                             <th>Price List</th>
                             <th>Discount</th>
                             <th>Net Price</th>
-                            <th>Qty</th>
+                            <th>Pcs/LO</th>
                             <th>Ammount</th>
                             <th>Remark</th>
                             <th>Aksi</th>

@@ -281,7 +281,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th width="11%"><div align="center">Part Number</div></th>
           <th ><strong>Description</strong></th>
           <th width="8%">Price</th>
-          <th width="4%"><div align="center">Pcs</div></th>
+          <th width="4%"><div align="center">Pcs/LO</div></th>
           <th width="7%"><div align="center">Amount</div></th>
           <th width="14%"><div align="center">Remarks</div></th>
         </tr>
@@ -297,6 +297,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         
           $grand_total += $d->total_harga;
           $ppn = $grand_total * $k->ppn / 100;
+            $totalnya = $d->harga_net * $d->jumlah;
 
           ?>
           <tr>
@@ -305,7 +306,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td width="53%"><div align="center"><?php echo $d->nama_part ?></div></td>
             <td width="8%"><div align="right">&nbsp;<?php echo "Rp. " .number_format($d->harga_net,0,",",".") ?></div></td>
             <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
-            <td><div align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></div></td>
+            <td><div align="right"><?php echo "Rp. " .number_format($totalnya,0,",",".") ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>
           
