@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_service_appointment extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','free_service','pembuat');
     var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
@@ -16,7 +16,7 @@ class Mod_service_appointment extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('status','N');
         $i = 0;
@@ -228,6 +228,7 @@ class Mod_service_appointment extends CI_Model
         date_open_wo  ='".$date_open_wo."',
         clockin   ='".$data['clockin']."',
         status    ='N',
+        free_service    ='".$data['free_service']."',
         pembuat   ='".$data['pembuat']."'";
 
 		$this->db->query($sql);
@@ -258,7 +259,8 @@ class Mod_service_appointment extends CI_Model
         type      ='".$data['vehicle_type']."',
         storing   ='".$data['storing']."',
         date_open_wo  ='".$data['date_open_wo']."',
-        clockin   ='".$data['clockin']."' WHERE id='".$data['id']."'";
+        clockin   ='".$data['clockin']."',
+        free_service    ='".$data['free_service']."' WHERE id='".$data['id']."'";
 
 		$this->db->query($sql);
 

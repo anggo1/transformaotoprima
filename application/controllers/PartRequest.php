@@ -54,6 +54,7 @@ class PartRequest extends MY_Controller
                 $row[] = $p->no_pol;
                 $row[] = $p->type;
                 $row[] = $p->storing;
+                $row[] = $p->free_service == 'Y' ? '<td style="background-color: #28a745; color: white;">Free Service</td>' : '<td style="background-color: #ffc107; color: white;">Non Free</td>';
                 $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
                 $row[] = empty($p->pre_order) ? 'Not Processed' : 'On Process';

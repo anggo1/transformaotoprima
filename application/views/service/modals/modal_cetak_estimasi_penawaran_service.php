@@ -305,7 +305,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><div align="center">&nbsp;<?php echo $d->no_part ?></div></td>
             <td width="53%"><div align="center"><?php echo $d->nama_part ?></div></td>
             <td width="8%"><div align="right">&nbsp;<?php echo "Rp. " .number_format($d->harga_net,0,",",".") ?></div></td>
-            <td width="4%"><div align="center">&nbsp;<?php echo number_format($d->jumlah) ?></div></td>
+            <td width="4%"><div align="center">&nbsp;<?php echo $d->jumlah ?></div></td>
             <td><div align="right"><?php echo "Rp. " .number_format($totalnya,0,",",".") ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>

@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_part_request extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','part_request','free_service','pembuat');
     var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pre_order','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
@@ -16,9 +16,10 @@ class Mod_part_request extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,part_request,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,part_request,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('estimasi','Y');
+        $this->db->or_where('free_service','Y');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

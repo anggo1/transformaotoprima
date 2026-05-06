@@ -18,14 +18,14 @@
             <tr>
 
                 <td><?php echo $no; ?></td>
-                <td><?php echo $s->no_work_order; ?></td>
-                <td><?php echo $s->operation; ?></td>
-                <td><?php echo $s->hours; ?></td>
-                <td><?php echo $s->type_of_work; ?></td>
+                <td><?php echo $s->wo_no; ?></td>
+                <td><?php echo $s->no_part; ?></td>
+                <td><?php echo $s->jumlah; ?></td>
+                <td><?php echo $s->nama_part; ?></td>
 
                 <td class="text-center">
                     <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"
-                        data-id="<?php echo $s->no_work_order; ?>"> Add Mechanic</button>
+                        data-id="<?php echo $s->wo_no; ?>"> Add Mechanic</button>
                     <button class="btn btn-xs btn-outline-danger delete-operation ion-android-delete"
                         data-id="<?php echo $s->id_detail; ?>"> Delete</button>
                 </td>

@@ -6,14 +6,6 @@
       foreach ($dataCus as $dataCus) {
       }
     }
-    $ci_kons = get_instance();
-		$query = "SELECT max(kode_cus) AS maxKode FROM tbl_customer";
-		$hasil = $ci_kons->db->query($query)->row_array();
-		$noOrder = $hasil['maxKode'];
-		$noUrut = (int)substr($noOrder, 3, 4);
-		$noUrut++;
-		$huruf = "CS-";
-		$kode_po  = $huruf . sprintf("%04s", $noUrut);
     ?>
         <p></span>
         <h4 style="display:block; text-align:center;"><?php if (!empty($dataCus->id_cus)) {
@@ -38,10 +30,11 @@
                 <input type="hidden" name="id_cus" id="id_cusW" value="<?php if (!empty($dataCus->id_cus)) {
                                                           echo $dataCus->id_cus;
                                                         } ?>">
+                
                 <input type="hidden" class="form-control" placeholder="Kode Customer" value="<?php
                                                                                     if (!empty($dataCus->kode_cus)) {
                                                                                       echo $dataCus->kode_cus;
-                                                                                    } else { echo $kode_po; }
+                                                                                    }
                                                                                     ?>" name="kode_cus"
                     aria-describedby="sizing-addon2" readonly>
             </div>

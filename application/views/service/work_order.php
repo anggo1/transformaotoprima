@@ -50,6 +50,7 @@ table.dataTable td {
                                         <th>LcPlate</th>
                                         <th>VcType</th>
                                         <th>Storing</th>
+                                        <th>Status</th>
                                         <th>DateStart</th>
                                         <th>C.In</th>
                                         <th>Work Order</th>
@@ -286,7 +287,6 @@ function insertOperation() {
 
 function insertMechanic() {
     var wo_no = document.getElementById('wo_no').value;
-    var no_work_order = document.getElementById('no_work_order').value;
     var nik = document.getElementById('nik').value;
     var nama = document.getElementById('nama').value;
     $.ajax({
@@ -295,8 +295,7 @@ function insertMechanic() {
         data: {
             'wo_no': wo_no,
             'nik': nik,
-            'nama': nama,
-            'no_work_order': no_work_order
+            'nama': nama
         },
         success: function(hasil) {
             tampilMechanic();
@@ -326,18 +325,7 @@ function tampilKeterangan() {
     });
 }
 
-function tampilMechanic() {
-    var no_work_order = document.getElementById('no_work_order').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('WorkOrder/tampilMechanic'); ?>',
-        data: 'no_work_order=' + no_work_order,
-        success: function(hasil) {
-            //tableKeterangan.fnDestroy();
-            $('#data-daftar-mechanic').html(hasil);
-        }
-    });
-}
+
 
 function tampilLabor() {
     var wo_no = document.getElementById('wo_no').value;

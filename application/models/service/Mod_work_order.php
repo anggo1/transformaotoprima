@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_work_order extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
+    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -16,7 +16,7 @@ class Mod_work_order extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('status !=', 'F');
         $i = 0;
@@ -130,8 +130,10 @@ class Mod_work_order extends CI_Model
     function select_operation_detail($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_wo');
+        $this->db->from('tbl_af_detail_estimasi_penawaran');
         $this->db->where('wo_no',$wo_no);
+        $this->db->where('validasi_jenis','S');
+        
 
         $data = $this->db->get();
 
@@ -140,8 +142,8 @@ class Mod_work_order extends CI_Model
     function select_labor_detail($idL)
     {
         $this->db->select('*');
-        $this->db->from('tbl_after_sales_detail_wo');
-        $this->db->where('no_work_order',$idL);
+        $this->db->from('tbl_af_detail_estimasi_penawaran');
+        $this->db->where('wo_no',$idL);
 
         $data = $this->db->get();
 
@@ -206,12 +208,11 @@ class Mod_work_order extends CI_Model
 		return $this->db->affected_rows();
     }
     
-    function insertLabor($wo_no, $nik, $nama, $no_work_order)
+    function insertLabor($wo_no, $nik, $nama)
     {
         $sql = "INSERT INTO tbl_after_sales_labor SET
         id_labor  ='',
         wo_no       ='".$wo_no."',
-        no_work_order       ='".$no_work_order."',
         nik         ='".$nik."',
         nama        ='".$nama."'";
 
@@ -304,6 +305,22 @@ class Mod_work_order extends CI_Model
     }
     function finish_work($wo_no)
     {
+         $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+        $waktu_input='';
+            $ci_kons = get_instance();
+			$query = "SELECT total_pause,total_time FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status = 'R' OR status = 'P'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+		    $pause = $hasil['total_pause'];
+		    $total = $hasil['total_time'];
+            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+        $sql2 = "UPDATE tbl_after_sales_detail_wo SET
+        end_date    ='".$tgl_jam_sekarang."',
+        total_time    ='".$waktu_input."',
+        status     ='F' WHERE wo_no='".$wo_no."'";
+
+		$this->db->query($sql2);
+
+        
 	    $tgl_sekarang  = date("Y-m-d");
 	    $jam_sekarang  = date("H:i:s");
         $sql = "UPDATE tbl_after_sales SET        

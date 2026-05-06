@@ -109,7 +109,15 @@ class Mod_customer extends CI_Model
 	}
 	public function insertCustomer($data)
 	{
-	$sql = "INSERT INTO tbl_customer SET kode_cus='" . $data['kode_cus'] . "',
+    $ci_kons = get_instance();
+		$query = "SELECT max(kode_cus) AS maxKode FROM tbl_customer";
+		$hasil = $ci_kons->db->query($query)->row_array();
+		$noOrder = $hasil['maxKode'];
+		$noUrut = (int)substr($noOrder, 3, 4);
+		$noUrut++;
+		$huruf = "CS-";
+		$kode_cus  = $huruf . sprintf("%04s", $noUrut);
+	$sql = "INSERT INTO tbl_customer SET kode_cus='" . $kode_cus . "',
 	kode_nama='" . $data['kode_nama'] . "',
 	nama_cus='" . $data['nama_customer'] . "',
 	detail='" . $data['detail'] . "',

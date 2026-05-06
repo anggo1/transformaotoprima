@@ -142,6 +142,18 @@
                         placeholder="Service Advisor">
                 </div>
             </div>
+            
+            <div class="row form-group row">
+                <label class="col-sm-2 col-form-label">Status Service</label>
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="free_service1" value="N" name="free_service" checked>
+                    <label for="free_service1" class="custom-control-label">Non Free</label>
+                </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="free_service2" value="Y" name="free_service">
+                    <label for="free_service2" class="custom-control-label">Free</label>
+                </div>
+            </div>
             <input type="hidden" name="pembuat" id="pembuat"
                 value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
             <div class="modal-footer right-content-between">

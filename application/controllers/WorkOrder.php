@@ -54,22 +54,23 @@ class WorkOrder extends MY_Controller
                 $row[] = $p->no_pol;
                 $row[] = $p->type;
                 $row[] = $p->storing;
+                $row[] = $p->free_service == 'Y' ? '<span class="badge badge-success">Free Service</span>' : '<span class="badge badge-warning">Non Free</span>';
                 $row[] = tglIndoPendek($p->date_open_wo);
                 $row[] = $p->clockin;
                 $row[] = empty($p->work_order) ? 'Not Processed' : 'Active';
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-xs btn-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-chalkboard"></i> Process
+                    <button class="btn btn-xs bg-gradient-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-chalkboard"></i> Process
                   </button>';
                   
                   $print='                    
-                    <button class="btn btn-xs btn-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
+                    <button class="btn btn-xs bg-gradient-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
                   </button>
-                  <button class="btn btn-xs btn-primary process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
+                  <button class="btn btn-xs bg-gradient-primary  process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
                   </button>
-                  <button class="btn btn-xs btn-success process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Detail
+                  <button class="btn btn-xs bg-gradient-indigo process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Detail
                   </button>
-                  <button class="btn btn-xs btn-danger hapus-work-order" title="Edit" data-id="'.$p->wo_no.'"><i class="fa fa-times"></i>Finish
+                  <button class="btn btn-xs bg-gradient-danger hapus-work-order" title="Edit" data-id="'.$p->wo_no.'"><i class="fa fa-times"></i>Finish
                   </button>';
                 $akses_system= empty ($p->work_order) ? $edit : $print;
                 $row[] = $akses_system;
@@ -174,13 +175,12 @@ class WorkOrder extends MY_Controller
 
         //$data     = $this->input->post();
         $wo_no = $this->input->post('wo_no');
-        $no_work_order = $this->input->post('no_work_order');
         $nik   = $this->input->post('nik');
         $nama = $this->input->post('nama');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_work_order->insertLabor($wo_no, $nik, $nama, $no_work_order);
+            $result = $this->Mod_work_order->insertLabor($wo_no, $nik, $nama);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -209,7 +209,9 @@ class WorkOrder extends MY_Controller
 	}
     
     public function tampilMechanic() {
-		$idX = $_POST['no_work_order'];
+		$idX = $_POST['wo_no'];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataM'] = $this->Mod_work_order->select_labor_mechanic($idX);
         
 		$this->load->view('service/detail_mechanic', $data);

@@ -64,7 +64,7 @@ class EstimasiPenawaranService extends MY_Controller
                 $row[] = $no;
                 $row[] = $p->wo_no;
                 $row[] = $p->sa_name;
-                $row[] = $p->customer;
+                $row[] = $p->customer_name;
                 $row[] = $p->customer_complain;
                 $row[] = $p->vin;
                 $row[] = $p->no_pol;
@@ -79,6 +79,8 @@ class EstimasiPenawaranService extends MY_Controller
                   
                   $print='                    
                     <button class="btn btn-xs btn-info cetak-po" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
+                  </button>                  
+                    <button class="btn btn-xs btn-primary process-estimasi" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-check"></i> Edit
                   </button>';
                 $akses_system= ($p->estimasi == 'N') ? $edit : $print;
                 $row[] = $akses_system;
@@ -187,7 +189,7 @@ public function showPart()
 		$tahun = substr($date, 0, 2);
 		$bulan = substr($date, 3, 2);
 		$kode_po  = $tahun.'-'.$bulan.sprintf("%03s", $noUrut);
-		$kode_ref = 'SP/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
+		$kode_ref = 'SV/TOP/'.$bulan.'/'.$tahun.'/'.sprintf("%03s", $noUrut);
 		
 		$data 	= $this->input->post();
 		$result = $this->Mod_estimasi_penawaran_service->insertDetailPo($kode_po, $kode_ref, $data);
@@ -213,7 +215,8 @@ public function showPart()
         $id = $_POST['id'];
         $jml_part = $_POST['jml_part'];
         $hrg_part = $_POST['hrg_part'];
-		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->update_detailPo($id,$jml_part,$hrg_part);
+		$total=$hrg_part*$jml_part;
+		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->update_detailPo($id,$jml_part,$hrg_part,$total);
 		//$this->load->view('body_repair/detail_estimasi', $data);
 	}
 	public function updateRemark()

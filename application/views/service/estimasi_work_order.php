@@ -329,6 +329,7 @@ function panggilPart() {
             var stok = data[4];
             var harga_baru = data[5];
             var jenis = 'P';
+        var jumlah = '1';
         var wo_no = document.getElementById('wo_no').value;
         $.ajax({
             method: 'POST',
@@ -339,7 +340,8 @@ function panggilPart() {
                 "&satuan=" + satuan +
                 "&stok=" + stok +
                 "&harga_baru=" + harga_baru +
-                "&jenis=" + jenis
+                "&jenis=" + jenis +
+                "&jumlah=" + jumlah
         })
         .done(function(data) {
             Swal.fire({
@@ -404,6 +406,7 @@ function panggilTabel() {
         var stok_operation = '0';
         var harga = data[4];
         var jenis = 'S';
+        var jumlah = data[2];
         var wo_no = document.getElementById('wo_no').value;
         $.ajax({
             method: 'POST',
@@ -414,7 +417,8 @@ function panggilTabel() {
                 "&satuan=" + hours +
                 "&stok=" + stok_operation +
                 "&harga_baru=" + harga +
-                "&jenis=" + jenis
+                "&jenis=" + jenis +
+                "&jumlah=" + jumlah
         })
        .done(function(data) {
             Swal.fire({

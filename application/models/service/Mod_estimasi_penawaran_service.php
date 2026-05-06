@@ -75,13 +75,13 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     //tabele work order
     var $table_estimasi = 'tbl_after_sales';
-    var $column_search_estimasi = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
-    var $column_order_estimasi = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_search_estimasi = array('wo_no','sa_name','customer','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_order_estimasi = array('null','wo_no','sa_name','customer','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
     var $order_estimasi = array('id' => 'asc'); // default order 
 
     private function _get_datatables_query_estimasi($term = '')
     {
-    $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,estimasi,pembuat');
+    $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,estimasi,pembuat');
         $this->db->from('tbl_after_sales');
         //$this->db->where('estimasi !=', 'Y');
         $this->db->where('status !=', 'F');
@@ -264,7 +264,7 @@ class Mod_estimasi_penawaran_service extends CI_Model
             harga       ='" . $harga_baru. "',
             harga_net   ='" . $harga_baru. "',
             total_harga   ='" . $grand_total. "',
-            jumlah      ='1',
+            jumlah      ='" . $data['jumlah'] . "',
             stok_akhir  ='" . $data['stok'] . "',
             validasi_jenis = '" . $data['jenis'] . "'";
         $this->db->query($sql);
@@ -282,10 +282,10 @@ class Mod_estimasi_penawaran_service extends CI_Model
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
-    function update_detailPo($id,$jml_part,$hrg_part)
+    function update_detailPo($id,$jml_part,$hrg_part,$total)
 		{			
-		$jml =str_replace(" ","", $jml_part);
-		$total=$hrg_part*$jml;
+		//$jml =str_replace(" ","", $jml_part);
+		//$total=$hrg_part*$jml_part;
 			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
 
 		return $this->db->affected_rows();

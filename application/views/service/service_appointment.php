@@ -45,6 +45,7 @@ table.dataTable td {
                                     <th>LcPlate</th>
                                     <th>VcType</th>
                                     <th>Storing</th>
+                                    <th>Status</th>
                                     <th>DateStart</th>
                                     <th>C.In</th>
                                     <th>User</th>

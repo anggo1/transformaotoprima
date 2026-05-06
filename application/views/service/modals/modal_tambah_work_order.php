@@ -158,4 +158,16 @@
     </div>
 </div>
 <script type="text/javascript">
+    function tampilMechanic() {
+    var wo_no = document.getElementById('wo_no').value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/tampilMechanic'); ?>',
+        data: 'wo_no=' + wo_no,
+        success: function(hasil) {
+            //tableKeterangan.fnDestroy();
+            $('#data-daftar-mechanic').html(hasil);
+        }
+    });
+}
 </script>

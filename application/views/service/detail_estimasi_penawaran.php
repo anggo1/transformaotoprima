@@ -102,7 +102,7 @@ function saveDiskon(e, idpo, id, hrg_part, diskon) {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/updateDiskon')?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/updateDiskon')?>",
             data: {
                 '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
                 'id': id,
@@ -121,7 +121,7 @@ function saveData(e, idpo, id, hrg_part, jml_part) {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/updateDetailPo')?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/updateDetailPo')?>",
             data: {
                 '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
                 'id': id,
@@ -141,7 +141,7 @@ function saveRemark(e, idpo, id, remark) {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('EstimasiPenawaran/updateRemark')?>",
+            url: "<?php echo base_url('EstimasiPenawaranService/updateRemark')?>",
             data: {
                 '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>',
                 'id': id,

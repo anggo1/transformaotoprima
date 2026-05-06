@@ -252,7 +252,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th><div class="text1"><font size="-2">Sales designation</font></div>
             <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Reception date/time</font></div>
-            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
+            <div class="text2"><?php echo tglIndoSedang($s->date_open_wo) . ' ' . $s->clockin ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Mileage/Km</font></div>
@@ -402,5 +402,5 @@ font-family:Georgia, "Times New Roman", Times, serif;
     </div>
 <div class="modal-footer justify-content-between">
 <button type="button" id="btnPrint" class="btn btn-success"><span class="fa fa-print"></span>&nbsp;&nbsp; C E T A K </button>
-  <button class="btn btn-danger" id="tutup" onClick="window.location.assign(" <?php echo base_url(); ?>/Transaksi/Pengiriman");" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
+  <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
     </div>
