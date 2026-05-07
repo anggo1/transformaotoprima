@@ -557,6 +557,8 @@ $(document).on("click", ".hapusWorkOder", function() {
             $('#tabel-appointment').DataTable().ajax.reload();
             $('.msg').html(out.msg);
             $('#finishWorkOrder').modal('hide');
+            panggilTabel();
+            tampilPekerjaan();
             if (out.status != 'form') {
                 Swal.fire({
                     position: 'center',
@@ -568,6 +570,23 @@ $(document).on("click", ".hapusWorkOder", function() {
             }
         })
 })
+})
+$(document).on("click", ".finish-work-order", function() {
+    var id = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('WorkOrder/finishWorkOrder'); ?>',
+        data: 'id=' + id,
+        success: function(hasil) {
+            $('#data-proses-pk').html(hasil);
+            document.getElementById("tab-pk-tab").hidden = false;
+            $("a[href='#tab-pk']").tab('show');
+            //panggilTabel();
+            //tampilKeterangan();
+            tampilPekerjaan();
+        }
+    });
 })
 
 </script>

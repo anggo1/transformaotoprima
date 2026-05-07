@@ -59,19 +59,16 @@ class WorkOrder extends MY_Controller
                 $row[] = $p->clockin;
                 $row[] = empty($p->work_order) ? 'Not Processed' : 'Active';
                 $row[] = $p->pembuat;
-                    $edit='                    
+                    $edit='
                     <button class="btn btn-xs bg-gradient-dark process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-chalkboard"></i> Process
-                  </button>';
-                  
-                  $print='                    
+                </button>';
+                $print='
                     <button class="btn btn-xs bg-gradient-info cetak-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-print"></i> Print
-                  </button>
-                  <button class="btn btn-xs bg-gradient-primary  process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
-                  </button>
-                  <button class="btn btn-xs bg-gradient-indigo process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Detail
-                  </button>
-                  <button class="btn btn-xs bg-gradient-danger hapus-work-order" title="Edit" data-id="'.$p->wo_no.'"><i class="fa fa-times"></i>Finish
-                  </button>';
+                </button>
+                <button class="btn btn-xs bg-gradient-primary  process-work-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-xs bg-gradient-indigo process-start" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'"><i class="fa fa-play"></i> Status
+                </button>';
                 $akses_system= empty ($p->work_order) ? $edit : $print;
                 $row[] = $akses_system;
                 $data[] = $row;

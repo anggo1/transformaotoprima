@@ -20,9 +20,9 @@
 
                 <td><?php echo $no; ?></td>
                 <td><?php echo $s->spk; ?></td>
-                <td><?php echo $s->no_part; ?></td>
+                <td><?php echo $s->operation; ?></td>
                 <td><?php echo $s->jumlah; ?></td>
-                <td><?php echo $s->nama_part; ?></td>
+                <td><?php echo $s->type_of_work; ?></td>
                 <td><?php echo number_format($s->total_harga, 2, ',', '.'); ?></td>
                 <td class="text-center">
                     <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"

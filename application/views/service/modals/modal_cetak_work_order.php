@@ -270,7 +270,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
             <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <div class="text2"><?php echo $s->date_open_wo ?></div></th>
+            <div class="text2"><?php echo tglIndoPendek($s->date_open_wo) ?></div></th>
           <th>&nbsp;</th>
         </tr>
         </table>
@@ -290,9 +290,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
           ?>
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>
-            <td><div align="center"><?php echo $d->no_part; ?>&nbsp;</div></td>
+            <td><div align="center"><?php echo $d->operation; ?>&nbsp;</div></td>
             <td width="8%"><div align="center"><?php echo $d->jumlah; ?></div></td>
-            <td width="63%"><?php echo $d->nama_part ?>&nbsp;</td>
+            <td width="63%"><?php echo $d->type_of_work ?>&nbsp;</td>
             </tr>
           
         <?php $no + 1;

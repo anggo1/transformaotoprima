@@ -18,7 +18,9 @@ class Mod_work_order extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
-        $this->db->where('status !=', 'F');
+        //$this->db->where('estimasi', 'Y');
+        $this->db->where('pre_order <>', 'empty');
+        $this->db->or_where('free_service', 'Y');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -196,8 +198,18 @@ class Mod_work_order extends CI_Model
 
 		$harga_baru =str_replace(",","", $price);
         $grand_total = $price * $hours;
+        $sql = "INSERT INTO tbl_after_sales_detail_wo SET
+        id_detail   ='',
+        wo_no       ='" . $wo_no. "',
+        spk       ='".$kode_keluar."',
+        operation   ='" . $operation. "',
+        hours       ='" . $hours . "',
+        type_of_work  ='" . $type_of_work . "',
+        jumlah      ='" . $hours . "',
+        harga       ='" . $harga_baru. "',
+        total_harga   ='" . $grand_total. "'";
         
-        $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
+        $sql2 = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             wo_no     ='" . $wo_no . "',
             no_part     ='" . $operation . "',
             nama_part   ='" . $type_of_work . "',
@@ -209,6 +221,7 @@ class Mod_work_order extends CI_Model
             spk = '" . $kode_keluar . "'";
 
 		$this->db->query($sql);
+		$this->db->query($sql2);
 
 		return $this->db->affected_rows();
     }
@@ -314,27 +327,39 @@ class Mod_work_order extends CI_Model
          $tgl_jam_sekarang  = date("Y-m-d H:i:s");
         $waktu_input='';
             $ci_kons = get_instance();
-			$query = "SELECT total_pause,total_time FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status = 'R' OR status = 'P'";
+            $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
 			$hasil = $ci_kons->db->query($query)->row_array();
 		    $pause = $hasil['total_pause'];
-		    $total = $hasil['total_time'];
+            $id_detail = $hasil['id_detail'];
+            
+	    $tgl_jam_mulai  = $hasil['start_date'];
+        $start = new DateTime($tgl_jam_mulai);
+        $end = new DateTime($tgl_jam_sekarang);
+        $interval = $start->diff($end);
+
+        $jam = $interval->format('%h');
+        $menit = $interval->format('%i');
+        $total=$jam.'.'.$menit;
+
             empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
-        $sql2 = "UPDATE tbl_after_sales_detail_wo SET
+        $sql = "UPDATE tbl_after_sales_detail_wo SET
         end_date    ='".$tgl_jam_sekarang."',
         total_time    ='".$waktu_input."',
-        status     ='F' WHERE wo_no='".$wo_no."'";
+        status     ='F' WHERE id_detail='".$id_detail."'";
 
-		$this->db->query($sql2);
+		$this->db->query($sql);
+        if($query > 0){
 
         
 	    $tgl_sekarang  = date("Y-m-d");
 	    $jam_sekarang  = date("H:i:s");
-        $sql = "UPDATE tbl_after_sales SET        
+        $sql1 = "UPDATE tbl_after_sales SET        
         date_close_wo    ='".$tgl_sekarang."',
         clockout    ='".$jam_sekarang."',
         status     ='F' WHERE wo_no='".$wo_no."'";
 
-		$this->db->query($sql);
+		$this->db->query($sql1);
+        }
 
 		return $this->db->affected_rows();
     }
