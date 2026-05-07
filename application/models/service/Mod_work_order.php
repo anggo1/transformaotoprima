@@ -130,9 +130,8 @@ class Mod_work_order extends CI_Model
     function select_operation_detail($wo_no)
     {
         $this->db->select('*');
-        $this->db->from('tbl_af_detail_estimasi_penawaran');
+        $this->db->from('tbl_after_sales_detail_wo');
         $this->db->where('wo_no',$wo_no);
-        $this->db->where('validasi_jenis','S');
         
 
         $data = $this->db->get();
@@ -143,7 +142,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_af_detail_estimasi_penawaran');
-        $this->db->where('wo_no',$idL);
+        $this->db->where('spk',$idL);
 
         $data = $this->db->get();
 
@@ -153,7 +152,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_after_sales_labor');
-        $this->db->where('no_work_order',$idX);
+        $this->db->where('spk',$idX);
 
         $data = $this->db->get();
 
@@ -178,13 +177,13 @@ class Mod_work_order extends CI_Model
 
         return $data->result();
     }
-    function insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order)
+    function insertOperation($wo_no, $operation, $hours, $type_of_work, $price)
     {
         $kd='SPK';
 			$tgl_keluar = date("y-m-d");
 			$date = date("ym");
 			$ci_kons = get_instance();
-			$query = "SELECT max(no_work_order) AS maxKode FROM tbl_after_sales_detail_wo WHERE no_work_order LIKE '%$date%'";
+			$query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
 			$hasil = $ci_kons->db->query($query)->row_array();
 			$noOrder = $hasil['maxKode'];
 			$noUrut = (int)substr($noOrder, 8, 4);
@@ -195,24 +194,31 @@ class Mod_work_order extends CI_Model
 			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
 			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
 
-        $sql = "INSERT INTO tbl_after_sales_detail_wo SET
-        id_detail   ='',
-        wo_no       ='".$wo_no."',
-        no_work_order       ='".$kode_keluar."',
-        operation   ='".$operation."',
-        hours       ='".$hours."',
-        type_of_work  ='".$type_of_work."'";
+		$harga_baru =str_replace(",","", $price);
+        $grand_total = $price * $hours;
+        
+        $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
+            wo_no     ='" . $wo_no . "',
+            no_part     ='" . $operation . "',
+            nama_part   ='" . $type_of_work . "',
+            harga       ='" . $harga_baru. "',
+            harga_net   ='" . $harga_baru. "',
+            total_harga   ='" . $grand_total. "',
+            jumlah      ='" . $hours . "',
+            validasi_jenis = 'S',
+            spk = '" . $kode_keluar . "'";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
     
-    function insertLabor($wo_no, $nik, $nama)
+    function insertLabor($wo_no, $spk, $nik, $nama)
     {
         $sql = "INSERT INTO tbl_after_sales_labor SET
         id_labor  ='',
         wo_no       ='".$wo_no."',
+        spk         ='".$spk."',
         nik         ='".$nik."',
         nama        ='".$nama."'";
 
@@ -240,7 +246,7 @@ class Mod_work_order extends CI_Model
     }
     function deleteOperation($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}'";
 
 		$this->db->query($sql);
 

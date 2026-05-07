@@ -117,6 +117,7 @@ class WorkOrder extends MY_Controller
                 $row[] = $p->code;
                 $row[] = $p->duration;
                 $row[] = $p->description;
+                $row[] = $p->price;
                 
                 $data[] = $row;
             }
@@ -142,11 +143,11 @@ class WorkOrder extends MY_Controller
         $operation = $this->input->post('operation');
         $hours = $this->input->post('hours');
         $type_of_work = $this->input->post('type_of_work');
-        $no_work_order = $this->input->post('no_work_order');
+        $price = $this->input->post('harga');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_work_order->insertOperation($wo_no, $operation, $hours, $type_of_work, $no_work_order);
+            $result = $this->Mod_work_order->insertOperation($wo_no, $operation, $hours, $type_of_work, $price);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -175,12 +176,13 @@ class WorkOrder extends MY_Controller
 
         //$data     = $this->input->post();
         $wo_no = $this->input->post('wo_no');
+        $spk = $this->input->post('spk');
         $nik   = $this->input->post('nik');
         $nama = $this->input->post('nama');
 
 
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->Mod_work_order->insertLabor($wo_no, $nik, $nama);
+            $result = $this->Mod_work_order->insertLabor($wo_no, $spk, $nik, $nama);
 
             if ($result > 0) {
                 $out['status'] = '';
@@ -209,7 +211,7 @@ class WorkOrder extends MY_Controller
 	}
     
     public function tampilMechanic() {
-		$idX = $_POST['wo_no'];
+		$idX = $_POST['spk'];
 
         $data['apl'] = $this->db->get("aplikasi")->row();
 		$data['dataM'] = $this->Mod_work_order->select_labor_mechanic($idX);

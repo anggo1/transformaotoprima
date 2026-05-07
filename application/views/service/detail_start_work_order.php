@@ -19,22 +19,22 @@
             <tr>
 
                 <td><?php echo $no; ?></td>
-                <td><?php echo $s->no_work_order; ?></td>
-                <td><?php echo $s->operation; ?></td>
-                <td><?php echo $s->hours; ?></td>
+                <td><?php echo $s->spk; ?></td>
+                <td><?php echo $s->nama_part; ?></td>
+                <td><?php echo $s->jumlah; ?></td>
                 <td><?php echo $s->start_date; ?></td>
                 <td><?php echo $s->type_of_work; ?></td>
                 <td class="text-center">
                     <?php if($s->status=='N' or $s->status=='P') {?>
                     <button class="btn btn-xs btn-outline-success add-mechanic ion-android-play"
-                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>')">
+                        onclick="Start('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>')">
                         Start</button>
                         <?php }if($s->status=='R') {?>
                     <button class="btn btn-xs btn-outline-warning pause-operation ion-android-pause"
-                        onclick="Pause('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>', '<?php echo $s->start_date; ?>')">
+                        onclick="Pause('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>', '<?php echo $s->start_date; ?>')">
                         Pause</button>
                     <button class="btn btn-xs btn-outline-danger complete-operation ion-android-stop"
-                        onclick="End('<?php echo $s->id_detail; ?>', '<?php echo $s->no_work_order; ?>', '<?php echo $s->start_date; ?>')">
+                        onclick="End('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>', '<?php echo $s->start_date; ?>')">
                         Complete</button>
                     <?php } if($s->status=='F') { echo 'Finish';}?> 
                 </td>

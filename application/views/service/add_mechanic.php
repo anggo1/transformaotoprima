@@ -7,7 +7,7 @@
             <div class="card">
                     <div class="card-header card-dark card-outline">
                         <h3 class="card-title" id="card-title" title="Operation" text><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
-                            Data Mekanik <?php echo "<span style='color:green'>".$m->wo_no."</span>"  ?></h3>
+                            Data No :  <?php echo "<span style='color:green'>".$m->spk."</span>"  ?></h3>
                     </div>
                     
                 <div class="row">
@@ -15,6 +15,8 @@
                         <div class="form-group">
                             <label class="col-sm-4 col-form-label">NIK</label>
                             <div class="col-sm-12">
+                                <input type="hidden" name="spk" id="spk" value="<?php echo $m->spk; ?>"
+                                    class="form-control" placeholder="Operation">                                    
                                 <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $m->wo_no; ?>"
                                     class="form-control" placeholder="Operation">
                                 <input type="text" name="nik" id="nik" value="" class="form-control" placeholder="Nomor Induk Karyawan">

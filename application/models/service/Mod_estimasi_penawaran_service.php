@@ -254,6 +254,41 @@ class Mod_estimasi_penawaran_service extends CI_Model
 		$harga=$data['harga_baru'];
 		$harga_baru =str_replace(",","", $harga);
         $grand_total = $harga_baru * $data['jumlah'];
+
+        $kd='SPK';
+			$tgl_keluar = date("y-m-d");
+			$date = date("ym");
+			$ci_kons = get_instance();
+			$query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
+			$hasil = $ci_kons->db->query($query)->row_array();
+			$noOrder = $hasil['maxKode'];
+			$noUrut = (int)substr($noOrder, 8, 4);
+			$noUrut++;
+			$tahun = substr($date, 0, 2);
+			$bulan = substr($date, 2, 2);
+
+			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
+			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+
+        $jenis = $data['jenis'];
+        if($jenis == 'S'){
+           $spk=$kode_keluar;
+
+        $sql2 = "INSERT INTO tbl_after_sales_detail_wo SET
+        id_detail   ='',
+        wo_no       ='" . $data['wo_no'] . "',
+        spk       ='".$kode_keluar."',
+        operation   ='" . $data['no_part'] . "',
+        hours       ='" . $data['jumlah'] . "',
+        type_of_work  ='" . $data['nama_part'] . "',
+        jumlah      ='" . $data['jumlah'] . "',
+        harga       ='" . $harga_baru. "',
+        total_harga   ='" . $grand_total. "'";
+
+		$this->db->query($sql2);
+           }else{
+             $spk='';}
+              
         $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             wo_no     ='" . $data['wo_no'] . "',
             id_estimasi_penawaran   ='" . $kode_po . "',
@@ -266,9 +301,10 @@ class Mod_estimasi_penawaran_service extends CI_Model
             total_harga   ='" . $grand_total. "',
             jumlah      ='" . $data['jumlah'] . "',
             stok_akhir  ='" . $data['stok'] . "',
-            validasi_jenis = '" . $data['jenis'] . "'";
-        $this->db->query($sql);
+            validasi_jenis = '" . $data['jenis'] . "',
+            spk = '" . $spk . "'";
 
+        $this->db->query($sql);
         return $this->db->affected_rows();
     }
     function update_detailDiskon($id,$diskon,$hrg_part)

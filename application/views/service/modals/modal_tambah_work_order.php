@@ -93,6 +93,8 @@
                             <div class="col-sm-12 input-group">
                                 <input type="text" name="type_of_work" id="type_of_work" value="" class="form-control"
                                     placeholder="Type Of Work">
+                                <input type="hidden" name="harga" id="harga" value="" class="form-control"
+                                    placeholder="Harga">
                                 <span class="input-group-append">
                                     <button type="button" class="btn btn-warning btn-flat" data-toggle="modal"
                                         data-target="#modal-operation">Cari!</button>
@@ -147,6 +149,7 @@
                                 <th>Code</th>
                                 <th>Hours</th>
                                 <th>Type of Work</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -159,11 +162,11 @@
 </div>
 <script type="text/javascript">
     function tampilMechanic() {
-    var wo_no = document.getElementById('wo_no').value;
+    var spk = document.getElementById('spk').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('WorkOrder/tampilMechanic'); ?>',
-        data: 'wo_no=' + wo_no,
+        data: 'spk=' + spk,
         success: function(hasil) {
             //tableKeterangan.fnDestroy();
             $('#data-daftar-mechanic').html(hasil);

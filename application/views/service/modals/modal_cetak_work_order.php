@@ -290,9 +290,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
           ?>
           <tr>
             <td><div align="center"><?php echo $no ?></div></td>
-            <td><div align="center"><?php echo $d->operation; ?>&nbsp;</div></td>
-            <td width="8%"><div align="center"><?php echo $d->hours; ?></div></td>
-            <td width="63%"><?php echo $d->type_of_work ?>&nbsp;</td>
+            <td><div align="center"><?php echo $d->no_part; ?>&nbsp;</div></td>
+            <td width="8%"><div align="center"><?php echo $d->jumlah; ?></div></td>
+            <td width="63%"><?php echo $d->nama_part ?>&nbsp;</td>
             </tr>
           
         <?php $no + 1;

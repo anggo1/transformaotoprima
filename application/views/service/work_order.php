@@ -241,6 +241,25 @@ $(document).on("click", ".delete-operation", function() {
             }
         })
 })
+$(document).on("click", ".delete-mechanic", function() {
+    idS = $(this).attr("data-id");
+})
+$(document).on("click", ".delete-mechanic", function() {
+    var id = idS;
+
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('WorkOrder/deleteMechanic'); ?>",
+            data: "id=" + id
+        })
+
+        .done(function(data) {
+            var out = jQuery.parseJSON(data);
+            table.ajax.reload();
+            $('.msg').html(out.msg);
+            tampilMechanic();
+        })
+})
 
 function showOperationForm() {
     document.getElementById("operation-body").hidden = false;
@@ -253,6 +272,7 @@ function insertOperation() {
     var operation = document.getElementById('operation').value;
     var hours = document.getElementById('hours').value;
     var type_of_work = document.getElementById('type_of_work').value;
+    var harga = document.getElementById('harga').value;
     $.ajax({
         type: 'POST',
         url: '<?php echo base_url('WorkOrder/tambahXot'); ?>',
@@ -260,7 +280,8 @@ function insertOperation() {
             'wo_no': wo_no,
             'operation': operation,
             'hours': hours,
-            'type_of_work': type_of_work
+            'type_of_work': type_of_work,
+            'harga': harga
         },
         success: function(hasil) {
             tampilKeterangan();
@@ -273,6 +294,7 @@ function insertOperation() {
             operation = document.getElementById('operation').value = '';
             hours = document.getElementById('hours').value = '';
             type_of_work = document.getElementById('type_of_work').value = '';
+            harga = document.getElementById('harga').value = '';
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -287,6 +309,7 @@ function insertOperation() {
 
 function insertMechanic() {
     var wo_no = document.getElementById('wo_no').value;
+    var spk = document.getElementById('spk').value;
     var nik = document.getElementById('nik').value;
     var nama = document.getElementById('nama').value;
     $.ajax({
@@ -294,6 +317,7 @@ function insertMechanic() {
         url: '<?php echo base_url('WorkOrder/tambahLabor'); ?>',
         data: {
             'wo_no': wo_no,
+            'spk': spk,
             'nik': nik,
             'nama': nama
         },
@@ -465,10 +489,12 @@ function panggilTabel() {
         var code = data[1];
         var hours = data[2];
         var operation = data[3];
+         var harga = data[4];
 
         document.getElementById('operation').value = code;
         document.getElementById('hours').value = hours;
         document.getElementById('type_of_work').value = operation;
+        document.getElementById('harga').value = harga;
         $('#modal-operation').modal('hide');
 
 
