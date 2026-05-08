@@ -18,7 +18,7 @@ class Mod_work_order extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
-        //$this->db->where('estimasi', 'Y');
+        $this->db->where('status !=', 'F');
         $this->db->where('pre_order <>', 'empty');
         $this->db->or_where('free_service', 'Y');
         $i = 0;
@@ -262,6 +262,9 @@ class Mod_work_order extends CI_Model
         $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}'";
 
 		$this->db->query($sql);
+        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}'";
+
+		$this->db->query($sql2);
 
 		return $this->db->affected_rows();
     }
