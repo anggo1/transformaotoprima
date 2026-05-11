@@ -257,12 +257,12 @@ class Mod_work_order extends CI_Model
 
 		return $this->db->affected_rows();
     }
-    function deleteOperation($id)
+    function deleteOperation($id, $spk)
     {
-        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}' or spk='{$spk}'";
 
 		$this->db->query($sql);
-        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}'";
+        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}' OR spk='{$spk}'";
 
 		$this->db->query($sql2);
 

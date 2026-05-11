@@ -336,8 +336,11 @@ public function showPart()
 	}
 	public function deleteDetail()
 	{
-		$id = $_POST['id'];
-		$result = $this->Mod_estimasi_penawaran_service->deleteDetail_po($id);
+		$idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $spk = $kat[1];
+        $id = $kat[0];
+		$result = $this->Mod_estimasi_penawaran_service->deleteDetail_po($id, $spk);
 		if ($result > 0) {
 			//$out['datakode']=$kodeBaru;
 			$out['status'] = '';

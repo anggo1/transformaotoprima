@@ -73,7 +73,7 @@ table.dataTable td {
 
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-danger delete-detail ion-android-delete"
-                                    data-id="<?php echo $s->id_detail; ?>"></button>
+                                    data-id="<?php echo $s->id_detail.'|'.$s->spk; ?>"></button>
                             </td>
                         </tr>
                         <?php

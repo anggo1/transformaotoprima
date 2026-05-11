@@ -28,7 +28,7 @@
                     <button class="btn btn-xs btn-outline-success add-mechanic ion-android-add"
                         data-id="<?php echo $s->spk; ?>"> Add Mechanic</button>
                     <button class="btn btn-xs btn-outline-danger delete-operation ion-android-delete"
-                        data-id="<?php echo $s->id_detail; ?>"> Delete</button>
+                        data-id="<?php echo $s->id_detail.'|'.$s->spk; ?>"> Delete</button>
                 </td>
             </tr>
             <?php

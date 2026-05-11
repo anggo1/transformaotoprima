@@ -259,8 +259,13 @@ class WorkOrder extends MY_Controller
 
     public function deleteOperation()
     {
+        $idS = trim($_POST['id']);
+        $kat = explode('|', $idS);
+        $spk = $kat[1];
+        $id = $kat[0];
+
         $id = $_POST['id'];
-        $result = $this->Mod_work_order->deleteOperation($id);
+        $result = $this->Mod_work_order->deleteOperation($id, $spk);
 
         if ($result > 0) {
             $out['status'] = '';
