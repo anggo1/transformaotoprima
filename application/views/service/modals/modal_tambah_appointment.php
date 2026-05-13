@@ -99,6 +99,14 @@
                                     <div class="input-group-text"><i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
+                                
+                        <div class="col-sm-4">
+                            <div class="input-group date" id="timepicker2" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" name="dead_time" id="dead_time"
+                                    value="" data-toggle="datetimepicker" data-target="#timepicker2"
+                                    data-format="HH:mm" />
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>

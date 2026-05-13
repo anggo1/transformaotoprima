@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_work_order extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
+    var $column_search = array('wo_no','sa_name','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
+    var $column_order = array('null','wo_no','sa_name','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -16,7 +16,7 @@ class Mod_work_order extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('status !=', 'F');
         $this->db->where('pre_order <>', 'empty');
@@ -111,7 +111,7 @@ class Mod_work_order extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('id,wo_no,sa_name,customer,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pembuat');
+       $this->db->select('*');
         $this->db->from('tbl_after_sales');
          $this->db->where('wo_no',$id);
 

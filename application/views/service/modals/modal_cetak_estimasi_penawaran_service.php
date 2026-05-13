@@ -152,7 +152,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="0" cellpadding="5" cellspacing="0">
       <tr align="center">
         <th width="99%" align="center">
-          <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%"></th>
+          <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="10%"></th>
       </tr>
 
 </table>

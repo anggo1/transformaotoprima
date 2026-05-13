@@ -75,8 +75,9 @@ $('#date_open_wo,#last_service_date,#dead_line').datetimepicker({
     date: moment()
 });
 $(function () {
-  $('#timepicker').datetimepicker({
-    format: 'LT'
+  $('#timepicker,#timepicker2').datetimepicker({
+    format: 'H:mm',
+    time: moment()
   })
 })
 $(document).ready(function() {

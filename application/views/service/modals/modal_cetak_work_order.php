@@ -67,7 +67,7 @@ p, td, th {
 .datatable3 td {
     padding: 2px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:8px;
+	font-size:12px;
     font: bold;
 }
 .datatable3 th {
@@ -76,7 +76,7 @@ p, td, th {
     align-content: center;
     font-weight: bolder;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:10px;
+	font-size:12px;
     text-align: center;
 }
          
@@ -152,7 +152,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="0" cellpadding="5" cellspacing="0">
       <tr align="center">
         <th width="99%" align="center">
-          <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%"></th>
+          <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="10%"></th>
       </tr>
 
 </table>
@@ -246,21 +246,21 @@ font-family:Georgia, "Times New Roman", Times, serif;
     <table width="100%" border="1" cellpadding="1" cellspacing="0" class="datatable2">
         <tr>
             <th height="37"><div class="text1"><font size="-2">Registration No</font></div>
-          <div class="text2"><?php echo $s->wo_no ?></div></th>
+          <div class="text2"><?php echo $s->no_pol ?></div></th>
           <th><div class="text1"><font size="-2">Vin No</font></div>
             <div class="text2"><?php echo $s->vin ?></div></th>
           <th><div class="text1"><font size="-2">Sales designation</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"><?php echo $s->type ?></div></th>
           <th><div class="text1"><font size="-2">Reception date/time</font></div>
             <div class="text2"><?php echo tglIndoSedang($s->date_open_wo) . ' ' . $s->clockin ?></div></th>
         </tr>
         <tr>
           <th><div class="text1"><font size="-2">Mileage/Km</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"><?php echo $s->mileage ?></div></th>
           <th><div class="text1"><font size="-2">Engine No.</font></div>
-            <div class="text2"></div></th>
+            <div class="text2"><?php echo $s->engine_no ?></div></th>
           <th><div class="text1"><font size="-2">Active reception</font></div>
-            <div class="text2"></div></th>
+              <div class="text2">□ Yes □ No</div></th>
           <th><div class="text1"><font size="-2">Received By</font></div>
             <div class="text2"><?php echo $s->sa_name ?></div></th>
         </tr>
@@ -270,8 +270,11 @@ font-family:Georgia, "Times New Roman", Times, serif;
           <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
             <div class="text2"></div></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
-            <div class="text2"><?php echo tglIndoPendek($s->date_open_wo) ?></div></th>
-          <th>&nbsp;</th>
+            <div class="text2"></div></th>
+          
+                            <th><div class="text1"><font size="-2">Date line/time</font></div>
+                            
+                                <div class="text2"><?php echo tglIndoSedang($s->dead_line).'/'.$s->dead_time ?></div></th>
         </tr>
         </table>
     Is this vehicle related to campaign □ No □ Yes Mobility Service □ No □ Yes<br>

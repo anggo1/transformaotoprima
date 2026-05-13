@@ -76,7 +76,7 @@ th {
 .datatable3 td {
     padding: 2px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 8px;
+    font-size: 11px;
     font: bold;
 }
 
@@ -86,7 +86,7 @@ th {
     align-content: center;
     font-weight: bolder;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     text-align: center;
 }
 
@@ -177,7 +177,7 @@ th {
                     <table width="100%" border="0" cellpadding="5" cellspacing="0">
                         <tr align="center">
                             <th width="99%" align="center">
-                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%">
+                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="10%">
                             </th>
                         </tr>
 
@@ -252,7 +252,7 @@ th {
                                 <th>
                                     <div align="left">Engine No</div>
                                 </th>
-                                <th><span class="text2"><?php echo $s->vin ?></span></th>
+                                <th><span class="text2"><?php echo $s->engine_no ?></span></th>
                                 <th>
                                     <div align="left">
                                         <font size="2">Received by</font>

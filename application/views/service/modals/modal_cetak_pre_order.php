@@ -76,7 +76,7 @@ th {
 .datatable3 td {
     padding: 2px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 8px;
+    font-size: 11px;
     font: bold;
 }
 
@@ -86,7 +86,7 @@ th {
     align-content: center;
     font-weight: bolder;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
 }
 
@@ -153,6 +153,42 @@ th {
     border: 3px double black;
     padding: 10px, 10px, 10px, 10px;
 }
+.text21 {    font: bold;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    align-content: center;
+    text-align: center;
+    padding: 1px 1px 1px 1px;
+    width: auto;
+}
+.text21 {    font: bold;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    align-content: center;
+    text-align: center;
+    padding: 1px 1px 1px 1px;
+    width: auto;
+}
+.text21 {    font: bold;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    align-content: center;
+    text-align: center;
+    padding: 1px 1px 1px 1px;
+    width: auto;
+}
+.text21 {    font: bold;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    align-content: center;
+    text-align: center;
+    padding: 1px 1px 1px 1px;
+    width: auto;
+}
 </style>
 
 <div id="printThis">
@@ -173,7 +209,7 @@ th {
                     <table width="100%" border="0" cellpadding="5" cellspacing="0">
                         <tr align="center">
                             <th width="99%" align="center">
-                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%">
+                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="10%">
                             </th>
                         </tr>
 
@@ -329,7 +365,7 @@ th {
                                 <div class="text1">
                                     <font size="-2">Sales designation</font>
                                 </div>
-                                <div class="text2"></div><?php echo $s->type ?>
+                                <div class="text2"><?php echo $s->type ?></div>
                             </th>
                             <th>
                                 <div class="text1">
@@ -343,14 +379,13 @@ th {
                                 <div class="text1">
                                     <font size="-2">Mileage/Km</font>
                                 </div>
-                                <div class="text2"></div><?php echo $s->mileage ?>
+                                <div class="text2"><?php echo $s->mileage ?></div>
                             </th>
                             <th>
                                 <div class="text1">
                                     <font size="-2">Engine No.</font>
                                 </div>
-                                <div class="text2"></div><?php echo $s->vin ?>
-                            </th>
+                                <div class="text2"><?php echo $s->engine_no ?></div></th>
                             <th>
                                 <div class="text1">
                                     <font size="-2">Active reception</font>
@@ -381,9 +416,11 @@ th {
                                 <div class="text1">
                                     <font size="-2">Date of 1st registration</font>
                                 </div>
-                                <div class="text2"><?php echo tglIndoSedang($s->dead_line) ?></div>
+                                <div class="text2"></div>
                             </th>
-                            <th>&nbsp;</th>
+                            <th><div class="text1"><font size="-2">Date line/time</font></div>
+                            
+                                <div class="text2"><?php echo tglIndoSedang($s->dead_line).'/'.$s->dead_time ?></div></th>
                         </tr>
                     </table>
                     Is this vehicle related to campaign □ No □ Yes Mobility Service □ No □ Yes<br>
@@ -557,23 +594,23 @@ th {
                         </tr>
                         <tr align="center">
                             <td
-                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                &nbsp;</td>
+                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;
+                                </td>
                         </tr>
                         <tr align="center">
                             <th
-                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                &nbsp;</th>
+                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;
+                                </th>
                         </tr>
                         <tr align="center">
                             <th height="28"
-                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                &nbsp;</th>
+                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;
+                                </th>
                         </tr>
                         <tr align="center">
                             <td
-                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">
-                                &nbsp;</td>
+                                style="border-left:0px solid #000; border-bottom:2px solid #000;border-right:0px solid #000;">&nbsp;
+                                </td>
                         </tr>
                         <tr align="center">
                             <td>&nbsp;</td>

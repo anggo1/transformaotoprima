@@ -221,6 +221,7 @@ class Mod_service_appointment extends CI_Model
         engine_no ='".$data['engine_no']."',
         last_service_date ='".$date_last_service."',
         dead_line ='".$date_dead_line."',
+        dead_time   ='".$data['dead_time']."',
         mileage   ='".$data['mileage']."',
         no_pol    ='".$data['licence_plate']."',
         type      ='".$data['vehicle_type']."',
@@ -245,6 +246,7 @@ class Mod_service_appointment extends CI_Model
 		$date_dead = $data['dead_line'];
 		$tgl3 = explode('-', $date_dead);
 		$date_dead_line= $tgl3[2] . "-" . $tgl3[1] . "-" . $tgl3[0] . "";
+		$dead_time = $data['dead_time'];
         $sql = "UPDATE tbl_after_sales SET
         wo_no     ='".$data['wo_no']."',
         sa_name   ='".$data['sa_name']."',
@@ -254,7 +256,8 @@ class Mod_service_appointment extends CI_Model
         engine_no ='".$data['engine_no']."',
         last_service_date ='".$date_last_service."',
         dead_line ='".$date_dead_line."',
-        mileage   ='".$data['mileage']."',
+        dead_time   ='".$dead_time."',
+        mileage   ='".$data['mileage']."'
         no_pol    ='".$data['licence_plate']."',
         type      ='".$data['vehicle_type']."',
         storing   ='".$data['storing']."',

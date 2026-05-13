@@ -214,15 +214,23 @@ class Mod_estimasi_penawaran_service extends CI_Model
         return $data->result();
     }
     
-    public function deleteDetail_po($id, $spk)
+    public function deleteDetail_po($id, $spk, $validasi_jenis)
     {
-        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "' or spk='" . $spk . "'";
+        if($validasi_jenis == 'S'){
+            $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE spk='" . $spk . "'";
 
-        $this->db->query($sql);
-        
-        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}' OR spk='{$spk}'";
+            $this->db->query($sql2);
+            
+            $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "' or spk='" . $spk . "'";
 
-		$this->db->query($sql2);
+            $this->db->query($sql);
+
+        }
+         else if($validasi_jenis == 'P'){
+            $sql2 = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
+
+            $this->db->query($sql2);
+        }
 
         return $this->db->affected_rows();
     }

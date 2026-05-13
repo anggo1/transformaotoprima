@@ -48,7 +48,7 @@ class WorkOrder extends MY_Controller
                 $row[] = $no;
                 $row[] = $p->wo_no;
                 $row[] = $p->sa_name;
-                $row[] = $p->customer;
+                $row[] = $p->customer_name;
                 $row[] = $p->customer_complain;
                 $row[] = $p->vin;
                 $row[] = $p->no_pol;

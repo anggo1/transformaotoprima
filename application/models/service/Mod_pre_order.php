@@ -109,7 +109,7 @@ class Mod_pre_order extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,mileage,engine_no,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,last_service_date,dead_line,pembuat');
+       $this->db->select('*');
         $this->db->from('tbl_after_sales');
          $this->db->where('wo_no',$id);
 
