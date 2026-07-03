@@ -82,14 +82,18 @@ class ServiceAppointment extends MY_Controller
                 $data[] = $row;
             }
         }
+        
+        $csrf_name = $this->security->get_csrf_token_name();
+$csrf_hash = $this->security->get_csrf_hash(); 
         $output = array(
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->Mod_service_appointment->count_all(),
             "recordsFiltered" => $this->Mod_service_appointment->count_filtered(),
-            "data" => $data,
+            "data" => $data
         );
+        $json_data[$csrf_name] = $csrf_hash;   
         //output to json format
-        echo json_encode($output);
+        echo json_encode($json_data);
     }
 
 	public function prosesTappointment()

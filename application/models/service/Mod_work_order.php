@@ -20,7 +20,7 @@ class Mod_work_order extends CI_Model
         $this->db->from('tbl_after_sales');
         $this->db->where('status !=', 'F');
         $this->db->where('pre_order <>', 'empty');
-        $this->db->or_where('free_service', 'Y');
+        $this->db->where('free_service', 'Y');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -332,7 +332,11 @@ class Mod_work_order extends CI_Model
             $ci_kons = get_instance();
             $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
 			$hasil = $ci_kons->db->query($query)->row_array();
+            if(empty($hasil['total_pause'])){
+                $pause = 0;
+            }else{
 		    $pause = $hasil['total_pause'];
+            }
             $id_detail = $hasil['id_detail'];
             
 	    $tgl_jam_mulai  = $hasil['start_date'];
@@ -352,8 +356,7 @@ class Mod_work_order extends CI_Model
 
 		$this->db->query($sql);
         if($query > 0){
-
-        
+       
 	    $tgl_sekarang  = date("Y-m-d");
 	    $jam_sekarang  = date("H:i:s");
         $sql1 = "UPDATE tbl_after_sales SET        

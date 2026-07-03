@@ -257,5 +257,5 @@ $apl = $this->db->get("aplikasi")->row();
 <script src="<?php echo base_url();?>assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-<?php include './assets/js/ajx_rowsgroup.php';?>
+<?php //include './assets/js/ajx_rowsgroup.php';?>
 <?php include './assets/js/ajx_user.php';?>

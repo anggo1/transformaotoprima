@@ -6,13 +6,15 @@
 .radio-button {
     display: flex;
     align-items: center;
-    margin-right: 5px;
+    margin-right: auto;
     position: relative;
     padding: 5px 10px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 20px;
     cursor: pointer;
+    width: auto;
+    height: auto;
 }
 
 .radio-button input[type="radio"] {

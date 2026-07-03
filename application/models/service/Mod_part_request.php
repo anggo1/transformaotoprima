@@ -19,7 +19,8 @@ class Mod_part_request extends CI_Model
         $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,pre_order,part_request,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('estimasi','Y');
-        $this->db->or_where('free_service','Y');
+        $this->db->where('free_service','Y');
+        $this->db->where('status !=', 'F');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

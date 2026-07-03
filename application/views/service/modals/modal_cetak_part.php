@@ -470,8 +470,8 @@ th {
                         <tr align="center">
                             <td>&nbsp;</td>
                             <td><?php echo $this->session->userdata['full_name'] ?></td>
-                            <td><?php echo $this->session->userdata['full_name'] ?></td>
-                            <td><?php echo $this->session->userdata['full_name'] ?></td>
+                            <td><?php echo $a->nama ?></td>
+                            <td></td>
                         </tr>
                     </table>
                     <!--</table>-->

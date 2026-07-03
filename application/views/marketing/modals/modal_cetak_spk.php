@@ -221,7 +221,7 @@ th {
                   <table width="100%" border="0" cellpadding="5" cellspacing="0">
                         <tr align="center">
                             <th width="99%" align="center">
-                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="25%">
+                                <img src="<?php echo base_url(); ?>assets\dist\img\logo_mercedes.png" width="10%">
                             </th>
                         </tr>
 
@@ -459,7 +459,7 @@ th {
                             <td>/unit</td>
                             <td>&nbsp;</td>
                             <td>3.</td>
-                            <td> Pembayaran dengan Cek/biyel Giro / Transfer harus diatasnamakan PT. Transforma</td>
+                            <td> Pembayaran dengan Cek/biyel Giro / Transfer harus diatasnamakan <strong>PT. Transforma Oto Prima</strong></td>
                         </tr>
                         <tr>
                             <td>Harga Nett On The Road</td>
@@ -469,82 +469,131 @@ th {
                             <td>/unit</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>Oto Prima dan dianggap sah apabila telah diterima direkening PT. Transforma Oto Prima
-                            </td>
+                            <td> dan dianggap sah apabila telah diterima direkening<strong> PT. Transforma Oto Prima </strong></td>
                         </tr>
                         <tr>
-                            <td>Perlengkapan Tambahan</td>
-                            <td>:</td>
-                            <td colspan="3">&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>4.</td>
-                            <td>PT. Transforma Oto Prima tidak menerima pembayaran cash/tunai</td>
+                          <td>Perlengkapan Tambahan</td>
+                          <td>:</td>
+                          <td colspan="3">&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>4.</td>
+                          <td>Bahwa sumber dana yang dipergunakan dalam setiap transaksi pembayaran dengan<strong> PT. Transforma Oto Prima</strong> bukan </td>
                         </tr>
                         <tr>
-                            <td><?php echo  $k->tambahan_1; ?></td>
+                          <td><?php echo  $k->tambahan_1; ?></td>
+                          <td>: Rp.</td>
+                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_1); ?></td>
+                          <td>&nbsp;</td>
+                          <td>/unit</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>merupakan hasil dari tindak pidana pencucian uang dan/atau dari hasil tindak pidana lainnya, serta Pembeli </td>
+                        </tr>
+                        <tr>
+                          <td><?php echo  $k->tambahan_2; ?></td>
+                          <td>: Rp.</td>
+                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_2); ?></td>
+                          <td>&nbsp;</td>
+                          <td>/unit</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>bertanggung jawab secara penuh dan membebaskan <strong>PT. Transforma Oto Prima</strong> dari setiap permasalahan hukum dalam</td>
+                        </tr>
+                        <tr>
+                          <td><?php echo  $k->tambahan_3; ?></td>
+                          <td>: Rp.</td>
+                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_3); ?></td>
+                          <td>&nbsp;</td>
+                          <td>/unit</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>bentuk apapun apabila dikemudian hari diketahui terdapat keterkaitan permasalahan hukum dengan sumber dana yang</td>
+                        </tr>
+                        <tr>
+                          <td><?php echo  $k->tambahan_4; ?></td>
+                          <td>: Rp.</td>
+                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_4); ?></td>
+                          <td>&nbsp;</td>
+                          <td>/unit +</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>dipergunakan pembeli dalam melakukan pembayaran kepada <strong>PT. Transforma Oto Prim</strong>a.</td>
+                        </tr>
+                        <tr>
+                            <td>Harga Jual per Unit</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_1); ?></td>
-                            <td align="right">&nbsp;</td>
+                            <td colspan="3" align="right"><span style="font-weight: bolder;"><?php echo  number_format($k->hrg_jual_perunit); ?></span></td>
+                            <td>&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>
                             <td>5.</td>
-                            <td>Jika pesanan DIBATALKAN oleh PEMESAN dengan alasan / dalil apapun, maka surat pemesanan
+                            <td>PT. Transforma Oto Prima tidak menerima pembayaran cash/tunai</td>
+                        </tr>
+                        <tr>
+                            <td>TOTAL HARGA JUAL</td>
+                            <td>: Rp.</td>
+                            <td colspan="3" align="right"  style="border-top: 1px solid #000; font-weight: bolder;"><span style="border-top: 1px solid #000; font-weight: bolder;"><?php echo  number_format($k->total_hrg_jual); ?></span></td>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>6.</td>
+                            <td >Jika pesanan DIBATALKAN oleh PEMESAN dengan alasan / dalil apapun, maka surat pemesanan
                                 ini</td>
                         </tr>
                         <tr>
-                            <td><?php echo  $k->tambahan_2; ?></td>
-                            <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_2); ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="3" align="right">&nbsp;</td>
                             <td align="right">&nbsp;</td>
-                            <td>/unit</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>harus dikembalikan dan uang muka yang sudah diterima seluruhnya menjadi HAK PT.
-                                Transforma Oto Prima</td>
+                            <td>&nbsp;</td>
+                            <td>harus dikembalikan dan uang muka yang sudah diterima seluruhnya menjadi HAK<strong> PT.
+                                Transforma Oto Prima</strong></td>
                         </tr>
                         <tr>
-                            <td><?php echo  $k->tambahan_3; ?></td>
-                            <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_3); ?></td>
-                            <td align="right">&nbsp;</td>
-                            <td>/unit</td>
                             <td>&nbsp;</td>
-                            <td>6.</td>
+                            <td>&nbsp;</td>
+                            <td colspan="3" align="right">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>7.</td>
                             <td>Faktur kendaraan diterbitkan setelah semua pembayaran lunas dan ada pemohon tertulis dan
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo  $k->tambahan_4; ?></td>
-                            <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_4); ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="3" align="right">&nbsp;</td>
                             <td align="right">&nbsp;</td>
-                            <td>/unit +</td>
+                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td> PEMESAN dan hanya berlaku 2(dua) minggu dari tanggal terbit. Resiko dan biaya yang
                                 timbul</td>
                         </tr>
                         <tr>
-                            <td>Harga Jual per Unit</td>
-                            <td>: Rp.</td>
-                            <td colspan="3" align="right" style="font-weight: bolder;"><?php echo  number_format($k->hrg_jual_perunit); ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="3" align="right" style="font-weight: bolder;">&nbsp;</td>
                             <td align="right">&nbsp;</td>
-                            <td>/unit</td>
+                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td> sehubungan dengan faktur kendaraan yang melampaui masa berlaku akan menjadi tanggung
                                 jawab PEMESAN.</td>
                         </tr>
                         <tr>
-                            <td>TOTAL HARGA JUAL</td>
-                            <td>: Rp.</td>
-                            <td colspan="3" align="right" style="border-top: 1px solid #000; font-weight: bolder;"><?php echo  number_format($k->total_hrg_jual); ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td colspan="3" align="right">&nbsp;</td>
                             <td align="right">&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>7.</td>
+                            <td>8.</td>
                             <td>Apabila pembatal dari pihak Dealer dikarenakan unit yang dipesan oleh PEMESAN tidak</td>
                         </tr>
                         <tr>
@@ -588,12 +637,11 @@ th {
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td> mengembalikan uang tanda jadi yang sudah masuk ke rekening PT. Transforma Oto Prima.
-                            </td>
+                            <td> mengembalikan uang tanda jadi yang sudah masuk ke rekening<strong> PT. Transforma Oto Prima</strong>. </td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
-                            <td>8.</td>
+                            <td>9.</td>
                             <td>Apabila unit yang di pesan oleh PEMESAN sudah terssedia, maka PEMESAN berkewajiban untuk
                             </td>
                         </tr>
@@ -612,11 +660,11 @@ th {
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>tanpa mengembalikan uang yang sudah masuk di rekening PT. Transforma Oto Prima</td>
+                            <td>tanpa mengembalikan uang yang sudah masuk di rekening<strong> PT. Transforma Oto Prima</strong></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
-                            <td>9.</td>
+                            <td>10.</td>
                             <td>Biaya BBN tidak mengikat (termasuk jika ada biaya yang timbul aikbat kekurangan dokumen
                             </td>
                         </tr>
@@ -834,7 +882,6 @@ th {
 <div class="modal-footer justify-content-between">
     <button type="button" id="btnPrint" class="btn btn-success"><span class="fa fa-print"></span>&nbsp;&nbsp; C E T A K
     </button>
-    <button class="btn btn-danger" id="tutup" onClick="window.location.assign("
-        <?php echo base_url(); ?>/Transaksi/Pengiriman");" data-dismiss="modal"><span
+    <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span
             class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
 </div>
