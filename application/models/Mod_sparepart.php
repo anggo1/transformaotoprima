@@ -169,8 +169,12 @@ class Mod_sparepart extends CI_Model
     function insertSparepart($data)
     {
         
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
+		$pricelist=$data['harga_pricelist'];
+		$hrg_pricelist =str_replace(",","", $pricelist);
+		$net=$data['harga_net'];
+		$hrg_net =str_replace(",","", $net);
+
+        
 
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
