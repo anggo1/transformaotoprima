@@ -169,13 +169,14 @@ class Mod_sparepart extends CI_Model
     function insertSparepart($data)
     {
         
+        $idlokasi = $this->session->userdata['lokasi'];
+
 		$pricelist=$data['harga_pricelist'];
 		$hrg_pricelist =str_replace(",","", $pricelist);
 		$net=$data['harga_net'];
 		$hrg_net =str_replace(",","", $net);
-
         
-
+        if($idlokasi=='Cibitung'){
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
         no_part     ='".$data['no_part']."',
@@ -186,21 +187,13 @@ class Mod_sparepart extends CI_Model
         type        ='".$data['type']."',
         kategori    ='".$data['kategori']."',
         kode_sup    ='".$data['supplier']."',
-        lokasi      ='".$data['lokasi']."',
-        stok        ='".$data['stok']."',
-        harga_baru  ='".$harga_baru."',
-        ket         ='".$data['ket']."',
-        std_pakai   ='".$data['std_pakai']."'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
-    }
-    function updateSparepart($data)
-    {
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
-        $sql = "UPDATE tbl_wh_barang SET
+        lok_sby     ='".$data['lokasi']."',
+        hrg_net_sby ='".$hrg_net."',
+        price_list_sby ='".$hrg_pricelist."',
+        std_pakai   ='".$data['std_pakai']."'"; 
+        }if($idlokasi=='Jakarta'){
+        $sql = "INSERT INTO tbl_wh_barang SET
+        id_part   ='',
         no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
         nama_part_e ='".$data['nama_part_e']."',
@@ -209,30 +202,108 @@ class Mod_sparepart extends CI_Model
         type        ='".$data['type']."',
         kategori    ='".$data['kategori']."',
         kode_sup    ='".$data['supplier']."',
-        lokasi      ='".$data['lokasi']."',
-        stok        ='".$data['stok']."',
-        harga_baru  ='".$harga_baru."',
-        ket         ='".$data['ket']."',
+        lok_jkt     ='".$data['lokasi']."',
+        hrg_net_jkt ='".$hrg_net."',
+        price_list_jkt ='".$hrg_pricelist."',
+        std_pakai   ='".$data['std_pakai']."'"; 
+        }if($idlokasi=='Surabaya'){
+        $sql = "INSERT INTO tbl_wh_barang SET
+        id_part   ='',
+        no_part     ='".$data['no_part']."',
+        nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
+        satuan      ='".$data['satuan']."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
+        lok_sby     ='".$data['lokasi']."',
+        hrg_net_sby ='".$hrg_net."',
+        price_list_sby ='".$hrg_pricelist."',
+        std_pakai   ='".$data['std_pakai']."'"; 
+        }
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+    }
+    function updateSparepart($data)
+    {
+        
+        $idlokasi = $this->session->userdata['lokasi'];
+
+		$pricelist=$data['harga_pricelist'];
+		$hrg_pricelist =str_replace(",","", $pricelist);
+		$net=$data['harga_net'];
+		$hrg_net =str_replace(",","", $net);
+
+        if($idlokasi=='Cibitung'){
+        $sql = "UPDATE tbl_wh_barang SET
+        nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
+        satuan      ='".$data['satuan']."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
+        lok_cbt     ='".$data['lokasi']."',
+        hrg_net_cbt ='".$hrg_net."',
+        price_list_cbt ='".$hrg_pricelist."',
         std_pakai   ='".$data['std_pakai']."'
         WHERE id_part='".$data['id_part']."'";
-
+        }if($idlokasi=='Jakarta'){
+        $sql = "UPDATE tbl_wh_barang SET
+        nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
+        satuan      ='".$data['satuan']."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
+        lok_jkt     ='".$data['lokasi']."',
+        hrg_net_jkt ='".$hrg_net."',
+        price_list_jkt ='".$hrg_pricelist."',
+        std_pakai   ='".$data['std_pakai']."'
+        WHERE id_part='".$data['id_part']."'";
+        }if($idlokasi=='Surabaya'){
+        $sql = "UPDATE tbl_wh_barang SET
+        nama_part   ='".$data['nama_part']."',
+        nama_part_e ='".$data['nama_part_e']."',
+        satuan      ='".$data['satuan']."',
+        kelompok    ='".$data['kelompok']."',
+        type        ='".$data['type']."',
+        kategori    ='".$data['kategori']."',
+        kode_sup    ='".$data['supplier']."',
+        lok_sby     ='".$data['lokasi']."',
+        hrg_net_sby ='".$hrg_net."',
+        price_list_sby ='".$hrg_pricelist."',
+        std_pakai   ='".$data['std_pakai']."'
+        WHERE id_part='".$data['id_part']."'";
+        }
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
     }
     function updateStok($data)
     {
+        
+        $idlokasi = $this->session->userdata['lokasi'];
         $id = $data['id_part'];
-
+        if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
-        stok_jkt  ='".$data['stok_jkt']."',
-        lok_jkt  ='".$data['lok_jkt']."',
-        stok_cbt  ='".$data['stok_cbt']."',
-        lok_cbt  ='".$data['lok_cbt']."',
-        stok_sby  ='".$data['stok_sby']."',
-        lok_sby  ='".$data['lok_sby']."'
+        stok_jkt  ='".$data['stok']."',
+        lok_jkt  ='".$data['lokasi']."'
         WHERE id_part='".$data['id_part']."'";
-
+        }if($idlokasi=='Cibitung'){
+        $sql = "UPDATE tbl_wh_barang SET
+        stok_cbt  ='".$data['stok']."',
+        lok_cbt  ='".$data['lokasi']."'
+        WHERE id_part='".$data['id_part']."'";
+        }if($idlokasi=='Surabaya'){
+        $sql = "UPDATE tbl_wh_barang SET
+        stok_sby  ='".$data['stok']."',
+        lok_sby  ='".$data['lokasi']."'
+        WHERE id_part='".$data['id_part']."'";
+        }
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

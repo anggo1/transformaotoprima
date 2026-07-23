@@ -30,21 +30,31 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="20%">No Part</td>
-                                                            <td width="30%">: <?php if (!empty($part->no_part)) { echo $part->no_part;} ?></td>
+                                                            <td width="30%">:
+                                                                <?php if (!empty($part->no_part)) { echo $part->no_part;} ?>
+                                                            </td>
                                                             <td width="20%">Nama Part</td>
-                                                            <td width="30%">: <?php if (!empty($part->nama_part)) { echo $part->nama_part;}?></td>
+                                                            <td width="30%">:
+                                                                <?php if (!empty($part->nama_part)) { echo $part->nama_part;}?>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Satuan</td>
-                                                            <td>: <?php if (!empty($part->satuan)) { echo $part->satuan;}?></td>
+                                                            <td>:
+                                                                <?php if (!empty($part->satuan)) { echo $part->satuan;}?>
+                                                            </td>
                                                             <td>Type</td>
-                                                            <td>: <?php if (!empty($part->type)) { echo $part->type;}?></td>
+                                                            <td>: <?php if (!empty($part->type)) { echo $part->type;}?>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Kategori</td>
-                                                            <td>: <?php if (!empty($part->kategori)) { echo $part->kategori;}?></td>
+                                                            <td>:
+                                                                <?php if (!empty($part->kategori)) { echo $part->kategori;}?>
+                                                            </td>
                                                             <td>Kelompok</td>
-                                                            <td>:<?php if (!empty($part->kelompok)) { echo $part->kelompok;}?></td>
+                                                            <td>:<?php if (!empty($part->kelompok)) { echo $part->kelompok;}?>
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>&nbsp;</td>
@@ -54,56 +64,73 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Harga Awal</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="harga_baru" id="harga_baru"
-                                            value="<?php if (!empty($part->harga_baru)) { echo number_format($part->harga_baru);}?>" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
-                                            class="form-control">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Diskon</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="diskon" id="diskon"
-                                            value="<?php if (!empty($part->diskon)) { echo $part->diskon;}?>"
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Harga Net</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="harga_net" id="harga_net" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
-                                            value="<?php if (!empty($part->harga_net)) { echo number_format($part->harga_net);}?>"
-                                            class="form-control">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">Harga Rata-rata</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="harga_rata" id="harga_rata" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
-                                            value="<?php if (!empty($part->harga_rata)) { echo number_format($part->harga_rata);}?>"
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Harga Valid</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="harga_valid" id="harga_valid" onkeyup="formatNumber(this)"onchange="formatNumber(this);"
-                                            value="<?php if (!empty($part->harga_valid)) { echo number_format($part->harga_valid);}?>"
-                                            class="form-control">
-                                    </div>
-                                    <label class="col-sm-2 col-form-label">PPN</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="ppn" id="ppn"
-                                            value="<?php if (!empty($part->ppn)) { echo $part->ppn;}?>"
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Keterangan Harga</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="ket_harga" id="ket_harga"
-                                            value="<?php if (!empty($part->ket_harga)) { echo $part->ket_harga;}?>"
-                                            class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Harga Net Awal</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="net_awal" id="net_awal" readonly
+                                                    onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Jakarta'){
+                                            if (!empty($part->hrg_net_jkt)) { echo number_format($part->hrg_net_jkt);
+                                            }
+                                            }if($lokasi=='Cibitung'){
+                                            if (!empty($part->hrg_net_cbt)) { echo number_format($part->hrg_net_cbt);
+                                                            }
+                                                            }if($lokasi=='Surabaya'){
+                                            if (!empty($part->hrg_net_sby)) { echo number_format($part->hrg_net_sby);
+                                                                }}?>" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Harga Pricelist awal</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="price_list_awal" id="price_list_awal" readonly
+                                                    onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Jakarta'){
+                                            if (!empty($part->price_list_jkt)) { echo number_format($part->price_list_jkt);
+                                            }
+                                            }if($lokasi=='Cibitung'){
+                                            if (!empty($part->price_list_cbt)) { echo number_format($part->price_list_cbt);
+                                                            }
+                                                            }if($lokasi=='Surabaya'){
+                                            if (!empty($part->price_list_sby)) { echo number_format($part->price_list_sby);
+                                                                }}?>" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Harga Net</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="harga_net" id="harga_net"
+                                                    onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Jakarta'){
+                                            if (!empty($part->hrg_net_jkt)) { echo number_format($part->hrg_net_jkt);
+                                            }
+                                            }if($lokasi=='Cibitung'){
+                                            if (!empty($part->hrg_net_cbt)) { echo number_format($part->hrg_net_cbt);
+                                                            }
+                                                            }if($lokasi=='Surabaya'){
+                                            if (!empty($part->hrg_net_sby)) { echo number_format($part->hrg_net_sby);
+                                                                }}?>" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Harga Pricelist</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="price_list" id="price_list"
+                                                    onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Jakarta'){
+                                            if (!empty($part->price_list_jkt)) { echo number_format($part->price_list_jkt);
+                                            }
+                                            }if($lokasi=='Cibitung'){
+                                            if (!empty($part->price_list_cbt)) { echo number_format($part->price_list_cbt);
+                                                            }
+                                                            }if($lokasi=='Surabaya'){
+                                            if (!empty($part->price_list_sby)) { echo number_format($part->price_list_sby);
+                                                                }}?>" class="form-control">
+                                            </div>
+                                        </div>
+
                                         <input type="hidden" name="id_part"
                                             value="<?php if (!empty($part->id_part)) { echo $part->id_part;} ?>">
                                         <input type="hidden" name="no_part"

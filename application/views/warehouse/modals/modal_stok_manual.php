@@ -8,7 +8,8 @@
     }
     ?>
         <p></span>
-        <h4 style="display:block; text-align:center;">Edit Stok Sparepart</h4>
+        <h4 style="display:block; text-align:center;">Edit Stok Sparepart
+            <?php echo $this->session->userdata['lokasi']; ?></h4>
         </p>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -43,44 +44,30 @@
 
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <label class="col-form-label">Stok Jakarta</label>
-                                                        <input type="text" name="stok_jkt" id="stok_jkt"
-                                                            value="<?php if (!empty($part->stok_jkt)) { echo $part->stok_jkt;} else { echo"0";}?>"
-                                                            class="form-control">
+                                                        <label class="col-form-label">Stok Barang</label>
+                                                        <input type="text" name="stok" id="stok" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Cibitung'){
+                                                                if (!empty($part->stok_cbt)) { echo $part->stok_cbt;} else { echo"0";}
+                                                            }if($lokasi=='Jakarta'){
+                                                                if (!empty($part->stok_jkt)) { echo $part->stok_jkt;} else { echo"0";}
+                                                            }if($lokasi=='Surabaya'){
+                                                                if (!empty($part->stok_sby)) { echo $part->stok_sby;} else { echo"0";}
+                                                            }
+                                                            ?>" class="form-control">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label class="col-form-label">Lokasi</label>
-                                                        <input type="text" name="lok_jkt" id="lok_jkt"
-                                                            value="<?php if (!empty($part->lok_jkt)) { echo $part->lok_jkt;}?>"
-                                                            class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                    <label class="col-form-label">Stok Cibitung</label>
-                                                        <input type="text" name="stok_cbt" id="stok_cbt"
-                                                            value="<?php if (!empty($part->stok_cbt)) { echo $part->stok_cbt;} else { echo"0";}?>"
-                                                            class="form-control">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <label class="col-form-label">Lokasi</label>
-                                                        <input type="text" name="lok_cbt" id="lok_cbt"
-                                                            value="<?php if (!empty($part->lok_cbt)) { echo $part->lok_cbt;}?>"
-                                                            class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                    <label class="col-form-label">Stok Surabaya</label>
-                                                        <input type="text" name="stok_sby" id="stok_sby"
-                                                            value="<?php if (!empty($part->stok_sby)) { echo $part->stok_sby;} else { echo"0";}?>"
-                                                            class="form-control">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <label class="col-form-label">Lokasi</label>
-                                                        <input type="text" name="lok_sby" id="lok_sby"
-                                                            value="<?php if (!empty($part->lok_sby)) { echo $part->lok_sby;}  else { echo"0";}?>"
-                                                            class="form-control">
+                                                        <input type="text" name="lokasi" id="lokasi" value="<?php 
+                                                            $lokasi=$this->session->userdata['lokasi'];
+                                                            if($lokasi=='Jakarta'){
+                                                                if (!empty($part->lok_jkt)) { echo $part->lok_jkt;}
+                                                            }if($lokasi=='Cibitung'){
+                                                                if (!empty($part->lok_cbt)) { echo $part->lok_cbt;}
+                                                            }if($lokasi=='Surabaya'){
+                                                                if (!empty($part->lok_sby)) { echo $part->lok_sby;}
+                                                            }
+                                                            ?>" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

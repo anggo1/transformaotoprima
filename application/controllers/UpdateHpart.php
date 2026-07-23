@@ -40,6 +40,7 @@ class UpdateHpart extends MY_Controller
     {
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
+        $idlokasi = $this->session->userdata['lokasi'];
         $get_id = $this->Mod_update_hpart->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
@@ -63,13 +64,21 @@ class UpdateHpart extends MY_Controller
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;
                 $row[] = $p->satuan;
-                $row[] = number_format($p->harga_baru);
-                $row[] = $p->diskon;
-                $row[] = number_format($p->harga_net);
-                $row[] = number_format($p->harga_rata);
-                $row[] = $p->ppn;
-                $row[] = number_format($p->harga_valid);
-                $row[] = $p->ket_harga;
+                if($idlokasi=='Jakarta'){
+                $row[] = number_format($p->price_list_jkt);
+                $row[] = $p->discount_jkt;
+                $row[] = number_format($p->hrg_net_jkt);
+                }
+                if($idlokasi=='Cibitung'){
+                $row[] = number_format($p->price_list_cbt);
+                $row[] = $p->discount_cbt;
+                $row[] = number_format($p->hrg_net_cbt);
+                }
+                if($idlokasi=='Surabaya'){
+                $row[] = number_format($p->price_list_sby);
+                $row[] = $p->discount_sby;
+                $row[] = number_format($p->hrg_net_sby);
+                }
                 $row[]='
                     <button class="btn btn-sm btn-outline-primary update-harga" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-edit"> Update Harga</i>
                     </button>';

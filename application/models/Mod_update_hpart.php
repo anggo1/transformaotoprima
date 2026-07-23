@@ -5,8 +5,8 @@ class Mod_update_hpart extends CI_Model
 {
 
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.price_list_cbt','a.discount_cbt','a.hrg_net_cbt');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.price_list_cbt','a.discount_cbt','a.hrg_net_cbt');
     var $order = array('id_part' => 'asc'); // default order 
 
     public function __construct()
@@ -142,40 +142,45 @@ class Mod_update_hpart extends CI_Model
 
     function updateHarga( $data)
     {
+        $idlokasi = $this->session->userdata['lokasi'];
         $datenow= date("Y-m-d");
-        $hargaB=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $hargaB);
-        $hargaN=$data['harga_net'];
-		$harga_net =str_replace(",","", $hargaN);
-        $hargaR=$data['harga_rata'];
-		$harga_rata =str_replace(",","", $hargaR);
-        $hargaV=$data['harga_valid'];
-		$harga_valid =str_replace(",","", $hargaV);
-
+        $price_list_awal=$data['price_list_awal'];
+		$list_lama =str_replace(",","", $price_list_awal);
+        $net_awal=$data['net_awal'];
+		$net_lama =str_replace(",","", $net_awal);
+        $hrg_net=$data['hrg_net'];
+		$net_baru =str_replace(",","", $hrg_net);
+        $price_list=$data['price_list'];
+		$list_baru =str_replace(",","", $price_list);
+        
         $sql_log = "INSERT INTO tbl_wh_log_harga SET
         id = '',
         id_part   = '".$data['id_part']."',
         no_part     = '".$data['no_part']."',
-        harga_baru  = '".$harga_baru."',
-        diskon      = '".$data['diskon']."',
-        harga_net   = '".$harga_net."',
-        harga_rata  = '".$harga_rata."',
-        harga_valid = '".$harga_valid."',
-        ket_harga   = '".$data['ket_harga']."',
-        ppn         = '".$data['ppn']."',
+        hrg_net_lama  = '".$net_lama."',
+        hrg_price_list_lama   = '".$list_lama."',
+        hrg_net  = '".$net_baru."',
+        hrg_price_list = '".$list_baru."',
+        lokasi   = '".$idlokasi."',
         tgl_update  = '$datenow',
         user        = '".$data['user']."'";
         $this ->db ->query($sql_log);
-
+        if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
-        harga_baru  = '".$harga_baru."',
-        diskon      = '".$data['diskon']."',
-        harga_net   = '".$harga_net."',
-        harga_rata  = '".$harga_rata."',
-        harga_valid = '".$harga_valid."',
-        ppn         = '".$data['ppn']."',
-        ket_harga   = '".$data['ket_harga']."'
+        hrg_net_jkt   = '".$net_baru."',
+        price_list_jkt = '".$list_baru."'
         WHERE id_part = '".$data['id_part']."'";
+        }if($idlokasi=='Cibitung'){
+        $sql = "UPDATE tbl_wh_barang SET
+        hrg_net_cbt   = '".$net_baru."',
+        price_list_cbt = '".$list_baru."'
+        WHERE id_part = '".$data['id_part']."'";
+        }if($idlokasi=='Surabaya'){
+        $sql = "UPDATE tbl_wh_barang SET
+        hrg_net_sby   = '".$net_baru."',
+        price_list_sby = '".$list_baru."'
+        WHERE id_part = '".$data['id_part']."'";
+        }
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

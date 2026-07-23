@@ -30,10 +30,6 @@
                                     <th>Harga List</th>
                                     <th>Diskon</th>
                                     <th>Harga Net</th>
-                                    <th>Harga Rata-rata</th>
-                                    <th>PPN</th>
-                                    <th>Harga Valid</th>
-                                    <th>Ket Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -79,7 +75,7 @@ show_my_confirm('hapusPart', 'hapus-part', 'Hapus Data Ini?', 'Ya, Hapus Data In
             },
             "columnDefs": [
         {
-            "targets": [ 0,11],
+            "targets": [ 0,6],
             "orderable": false,
         },
         ],
