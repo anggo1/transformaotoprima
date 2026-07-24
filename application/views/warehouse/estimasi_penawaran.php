@@ -22,7 +22,8 @@
 
                         <?php
 						$date = date("y-m");
-						$ci_kons = get_instance();
+                        $ci_kons =& get_instance();
+                        $ci_kons->load->database();
 						$query = "SELECT max(id_estimasi_penawaran) AS maxKode FROM tbl_wh_estimasi_penawaran WHERE id_estimasi_penawaran LIKE '%$date%'";
 						$hasil = $ci_kons->db->query($query)->row_array();
 						$noOrder = $hasil['maxKode'];

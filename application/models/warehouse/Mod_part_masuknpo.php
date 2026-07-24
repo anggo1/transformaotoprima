@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_part_masuknpo extends CI_Model
 {
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
-    var $column_order = array('a.no_part','a.nama_part','a.stok','a.lokasi','c.kode_satuan','a.type','a.kelompok');
+    var $column_search = array('a.no_part','a.nama_part','c.kode_satuan','a.type','a.kelompok');
+    var $column_order = array('a.no_part','a.nama_part','c.kode_satuan','a.type','a.kelompok');
     var $order = array('id_part' => 'desc'); // default order 
 
     public function __construct()
@@ -156,7 +156,7 @@ class Mod_part_masuknpo extends CI_Model
         tgl_masuk   ='$tgl_masuk',
         jumlah      ='0',
         satuan    ='".$data['satuan']."',
-        hrg_part    ='".$data['harga_baru']."',
+        hrg_part    ='".$data['harga']."',
         stok_akhir  ='".$data['stok']."'";
         $this->db->query($sql);
 
@@ -165,6 +165,7 @@ class Mod_part_masuknpo extends CI_Model
     function update_harga($id,$hrg_part)
 		{
 		$harga =str_replace(" ","", $hrg_part);
+
 	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET hrg_part ='$harga' WHERE id ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
@@ -176,6 +177,9 @@ class Mod_part_masuknpo extends CI_Model
 		}
     public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
     {
+        
+        $idlokasi = $this->session->userdata['lokasi'];
+        
         $date = $data['date1'];
         $tgl1 = explode('-', $date);
         $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
@@ -190,7 +194,6 @@ class Mod_part_masuknpo extends CI_Model
             $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-            'stok'=>$total,
             'stok_jkt'=>$total_jkt
         );
     }}
@@ -201,7 +204,6 @@ class Mod_part_masuknpo extends CI_Model
             $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-            'stok'=>$total,
             'stok_cbt'=>$total_cbt
         );
     }}
@@ -212,7 +214,6 @@ class Mod_part_masuknpo extends CI_Model
             $total_sby= $stok_sby[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-            'stok'=>$total,
             'stok_sby'=>$total_sby
         );
     }}

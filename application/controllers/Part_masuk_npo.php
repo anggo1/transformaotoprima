@@ -32,24 +32,24 @@ class Part_masuk_npo extends MY_Controller
 		foreach ($list as $p) {
 			$no++;
 			$row = array();
-			$row[] = "<a onclick=selectPart('$p->id_part')>$no</a>";
+			$row[] = $no;
 			$row[] = $p->no_part;
 			$row[] = $p->nama_part;
 			$row[] = $p->kode_satuan;
-			$row[] = $p->id_part;
-			 if (($idlevel !='12') && $idlokasi =='Cibitung'){
+			 if ($idlokasi =='Cibitung'){
                     $row[] = $p->stok_cbt;
                     //$row[] = $p->lok_cbt;
                     $row[] = number_format($p->hrg_net_cbt);
-                }elseif (($idlevel !='12') && $idlokasi=='Jakarta'){
+                }elseif ($idlokasi=='Jakarta'){
                         $row[] = $p->stok_jkt;
                         //$row[] = $p->lok_jkt;
                     $row[] = number_format($p->hrg_net_jkt);
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
+                }elseif ($idlokasi=='Surabaya'){
                             $row[] = $p->stok_sby;
                             //$row[] = $p->lok_sby;
                     		$row[] = number_format($p->hrg_net_sby);
 							}
+			$row[] = $p->id_part;
 			$data[] = $row;
 		}
 
@@ -64,7 +64,7 @@ class Part_masuk_npo extends MY_Controller
 	}
 	public function cariKode($id)
 	{
-	$data = $this->Mod_part_masuk_npo->get_part($id);
+	$data = $this->Mod_part_masuknpo->get_part($id);
 	echo json_encode($data);
 	}
 	public function prosesDetailInput()
@@ -162,20 +162,20 @@ class Part_masuk_npo extends MY_Controller
 	}
 	public function tampilDetail()
 	{
-		$id 				= $_GET['kode_masuk'];
+		$id 				= $_POST['kode_masuk'];
 		$data['dataDetail'] = $this->Mod_part_masuknpo->select_detail($id);
 		$this->load->view('warehouse/detail_part_masuknpo', $data);
 	}
 	public function tampilDetailCache()
 	{
-		$id 				= $_GET['kode_masuk'];
+		$id 				= $_POST['kode_masuk'];
 		$data['dataDetail'] = $this->Mod_part_masuknpo->select_detail($id);
 		$this->load->view('warehouse/detail_part_masuknpo_cache', $data);
 	}
 	public function deleteDetail()
 	{
 		$id = $_POST['id'];
-		$result = $this->Mod_part_masuk_npo->deleteDetail($id);
+		$result = $this->Mod_part_masuknpo->deleteDetail($id);
 		if ($result > 0) {
 			//$out['datakode']=$kodeBaru;
 			$out['status'] = '';

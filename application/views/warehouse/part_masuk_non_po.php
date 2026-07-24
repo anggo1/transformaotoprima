@@ -184,6 +184,7 @@ textarea {
                     <div id="modal-masuk"></div>
                 </div>
             </div>
+        </div>
             <div class="modal fade" id="modal_form" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -197,9 +198,9 @@ textarea {
                                                     <th>#</th>
                                                     <th>No Part</th>
                                                     <th>Nama Part</th>
+                                                    <th>Satuan</th>
                                                     <th>Stok</th>
                                                     <th>Harga</th>
-                                                    <th>Satuan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -213,7 +214,6 @@ textarea {
                     </div>
                 </div>
             </div>
-        </div>
 
         <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
@@ -226,15 +226,6 @@ $('#date1,#tgl_po,#tgl_akhir').datetimepicker({
 window.onload = function() {
     //startRefresh();
 }
-var MyTable = $('#listpomasuk').dataTable({
-    "responsive": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true
-});
-
 function startRefresh() {
     setTimeout(startRefresh, 1000);
     $.get('Part_masuk_npo', function(data) {
@@ -263,25 +254,23 @@ function refresh() {
 function tampilDetail(kode_masuk) {
     //var kode_masuk = document.getElementById('id_masuk').value = kode_masuk;
     $.ajax({
-        type: 'GET',
-        url: '<?php echo base_url('Part_masuk_npo/tampilDetail'); ?>?kode_masuk=' + kode_masuk,
+        type: 'POST',
+        url: '<?php echo base_url('Part_masuk_npo/tampilDetail'); ?>',
         data: 'kode_masuk=' + kode_masuk,
         success: function(hasil) {
-            MyTable.fnDestroy();
+            //MyTable.fnDestroy();
             $('#data-masuk').html(hasil);
-            refresh();
+            //refresh();
         }
     });
 }
 $(document).ready(function() {
-    table = $('#table-part').dataTable({
+    table = $('#table-part').DataTable({
         "responsive": false,
-        "paging": true,
         "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
-        "processing": true,
         "serverSide": true,
         "pageLength": 10, // Defaults number of rows to display in table
         "order": [],
@@ -304,9 +293,9 @@ $(document).ready(function() {
         var id_part = data[6];
         var no_part = data[1];
         var nama_part = data[2];
-        var satuan = data[5];
-        var stok = data[7];
-        var harga = data[7];
+        var satuan = data[3];
+        var stok = data[4];
+        var harga = data[5];
         $.ajax({
             method: 'POST',
             url: '<?php echo base_url('Part_masuk_npo/prosesDetailInput'); ?>',
@@ -321,10 +310,9 @@ $(document).ready(function() {
                 "&harga=" + harga
         })
         tampilDetail(kode_masuk);
-        tampilDetail(kode_masuk);
         $('#modal_form').modal('hide');
-
     });
+   
 });
 
 function tampilDetailCache(kode_masuk) {
@@ -332,7 +320,7 @@ function tampilDetailCache(kode_masuk) {
     var kode_masuk = document.getElementById('kode_masuk').value = kode_masuk;
     $.ajax({
         type: 'GET',
-        url: '<?php echo base_url('Part_masuk_npo/tampilDetailCache'); ?>?kode_masuk=' + kode_masuk,
+        url: '<?php echo base_url('Part_masuk_npo/tampilDetailCache'); ?>',
         data: 'kode_masuk=' + kode_masuk,
         success: function(hasil) {
             MyTable.fnDestroy();

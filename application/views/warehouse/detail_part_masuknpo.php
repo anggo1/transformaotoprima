@@ -63,7 +63,6 @@
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $d->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $d->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $d->satuan; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok; ?>">
                 <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $d->stok_jkt; ?>">
                 <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $d->stok_cbt; ?>">
                 <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $d->stok_sby; ?>">
@@ -91,6 +90,15 @@
     <tfoot></tfoot>
 </table>
 <script language="javascript">
+    
+var MyTable = $('#listpomasuk').dataTable({
+    "responsive": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true
+});
 function saveHarga(e, id, id_masuk, hrg_part) {
     if (e.keyCode === 13) {
         e.preventDefault();
