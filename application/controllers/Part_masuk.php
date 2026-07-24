@@ -113,7 +113,6 @@ class Part_masuk extends MY_Controller
 				$nama_part = $this->input->post('nama_part');
 				$qty_masuk = $this->input->post('qty_masuk');
 				$satuan = $this->input->post('satuan');
-				$stok = $this->input->post('stok');
 				$stok_jkt = $this->input->post('stok_jkt');
 				$stok_cbt = $this->input->post('stok_cbt');
 				$stok_sby = $this->input->post('stok_sby');

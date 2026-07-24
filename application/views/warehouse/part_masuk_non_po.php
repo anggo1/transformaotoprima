@@ -304,12 +304,9 @@ $(document).ready(function() {
         var id_part = data[6];
         var no_part = data[1];
         var nama_part = data[2];
-        var stok = data[3];
         var satuan = data[5];
-        var stok_jkt = data[7];
-        var stok_cbt = data[8];
-        var stok_sby = data[9];
-        var harga_baru = data[10];
+        var stok = data[7];
+        var harga = data[7];
         $.ajax({
             method: 'POST',
             url: '<?php echo base_url('Part_masuk_npo/prosesDetailInput'); ?>',
@@ -320,10 +317,8 @@ $(document).ready(function() {
                 "&nama_part=" + nama_part +
                 "&stok=" + stok +
                 "&satuan=" + satuan +
-                "&stok_jkt=" + stok_jkt +
-                "&stok_cbt=" + stok_cbt +
-                "&stok_sby=" + stok_sby +
-                "&harga_baru=" + harga_baru
+                "&stok=" + stok +
+                "&harga=" + harga
         })
         tampilDetail(kode_masuk);
         tampilDetail(kode_masuk);

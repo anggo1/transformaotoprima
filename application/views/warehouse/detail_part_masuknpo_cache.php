@@ -23,15 +23,31 @@
     <tbody>
         <?php
             $no = 1;
-            foreach ($dataDetail as $s) {
+            $idlokasi = $this->session->userdata['lokasi'];
+        foreach ($detailMasuk as $d) : $no++;
+          if($idlokasi=='Cibitung'){
+            $stok=$d->stok_cbt;
+            $harga=$d->hrg_net_cbt;
+          $total += $d->hrg_net_cbt * $d->jumlah;
+          
+          if($idlokasi=='Jakarta'){
+            $stok=$d->stok_jkt;
+            $harga=$d->hrg_net_jkt;
+          $total += $d->hrg_net_jkt* $d->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$d->stok_sby;
+            $harga=$d->hrg_net_sby;
+          $total += $d->hrg_net_sby * $d->jumlah;
+          }
             ?>
         <tr>
             <td><?php echo $no; ?></td>
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
-            <td><?php echo $s->stok; ?></td>
-            <td><?php echo $s->harga_baru; ?></td>
+            <td><?php echo $stok; ?></td>
+            <td><?php echo $harga; ?></td>
             <td><?php echo $s->hrg_part;?></td>
             <td><?php echo $s->jumlah; ?></td>
             <td><?php if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>

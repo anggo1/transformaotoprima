@@ -30,24 +30,31 @@ public function showPart()
 	{
 		ini_set('memory_limit', '512M');
 		set_time_limit(3600);
+        $idlokasi = $this->session->userdata['lokasi'];
+        $idlevel = $this->session->userdata['id_level'];
 		$list = $this->Mod_purchaseorder->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $pel) {
+		foreach ($list as $p) {
 			$no++;
 			$row = array();
 			$row[] = "$no";
-			$row[] = $pel->no_part;
-                $row[] = $pel->nama_part;
-                $row[] = $pel->satuan;
-                $row[] = $pel->stok;
-                $row[] = number_format($pel->harga_baru);
-                $row[] = $pel->diskon;
-                $row[] = number_format($pel->harga_net);
-                $row[] = number_format($pel->harga_rata);
-                $row[] = $pel->ppn;
-                $row[] = number_format($pel->harga_valid);
-                $row[] = $pel->ket_harga;
+			$row[] = $p->no_part;
+                $row[] = $p->nama_part;
+                $row[] = $p->satuan;
+                if (($idlevel !='12') && $idlokasi =='Cibitung'){
+                    $row[] = $p->stok_cbt;
+                    //$row[] = $p->lok_cbt;
+                    $row[] = number_format($p->hrg_net_cbt);
+                }elseif (($idlevel !='12') && $idlokasi=='Jakarta'){
+                        $row[] = $p->stok_jkt;
+                        //$row[] = $p->lok_jkt;
+                    $row[] = number_format($p->hrg_net_jkt);
+                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
+                            $row[] = $p->stok_sby;
+                            //$row[] = $p->lok_sby;
+                    		$row[] = number_format($p->hrg_net_sby);
+							}
 			$data[] = $row;
 		}
 

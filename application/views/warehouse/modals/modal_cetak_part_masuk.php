@@ -184,7 +184,6 @@
           <th width="5%" rowspan="2" style="text-align: center;">No</th>
           <th width="9%" rowspan="2" style="text-align: center;">Kode</th>
           <th width="25%" rowspan="2" style="text-align: center;">Nama Barang</th>
-          <th width="7%" rowspan="2" style="text-align: center;">Keterangan</th>
           <th width="6%" rowspan="2" style="text-align: center;">Jumlah</th>
           <th width="6%" rowspan="2" style="text-align: center;">Satuan</th>
           <th width="6%" rowspan="2" style="text-align: center;">Harga</th>
@@ -199,21 +198,35 @@
         <?php
         $no = 0;
         $total = 0;
+        $idlokasi = $this->session->userdata['lokasi'];
         foreach ($detailMasuk as $d) : $no++;
-          $total += $d->harga_baru * $d->jumlah;
+          if($idlokasi=='Cibitung'){
+            $stok=$d->stok_cbt;
+            $harga=$d->hrg_net_cbt;
+          $total += $d->hrg_net_cbt * $d->jumlah;
+          }
+          if($idlokasi=='Jakarta'){
+            $stok=$d->stok_jkt;
+            $harga=$d->hrg_net_jkt;
+          $total += $d->hrg_net_jkt* $d->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$d->stok_sby;
+            $harga=$d->hrg_net_sby;
+          $total += $d->hrg_net_sby * $d->jumlah;
+          }
         ?>
           <tr>
             <th style="text-align: center;"><?php echo $no ?></th>
             <th style="text-align: center;"><?php echo $d->no_part ?></th>
             <th><?php echo $d->nama_part ?></th>
-            <th><?php echo $d->ket?></th>
             <th style="text-align: right;"><?php echo $d->jumlah ?></th>
             <th style="text-align: right;"><?php echo $d->nama_satuan ?></th>
-            <th style="text-align: right;"><?php echo number_format($d->harga_baru) ?></th>
-            <th style="text-align: right;"><?php echo number_format($d->harga_baru * $d->jumlah) ?></th>
-            <th style="text-align: center;"><?php echo $d->stok-$d->jumlah ?></th>
+            <th style="text-align: right;"><?php echo number_format($harga) ?></th>
+            <th style="text-align: right;"><?php echo number_format($harga * $d->jumlah) ?></th>
+            <th style="text-align: center;"><?php echo $stok-$d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $d->jumlah ?></th>
-            <th style="text-align: center;"><?php echo $d->stok ?></th>
+            <th style="text-align: center;"><?php echo $stok ?></th>
           </tr>
         <?php $no + 1;
         endforeach ?>

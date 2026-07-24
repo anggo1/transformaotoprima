@@ -201,11 +201,11 @@ $(document).ready(function() {
                 "&stok=" + stok +
                 "&harga_baru=" + harga_baru
 			})
-			tampilDetail();
+			//tampilDetail();
 		$('#modal_form').modal('hide');
 			tampilDetail();
-    } );
-	} );
+    });
+	});
 var MyTable = $('#list-po').dataTable({
     "responsive": true,
     "paging": true,

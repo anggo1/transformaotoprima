@@ -23,45 +23,63 @@
     </thead>
     <tbody>
         <?php
+        
+        $idlokasi = $this->session->userdata['lokasi'];
             $no = 1;
-            foreach ($dataDetail as $s) {
+            foreach ($dataDetail as $d) {
+                if($idlokasi=='Cibitung'){
+            $stok=$d->stok_cbt;
+            $harga=$d->hrg_net_cbt;
+                }
+          if($idlokasi=='Jakarta'){
+            $stok=$d->stok_jkt;
+            $harga=$d->hrg_net_jkt;
+          $total += $d->hrg_net_jkt* $d->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$d->stok_sby;
+            $harga=$d->hrg_net_sby;
+          $total += $d->hrg_net_sby * $d->jumlah;
+          }
+          //$total += $harga * $d->jumlah;
             ?>
         <tr>
             <td><?php echo $no; ?></td>
-            <td><?php echo $s->no_part; ?></td>
-            <td><?php echo $s->nama_part; ?></td>
-            <td><?php echo $s->nama_satuan; ?></td>
-            <td><?php echo $s->stok; ?></td>
-            <td><?php echo $s->harga_baru; ?></td>
+            <td><?php echo $d->no_part; ?></td>
+            <td><?php echo $d->nama_part; ?></td>
+            <td><?php echo $d->nama_satuan; ?></td>
+            <td><?php echo $stok; ?></td>
+            <td><?php echo $harga; ?></td>
             <td class="qty">
-              <input type="number" name="harga[]" id="harga[]"
-              value="<?php if(empty($s->hrg_part)){echo $s->harga_baru; }else{echo $s->hrg_part;} ?>"
-                    onkeypress="saveHarga(event,'<?php echo $s->id; ?>','<?php echo $s->id_masuk; ?>',$(this).val() )"
+                <input type="number" name="harga[]" id="harga[]"
+                    value="<?php if(empty($harga)){echo $harga; }else{echo $harga;} ?>"
+                    onkeypress="saveHarga(event,'<?php echo $d->id; ?>','<?php echo $d->id_masuk; ?>',$(this).val() )"
                     class="form-control col-sm-10">
             </td>
             <td class="hrg">
-              <input type="number" name="qty_masuk[]" id="qty_masuk[]"
-                    value="<?php echo $s->jumlah ?>"
-                    onkeypress="saveJumlah(event,'<?php echo $s->id; ?>','<?php echo $s->id_masuk; ?>',$(this).val() )"
+                <input type="number" name="qty_masuk[]" id="qty_masuk[]" value="<?php echo $d->jumlah ?>"
+                    onkeypress="saveJumlah(event,'<?php echo $d->id; ?>','<?php echo $d->id_masuk; ?>',$(this).val() )"
                     class="form-control col-sm-10">
-                <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
-                <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
-                <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok; ?>">
-                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
-                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
-                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
+                <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $d->no_part; ?>">
+                <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $d->nama_part; ?>">
+                <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $d->satuan; ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok; ?>">
+                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $d->stok_jkt; ?>">
+                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $d->stok_cbt; ?>">
+                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $d->stok_sby; ?>">
             </td>
             <td><?php 
-            if(!empty($s->jumlah)){
-                 if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}
+            if(!empty($d->jumlah)){
+                 if(empty($harga)) { echo number_format($harga * $d->jumlah);}else{ echo number_format($harga * $d->jumlah);}
             }
              ?></td>
             <td class="text-center">
-			<div class="input-group mb-3 danger">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text btn bg-danger" onclick="delData(event,'<?php echo $s->id; ?>','<?php echo $s->id_masuk; ?>')"><i class="fas fa-trash"></i></span>
-                  </div>
+                <div class="input-group mb-3 danger">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text btn bg-danger"
+                            onclick="delData(event,'<?php echo $d->id; ?>','<?php echo $d->id_masuk; ?>')"><i
+                                class="fas fa-trash"></i></span>
+                    </div>
                 </div>
             </td>
         </tr>
@@ -73,8 +91,7 @@
     <tfoot></tfoot>
 </table>
 <script language="javascript">
-    
-function saveHarga(e, id,id_masuk,hrg_part) {
+function saveHarga(e, id, id_masuk, hrg_part) {
     if (e.keyCode === 13) {
         e.preventDefault();
         $.ajax({
@@ -85,12 +102,13 @@ function saveHarga(e, id,id_masuk,hrg_part) {
                 'hrg_part': hrg_part,
             },
             success: function(response) {
-              tampilDetail(id_masuk);
+                tampilDetail(id_masuk);
             }
         });
     }
 }
-function saveJumlah(e, id,id_masuk,jml_part) {
+
+function saveJumlah(e, id, id_masuk, jml_part) {
     if (e.keyCode === 13) {
         e.preventDefault();
         $.ajax({
@@ -102,23 +120,24 @@ function saveJumlah(e, id,id_masuk,jml_part) {
             },
 
             success: function(response) {
-              tampilDetail(id_masuk);
+                tampilDetail(id_masuk);
             }
         });
     }
 }
-function delData(e, id_detail,id_masuk) {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Part_masuk_npo/deletepartDetail')?>",
-            data: {
-                'id_detail': id_detail,
-                'id': id_masuk,
-            },
 
-            success: function(response) {
-              tampilDetail(id_masuk);
-            }
-        });
-    }
+function delData(e, id_detail, id_masuk) {
+    $.ajax({
+        type: "POST",
+        url: "<?php echo base_url('Part_masuk_npo/deletepartDetail')?>",
+        data: {
+            'id_detail': id_detail,
+            'id': id_masuk,
+        },
+
+        success: function(response) {
+            tampilDetail(id_masuk);
+        }
+    });
+}
 </script>

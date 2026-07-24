@@ -40,7 +40,7 @@ class Mod_part_masuk extends CI_Model
     }
     function select_part($po)
     {
-        $sql    = "SELECT a.*,b.harga_baru,b.stok,b.stok_jkt,b.stok_cbt,b.stok_sby,c.*,d.satuan 
+        $sql    = "SELECT a.*,b.stok_jkt,b.stok_cbt,b.stok_sby,c.*,d.satuan 
         FROM tbl_wh_detail_po AS a 
         LEFT JOIN tbl_wh_barang AS b ON a.no_part=b.no_part
         LEFT JOIN tbl_wh_po AS c ON a.id_po=c.id_po
@@ -132,8 +132,7 @@ class Mod_part_masuk extends CI_Model
             $total = $stok[$key] + $qty_masuk[$key];
             $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
             $data1[]  = array(
-            'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-            'stok'=>$total,
+            'no_part'=>$no_part[$key],
             'stok_jkt'=>$total_jkt
         );
                 }}
@@ -143,8 +142,7 @@ class Mod_part_masuk extends CI_Model
                         $total = $stok[$key] + $qty_masuk[$key];
                         $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
                         $data1[]  = array(
-                        'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-                        'stok'=>$total,
+                        'no_part'=>$no_part[$key],  
                         'stok_cbt'=>$total_cbt
                     );
                 }}
@@ -154,8 +152,7 @@ class Mod_part_masuk extends CI_Model
                         $total = $stok[$key] + $qty_masuk[$key];
                         $total_sby= $stok_sby[$key] + $qty_masuk[$key];
                         $data1[]  = array(
-                        'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-                        'stok'=>$total,
+                        'no_part'=>$no_part[$key], 
                         'stok_sby'=>$total_sby
                     );
                 }}

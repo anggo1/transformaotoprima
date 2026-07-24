@@ -24,6 +24,7 @@
         <?php
             $no = 1;
             foreach ($dataPo as $s) {
+            
             ?>
         <tr>
             <td><?php echo $no; ?></td>
@@ -41,9 +42,7 @@
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
                 <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
-                <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
-                <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
-                <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok ?>">
             </td>
             <td><?php echo number_format($s->jml_masuk * $s->harga); ?></td>
             <td class="text-center">
