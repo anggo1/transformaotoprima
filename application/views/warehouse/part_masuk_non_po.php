@@ -224,7 +224,8 @@ $('#date1,#tgl_po,#tgl_akhir').datetimepicker({
     date: moment()
 });
 window.onload = function() {
-    //startRefresh();
+tampilDetail();
+//startRefresh();
 }
 function startRefresh() {
     setTimeout(startRefresh, 1000);
@@ -251,7 +252,8 @@ function refresh() {
     MyTable = $('#listpomasuk').dataTable();
 }
 
-function tampilDetail(kode_masuk) {
+function tampilDetail() {
+    var kode_masuk = document.getElementById("kode_masuk").value;
     //var kode_masuk = document.getElementById('id_masuk').value = kode_masuk;
     $.ajax({
         type: 'POST',
@@ -304,7 +306,6 @@ $(document).ready(function() {
                 "&id_part=" + id_part +
                 "&no_part=" + no_part +
                 "&nama_part=" + nama_part +
-                "&stok=" + stok +
                 "&satuan=" + satuan +
                 "&stok=" + stok +
                 "&harga=" + harga
@@ -315,11 +316,11 @@ $(document).ready(function() {
    
 });
 
-function tampilDetailCache(kode_masuk) {
+function tampilDetailCache() {
     //var out = jQuery.parseJSON(data);
-    var kode_masuk = document.getElementById('kode_masuk').value = kode_masuk;
+    var kode_masuk = document.getElementById("kode_masuk").value;
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '<?php echo base_url('Part_masuk_npo/tampilDetailCache'); ?>',
         data: 'kode_masuk=' + kode_masuk,
         success: function(hasil) {

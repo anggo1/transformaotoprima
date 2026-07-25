@@ -140,24 +140,26 @@ class Mod_part_masuknpo extends CI_Model
     public function insert_part($data)
     {
         
-		$lokasi = $data['tgl_masuk'];
-		$kl = explode('|',$lokasi);
-		$kd_lok = $kl[0];
+        $idlokasi = $this->session->userdata['lokasi'];
 
         $date = $data['tgl_masuk'];
         $tgl1 = explode('-', $date);
         $tgl_masuk = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         
+        $harga=$data['harga'];
+		$harga_part =str_replace(",","", $harga);
+
         $sql = "INSERT INTO tbl_wh_detail_part_masuk SET
         id_masuk    ='".$data['kode_masuk']."',
         no_part     ='".$data['no_part']."',
-        nama_part   ='".$kd_lok."',
+        nama_part   ='".$data['no_part']."',
         status_po   ='N',
         tgl_masuk   ='$tgl_masuk',
         jumlah      ='0',
-        satuan    ='".$data['satuan']."',
-        hrg_part    ='".$data['harga']."',
-        stok_akhir  ='".$data['stok']."'";
+        satuan      ='".$data['satuan']."',
+        hrg_part    ='".$harga_part."',
+        stok_akhir  ='".$data['stok']."',
+        lokasi      ='".$id_lokasi."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -190,7 +192,7 @@ class Mod_part_masuknpo extends CI_Model
        if($nm_lok=="Jakarta"){
         $data1 = array();
         foreach($no_part as $key=>$value){ 
-            $total = $stok[$key] + $qty_masuk[$key];
+            //$total = $stok[$key] + $qty_masuk[$key];
             $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
@@ -200,7 +202,7 @@ class Mod_part_masuknpo extends CI_Model
     if($nm_lok=="Cibitung"){
         $data1 = array();
         foreach($no_part as $key=>$value){
-            $total = $stok[$key] + $qty_masuk[$key];
+            //$total = $stok[$key] + $qty_masuk[$key];
             $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
@@ -210,7 +212,7 @@ class Mod_part_masuknpo extends CI_Model
     if($nm_lok=="Surabaya"){
         $data1 = array();
         foreach($no_part as $key=>$value){
-            $total = $stok[$key] + $qty_masuk[$key];
+            //$total = $stok[$key] + $qty_masuk[$key];
             $total_sby= $stok_sby[$key] + $qty_masuk[$key];
             $data1[]  = array(
             'no_part'=>$no_part[$key],  // Ambil dan set data telepon sesuai index array dari $index

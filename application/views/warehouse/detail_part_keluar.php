@@ -23,15 +23,31 @@
     <tbody>
         <?php
             $no = 1;
+            $idlokasi = $this->session->userdata['lokasi'];
+            $no = 1;
             foreach ($dataDetail as $s) {
+                if($idlokasi=='Cibitung'){
+            $stok=$s->stok_cbt;
+            $harga=$s->hrg_net_cbt;
+                }
+          if($idlokasi=='Jakarta'){
+            $stok=$s->stok_jkt;
+            $harga=$s->hrg_net_jkt;
+          $total += $s->hrg_net_jkt* $s->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$s->stok_sby;
+            $harga=$s->hrg_net_sby;
+          $total += $s->hrg_net_sby * $s->jumlah;
+          }
             ?>
         <tr>
             <td><?php echo $no; ?></td>
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
-            <td><?php echo $s->stok_akhir; ?></td>
-            <td><?php echo number_format($s->harga_baru); ?></td>
+            <td><?php echo $stok; ?></td>
+            <td><?php echo number_format($harga); ?></td>
             <td class="jml">
               <input type="number" name="qty_keluar[]" id="qty_keluar[]"
                     value="<?php echo $s->jumlah ?>"
@@ -39,14 +55,14 @@
                     class="form-control col-sm-10">
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok; ?>">
                 <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
                 <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
                 <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
             </td>
             <td><?php 
             if(!empty($s->jumlah)){
-                 if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->harga_baru * $s->jumlah);}
+                 if(empty($s->hrg_part)) { echo number_format($harga * $s->jumlah);}else{ echo number_format($harga * $s->jumlah);}
             }
              ?></td>
             <td class="text-center">

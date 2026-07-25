@@ -106,18 +106,32 @@ public function showPart()
 	{
 		ini_set('memory_limit', '512M');
 		set_time_limit(3600);
+        $idlokasi = $this->session->userdata['lokasi'];
+        $idlevel = $this->session->userdata['id_level'];
 		$list = $this->Mod_estimasi_penawaran_service->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $pel) {
+		foreach ($list as $p) {
 			$no++;
 			$row = array();
 			$row[] = $no;
-			$row[] = $pel->no_part;
-                $row[] = $pel->nama_part;
-                $row[] = $pel->satuan;
-                $row[] = $pel->stok;
-                $row[] = number_format($pel->harga_baru);
+			$row[] = $p->no_part;
+            $row[] = $p->nama_part;                
+			$row[] = $p->satuan;
+			 if ($idlokasi =='Cibitung'){
+                    $row[] = $p->stok_cbt;
+                    //$row[] = $p->lok_cbt;
+                    $row[] = number_format($p->price_list_cbt);
+                }elseif ($idlokasi=='Jakarta'){
+                        $row[] = $p->stok_jkt;
+                        //$row[] = $p->lok_jkt;
+                    $row[] = number_format($p->price_list_jkt);
+                }elseif ($idlokasi=='Surabaya'){
+                            $row[] = $p->stok_sby;
+                            //$row[] = $p->lok_sby;
+                    		$row[] = number_format($p->price_list_sby);
+							}
+			$row[] = $p->id_part;
 			$data[] = $row;
 		}
 

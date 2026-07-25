@@ -148,7 +148,7 @@ class Mod_update_hpart extends CI_Model
 		$list_lama =str_replace(",","", $price_list_awal);
         $net_awal=$data['net_awal'];
 		$net_lama =str_replace(",","", $net_awal);
-        $hrg_net=$data['hrg_net'];
+        $hrg_net=$data['harga_net'];
 		$net_baru =str_replace(",","", $hrg_net);
         $price_list=$data['price_list'];
 		$list_baru =str_replace(",","", $price_list);

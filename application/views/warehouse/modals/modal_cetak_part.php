@@ -164,18 +164,35 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <?php
         $no = 0;
         $grand_total = 0;
-        foreach ($detailPart as $d) : $no++;
-          $grand_total += $d->jumlah * $d->harga_baru;
+            $idlokasi = $this->session->userdata['lokasi'];
+            $no = 1;
+            foreach ($detailPart as $s) {
+                if($idlokasi=='Cibitung'){
+            $stok=$s->stok_cbt;
+            $harga=$s->hrg_net_cbt;
+          $grand_total += $s->jumlah * $harga;
+                }
+          if($idlokasi=='Jakarta'){
+            $stok=$s->stok_jkt;
+            $harga=$s->hrg_net_jkt;
+          $grand_total += $s->jumlah * $harga;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$s->stok_sby;
+            $harga=$s->hrg_net_sby;
+          $grand_total += $s->jumlah * $harga;
+          }
+
         ?>
           <tr>
             <th><?php echo $no ?></th>
-            <th><?php echo $d->no_part ?></th>
-            <th><?php echo $d->nama_part ?></th>
-            <th><?php echo $d->jumlah ?></th>
-            <th><?php echo $d->satuan ?></th>
+            <th><?php echo $s->no_part ?></th>
+            <th><?php echo $s->nama_part ?></th>
+            <th><?php echo $s->jumlah ?></th>
+            <th><?php echo $s->satuan ?></th>
           </tr>
         <?php $no + 1;
-        endforeach ?>
+        } ?>
       </thead>
 
     </table>

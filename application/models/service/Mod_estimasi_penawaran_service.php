@@ -9,14 +9,14 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $this->load->database();
     }
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.harga_baru','a.diskon','a.harga_net','a.harga_rata','a.ppn','a.harga_valid','a.ket_harga');
+    var $column_search = array('a.no_part','a.nama_part','a.satuan');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan');
     var $order = array('id_part' => 'desc'); // default order 
 
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id_part,no_part,nama_part,satuan,harga_baru,stok');
+        $this->db->select('a.*');
         $this->db->from('tbl_wh_barang as a');
         $i = 0;
 

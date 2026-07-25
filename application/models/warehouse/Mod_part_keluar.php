@@ -137,42 +137,39 @@ class Mod_part_keluar extends CI_Model
 		}
     public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
         {
+        $nm_lok = $this->session->userdata['lokasi'];
             $date = $data['tgl_keluar'];
             $tgl1 = explode('-', $date);
             $tgl_keluar = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
-            $lokasi = $data['lokasi'];
             $id_keluar = $data['id_keluar'];
 
             if($nm_lok=="Jakarta"){
              $data1 = array();
              foreach($no_part as $key=>$value){ 
-                 $total = $stok[$key] - $qty_keluar[$key];
+                 //$total = $stok[$key] - $qty_keluar[$key];
                  $total_jkt= $stok_jkt[$key] - $qty_keluar[$key];
                  $data1[]  = array(
                  'no_part'=>$no_part[$key],  
-                 'stok'=>$total,
                  'stok_jkt'=>$total_jkt
              );
                      }}
                      elseif($nm_lok=="Cibitung"){
                          $data1 = array();
                          foreach($no_part as $key=>$value){
-                             $total = $stok[$key] - $qty_keluar[$key];
+                             //$total = $stok[$key] - $qty_keluar[$key];
                              $total_cbt= $stok_cbt[$key] - $qty_keluar[$key];
                              $data1[]  = array(
                              'no_part'=>$no_part[$key], 
-                             'stok'=>$total,
                              'stok_cbt'=>$total_cbt
                          );
                      }}
                      elseif($nm_lok=="Surabaya"){
                          $data1 = array();
                          foreach($no_part as $key=>$value){
-                             $total = $stok[$key] - $qty_keluar[$key];
+                             //$total = $stok[$key] - $qty_keluar[$key];
                              $total_sby= $stok_sby[$key] - $qty_keluar[$key];
                              $data1[]  = array(
                              'no_part'=>$no_part[$key],  
-                             'stok'=>$total,
                              'stok_sby'=>$total_sby
                          );
                      }}

@@ -31,29 +31,28 @@ class Part_keluar extends MY_Controller
         $idlokasi = $this->session->userdata['lokasi'];
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $pel) {
+		foreach ($list as $p) {
 			$no++;
 			$row = array();
-			$row[] = $pel->id_part;
-			$row[] = $pel->no_part;
-			$row[] = $pel->nama_part;
-			if($idlevel=='1' or $idlevel=='12'){
-				$row[] = $pel->stok;
-			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi =='Cibitung'){
-				$row[] = $pel->stok_cbt;
-			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Jakarta'){
-					$row[] = $pel->stok_jkt;
-			}elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
-						$row[] = $pel->stok_sby;
-			}
-			//$row[] = $pel->stok;
-			//$row[] = number_format($pel->harga_baru);
-			$row[] = $pel->satuan;
-			$row[] = $pel->id_part;
-			$row[] = $pel->stok_jkt;
-			$row[] = $pel->stok_cbt;
-			$row[] = $pel->stok_sby;
-			$row[] = $pel->harga_baru;
+			$row[] = $p->id_part;
+			$row[] = $p->no_part;
+			$row[] = $p->nama_part;
+			
+			$row[] = $p->satuan;
+			 if ($idlokasi =='Cibitung'){
+                    $row[] = $p->stok_cbt;
+                    //$row[] = $p->lok_cbt;
+                    $row[] = number_format($p->hrg_net_cbt);
+                }elseif ($idlokasi=='Jakarta'){
+                        $row[] = $p->stok_jkt;
+                        //$row[] = $p->lok_jkt;
+                    $row[] = number_format($p->hrg_net_jkt);
+                }elseif ($idlokasi=='Surabaya'){
+                            $row[] = $p->stok_sby;
+                            //$row[] = $p->lok_sby;
+                    		$row[] = number_format($p->hrg_net_sby);
+							}
+			$row[] = $p->id_part;
 			$data[] = $row;
 		}
 

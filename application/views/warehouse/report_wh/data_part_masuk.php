@@ -1,7 +1,9 @@
 <div class="col-12 ">
     <div class="table-responsive">
-    <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-ppu"><i class="fa fa-id-card-alt"></i>  &nbsp;P P U</button>
-    <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-mpu"><i class="fa fa-id-card-alt"></i>  &nbsp;M P U</button>
+        <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-ppu"><i
+                class="fa fa-id-card-alt"></i> &nbsp;P P U</button>
+        <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-mpu"><i
+                class="fa fa-id-card-alt"></i> &nbsp;M P U</button>
         <table class="table table-bordered table-hover nowrap" id="list-data">
             <thead>
                 <tr>
@@ -36,15 +38,16 @@ foreach ($dataMasuk as $s) {
                         <?php if($s->status_po=='Y'){?>
                         <button class="btn btn-xs btn-outline-primary cetak-masuk"
                             data-id="<?php echo $s->kode_masuk; ?>"><i class="fa fa-print"></i> Print</button>
-                            <?php }else{ ?>
+                        <?php }else{ ?>
                         <button class="btn btn-xs btn-outline-primary cetak-masuknon"
                             data-id="<?php echo $s->kode_masuk; ?>"><i class="fa fa-print"></i> Print</button>
-                           <?php } ?>
-                           <?php foreach($viewLevel as $v) { } if ($v->delete_level =='Y') {?>
-                                    <button type="button" class="btn btn-xs bg-gradient-danger delete-detail" id="delete"
-                                        data-id="<?php echo $s->kode_masuk; ?>" data-status="<?php echo $s->status_part; ?>" title="Delete Data"  data-toggle="modal" data-target="#hapusDetail"><i
-                                            class="fas fa-trash"></i> Delete</button>
-                                            <?php } ?>
+                        <?php } ?>
+                        <?php foreach($viewLevel as $v) { } if ($v->delete_level =='Y') {?>
+                        <button type="button" class="btn btn-xs bg-gradient-danger delete-detail" id="delete"
+                            data-id="<?php echo $s->kode_masuk; ?>" data-status="<?php echo $s->status_part; ?>"
+                            title="Delete Data" data-toggle="modal" data-target="#hapusDetail"><i
+                                class="fas fa-trash"></i> Delete</button>
+                        <?php } ?>
                     </td>
                 </tr>
                 <?php
@@ -54,33 +57,33 @@ foreach ($dataMasuk as $s) {
 
             </tbody>
             <tfoot>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>Grand Total</th>
-            <th style="text-align: right;"></th>
-            <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Grand Total</th>
+                <th style="text-align: right;"></th>
+                <th></th>
             </tfoot>
         </table>
     </div>
 </div>
 <script>
 var MyTable = $('#list-data').DataTable({
-    "footerCallback": function (row, data, start, end, display) {
+    "footerCallback": function(row, data, start, end, display) {
         var api = this.api();
-        var intVal = function (i) {
+        var intVal = function(i) {
             return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
         };
         hasil = api
             .column(7)
             .data()
-            .reduce(function (a, b) {
+            .reduce(function(a, b) {
                 return intVal(a) + intVal(b);
             }, 0);
-            total=$.fn.dataTable.render.number(',', '.', 0).display(hasil);
+        total = $.fn.dataTable.render.number(',', '.', 0).display(hasil);
         $(api.column(7).footer()).html(total);
     },
 

@@ -23,7 +23,20 @@
     <tbody>
         <?php
             $no = 1;
+            $idlokasi = $this->session->userdata['lokasi'];
+            $no = 1;
             foreach ($dataPo as $s) {
+                if($idlokasi=='Cibitung'){
+            $stok=$s->stok_cbt;
+                }
+          if($idlokasi=='Jakarta'){
+            $stok=$s->stok_jkt;
+          $total += $s->hrg_net_jkt* $s->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$s->stok_sby;
+          $total += $s->hrg_net_sby * $s->jumlah;
+          }
             
             ?>
         <tr>
@@ -41,8 +54,7 @@
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok ?>">
             </td>
             <td><?php echo number_format($s->jml_masuk * $s->harga); ?></td>
             <td class="text-center">

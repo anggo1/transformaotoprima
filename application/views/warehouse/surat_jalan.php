@@ -25,7 +25,7 @@ table.dataTable td {
                                 Baru</button>
                         </div>
                         <div class="modal-body">
-                            <form id="formpartmasuk" name="formpartmasuk" method="POST">
+                            <form id="suratjalan" name="suratjalan" method="POST">
                                 <input type="hidden" name="id_masuk" id="id_masuk" class="form-control" readonly>
 
                                 <div class="form-group row">
