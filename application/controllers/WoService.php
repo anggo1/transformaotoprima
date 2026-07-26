@@ -6,28 +6,28 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 /* ------------ use PhpOffice\PhpSpreadsheet\Style\NumberFormat; ------------ */
 
-class ReportService extends MY_Controller
+class WoService extends MY_Controller
 {
 
-    public $Mod_report_service;
+    public $Mod_report_wo_service;
     public $Mod_menu;
     public $Mod_userlevel;
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('service/Mod_report_service', 'Mod_menu'));
+        $this->load->model(array('service/Mod_report_wo_service', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
         $this->load->helper('tgl_indo_helper');
     }
 
     public function index()
     {
-        $data['page']         = "Report Service";
+        $data['page']         = "Work Order Report";
         $data['judul']         = "List Service";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
-        $this->template->load('layoutbackend', 'service/report_service/all_service', $data);
+        $this->template->load('layoutbackend', 'service/report_service/wo_service', $data);
     }
 
     public function listService()
@@ -39,8 +39,8 @@ class ReportService extends MY_Controller
 
         $tgl2 = explode('-', $date2);
         $ttmp2 = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-        $data['dataPo'] = $this->Mod_report_service->cari_service($ttmp1, $ttmp2);
-        $this->load->view('service/report_service/data_all_service', $data);
+        $data['dataPo'] = $this->Mod_report_wo_service->cari_service($ttmp1, $ttmp2);
+        $this->load->view('service/report_service/data_wo_service', $data);
     }
 
 

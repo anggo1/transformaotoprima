@@ -14,7 +14,7 @@
 			<div class="card">
 				<div class="modal-content">
 					<div class="card-header card-blue card-outline">
-						<h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Report After Sales</h3>
+						<h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; WO Service</h3>
 					</div>
 
 
@@ -98,7 +98,7 @@
 				var date2 = document.getElementById("tgl_akhir").value;
 				$.ajax({
 					type: 'GET',
-					url: '<?php echo base_url('ReportService/listService'); ?>?date1' + date1 + '&date2=' + date2,
+					url: '<?php echo base_url('WoService/listService'); ?>?date1' + date1 + '&date2=' + date2,
 					data: 'date1=' + date1 + '&date2=' + date2,
 					success: function(hasil) {
 						MyTable.fnDestroy();

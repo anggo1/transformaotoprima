@@ -1,45 +1,59 @@
 <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-pk">
-                                            <thead>
-                                                <tr>
-                                                    <th width='5%'>No</th>
-                                                    <th>Wo No</th>
-                                                    <th>Tgl Service</th>
-                                                    <th>Konsumen</th>
-                                                    <th>Complain</th>
-                                                    <th>Tgl Selesai</th>
-                                                    <th>Status</th>
-                                                    <th>Pembuat</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-<?php
-$no = 1;
-foreach ($dataPo as $s) {
-?> <tr>
+  
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover nowrap" id="list-pk">
+            <thead>
+                <tr>
+                    <th width='5%'>No</th>
+                    <th>Wo No</th>
+                    <th>SA</th>
+                    <th>Date Open</th>
+                    <th>VIN</th>
+                    <th>Konsumen</th>
+                    <th>Complain</th>
+                    <th>Engine No</th>
+                    <th>Type</th>
+                    <th>Last Service</th>
+                    <th>Deadline</th>
+                    <th>Date Close</th>
+                    <th>Status</th>
+                    <th>Pembuat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $no = 1;
+                foreach ($dataPo as $s) {
+                ?> <tr>
 
-        <td><?php echo $no; ?></td>
-        <td><?php echo $s->wo_no; ?></td>
-        <td><?php echo tglIndoSedang($s->date_open_wo); ?></td>
-        <td><?php echo $s->customer_name; ?></td>
-        <td><?php echo $s->customer_complain; ?></td>
-        <td><?php echo tglIndoSedang($s->date_close_wo); ?></td>
-        <td><?php echo $s->pembuat; ?></td>
+                        <td><?php echo $no; ?></td>
+                        <td><?php echo $s->wo_no; ?></td>
+                        <td><?php echo $s->sa_name; ?></td>
+                        <td><?php echo tglIndoSedang($s->date_open_wo); ?></td>
+                        <td><?php echo $s->vin; ?></td>
+                        <td><?php echo $s->customer_name; ?></td>
+                        <td><?php echo $s->customer_complain; ?></td>
+                        <td><?php echo $s->engine_no; ?></td>
+                        <td><?php echo $s->type; ?></td>
+                        <td><?php echo tglIndoSedang($s->last_service_date); ?></td>
+                        <td><?php echo tglIndoSedang($s->dead_line); ?></td>
+                        <td><?php echo tglIndoSedang($s->date_close_wo); ?></td>
+                        <td><?php echo ($s->status == 'Y') ? 'Free' : 'Non Free'; ?></td>
+                        <td><?php echo $s->pembuat; ?></td>
 
-    </tr>
-<?php
-    $no++;
-}
-?>
+                    </tr>
+                <?php
+                    $no++;
+                }
+                ?>
 
-</tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+            </tbody>
+            <tfoot></tfoot>
+        </table>
+    </div>
+</div>
 <script>
-var MyTable = $('#list-pk').DataTable({
+    var MyTable = $('#list-pk').DataTable({
         "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
@@ -47,53 +61,53 @@ var MyTable = $('#list-pk').DataTable({
                 extend: 'copyHtml5',
                 text: '<i class="fas fa-copy"></i> Copy',
                 titleAttr: 'Copy',
-                title: 'Report Purchase Order',
+                title: 'Report After Sales',
                 className: 'btn btn-sm  btn-outline-secondary',
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                }
             },
             {
                 extend: 'excelHtml5',
                 text: '<i class="fas fa-file-excel"></i> Excel',
                 titleAttr: 'Excel',
-                title: 'Report Purchase Order',
+                title: 'Report After Sales',
                 className: 'btn btn-outline-secondary',
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                }
             },
             {
                 extend: 'pdfHtml5',
                 text: '<i class="fas fa-file-pdf"></i> PDF',
                 titleAttr: 'PDF',
-                title: 'Report Purchase Order',
+                title: 'Report After Sales',
                 className: 'btn btn-outline-secondary',
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                }
             },
             {
                 extend: 'print',
                 text: '<i class="fas fa-print"></i> Cetak',
                 titleAttr: 'Print',
-                title: 'Report Purchase Order',
+                title: 'Report After Sales',
                 className: 'btn btn-outline-secondary',
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
-            exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-            }
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                }
             },
             {
                 extend: 'colvis',
@@ -116,32 +130,37 @@ var MyTable = $('#list-pk').DataTable({
         "pageLength": 10
     });
     $(document).on("click", ".cetak-keluar", function() {
-		var id = $(this).attr("data-id");
-		//var id = document.getElementById('next_proses').value=datakode;
+        var id = $(this).attr("data-id");
+        //var id = document.getElementById('next_proses').value=datakode;
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Part_keluar/cetak'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-keluar').html(data);
+                $('#cetak-keluar').modal('show');
+            })
+    })
+
+
+    function exportExcel() {
+		var date1 = document.getElementById("tgl_awal").value;
+		var date2 = document.getElementById("tgl_akhir").value;
 		$.ajax({
-				method: "POST",
-				url: "<?php echo base_url('Part_keluar/cetak'); ?>",
-				data: "id=" + id
-			})
-			.done(function(data) {
-				$('#modal-keluar').html(data);
-				$('#cetak-keluar').modal('show');
-			})
-	})
-    function cetakBon(datakode) {}
-
-
-$(document).on("click", ".cetak-bon", function() {
-		var id = $(this).attr("data-id");
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('PartPk/cetakBon'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-           // $('#part-pk').modal('hide');
-            $('#modal-pk').html(data);
-            $('#cetak-bon').modal('show');
-        })
-})
-    </script>
+		type: 'POST',
+		url: '<?php echo base_url('ReportService/export_excel'); ?>?',
+		data: 'date1=' +date1+'&date2=' +date2
+		});
+	}
+    function exportTableToExcel() {
+    // Select the HTML table
+    var el = document.getElementById('myTable');
+    
+    // Convert table to worksheet
+    var wb = XLSX.utils.table_to_book(el, {sheet: "SheetJS"});
+    
+    // Save/Download the file
+    XLSX.writeFile(wb, 'exported_data.xlsx');
+}
+</script>
