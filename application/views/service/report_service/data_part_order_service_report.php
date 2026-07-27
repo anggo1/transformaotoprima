@@ -6,16 +6,16 @@
                 <tr>
                     <th width='5%'>No</th>
                     <th>Wo No</th>
-                    <th>Date Open</th>
-                    <th>SPK No</th>
-                    <th>Code</th>
-                    <th>Type of Work</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Total Time</th>
-                    <th>Hours</th>
+                    <th>Date Estimate</th>
+                    <th>Estimation Code</th>
+                    <th>Customer</th>
+                    <th>Part No</th>
+                    <th>Part Name</th>
+                    <th>Unit</th>
                     <th>Price</th>
-                    <th>Grand Price</th>
+                    <th>QTY</th>
+                    <th>Total</th>
+                    <th>Sales Disgn</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,16 +26,17 @@
 
                         <td><?php echo $no; ?></td>
                         <td><?php echo $s->wo_no; ?></td>
-                        <td><?php echo tglIndoSedang($s->date_open_wo); ?></td>
-                        <td><?php echo $s->spk; ?></td>
-                        <td><?php echo $s->operation; ?></td>
-                        <td><?php echo $s->type_of_work; ?></td>
-                        <td><?php echo tglIndoSedang($s->start_date); ?></td>
-                        <td><?php echo tglIndoSedang($s->end_date); ?></td>
-                        <td><?php echo $s->total_time; ?></td>
-                        <td><?php echo $s->jumlah; ?></td>
+                        <td><?php echo tglIndoSedang($s->tgl_estimasi_penawaran); ?></td>
+                        <td><?php echo $s->kode_estimasi_penawaran; ?></td>
+                        <td><?php echo $s->nama_cus; ?></td>
+                        <td><?php echo $s->no_part; ?></td>
+                        <td><?php echo $s->nama_part; ?></td>
+                        <td><?php echo $s->satuan; ?></td>
                         <td><?php echo number_format($s->harga); ?></td>
+                        <td><?php echo $s->jumlah; ?></td>
                         <td><?php echo number_format($s->total_harga); ?></td>
+                        <td><?php echo $s->sales_design; ?></td>
+
 
                     </tr>
                 <?php
@@ -58,7 +59,7 @@
                     extend: 'copyHtml5',
                     text: '<i class="fas fa-copy"></i> Copy',
                     titleAttr: 'Copy',
-                    title: 'Work Order Report',
+                    title: 'Part Order',
                     className: 'btn btn-sm  btn-outline-secondary',
                     init: function(api, node, config) {
                         $(node).removeClass('btn-secondary')
@@ -71,7 +72,7 @@
                     extend: 'excelHtml5',
                     text: '<i class="fas fa-file-excel"></i> Excel',
                     titleAttr: 'Excel',
-                    title: 'Work Order Report',
+                    title: 'Part Order',
                     className: 'btn btn-outline-secondary',
                     init: function(api, node, config) {
                         $(node).removeClass('btn-secondary')
@@ -84,7 +85,7 @@
                     extend: 'pdfHtml5',
                     text: '<i class="fas fa-file-pdf"></i> PDF',
                     titleAttr: 'PDF',
-                    title: 'Work Order Report',
+                    title: 'Part Order',
                     className: 'btn btn-outline-secondary',
                     init: function(api, node, config) {
                         $(node).removeClass('btn-secondary')
@@ -97,7 +98,7 @@
                     extend: 'print',
                     text: '<i class="fas fa-print"></i> Cetak',
                     titleAttr: 'Print',
-                    title: 'Work Order Report',
+                    title: 'Part Order',
                     className: 'btn btn-outline-secondary',
                     init: function(api, node, config) {
                         $(node).removeClass('btn-secondary')
@@ -132,27 +133,27 @@
                     return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
                 };
                 hasil = api
-                    .column(11)
+                    .column(10)
                     .data()
                     .reduce(function(a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
                 total = $.fn.dataTable.render.number(',', '.', 0).display(hasil);
-                $(api.column(11).footer()).html(total);
+                $(api.column(10).footer()).html(total);
             },
             "rowGroup": {
                 "startRender": null,
                 "endRender": function(rows, group, type) {
                     var total = rows
                         .data()
-                        .pluck(11)
+                        .pluck(10)
                         .reduce(function(x, y) {
                             return x + y.replace(/[^\d]/g, '') * 1;
                         }, 0);
                     total = $.fn.dataTable.render.number(',', '.', 0).display(total);
                     return $('<tr/>')
                         .append(
-                            '<td colspan="11" style=font-weight: bolder; align="right">TOTAL</td>')
+                            '<td colspan="10" style=font-weight: bolder; align="right">TOTAL</td>')
                         .append('<td style= font-weight: bolder; align="Right">' + total +
                             '</td>');
                 },

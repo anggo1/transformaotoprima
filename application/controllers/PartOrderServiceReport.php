@@ -6,17 +6,17 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 /* ------------ use PhpOffice\PhpSpreadsheet\Style\NumberFormat; ------------ */
 
-class WoService extends MY_Controller
+class PartOrderServiceReport extends MY_Controller
 {
 
-    public $Mod_report_wo_service;
+    public $Mod_part_order_service_report;
     public $Mod_menu;
     public $Mod_userlevel;
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('service/Mod_report_wo_service', 'Mod_menu'));
+        $this->load->model(array('service/Mod_part_order_service_report', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
         $this->load->helper('tgl_indo_helper');
     }
@@ -27,7 +27,7 @@ class WoService extends MY_Controller
         $data['judul']         = "List Service";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
-        $this->template->load('layoutbackend', 'service/report_service/wo_service', $data);
+        $this->template->load('layoutbackend', 'service/report_service/part_order_service_report', $data);
     }
 
     public function listService()
@@ -39,8 +39,8 @@ class WoService extends MY_Controller
 
         $tgl2 = explode('-', $date2);
         $ttmp2 = $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-        $data['dataPo'] = $this->Mod_report_wo_service->cari_service($ttmp1, $ttmp2);
-        $this->load->view('service/report_service/data_wo_service', $data);
+        $data['dataPo'] = $this->Mod_part_order_service_report->cari_service($ttmp1, $ttmp2);
+        $this->load->view('service/report_service/data_part_order_service_report', $data);
     }
     public function export_excel()
     {
@@ -71,7 +71,7 @@ class WoService extends MY_Controller
 
         $no = 1;
         $x = 2;
-        $data = $this->Mod_report_service->cari_service($ttmp1, $ttmp2);
+        $data = $this->Mod_part_order_service_report->cari_service($ttmp1, $ttmp2);
         foreach ($data as $row) {
 
             $sheet->setCellValue('A' . $x, $no++);

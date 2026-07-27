@@ -98,7 +98,7 @@
 				var date2 = document.getElementById("tgl_akhir").value;
 				$.ajax({
 					type: 'GET',
-					url: '<?php echo base_url('WoService/listService'); ?>?date1' + date1 + '&date2=' + date2,
+					url: '<?php echo base_url('PartOrderServiceReport/listService'); ?>?date1' + date1 + '&date2=' + date2,
 					data: 'date1=' + date1 + '&date2=' + date2,
 					success: function(hasil) {
 						MyTable.fnDestroy();
