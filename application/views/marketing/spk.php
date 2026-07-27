@@ -1,129 +1,129 @@
 <style>
-.radio-buttons {
-    display: flex;
-}
+    .radio-buttons {
+        display: flex;
+    }
 
-.radio-button {
-    display: flex;
-    align-items: center;
-    margin-right: auto;
-    position: relative;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    width: auto;
-    height: auto;
-}
+    .radio-button {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        position: relative;
+        padding: 5px 10px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+    }
 
-.radio-button input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
+    .radio-button input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
 
-.radio-tick {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #000000;
-    border-radius: 20%;
-    margin-right: 10px;
-}
+    .radio-tick {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #000000;
+        border-radius: 20%;
+        margin-right: 10px;
+    }
 
-.radio-tick-merah {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #eb3449;
-    border-radius: 20%;
-    margin-right: 10px;
-}
+    .radio-tick-merah {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #eb3449;
+        border-radius: 20%;
+        margin-right: 10px;
+    }
 
-.radio-tick-kuning {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f2cc0c;
-    border-radius: 20%;
-    margin-right: 10px;
-}
+    .radio-tick-kuning {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f2cc0c;
+        border-radius: 20%;
+        margin-right: 10px;
+    }
 
-.radio-tick-hijau {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f2cc0c;
-    border-radius: 20%;
-    margin-right: 10px;
-}
+    .radio-tick-hijau {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f2cc0c;
+        border-radius: 20%;
+        margin-right: 10px;
+    }
 
-.radio-tick-lain {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #5187d6;
-    border-radius: 20%;
-    margin-right: 10px;
-}
+    .radio-tick-lain {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #5187d6;
+        border-radius: 20%;
+        margin-right: 10px;
+    }
 
-.radio-button input[type="radio"]:checked+.radio-tick::before {
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-}
+    .radio-button input[type="radio"]:checked+.radio-tick::before {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
 
-.radio-button input[type="radio"]:checked+.radio-tick-merah::before {
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-}
+    .radio-button input[type="radio"]:checked+.radio-tick-merah::before {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
 
-.radio-button input[type="radio"]:checked+.radio-tick-kuning::before {
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-}
+    .radio-button input[type="radio"]:checked+.radio-tick-kuning::before {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
 
-.radio-button input[type="radio"]:checked+.radio-tick-lain::before {
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-}
+    .radio-button input[type="radio"]:checked+.radio-tick-lain::before {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+    }
 
 
-.radio-button input[type="radio"]:checked~.radio-tick {
-    background-color: #007bff;
-}
+    .radio-button input[type="radio"]:checked~.radio-tick {
+        background-color: #007bff;
+    }
 
-.radio-button input[type="radio"]:checked~.radio-tick-merah {
-    background-color: #007bff;
-}
+    .radio-button input[type="radio"]:checked~.radio-tick-merah {
+        background-color: #007bff;
+    }
 
-.radio-button input[type="radio"]:checked~.radio-tick-kuning {
-    background-color: #007bff;
-}
+    .radio-button input[type="radio"]:checked~.radio-tick-kuning {
+        background-color: #007bff;
+    }
 
-.radio-button input[type="radio"]:checked~.radio-tick-lain {
-    background-color: #007bff;
-}
+    .radio-button input[type="radio"]:checked~.radio-tick-lain {
+        background-color: #007bff;
+    }
 </style>
 
 <?php if (!empty($dataPart)) {
-	foreach ($dataPart as $part) {
-	}
+    foreach ($dataPart as $part) {
+    }
 } ?>
 <section class="content">
     <div class="container-fluid">
@@ -145,22 +145,22 @@
 
 
                             <?php
-						$date = date("Y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(no_urut) AS maxKode FROM tbl_mk_spk WHERE no_urut LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 8, 3);
-						$noUrut++;
-						$tahun = substr($date, 0, 4);
-						$bulan = substr($date, 5, 2);
-						$kode_po  = $tahun.'-'.$bulan.'-'.sprintf("%03s", $noUrut);
-						$kode_ref = 'TOP-'.sprintf("%03s", $noUrut).'-'.$bulan.'-SBY-'.$tahun;
-						?>
+                            $date = date("Y-m");
+                            $ci_kons = get_instance();
+                            $query = "SELECT max(no_urut) AS maxKode FROM tbl_mk_spk WHERE no_urut LIKE '%$date%'";
+                            $hasil = $ci_kons->db->query($query)->row_array();
+                            $noOrder = $hasil['maxKode'];
+                            $noUrut = (int)substr($noOrder, 8, 3);
+                            $noUrut++;
+                            $tahun = substr($date, 0, 4);
+                            $bulan = substr($date, 5, 2);
+                            $kode_po  = $tahun . '-' . $bulan . '-' . sprintf("%03s", $noUrut);
+                            $kode_ref = 'TOP-' . sprintf("%03s", $noUrut) . '-' . $bulan . '-SBY-' . $tahun;
+                            ?>
                             <form id="formSpk" name="formSpk" method="POST">
                                 <div class="row">
 
-                                    <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>"class="form-control">
+                                    <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>" class="form-control">
                                     <input type="hidden" name="user" id="user"
                                         value="<?php echo $this->session->userdata['full_name']; ?>"
                                         class="form-control">
@@ -379,9 +379,9 @@
                                         <div class="col-12">
                                             <label class="col-form-label">Harga Off The Road</label>
                                             <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="0"
-                                            onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
-                                            
-                                                
+                                                onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
+
+
                                                 class="form-control" placeholder="0" style="text-align:right;">
                                         </div>
                                         <div class="col-12">
@@ -390,7 +390,7 @@
                                                 onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
                                                 class="form-control" placeholder="Biaya BBN"
                                                 style="text-align:right;">
-                                                <p></p>
+                                            <p></p>
                                         </div>
                                     </div>
                                 </div>
@@ -561,339 +561,341 @@
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">
-function fn(o) {
-    o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
-}
-$('#tgl_estimasi_penawaran,#tgl_received,#tgl_regis').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-//var Date = 
-$('#tgl_deadline').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-})
-$('#clear').click(function() {
-    $('#tgl_deadline').data("DateTimePicker").clear()
-})
-
-$('#tgl_deadline1').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-
-var MyTable = $('#list-po').dataTable({
-    "responsive": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true
-});
-
-var tableKeterangan = $('#list-keterangan').dataTable({
-    "responsive": false,
-    "paging": true,
-    "lengthChange": false,
-    "searching": false,
-    "ordering": false,
-    "info": false,
-    "autoWidth": true,
-    "pageLength": 5
-});
-
-
-
-function NilaiRupiah(jumlah) 
-{ 
-    var titik = ",";
-    var nilai = new String(jumlah); 
-    var pecah = []; 
-    while(nilai.length > 3) 
-    { 
-        var asd = nilai.substr(nilai.length-3); 
-        pecah.unshift(asd); 
-        nilai = nilai.substr(0, nilai.length-3); 
-    } 
-
-    if(nilai.length > 0) { pecah.unshift(nilai); } 
-    nilai = pecah.join(titik);
-    return nilai; 
-}
-
-function startCalculate(){
-interval=setInterval("Calculate()",10);
-}
-
-//function ganti(",");
-function Calculate(){
-			  
-              var a = document.formSpk.jml_unit.value;
-              var b = document.formSpk.hrg_off_the_road.value.replace(/\D/g, '');
-              var c = document.formSpk.biaya_bbn.value.replace(/\D/g, '');
-              var d = document.formSpk.hrg_tambahan_1.value.replace(/\D/g, '');
-              var e = document.formSpk.hrg_tambahan_2.value.replace(/\D/g, '');
-              var f = document.formSpk.hrg_tambahan_3.value.replace(/\D/g, '');
-              var g = document.formSpk.hrg_tambahan_4.value.replace(/\D/g, '');
-              document.formSpk.hrg_on_the_road.value=NilaiRupiah(((b*1)+(c*1))*a);
-              document.formSpk.hrg_jual_perunit.value=NilaiRupiah((((b*1)+(c*1))*a)+(d*1)+(e*1)+(f*1)+(g*1));
-              document.formSpk.total_harga_jual.value=NilaiRupiah((((b*1)+(c*1))*a)+(d*1)+(e*1)+(f*1)+(g*1));
-              
-              }
-              function stopCalc(){
-              clearInterval(startCalculate);
-              }
-
-function next(dataPo, dataRef) {
-    document.getElementById('id_estimasi_penawaran').value = dataPo;
-    document.getElementById('kode_ref').value = dataRef;
-    var d = document.getElementById("cetak");
-    d.setAttribute('data-id', dataPo);
-
-    document.getElementById("cetak").hidden = false;
-    //document.getElementById("alamat").readonly = true;
-}
-
-function nextref(dataRef) {
-    document.getElementById('kode_ref').value = dataRef;
-}
-
-function refresh() {
-    MyTable = $('#list-po').dataTable();
-}
-
-function insertNote() {
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('Spk/tambahNote'); ?>',
-        data: 'id=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            tampilKeterangan()
-        }
+    function fn(o) {
+        o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
+    }
+    $('#tgl_estimasi_penawaran,#tgl_received,#tgl_regis').datetimepicker({
+        format: 'DD-MM-YYYY',
+        date: moment()
     });
-}
+    //var Date = 
+    $('#tgl_deadline').datetimepicker({
+        format: 'DD-MM-YYYY',
+        date: moment()
+    })
+    $('#clear').click(function() {
+        $('#tgl_deadline').data("DateTimePicker").clear()
+    })
 
-function tampilKeterangan() {
-    var no_urut = document.getElementById('no_urut').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('Spk/tampilKeterangan'); ?>',
-        data: 'no_urut=' + no_urut,
-        success: function(hasil) {
-            tableKeterangan.fnDestroy();
-            $('#data-keterangan').html(hasil);
-        }
+    $('#tgl_deadline1').datetimepicker({
+        format: 'DD-MM-YYYY',
+        date: moment()
     });
-}
 
-/** Form Keterangan */
+    var MyTable = $('#list-po').dataTable({
+        "responsive": true,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true
+    });
 
-$('#form-keterangan').submit(function(e) {
-    var data = $(this).serialize();
-    var id = document.getElementById('no_urut').value;
-    var no_spk = document.getElementById('no_ref').value;
+    var tableKeterangan = $('#list-keterangan').dataTable({
+        "responsive": false,
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": false,
+        "info": false,
+        "autoWidth": true,
+        "pageLength": 5
+    });
 
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('Spk/tambahKeterangan'); ?>',
-            data: data + "&id=" + id+ "&no_spk=" + no_spk
-        })
-        .done(function(data) {
-            tampilKeterangan();
-            document.getElementById("form-keterangan").reset();
-            $('#tambah-keterangan').modal('hide');
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Mantap',
-                showConfirmButton: false,
-                timer: 1000
+
+
+    function NilaiRupiah(jumlah) {
+        var titik = ",";
+        var nilai = new String(jumlah);
+        var pecah = [];
+        while (nilai.length > 3) {
+            var asd = nilai.substr(nilai.length - 3);
+            pecah.unshift(asd);
+            nilai = nilai.substr(0, nilai.length - 3);
+        }
+
+        if (nilai.length > 0) {
+            pecah.unshift(nilai);
+        }
+        nilai = pecah.join(titik);
+        return nilai;
+    }
+
+    function startCalculate() {
+        interval = setInterval("Calculate()", 10);
+    }
+
+    //function ganti(",");
+    function Calculate() {
+
+        var a = document.formSpk.jml_unit.value;
+        var b = document.formSpk.hrg_off_the_road.value.replace(/\D/g, '');
+        var c = document.formSpk.biaya_bbn.value.replace(/\D/g, '');
+        var d = document.formSpk.hrg_tambahan_1.value.replace(/\D/g, '');
+        var e = document.formSpk.hrg_tambahan_2.value.replace(/\D/g, '');
+        var f = document.formSpk.hrg_tambahan_3.value.replace(/\D/g, '');
+        var g = document.formSpk.hrg_tambahan_4.value.replace(/\D/g, '');
+        document.formSpk.hrg_on_the_road.value = NilaiRupiah(((b * 1) + (c * 1)) * a);
+        document.formSpk.hrg_jual_perunit.value = NilaiRupiah((b * 1) + (c * 1) + (d * a) + (e * a) + (f * a) + (g * a) /(a*1));
+        document.formSpk.total_harga_jual.value = NilaiRupiah((((b * 1) + (c * 1)) * a) + (d * a) + (e * a) + (f * a) + (g * a));
+        //document.formSpk.hrg_on_the_road.value = NilaiRupiah(((b * 1) + (c * 1)+ (d * 1)+ (e * 1)+ (f * 1)+ (g * 1)) * a);
+
+    }
+
+    function stopCalc() {
+        clearInterval(startCalculate);
+    }
+
+    function next(dataPo, dataRef) {
+        document.getElementById('id_estimasi_penawaran').value = dataPo;
+        document.getElementById('kode_ref').value = dataRef;
+        var d = document.getElementById("cetak");
+        d.setAttribute('data-id', dataPo);
+
+        document.getElementById("cetak").hidden = false;
+        //document.getElementById("alamat").readonly = true;
+    }
+
+    function nextref(dataRef) {
+        document.getElementById('kode_ref').value = dataRef;
+    }
+
+    function refresh() {
+        MyTable = $('#list-po').dataTable();
+    }
+
+    function insertNote() {
+        var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url('Spk/tambahNote'); ?>',
+            data: 'id=' + id_estimasi_penawaran,
+            success: function(hasil) {
+                tampilKeterangan()
+            }
+        });
+    }
+
+    function tampilKeterangan() {
+        var no_urut = document.getElementById('no_urut').value;
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url('Spk/tampilKeterangan'); ?>',
+            data: 'no_urut=' + no_urut,
+            success: function(hasil) {
+                tableKeterangan.fnDestroy();
+                $('#data-keterangan').html(hasil);
+            }
+        });
+    }
+
+    /** Form Keterangan */
+
+    $('#form-keterangan').submit(function(e) {
+        var data = $(this).serialize();
+        var id = document.getElementById('no_urut').value;
+        var no_spk = document.getElementById('no_ref').value;
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Spk/tambahKeterangan'); ?>',
+                data: data + "&id=" + id + "&no_spk=" + no_spk
             })
-        })
-
-    e.preventDefault();
-});
-
-$(document).on("click", ".update-dataType", function() {
-    var id = $(this).attr("data-id");
-
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('Settingwh/updateType'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#modal-type').html(data);
-            $('#update-type').modal('show');
-        })
-})
-$(document).on('submit', '#form-update-type', function(e) {
-    var data = $(this).serialize();
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('Settingwh/prosesUtype'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-
-            showType();
-            if (out.status == 'form') {
-                $('.form-msg').html(out.msg);
-                effect_msg_form();
-            } else {
-                document.getElementById("form-update-type").reset();
-                $('#update-type').modal('hide');
-                $('.msg').html(out.msg);
+            .done(function(data) {
+                tampilKeterangan();
+                document.getElementById("form-keterangan").reset();
+                $('#tambah-keterangan').modal('hide');
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: out.msg,
+                    title: 'Mantap',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1000
                 })
-            }
-        })
+            })
 
-    e.preventDefault();
-});
-/** end Keterangan */
-function tampilDetailCache(dataPo) {
-    //var out = jQuery.parseJSON(data);
-    var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
-    $.ajax({
-        type: 'GET',
-        url: '<?php echo base_url('EstimasiPenawaran/tampilDetailCache'); ?>?id_estimasi_penawaran=' +
-            id_estimasi_penawaran,
-        data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
-        success: function(hasil) {
-            MyTable.fnDestroy();
-            $('#data-po-cache').html(hasil);
-            refresh();
-        }
+        e.preventDefault();
     });
-}
-$('#formSpk').submit(function(e) {
-    var data = $(this).serialize();
 
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('Spk/prosesSpk'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
+    $(document).on("click", ".update-dataType", function() {
+        var id = $(this).attr("data-id");
 
-            if (out.status == 'form') {
-                //toastr.error(out.msg);
-                $('.msg').html(out.msg);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } else {
-                $('.msg').html(out.msg);
-                $('.dataPo').html(out.dataPo);
-                //tampilDetail(out.dataPo)
-                document.getElementById("formSpk").reset();
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Settingwh/updateType'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-type').html(data);
+                $('#update-type').modal('show');
+            })
+    })
+    $(document).on('submit', '#form-update-type', function(e) {
+        var data = $(this).serialize();
 
-                var d = document.getElementById("cetak");
-                d.setAttribute('data-id', out.dataPo);
-                document.getElementById("cetak").hidden = false;
-                document.getElementById("tambah").hidden = false;
-                document.getElementById("data-po").hidden = true;
-                document.getElementById("simpan").hidden = true;
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Settingwh/prosesUtype'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
 
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                showType();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-type").reset();
+                    $('#update-type').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+    /** end Keterangan */
+    function tampilDetailCache(dataPo) {
+        //var out = jQuery.parseJSON(data);
+        var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo base_url('EstimasiPenawaran/tampilDetailCache'); ?>?id_estimasi_penawaran=' +
+                id_estimasi_penawaran,
+            data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+            success: function(hasil) {
+                MyTable.fnDestroy();
+                $('#data-po-cache').html(hasil);
+                refresh();
             }
-        })
+        });
+    }
+    $('#formSpk').submit(function(e) {
+        var data = $(this).serialize();
 
-    e.preventDefault();
-});
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Spk/prosesSpk'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
 
-function cetakPo(datakode) {}
+                if (out.status == 'form') {
+                    //toastr.error(out.msg);
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    $('.msg').html(out.msg);
+                    $('.dataPo').html(out.dataPo);
+                    //tampilDetail(out.dataPo)
+                    document.getElementById("formSpk").reset();
+
+                    var d = document.getElementById("cetak");
+                    d.setAttribute('data-id', out.dataPo);
+                    document.getElementById("cetak").hidden = false;
+                    document.getElementById("tambah").hidden = false;
+                    document.getElementById("data-po").hidden = true;
+                    document.getElementById("simpan").hidden = true;
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+    function cetakPo(datakode) {}
 
 
-$(document).on("click", ".cetak-po", function() {
-    var id = $(this).attr("data-id");
-    //var id = document.getElementById('next_proses').value=datakode;
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('Spk/cetak'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#modal-po').html(data);
-            $('#cetak-po').modal('show');
-        })
-})
+    $(document).on("click", ".cetak-po", function() {
+        var id = $(this).attr("data-id");
+        //var id = document.getElementById('next_proses').value=datakode;
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Spk/cetak'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-po').html(data);
+                $('#cetak-po').modal('show');
+            })
+    })
 
-$(document).on("click", ".delete-keterangan", function() {
-    data_id = $(this).attr("data-id");
-})
-$(document).on("click", ".delete-keterangan", function() {
-    var id = data_id;
+    $(document).on("click", ".delete-keterangan", function() {
+        data_id = $(this).attr("data-id");
+    })
+    $(document).on("click", ".delete-keterangan", function() {
+        var id = data_id;
 
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('Spk/deleteKeterangan'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-            if (out.status != 'form') {
-                //$('.msg').html(out.msg);
-                $('#hapusKeterangan').modal('hide');
-                var no_urut = document.formSpk.no_urut.value;
-                //next(next_proses);
-                tampilKeterangan(no_urut);
-            }
-        })
-})
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('Spk/deleteKeterangan'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                if (out.status != 'form') {
+                    //$('.msg').html(out.msg);
+                    $('#hapusKeterangan').modal('hide');
+                    var no_urut = document.formSpk.no_urut.value;
+                    //next(next_proses);
+                    tampilKeterangan(no_urut);
+                }
+            })
+    })
 
-function startHitung() {
-    interval = setInterval("Hitung()", 10);
-}
+    function startHitung() {
+        interval = setInterval("Hitung()", 10);
+    }
 
-function Hitung() {
+    function Hitung() {
 
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    document.formPo.total_harga.value = (a * b);
-}
+        var a = document.formPo.jumlah.value;
+        var b = document.formPo.hrg_awal.value;
+        document.formPo.total_harga.value = (a * b);
+    }
 
-function stopHitung() {
-    clearInterval(startHitung);
-}
+    function stopHitung() {
+        clearInterval(startHitung);
+    }
 
-function startDiskon() {
-    interval = setInterval("Diskon()", 10);
-}
+    function startDiskon() {
+        interval = setInterval("Diskon()", 10);
+    }
 
-function Diskon() {
+    function Diskon() {
 
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    var c = document.formPo.diskon.value;
-    document.formPo.total_diskon.value = (a * b) * c / 100;
-}
+        var a = document.formPo.jumlah.value;
+        var b = document.formPo.hrg_awal.value;
+        var c = document.formPo.diskon.value;
+        document.formPo.total_diskon.value = (a * b) * c / 100;
+    }
 
-function stopDiskon() {
-    clearInterval(startDiskon);
-}
+    function stopDiskon() {
+        clearInterval(startDiskon);
+    }
 
-function startPpn() {
-    interval = setInterval("Ppn()", 10);
-}
+    function startPpn() {
+        interval = setInterval("Ppn()", 10);
+    }
 </script>

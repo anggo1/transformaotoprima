@@ -330,6 +330,14 @@ class Mod_estimasi_penawaran_service extends CI_Model
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
+    function update_detailHarga($id,$hrg_part)
+		{			
+		$harga =str_replace(" ","", $hrg_part);
+			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET harga_net ='$harga' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+
+		return $this->db->affected_rows();
+			//return $data->row();
+		}
     function update_detailPo($id,$jml_part,$hrg_part,$total)
 		{			
 		//$jml =str_replace(" ","", $jml_part);

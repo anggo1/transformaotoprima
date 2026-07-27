@@ -85,6 +85,7 @@ class PartRequest extends MY_Controller
     //Cari Part
     public function list_parts()
     {
+        $idlokasi = $this->session->userdata['lokasi'];
             $list = $this->Mod_sparepart->get_datatables();
             $data = array();
             $no = $_POST['start'];
@@ -93,8 +94,14 @@ class PartRequest extends MY_Controller
                 $row = array();
                 $row[] = $no;
                 $row[] = $p->no_part;
-                $row[] = $p->nama_part;                
-                $row[] = $p->harga_baru;                
+                $row[] = $p->nama_part;
+                if ($idlokasi =='Cibitung'){
+                    $row[] = $p->hrg_net_cbt;
+                }elseif ($idlokasi=='Jakarta'){
+                        $row[] = $p->hrg_net_jktt;
+                }elseif ($idlokasi=='Surabaya'){
+                            $row[] = $p->hrg_net_sby;  
+                } 
                 $data[] = $row;
             }
         $output = array(

@@ -31,9 +31,9 @@
                     <td><?php echo $s->no_part; ?></td>
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo number_format($s->harga); ?></td>
+                    <td><?php echo number_format($s->harga_net); ?></td>
                     <td><?php echo $s->jumlah; ?></td>
-                    <td><?php echo number_format($s->harga*$s->jumlah); ?></td>
+                    <td><?php echo number_format($s->harga_net*$s->jumlah); ?></td>
                   </tr>
                 <?php
                     $no++;

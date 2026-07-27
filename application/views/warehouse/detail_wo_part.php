@@ -1,0 +1,127 @@
+<style>
+.inEdit {
+    background-color: #FFFFFF;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 25;
+}
+</style>
+<table class="table table-striped  table-bordered table-hover nowrap" id="listwo_keluar">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>No Part</th>
+            <th>Nama Barang</th>
+            <th>Satuan</th>
+            <th>Hrg Satuan</th>
+            <th>Jumlah</th>
+            <th>Aktual</th>
+            <th>Total</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            $no = 1;
+            $idlokasi = $this->session->userdata['lokasi'];
+            $no = 1;
+            foreach ($dataPo as $s) {
+                if($idlokasi=='Cibitung'){
+            $stok=$s->stok_cbt;
+                }
+          if($idlokasi=='Jakarta'){
+            $stok=$s->stok_jkt;
+          $total += $s->hrg_net_jkt* $s->jumlah;
+          }
+          if($idlokasi=='Surabaya'){
+            $stok=$s->stok_sby;
+          $total += $s->hrg_net_sby * $s->jumlah;
+          }
+            
+            ?>
+        <tr>
+            <td><?php echo $no; ?></td>
+            <td><?php echo $s->no_part; ?></td>
+            <td><?php echo $s->nama_part; ?></td>
+            <td><?php echo $s->satuan; ?></td>
+            <td align="right"><?php echo number_format($s->harga_net) ?></td>
+            <td><?php echo $s->jumlah; ?></td>
+            <td class="qty"><input type="number" name="qty_keluar[]" id="qty_keluar[]"
+                    value="<?php echo $s->jumlah; ?>"
+                    onkeypress="saveData(event,'<?php echo $s->wo_no; ?>','<?php echo $s->jumlah; ?>',$(this).val() )"
+                    class="form-control col-sm-10">
+                <input type="hidden" name="harga[]" id="harga[]" value="<?php echo $s->harga; ?>">
+                <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
+                <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
+                <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok ?>">
+            </td>
+            <td><?php echo number_format($s->jumlah * $s->harga); ?></td>
+            <td class="text-center">
+			<div class="input-group mb-3 danger">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text btn bg-danger" onclick="delData(event,'<?php echo $s->wo_no; ?>')"><i class="fas fa-trash"></i></span>
+                  </div>
+                </div>
+            </td>
+        </tr>
+        <?php
+            $no++;
+            }
+            ?>
+    </tbody>
+    <tfoot></tfoot>
+</table>
+<script language="javascript">
+var MyTable = $('#listwo_keluar').dataTable({
+    "responsive": false,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": false,
+    "info": true
+});
+
+function saveData(e, id, qty_awal, qty_masuk) {
+    var id_po = document.getElementById("id_po").value;
+    var no_po = document.getElementById("no_po").value;
+    var status = document.getElementById("status").value;
+    var kode_sup = document.getElementById("kode_sup").value;
+    var supplier = document.getElementById("supplier").value;
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Part_masuk/updatePart')?>",
+            data: {
+                'id': id,
+                'qty_awal': qty_awal,
+                'qty_masuk': qty_masuk,
+            },
+
+            success: function(response) {
+                showPart(id_po, no_po, kode_sup, supplier, status);
+            }
+        });
+    }
+}
+function delData(e, id, sisa) {
+    var id_po = document.getElementById("id_po").value;
+    var no_po = document.getElementById("no_po").value;
+    var status = document.getElementById("status").value;
+    var kode_sup = document.getElementById("kode_sup").value;
+    var supplier = document.getElementById("supplier").value;
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Part_masuk/deletepartDetail')?>",
+            data: {
+                'id': id,
+                'sisa': sisa,
+            },
+
+            success: function(response) {
+                showPart(id_po, no_po, kode_sup, supplier, status);
+            }
+        });
+    }
+</script>

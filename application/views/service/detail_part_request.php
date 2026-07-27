@@ -6,6 +6,7 @@
                 <th>No Part</th>
                 <th>Nama Part</th>
                 <th>Harga</th>
+                <th>Pricelist</th>
                 <th>Jumlah</th>
                 <th>Total</th>
                 <th>Keterangan</th>
@@ -24,8 +25,9 @@
                 <td><?php echo $s->no_part; ?></td>
                 <td><?php echo $s->nama_part; ?></td>
                 <td><?php echo number_format($s->harga, 0, ',', '.'); ?></td>
+                <td><?php echo number_format($s->harga_net, 0, ',', '.'); ?></td>
                 <td><?php echo $s->jumlah; ?></td>
-                <td><?php echo number_format($harga_total, 0, ',', '.'); ?></td>
+                <td><?php echo number_format($s->harga_net * $s->jumlah, 0, ',', '.'); ?></td>
                 <td><?php echo $s->remark; ?></td>
 
                 <td class="text-center">
