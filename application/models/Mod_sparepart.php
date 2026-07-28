@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_sparepart extends CI_Model
 {
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.kelompok','a.type','a.kategori');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan','a.lokasi','a.stok','a.kelompok','a.type','a.kategori');
+    var $column_search = array('a.no_part','a.nama_part','a.satuan');
+    var $column_order = array('null','a.no_part','a.nama_part','a.satuan');
     var $order = array('id_part' => 'asc'); // default order 
 
     public function __construct()

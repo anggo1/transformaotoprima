@@ -872,7 +872,14 @@ th {
                             <td>&nbsp;</td>
                         </tr>
                     </table>
-                    <!--</table>-->
+                    <table width="100%" border="0" cellpadding="5" cellspacing="0">
+                        <tr align="center">
+                            <th width="100%" align="center">
+                                <img src="<?php echo base_url(); ?>assets\dist\img\footer.png" width="100%" height="20%">
+                            </th>
+                        </tr>
+
+                    </table>Dicetak oleh : <?php echo $this->session->userdata['full_name']; ?>
 
     </div>
 
@@ -884,4 +891,3 @@ th {
     </button>
     <button class="btn btn-danger" id="tutup" data-dismiss="modal"><span
             class="fa fa-close"></span>&nbsp;&nbsp; T U T U P</button>
-</div>

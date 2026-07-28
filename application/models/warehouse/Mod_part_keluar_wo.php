@@ -55,30 +55,27 @@ class Mod_part_keluar_wo extends CI_Model
     {
         //$tgl   = explode('-', $tgl_po);
         //$tglnya = $tgl[2] . "-" . $tgl[1] . "-" . $tgl[0] . "";
-        $sql    = "SELECT *
+        $sql = "SELECT *
         FROM tbl_after_sales AS a
         LEFT JOIN tbl_af_estimasi_penawaran AS b ON b.wo_no=a.wo_no
-        LEFT JOIN tbl_af_detail_estimasi_penawaran AS c ON c.wo_no=a.wo_no
         LEFT JOIN tbl_customer AS d ON d.kode_cus=b.id_customer
         LEFT JOIN tbl_after_sales_part_request AS e ON e.wo_no=a.wo_no
-        WHERE a.part_request ='Y' " ;
+        WHERE a.part_request ='Y' OR a.part_request ='P' GROUP BY a.wo_no " ;
         $data = $this->db->query($sql);
-
-
         return $data->result();
     }
     function cari_barang($wo_no)
     {
         //$tgl   = explode('-', $tgl_po);
         //$tglnya = $tgl[2] . "-" . $tgl[1] . "-" . $tgl[0] . "";
-        $sql    = "SELECT a.wo_no,a.date_open_wo,c.harga_net,c.harga,c.diskon, c.jumlah, f.kode_pr, f.nik, f.nama AS petugas, d.nama_cus,e.*
+        $sql    = "SELECT a.wo_no,a.date_open_wo,c.id_detail,c.harga_net,c.harga,c.diskon, c.jumlah,c.jml_masuk,c.sisa, f.kode_pr, f.nik, f.nama AS petugas, d.nama_cus,e.*
         FROM tbl_after_sales AS a
         LEFT JOIN tbl_af_estimasi_penawaran AS b ON b.wo_no=a.wo_no
         LEFT JOIN tbl_af_detail_estimasi_penawaran AS c ON c.wo_no=a.wo_no
         LEFT JOIN tbl_customer AS d ON d.kode_cus=b.id_customer
         LEFT JOIN tbl_wh_barang AS e ON e.no_part=c.no_part
         LEFT JOIN tbl_after_sales_part_request AS f ON f.wo_no=a.wo_no
-        WHERE a.part_request ='Y' AND c.validasi_jenis='P' AND a.wo_no='".$wo_no."' " ;
+        WHERE a.part_request ='Y' AND c.validasi_jenis='P' AND a.wo_no='".$wo_no."' GROUP BY c.id_detail  " ;
         $data = $this->db->query($sql);
 
 
@@ -124,53 +121,44 @@ class Mod_part_keluar_wo extends CI_Model
         return $data = $query_result->result();
     }
  
-    public function insert_part($kode_awal,$kode_masuk,$data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_jkt,$stok_cbt,$stok_sby,$id_po,$kd_lok,$nm_lok)
+    public function insert_part($wo_no,$kode_keluar, $no_part,$nama_part,$jumlah,$harga_penawaran,$harga,$jml_keluar,$sisa,$stok)
     {
         //$id = md5(DATE('ymdhms') . rand());
-        $tgl_masuk =  date("y-m-d");
+        $idlokasi = $this->session->userdata['lokasi'];
+        $tgl_keluar =  date("y-m-d");
         $ci_data = get_instance();
-        $query = "SELECT * FROM tbl_wh_detail_po WHERE id_po='".$id_po."' AND status='P' OR status='N' ";
+        $query = "SELECT * FROM tbl_af_detail_estimasi_penawaran WHERE wo_no='".$wo_no."' AND status_part='P' ";
         $d_data = $ci_data->db->query($query)->row_array();
         if ($d_data >1){
-        $sql_po1 = "UPDATE tbl_wh_po SET status_po='P' WHERE id_po='".$id_po."'";
+        $sql_po1 = "UPDATE tbl_after_sales SET part_request='F' WHERE wo_no='".$wo_no."'";
         $this->db->query($sql_po1);
-        $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$id_po."' AND sisa=0";
-        $this->db->query($sql_po2);
-        $sql_po3 = "UPDATE tbl_wh_detail_po SET status='N' WHERE id_po='".$id_po."' AND status='P'";
-        $this->db->query($sql_po3);
         }else{
-            $sql_po1 = "UPDATE tbl_wh_po SET status_po='Y' WHERE id_po='".$id_po."'";
+            $sql_po1 = "UPDATE tbl_after_sales SET part_request='F' WHERE wo_no='".$wo_no."'";
             $this->db->query($sql_po1);
-            $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$id_po."'";
-            $this->db->query($sql_po2);
         }
         //$stok_awal       = $d_data['stok'];
-       $status_barang = $data['lokasi'];
-       if($nm_lok=="Jakarta"){
+       if($idlokasi=="Jakarta"){
         $data1 = array();
-        foreach($no_part as $key=>$value){ 
-            $total = $stok[$key] + $qty_masuk[$key];
-            $total_jkt= $stok_jkt[$key] + $qty_masuk[$key];
+        foreach($no_part as $key =>$value){ 
+            $total_jkt = $stok[$key] - $jml_keluar[$key];
             $data1[]  = array(
-            'no_part'=>$no_part[$key],
+            'no_part'=>$no_part[$key],  
             'stok_jkt'=>$total_jkt
         );
                 }}
-                if($nm_lok=="Cibitung"){
+                if($idlokasi=="Cibitung"){
                     $data1 = array();
-                    foreach($no_part as $key=>$value){
-                        $total = $stok[$key] + $qty_masuk[$key];
-                        $total_cbt= $stok_cbt[$key] + $qty_masuk[$key];
+                    foreach($no_part as $key){
+                        $total_cbt = $stok[$key] - $jml_keluar[$key];
                         $data1[]  = array(
                         'no_part'=>$no_part[$key],  
                         'stok_cbt'=>$total_cbt
                     );
                 }}
-                if($nm_lok=="Surabaya"){
+                if($idlokasi=="Surabaya"){
                     $data1 = array();
-                    foreach($no_part as $key=>$value){
-                        $total = $stok[$key] + $qty_masuk[$key];
-                        $total_sby= $stok_sby[$key] + $qty_masuk[$key];
+                    foreach($no_part as $key){
+                        $total_sby= $stok[$key] - $jml_keluar[$key];
                         $data1[]  = array(
                         'no_part'=>$no_part[$key], 
                         'stok_sby'=>$total_sby
@@ -180,19 +168,22 @@ class Mod_part_keluar_wo extends CI_Model
 
 
         $data = array();
-    foreach($no_part as $key=>$value){ // Kita buat perulangan berdasarkan nis sampai data terakhir
+    foreach($no_part as $key=>$value){ 
         $data[]  = array(
-        'id_masuk'=>$kode_awal,
-        'no_part'=>$no_part[$key],  // Ambil dan set data nama sesuai index array dari $index
-        'hrg_part'=>$harga[$key],  // Ambil dan set data nama sesuai index array dari $index
-        'status_part'=>$status_barang,  // Ambil dan set data nama sesuai index array dari $index
-        'nama_part'=>$nama_part[$key],  // Ambil dan set data telepon sesuai index array dari $index
-        'jumlah'=>$qty_masuk[$key],  // Ambil dan set data alamat sesuai index array dari $index
-        'satuan'=>$satuan[$key],  // Ambil dan set data alamat sesuai index array dari $index
-        'tgl_masuk'=>$tgl_masuk
+        'kode_keluar'=>$kode_keluar,
+        'wo_no'=>$wo_no,
+        'no_part'=>$no_part[$key],
+        'nama_part'=>isset($nama_part[$key]) ? $nama_part[$key] : null,
+        'jumlah'=>isset($jumlah[$key]) ? $jumlah[$key] : null,
+        'harga_penawaran'=>isset($harga_penawaran[$key]) ? $harga_penawaran[$key] : null,
+        'harga'=>isset($harga[$key]) ? $harga[$key] : null,
+        'jml_keluar'=>isset($jml_keluar[$key]) ? $jml_keluar[$key] : null,
+        'sisa'=>isset($sisa[$key]) ? $sisa[$key] : null,
+        'lokasi'=>$idlokasi,
+        'tgl_keluar'=>$tgl_keluar
     );
     }
-        $this->db->insert_batch('tbl_wh_detail_part_masuk', $data);
+        $this->db->insert_batch('tbl_wh_detail_part_keluar_service', $data);
         return $this->db->affected_rows();
     }
     function select_by_id($id)
@@ -245,14 +236,14 @@ class Mod_part_keluar_wo extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function update_part($id,$qty_awal,$qty_masuk)
+    function update_part($id,$jumlah,$jml_keluar)
 		{
-		$jml =str_replace(" ","", $qty_masuk);
-		$sisa =$qty_awal - $qty_masuk;
+		$jml =str_replace(" ","", $jml_keluar);
+		$sisa =$jumlah - $jml_keluar;
         if($sisa == 0){
-            $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '$sisa', status='N', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET sisa = '$sisa', status_part='P', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
         }else{
-		    $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '$sisa', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+		    $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET sisa = '$sisa', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
         }
 		return $this->db->affected_rows();
 			//return $data->row();

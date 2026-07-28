@@ -135,7 +135,7 @@
                         title="Add Part" data-toggle="modal" data-target="#modal_operation"><i class="fas fa-plus"></i>
                         Tambah
                         Jasa</button>
-                            <button class="btn btn-primary" id="simpan" type="submit" hidden="hidden"><span
+                            <button class="btn btn-primary" id="simpan" type="submit"><span
                                     class="fa fa-save"></span>
                                 Save All Data</button>
                             <button type="button" class="btn btn-secondary cetak-po" id="cetak" hidden="hidden" data-id=""
@@ -354,7 +354,7 @@ function panggilPart() {
             })
         tampilDetail();
         tampilKeterangan();
-        document.getElementById("simpan").hidden = false;
+        //document.getElementById("simpan").hidden = false;
         $('#modal_part').modal('hide');
         })
         e.preventDefault();

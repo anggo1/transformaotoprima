@@ -26,8 +26,6 @@
 						</div>
 						<div class="modal-body">
 							<form id="formpartkeluar" name="formpartkeluar" method="POST">
-								<input type="hidden" name="id_masuk" id="id_masuk" class="form-control" readonly>
-
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Tanggal</label>
 									<div class="col-sm-4">
@@ -45,7 +43,6 @@
 									</div>
 									<label class="col-sm-2 col-form-label">No WO</label>
 									<div class="col-sm-4">
-										<input type="hidden" id="id" name="id" class="form-control"></input>
 										<input type="text" id="wo_no" name="wo_no" class="form-control"
 											onclick="showWo()" data-toggle="modal" data-target="#modal_po" placeholder="Daftar WO"
 											required></input>
@@ -69,23 +66,16 @@
 									<div class="col-sm-3">
 										<input type="text" name="petugas" id="petugas" class="form-control" placeholder="Surat Jalan Barang">
 									</div>
-									<label class="col-sm-2 col-form-label">No INV</label>
-									<div class="col-sm-4">
-										<input type="text" name="no_inv" id="no_inv" class="form-control" placeholder="No Invoice">
-									</div>
-								</div>
-								
-								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Part Request No</label>
-									<div class="col-sm-2">
-										<input type="text" name="kode_pr" id="kode_pr" class="form-control" placeholder="Surat Jalan Barang">
+									<div class="col-sm-4">
+										<input type="text" name="kode_pr" id="kode_pr" class="form-control" placeholder="Kode Part Request">
 									</div>
 								</div>
 								
 								<div id="data_po_detail"></div>
 
 								<input type="hidden" name="status" id="status" class="form-control">
-								<input type="hidden" name="user" id="user"
+								<input type="hidden" name="pengguna" id="pengguna"
 									value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
 
 
@@ -160,7 +150,6 @@
 				//$('#data_po').html(hasil);
 				$('#data_po_detail').html(hasil);
 				$('[name = "wo_no"]').val(wo_no);
-				$('[name = "id"]').val(id);
 				$('[name = "nik"]').val(nik);
 				$('[name = "petugas"]').val(petugas);
 				$('[name = "kode_pr"]').val(kode_pr);
@@ -223,13 +212,13 @@
 			}
 		});
 	}
-	$('#formpartmasuk').submit(function(e) {
+	$('#formpartkeluar').submit(function(e) {
 		var data = $(this).serialize();
 		//var data = $('td').find('input[name="qty_masuk[]"]').val();
 
 		$.ajax({
 				method: 'POST',
-				url: '<?php echo base_url('Part_masuk/prosesPartmasuk'); ?>',
+				url: '<?php echo base_url('PartKeluarWo/prosesPartkeluar'); ?>',
 				data: data
 			})
 			.done(function(data) {
@@ -239,7 +228,13 @@
 					//toastr.error(out.msg);
 					$('.msg').html(out.msg);
 					refresh();
-					effect_msg();
+					Swal.fire({
+						position: 'center',
+						icon: 'error',
+						title: out.msg,
+						showConfirmButton: false,
+						timer: 1500
+					})
 				} else {
 					$('.msg').html(out.msg);
 					$('.dataPo').html(out.dataPo);
@@ -247,13 +242,14 @@
 					document.getElementById("cetak").hidden = false;
 					document.getElementById("tambah").hidden = false;
 					document.getElementById("simpan").hidden = true;
-					document.getElementById("formPo"); //reset()	
-					$('#tgl_po').attr('readonly', 'readonly');
-					$('#no_po').attr('readonly', 'readonly');
-					$('#keterangan').attr('readonly', 'readonly');
-					$('#no_sj_sup').attr('readonly', 'readonly');
-					$('#no_inv_sup').attr('readonly', 'readonly');
-					$('#supplier').attr('readonly', 'readonly');
+					document.getElementById("formpartkeluar"); //reset()	
+					$('#tgl_keluar').attr('readonly', 'readonly');
+					$('#wo_no').attr('readonly', 'readonly');
+					$('#no_sj').attr('readonly', 'readonly');
+					$('#no_inv').attr('readonly', 'readonly');
+					$('#nik').attr('readonly', 'readonly');
+					$('#petugas').attr('readonly', 'readonly');
+					$('#kode_pr').attr('readonly', 'readonly');
 					Swal.fire({
 						position: 'center',
 						icon: 'success',

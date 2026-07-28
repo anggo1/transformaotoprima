@@ -17,6 +17,8 @@ class PartKeluarWo extends MY_Controller
 		$data['judul'] 		= "Out Stock";
 		$this->load->helper('url');
 		//$data['dataKode'] = $this->Mod_cuti->select_kode_cuti();
+        $idlokasi = $this->session->userdata['lokasi'];
+        $idlevel = $this->session->userdata['id_level'];
         $data['dataPo'] = $this->Mod_part_keluar_wo->get_po();
         $data['dataSup'] = $this->Mod_part_keluar_wo->get_sup();
         $data['dataKota'] = $this->Mod_part_keluar_wo->get_kota();
@@ -56,12 +58,14 @@ class PartKeluarWo extends MY_Controller
         //$this->load->view('warehouse/data_po_partmasuk', $data);
         $this->load->view('warehouse/detail_wo_part', $data);
     }
-	public function prosesPartmasuk()
+	public function prosesPartkeluar()
 	{
-		$tgl_masuk = date("y-m-d");
+        $idlokasi = $this->session->userdata['lokasi'];
+        $idlevel = $this->session->userdata['id_level'];
+		$tgl_keluar = date("y-m-d");
 		$date = date("ym");
 		$ci_kons = get_instance();
-		$query = "SELECT max(kode_masuk) AS maxKode FROM tbl_wh_part_masuk WHERE kode_masuk LIKE '%$date%'";
+		$query = "SELECT max(kode_keluar) AS maxKode FROM tbl_wh_part_keluar_service WHERE kode_keluar LIKE '%$date%'";
 		$hasil = $ci_kons->db->query($query)->row_array();
 		$noOrder = $hasil['maxKode'];
 		$noUrut = (int)substr($noOrder, 5, 4);
@@ -70,69 +74,50 @@ class PartKeluarWo extends MY_Controller
 		$bulan = substr($date, 2, 2);
 
 		$kd='';
-		$status = $_POST['status'];
-		if($status=='PPU'){
-			$kd='PTB-';
+		if($idlokasi=='Cibitung'){
+			$kd='CBT-';
 		}
-		if($status=='MPU'){
-			$kd='MTB-';
+		if($idlokasi=='Jakarta'){
+			$kd='JKT-';
 		}
-		//if($status=='AKTIF' && $status_po=='N'){
-		//	$kd='PTN-';
-		//}
-		//if($status=='PASIF' && $status_po=='N'){
-		//	$kd='MTN-';
-		//}
-
+		if($idlokasi=='Surabaya'){
+			$kd='SBY-';
+		}
 		$kode_awal  = $tahun.$bulan.sprintf("%04s", $noUrut);
-		$kode_masuk  = $kd.$kode_awal;
+		$kode_keluar  = $kd.$kode_awal;
 
 
-		$this->form_validation->set_rules('tgl_po', 'Tanggal PO', 'trim|required');
+		$this->form_validation->set_rules('tgl_keluar', 'Tanggal PO', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
 			
-			$lokasi = $this->input->post('lokasi');				
-			$kl = explode('|',$lokasi);
-			$kd_lok = $kl[0];
-			$nm_lok = $kl[1];
-
 			$data = array(
-				'kode_masuk'  	=> $kode_awal,
-				'id_masuk'  	=> $kode_masuk,
-				'tgl_masuk'  	=> $tgl_masuk,
-				'status'      	=> $data['lokasi'],
-				'keterangan'  	=> $data['keterangan'],
-				'status_po'		=> 'Y',
-				'no_po'			=> $data['no_po'],
-				'no_sj_sup'		=> $data['no_sj_sup'],
-				'no_inv_sup'	=> $data['no_inv_sup'],
-				'kode_sup'		=> $data['kode_sup'],
-				'nama_supplier'		=> $data['supplier'],
-				'lokasi'   		=> $nm_lok,
-				'user'   		=> $data['user']
+				'kode_keluar'  	=> $kode_keluar,
+				'wo_no'  		=> $data['wo_no'],
+				'tgl_keluar'  	=> $tgl_keluar,
+				'no_sj'  		=> $data['no_sj'],
+				'nik'			=> $data['nik'],
+				'petugas'		=> $data['petugas'],
+				'pengguna'		=> $data['pengguna'],
+				'lokasi'      	=> $idlokasi
 			);
-				$data['dataPo'] = $this->db->insert('tbl_wh_part_masuk', $data);
-				$data 	= $this->input->post();
-				$no_part = $this->input->post('no_part');
-				$harga = $this->input->post('harga');
-				$nama_part = $this->input->post('nama_part');
-				$qty_masuk = $this->input->post('qty_masuk');
-				$satuan = $this->input->post('satuan');
-				$stok_jkt = $this->input->post('stok_jkt');
-				$stok_cbt = $this->input->post('stok_cbt');
-				$stok_sby = $this->input->post('stok_sby');
-				$lokasi = $this->input->post('lokasi');
-				
-				$kl = explode('|',$lokasi);
-				$kd_lok = $kl[0];
-				$nm_lok = $kl[1];
+				$data['dataPo'] = $this->db->insert('tbl_wh_part_keluar_service', $data);
 
-				$id_po=$data['id_po'];
-				$this->Mod_part_keluar_wo->insert_part($kode_awal,$kode_masuk, $data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$stok,$stok_jkt,$stok_cbt,$stok_sby,$id_po,$kd_lok,$nm_lok);
+				$data 	= $this->input->post();
+				$wo_no = $this->input->post('wo_no');
+				$no_part = $this->input->post('no_part');
+				$nama_part = $this->input->post('nama_part');
+				$jumlah = $this->input->post('jumlah');
+				$harga_penawaran = $this->input->post('harga_penawaran');
+				$harga = $this->input->post('harga');
+				$jml_keluar = $this->input->post('jml_keluar');
+				$sisa = $this->input->post('sisa');
+				$stok = $this->input->post('stok');
+
+				$this->Mod_part_keluar_wo->insert_part($wo_no,$kode_keluar, $no_part,$nama_part,$jumlah,$harga_penawaran,$harga,$jml_keluar,$sisa,$stok);
 			if ($result > 0) {
-				$out['dataPo'] = $kode_awal;
+				$out['dataPo'] = $kode_keluar;
 				$out['status'] = '';
 				$out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
 			} else {
@@ -168,9 +153,9 @@ class PartKeluarWo extends MY_Controller
 	public function updatePart()
 	{
         $id = $_POST['id'];
-        $qty_awal = $_POST['qty_awal'];
-        $qty_masuk = $_POST['qty_masuk'];
-		$data['dataEstimasi'] = $this->Mod_part_keluar_wo->update_part($id,$qty_awal,$qty_masuk);
+        $jumlah = $_POST['jumlah'];
+        $jml_keluar = $_POST['jml_keluar'];
+		$data['dataPo'] = $this->Mod_part_keluar_wo->update_part($id,$jumlah,$jml_keluar);
 		//$this->load->view('body_repair/detail_estimasi', $data);
 	}
 	public function deletepartDetail()

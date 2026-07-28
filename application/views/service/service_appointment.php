@@ -19,6 +19,12 @@
 table.dataTable td {
     padding-bottom: 5px;
 }
+.select2-container {
+    width: 100% !important; /* Memastikan container tidak mengecil */
+}
+.select2-container .select2-selection--single {
+    height: 38px !important; /* Menjaga tinggi tetap konsisten */
+}
 </style>
 <section class="content">
     <div class="container-fluid">
@@ -67,6 +73,28 @@ show_my_confirm('hapusAppointment', 'hapus-appointment', 'Hapus Data Ini?', 'Ya,
 ?>
 
 <script type="text/javascript">
+    
+$('#customer').select2({
+  escapeMarkup: function(markup) {
+    return markup; // Allow HTML in results
+  },
+  templateResult: function(data) {
+    if (!data.id) {
+      return data.text; // Return placeholder for empty search
+    }
+    // Read custom data attributes or split your content
+    var col1 = data.text;
+    var col2 = $(data.element).data('details') || '';
+    
+    // Return custom multi-column HTML
+    return '<div style="display: flex; justify-content: space-between;">' +
+             '<span style="font-weight: bold;">' + col1 + '</span>' +
+             '<span style="color: gray;">' + col2 + '</span>' +
+           '</div>';
+  }
+});
+
+
     function fn(o) {
     o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
 }

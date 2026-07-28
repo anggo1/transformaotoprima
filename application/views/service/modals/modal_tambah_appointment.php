@@ -35,11 +35,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row form-group row">
                         <label class="col-sm-2 col-form-label">Customer</label>
                         <div class="col-sm-4">
-                            <select name="customer" id="customer" class="form-control">
+                            <select name="customer" id="customer" class="form-control select2">
                                 <option value="">Customer...
                                 </option>
                                 <?php
@@ -134,7 +133,7 @@
                     <label for="customRadio1" class="custom-control-label">Ya</label>
                 </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio2" value="N" name="storing" checked>
+                    <input class="custom-control-input" type="radio" id="customRadio2" value="N" name="storing" required>
                     <label for="customRadio2" class="custom-control-label">Tidak</label>
                 </div>
             </div>
@@ -154,7 +153,7 @@
             <div class="row form-group row">
                 <label class="col-sm-2 col-form-label">Status Service</label>
                 <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="free_service1" value="N" name="free_service" checked>
+                    <input class="custom-control-input" type="radio" id="free_service1" value="N" name="free_service" required>
                     <label for="free_service1" class="custom-control-label">Non Free</label>
                 </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="custom-control custom-radio">
