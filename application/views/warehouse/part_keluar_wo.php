@@ -71,10 +71,11 @@
 										<input type="text" name="kode_pr" id="kode_pr" class="form-control" placeholder="Kode Part Request">
 									</div>
 								</div>
-								
+
 								<div id="data_po_detail"></div>
 
 								<input type="hidden" name="status" id="status" class="form-control">
+								<input type="hidden" name="kode_keluar" id="kode_keluar" class="form-control">
 								<input type="hidden" name="pengguna" id="pengguna"
 									value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
 
@@ -82,13 +83,13 @@
 								<div class="modal-footer center-content-between">
 									<button class="btn btn-primary" id="simpan" name="simpan" type="submit"><span
 											class="fa fa-save"></span> Simpan</button>
-									<button type="button" class="btn btn-success cetak-masuk" hidden="hidden" id="cetak"
+									<button type="button" class="btn btn-success cetak-keluar" hidden="hidden" id="cetak"
 										data-id="" title="Add Data"><i class="fas fa-print"></i> &nbsp;Cetak </button>
 								</div>
 							</form>
 						</div>
 					</div>
-					<div id="modal-masuk"></div>
+					<div id="modal-keluar"></div>
 				</div>
 			</div>
 			<div class="modal fade" id="modal_po" role="dialog">
@@ -138,7 +139,7 @@
 		document.getElementById("fndisc2").hidden = false;
 	}
 
-	function showPart(wo_no,nik,petugas,kode_pr) {
+	function showPart(wo_no, nik, petugas, kode_pr) {
 		//var no_po = document.getElementById("no_po").value;
 		//var no_po=document.getElementById("showPart");
 		$.ajax({
@@ -237,9 +238,11 @@
 					})
 				} else {
 					$('.msg').html(out.msg);
-					$('.dataPo').html(out.dataPo);
-					next(out.dataPo);
+					//$('.dataPo').html(out.dataPo);
+					//next(out.dataPo);
 					document.getElementById("cetak").hidden = false;
+					var d = document.getElementById("cetak");
+					d.setAttribute('data-id', out.dataPo);
 					document.getElementById("tambah").hidden = false;
 					document.getElementById("simpan").hidden = true;
 					document.getElementById("formpartkeluar"); //reset()	
@@ -263,29 +266,21 @@
 		e.preventDefault();
 	});
 
-	function next(dataPo) {
-		document.getElementById('id_masuk').value = dataPo;
-		var d = document.getElementById("cetak");
-		d.setAttribute('data-id', dataPo);
 
-		//document.getElementById("cetak").hidden = false;
-		//document.getElementById("alamat").readonly = true;
-	}
-
-	function cetakPo(datakode) {}
+	function cetakPart(datakode) {}
 
 
-	$(document).on("click", ".cetak-masuk", function() {
+	$(document).on("click", ".cetak-keluar", function() {
 		var id = $(this).attr("data-id");
 		//var id = document.getElementById('next_proses').value=datakode;
 		$.ajax({
 				method: "POST",
-				url: "<?php echo base_url('Part_masuk/cetak'); ?>",
+				url: "<?php echo base_url('PartKeluarWo/cetak'); ?>",
 				data: "id=" + id
 			})
 			.done(function(data) {
-				$('#modal-masuk').html(data);
-				$('#cetak-masuk').modal('show');
+				$('#modal-keluar').html(data);
+				$('#cetak-keluar').modal('show');
 			})
 	})
 </script>

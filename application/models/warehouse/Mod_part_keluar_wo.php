@@ -179,12 +179,10 @@ class Mod_part_keluar_wo extends CI_Model
     }
     function select_by_id($id)
     {
-        $this->db->select('a.kode_masuk,a.id_masuk,a.tgl_masuk,a.status,a.keterangan,
-        a.status_po,a.no_po AS no_ponye,a.no_sj_sup,a.no_inv_sup,a.kode_sup,a.user,a.part_return,b.jumlah,c.*', FALSE);
-        $this->db->from('tbl_wh_part_masuk as a');
-        $this->db->join('tbl_wh_detail_part_masuk as b','b.id_masuk=a.kode_masuk','left');
-        $this->db->join('tbl_wh_supplier as c','c.kode_sup=a.kode_sup','left');
-        $this->db->where('a.kode_masuk', $id);
+        $this->db->select('a.*,b.*', FALSE);
+        $this->db->from('tbl_wh_part_keluar_service as a');
+        $this->db->join('tbl_wh_detail_part_keluar_service as b','b.kode_keluar=a.kode_keluar','left');
+        $this->db->where('a.kode_keluar', $id);
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }

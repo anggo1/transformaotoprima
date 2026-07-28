@@ -177,9 +177,9 @@ class PartKeluarWo extends MY_Controller
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
-		$data['dataMasuk'] = $this->Mod_part_keluar_wo->select_by_id($id);
-		$data['detailMasuk'] = $this->Mod_part_keluar_wo->select_detail_cetak($id);
+		$data['dataKeluar'] = $this->Mod_part_keluar_wo->select_by_id($id);
+		$data['detailKeluar'] = $this->Mod_part_keluar_wo->select_detail_cetak($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_part_masuk', 'cetak-masuk', $data, ' modal-xl');
+		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_wo', 'cetak-keluar', $data, ' modal-xl');
 	}
 }

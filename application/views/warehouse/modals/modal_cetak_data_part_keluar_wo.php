@@ -86,17 +86,17 @@ th {
 <div id="printThis">
         <div class="card-body">
             <div class="col-12 ">
-                <H4>Report Barang Keluar Dengan PK</H4>
+                <H4>Nota Barang Keluar After Sales</H4>
                 <div class="table-responsive">
                     <table class="table table-cetak" id="list-pk">
                         <thead>
                             <tr>
                                 <th width='5%'>No</th>
                                 <th width="15%">Tgl Keluar</th>
-                                <th width="11%">No Bon</th>
-                                <th width="11%">No Body</th>
-                                <th width="18%">Tujuan</th>
-                                <th width="38%">Keterangan</th>
+                                <th width="11%">ID Keluar</th>
+                                <th width="11%">No Part</th></th>
+                                <th width="18%">Nama Part</th>
+                                <th width="38%">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,10 +107,10 @@ foreach ($dataKeluar as $s) {
 
                                 <td><?php echo $no; ?></td>
                                 <td><?php echo tglIndoSedang($s->tgl_keluar); ?></td>
-                                <td><?php echo $s->id_keluar; ?></td>
-                                <td><?php echo $s->no_body; ?></td>
-                                <td><?php echo $s->no_pk; ?></td>
-                                <td><?php echo $s->keterangan; ?></td>
+                                <td><?php echo $s->kode_keluar; ?></td>
+                                <td><?php echo $s->no_part; ?></td>
+                                <td><?php echo $s->nama_part; ?></td>
+                                <td><?php echo $s->jumlah; ?></td>
                             </tr>
                             <?php
     $no++;
@@ -120,6 +120,38 @@ foreach ($dataKeluar as $s) {
                         </tbody>
                         <tfoot></tfoot>
                     </table>
+                    <table width="100%" border="0" cellpadding="5" cellspacing="0">
+        <tr>
+          <td width="25%">&nbsp;</td>
+          <td width="25%">&nbsp;</td>
+          <td width="25%">&nbsp;</td>
+          <td width="25%">&nbsp;</td>
+        </tr>
+        <tr align="center">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><?php echo date('d F Y');?></td>
+        </tr>
+                    <tr align="center">
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <th height="61">&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <td><?php echo $s->petugas ?></td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td><?php echo $this->session->userdata['full_name'] ?></td>
+                    </tr>
+      </table>
                 </div>
             </div>
         </div>
