@@ -137,35 +137,26 @@ class Mod_part_keluar_wo extends CI_Model
             $this->db->query($sql_po1);
         }
         //$stok_awal       = $d_data['stok'];
-       if($idlokasi=="Jakarta"){
-        $data1 = array();
-        foreach($no_part as $key =>$value){ 
-            $total_jkt = $stok[$key] - $jml_keluar[$key];
-            $data1[]  = array(
-            'no_part'=>$no_part[$key],  
-            'stok_jkt'=>$total_jkt
-        );
-                }}
-                if($idlokasi=="Cibitung"){
-                    $data1 = array();
-                    foreach($no_part as $key){
-                        $total_cbt = $stok[$key] - $jml_keluar[$key];
-                        $data1[]  = array(
-                        'no_part'=>$no_part[$key],  
-                        'stok_cbt'=>$total_cbt
-                    );
-                }}
-                if($idlokasi=="Surabaya"){
-                    $data1 = array();
-                    foreach($no_part as $key){
-                        $total_sby= $stok[$key] - $jml_keluar[$key];
-                        $data1[]  = array(
-                        'no_part'=>$no_part[$key], 
-                        'stok_sby'=>$total_sby
-                    );
-                }}
-                    $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
+        $field = null;
+        if ($idlokasi == "Jakarta") {
+            $field = 'stok_jkt';
+        } elseif ($idlokasi == "Cibitung") {
+            $field = 'stok_cbt';
+        } elseif ($idlokasi == "Surabaya") {
+            $field = 'stok_sby';
+        }
 
+        $data1 = array();
+        if ($field !== null) {
+            foreach ($no_part as $key => $value) {
+                $total = isset($stok[$key]) && isset($jml_keluar[$key]) ? $stok[$key] - $jml_keluar[$key] : 0;
+                $data1[] = array(
+                    'no_part' => $value,
+                    $field => $total
+                );
+            }
+            $this->db->update_batch('tbl_wh_barang', $data1, 'no_part');
+        }
 
         $data = array();
     foreach($no_part as $key=>$value){ 
