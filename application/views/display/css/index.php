@@ -27,10 +27,10 @@ background: linear-gradient(to bottom, #fcf4c0 0%,#fdea59 50%,#ffe30b 51%,#fcf09
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcf4c0', endColorstr='#fcf09a',GradientType=0 );";
 ?>
 <script type="text/JavaScript">
-<!--
+    <!--
 <!--setTimeout("location.href = 'index.php';",1000*120 );
 -->
-<!--
+    <!--
 
 /*
 Auto Refresh Page with Time script
@@ -675,304 +675,629 @@ window.onload=beginrefresh
 	$hasil_1 = mysql_query($sql_pt1);$data_1  = mysql_fetch_array($hasil_1);}
 	
 							 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>KAROSERI SYSTEM</title>
-<link href="css/global.css" rel="stylesheet" type="text/css" />
-<script src="js/jquery.min.js"></script>
-<link rel="stylesheet" href="css/style1.css" type="text/css">
-<link href="css/global.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KAROSERI SYSTEM</title>
+    <link href="css/global.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style1.css" type="text/css">
+    <link href="css/global.css" rel="stylesheet" type="text/css" />
 </head>
 <div>
-  <div class="header" align="center"><strong>DENAH LOKASI PERBAIKAN BODY REPAIR</strong></div> 
-  <div class="kategoriatas">
-  <div class="jarak_kiri1"></div>
-  <div class="bis2">
-    <div
-        class="isikategori2"
-        <?php if($jumlah_pk30A < 1){ echo'style=background-color:#37BF07;';}if($data_30['last'] < 1){ echo'style=background-color:#E6F408;';} ?>> <div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>18</strong></div> <?php echo "<h4>".$bay_body30."</h4>";echo "PK : ".$jumlah_pk30A."<br>"; echo "Time : ".$data_30['last']."<br>"; if(!empty($tgl30)) {$diff = $tgl30->diff($kini); echo "BM : ".$diff->
+    <div class="header" align="center"><strong>DENAH LOKASI PERBAIKAN BODY REPAIR</strong></div>
+    <div class="kategoriatas">
+        <div class="jarak_kiri1"></div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk30A < 1){ echo'style=background-color:#37BF07;';}if($data_30['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>18</strong>
+                </div>
+                <?php echo "<h4>".$bay_body30."</h4>";echo "PK : ".$jumlah_pk30A."<br>"; echo "Time : ".$data_30['last']."<br>"; if(!empty($tgl30)) {$diff = $tgl30->diff($kini); echo "BM : ".$diff->
         d;}="D;}"
         ?="?"d, ></div>
 </div>
       <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk29A < 1){ echo'style=background-color:#37BF07;';}if($data_29['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-        <div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>17</strong></div>
-							<?php 
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>17</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body29."</h4>";echo "PK  : ".$jumlah_pk29A."<br>"; echo "Time : ".$data_29['last']."<br>"; if(!empty($tgl29)) {$diff = $tgl29->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 ?>
-	 </div></div>
-      <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk28A < 1){ echo'style=background-color:#37BF07;';}if($data_28['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-        <div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>16</strong></div>
-							<?php 
+            </div>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk28A < 1){ echo'style=background-color:#37BF07;';}if($data_28['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>16</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body28."</h4>";echo "PK  : ".$jumlah_pk28A."<br>"; echo "Time : ".$data_28['last']."<br>"; if(!empty($tgl28)) {$diff = $tgl28->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div></div>
-      <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk27A < 1){ echo'style=background-color:#37BF07;';}if($data_27['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-        <div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>15</strong></div>
-							<?php 
+            </div>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk27A < 1){ echo'style=background-color:#37BF07;';}if($data_27['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>15</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body27."</h4>";echo "PK  : ".$jumlah_pk27A."<br>"; echo "Time : ".$data_27['last']."<br>"; if(!empty($tgl27)) {$diff = $tgl27->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div></div>
-    <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk26A < 1){ echo'style=background-color:#37BF07;';}if($data_26['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>14</strong></div>
-							<?php 
+            </div>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk26A < 1){ echo'style=background-color:#37BF07;';}if($data_26['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>14</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body26."</h4>";echo "PK  : ".$jumlah_pk26A."<br>"; echo "Time : ".$data_26['last']."<br>"; if(!empty($tgl26)) {$diff = $tgl26->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div></div>
-     <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk25A < 1){ echo 'style=background-color:#37BF07;';}if($data_25['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>13</strong></div>
-							<?php 
+            </div>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk25A < 1){ echo 'style=background-color:#37BF07;';}if($data_25['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>13</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body25."</h4>";echo "PK  : ".$jumlah_pk25A."<br>"; echo "Time : ".$data_25['last']."<br>"; if(!empty($tgl25)) {$diff = $tgl25->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk24A < 1){ echo'style=background-color:#37BF07;';}if($data_24['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>12</strong></div>
-							<?php 
+            </div>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk24A < 1){ echo'style=background-color:#37BF07;';}if($data_24['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>12</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body24."</h4>";echo "PK  : ".$jumlah_pk24A."<br>"; echo "Time : ".$data_24['last']."<br>"; if(!empty($tgl24)) {$diff = $tgl24->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk23A < 1){ echo'style=background-color:#37BF07;';}if($data_23['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>11</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk23A < 1){ echo'style=background-color:#37BF07;';}if($data_23['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>11</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body23."</h4>";echo "PK  : ".$jumlah_pk23A."<br>"; echo "Time : ".$data_23['last']."<br>"; if(!empty($tgl23)) {$diff = $tgl23->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk22A < 1){ echo'style=background-color:#37BF07;';}if($data_22['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>10</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk22A < 1){ echo'style=background-color:#37BF07;';}if($data_22['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>10</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body22."</h4>";echo "PK  : ".$jumlah_pk22A."<br>"; echo "Time : ".$data_22['last']."<br>"; if(!empty($tgl22)) {$diff = $tgl22->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-    <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk21A < 1){ echo'style=background-color:#37BF07;';}if($data_21['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>9</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk21A < 1){ echo'style=background-color:#37BF07;';}if($data_21['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>9</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body21."</h4>";echo "PK  : ".$jumlah_pk21A."<br>"; echo "Time : ".$data_21['last']."<br>"; if(!empty($tgl21)) {$diff = $tgl21->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-    <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk20A < 1){ echo'style=background-color:#37BF07;';}if($data_20['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>8</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk20A < 1){ echo'style=background-color:#37BF07;';}if($data_20['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>8</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body20."</h4>";echo "PK  : ".$jumlah_pk20A."<br>"; echo "Time : ".$data_20['last']."<br>"; if(!empty($tgl20)) {$diff = $tgl20->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-    </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk19A < 1){ echo'style=background-color:#37BF07;';}if($data_19['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>7</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk19A < 1){ echo'style=background-color:#37BF07;';}if($data_19['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>7</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body19."</h4>";echo "PK  : ".$jumlah_pk19A."<br>"; echo "Time : ".$data_19['last']."<br>"; if(!empty($tgl19)) {$diff = $tgl19->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk18A < 1){ echo'style=background-color:#37BF07;';}if($data_18['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>6</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk18A < 1){ echo'style=background-color:#37BF07;';}if($data_18['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>6</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body18."</h4>";echo "PK  : ".$jumlah_pk18A."<br>"; echo "Time : ".$data_18['last']."<br>"; if(!empty($tgl18)) {$diff = $tgl18->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk17A < 1){ echo'style=background-color:#37BF07;';}if($data_17['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>5</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk17A < 1){ echo'style=background-color:#37BF07;';}if($data_17['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>5</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body17."</h4>";echo "PK  : ".$jumlah_pk17A."<br>"; echo "Time : ".$data_17['last']."<br>"; if(!empty($tgl17)) {$diff = $tgl17->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk16A < 1){ echo'style=background-color:#37BF07;';}if($data_16['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>4</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk16A < 1){ echo'style=background-color:#37BF07;';}if($data_16['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>4</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body16."</h4>";echo "PK  : ".$jumlah_pk16A."<br>"; echo "Time : ".$data_16['last']."<br>"; if(!empty($tgl16)) {$diff = $tgl16->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk15A < 1){ echo'style=background-color:#37BF07;';}if($data_15['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>3</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk15A < 1){ echo'style=background-color:#37BF07;';}if($data_15['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>3</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body15."</h4>";echo "PK  : ".$jumlah_pk15A."<br>"; echo "Time : ".$data_15['last']."<br>"; if(!empty($tgl15)) {$diff = $tgl15->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk14A < 1){ echo'style=background-color:#37BF07;';}if($data_14['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>2</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk14A < 1){ echo'style=background-color:#37BF07;';}if($data_14['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>2</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body14."</h4>";echo "PK  : ".$jumlah_pk14A."<br>"; echo "Time : ".$data_14['last']."<br>"; if(!empty($tgl14)) {$diff = $tgl14->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-    <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk13A < 1){ echo'style=background-color:#37BF07;';}if($data_13['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>
-							<?php 
+            </div><strong></strong>
+        </div>
+        <div class="bis2">
+            <div class="isikategori2"
+                <?php if($jumlah_pk13A < 1){ echo'style=background-color:#37BF07;';}if($data_13['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                <div class="nomor1"
+                    style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                    <strong>1</strong>
+                </div>
+                <?php 
  	echo "<h4>".$bay_body13."</h4>";echo "PK  : ".$jumlah_pk13A."<br>"; echo "Time : ".$data_13['last']."<br>"; if(!empty($tgl13)) {$diff = $tgl13->diff($kini); echo "BM : ".$diff->d, D;} 							 
 							 
 							 ?>
-	 </div><strong></strong></div>
-  </div><div class="kategoritengah"><div class="jarak_mobil2"></div><div class="judul"><strong>DEMPUL & CAT TOTAL BODY</strong></div><div class="jarak_mobil2"></div><div class="jarak_mobil2"></div><div class="judul"><strong>DEMPUL & CAT</strong></div><div class="jarak_mobil2"></div><div class="jarak_mobil"></div>
-  <div class="judul"><strong>BODY WELDING</strong></div><div class="jarak_mobil3"></div>
-  <div class="judul2"><strong>CHASSIS</strong></div><div class="jarak_mobil"></div><div class="jarak_mobil"></div><div class="jarak_mobil"></div>
-  <div class="judul"><strong>BODY MTE</strong></div>
+            </div><strong></strong>
+        </div>
+    </div>
+    <div class="kategoritengah">
+        <div class="jarak_mobil2"></div>
+        <div class="judul"><strong>DEMPUL & CAT TOTAL BODY</strong></div>
+        <div class="jarak_mobil2"></div>
+        <div class="jarak_mobil2"></div>
+        <div class="judul"><strong>DEMPUL & CAT</strong></div>
+        <div class="jarak_mobil2"></div>
+        <div class="jarak_mobil"></div>
+        <div class="judul"><strong>BODY WELDING</strong></div>
+        <div class="jarak_mobil3"></div>
+        <div class="judul2"><strong>CHASSIS</strong></div>
+        <div class="jarak_mobil"></div>
+        <div class="jarak_mobil"></div>
+        <div class="jarak_mobil"></div>
+        <div class="judul"><strong>BODY MTE</strong></div>
+    </div>
+    <div class="kategoritengah">
+
+        <div class="jarak_kiri"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk36A < 1){ echo'style=background-color:#37BF07;';}if($data_36['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>1</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body36."</h10>"."<br>";echo "PK  : ".$jumlah_pk36A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_36['last']."<br>"; if(!empty($tgl36)) {$diff = $tgl36->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk37A < 1){ echo'style=background-color:#37BF07;';}if($data_37['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>2</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body37."</h10>"."<br>";echo "PK  : ".$jumlah_pk37A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_37['last']."<br>"; if(!empty($tgl37)) {$diff = $tgl37->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk38A < 1){ echo'style=background-color:#37BF07;';}if($data_38['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>3</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body38."</h10>"."<br>";echo "PK  : ".$jumlah_pk38A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_38['last']."<br>"; if(!empty($tgl38)) {$diff = $tgl38->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk39A < 1){ echo'style=background-color:#37BF07;';}if($data_39['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>4</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body39."</h10>"."<br>";echo "PK  : ".$jumlah_pk39A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_39['last']."<br>"; if(!empty($tgl39)) {$diff = $tgl39->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1 bis2 bis5"
+            <?php if($jumlah_pk40A < 1){ echo'style=background-color:#37BF07;';}if($data_40['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>5</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body40."</h10>"."<br>";echo "PK  : ".$jumlah_pk40A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_40['last']."<br>"; if(!empty($tgl40)) {$diff = $tgl40->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1 bis2 bis5"
+            <?php if($jumlah_pk45A < 1){ echo'style=background-color:#37BF07;';}if($data_45['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>6</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body45."</h10>"."<br>";echo "PK  : ".$jumlah_pk45A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_45['last']."<br>"; if(!empty($tgl45)) {$diff = $tgl45->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+    </div><br />
+    <div class="kategoritengah">
+
+        <div class="jarak_kiri"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk31A < 1){ echo'style=background-color:#37BF07;';}if($data_31['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>1</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body31."</h10>"."<br>";echo "PK  : ".$jumlah_pk31A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_31['last']."<br>"; if(!empty($tgl31)) {$diff = $tgl31->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk32A < 1){ echo'style=background-color:#37BF07;';}if($data_32['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>2</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body31."</h10>"."<br>";echo "PK  : ".$jumlah_pk31A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_32['last']."<br>"; if(!empty($tgl32)) {$diff = $tgl32->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk33A < 1){ echo'style=background-color:#37BF07;';}if($data_33['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>3</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body33."</h10>"."<br>";echo "PK  : ".$jumlah_pk33A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_33['last']."<br>"; if(!empty($tgl33)) {$diff = $tgl33->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk34A < 1){ echo'style=background-color:#37BF07;';}if($data_34['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>4</strong>
+            </div>
+            <?php 
+ 	echo $bay_body34."&nbsp;&nbsp;&nbsp;";echo "PK  : ".$jumlah_pk34A."<br>"; echo "Time : ".$data_34['last']."<br>"; if(!empty($tgl34)) {$diff = $tgl34->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk35A < 1){ echo'style=background-color:#37BF07;';}if($data_35['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>5</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body35."</h10>"."<br>";echo "PK  : ".$jumlah_pk35A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_35['last']."<br>"; if(!empty($tgl35)) {$diff = $tgl35->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+        <div class="jarak_mobil"></div>
+        <div class="bis1"
+            <?php if($jumlah_pk46A < 1){ echo'style=background-color:#37BF07;';}if($data_46['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+            <div class="nomor2"
+                style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                <strong>6</strong>
+            </div>
+            <?php 
+ 	echo "<h10>".$bay_body46."</h10>"."<br>";echo "PK  : ".$jumlah_pk46A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_46['last']."<br>"; if(!empty($tgl46)) {$diff = $tgl46->diff($kini); echo "BM : ".$diff->d, D;} ?>
+        </div>
+    </div>
+    <div class="bis5">
+        <br />
+        <div class="jarak_kiri"></div>
+        <div class="kategoriatas">
+            <div class="jarak_kiri1"></div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php  if($jumlah_pk42A < 1){ echo'style=background-color:#37BF07;';}if($data_42['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>1</strong>
+                    </div>
+                    <?php 	echo "<h4>".$bay_body42."</h4>";echo "PK  : ".$jumlah_pk42A."<br>"; echo "Time : ".$data_42['last']."<br>"; if(!empty($tgl42)) {$diff = $tgl42->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk43A < 1){ echo'style=background-color:#37BF07;';}if($data_43['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>2</strong>
+                    </div>
+                    <?php echo "<h4>".$bay_body43."</h4>";echo "PK  : ".$jumlah_pk43A."<br>"; echo "Time : ".$data_43['last']."<br>"; if(!empty($tgl43)) {$diff = $tgl43->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div>
+            </div>
+            <div class="jarak_mobil"></div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php  if($jumlah_pk41A < 1){ echo'style=background-color:#37BF07;';}if($data_41['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>1</strong>
+                    </div>
+                    <?php 	echo "<h4>".$bay_body41."</h4>";echo "PK  : ".$jumlah_pk41A."<br>"; echo "Time : ".$data_41['last']."<br>"; if(!empty($tgl41)) {$diff = $tgl41->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div>
+            </div>
+            <div class="jarak_kiri1"></div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk12A < 1){ echo'style=background-color:#37BF07;';}if($data_12['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>12</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body12."</h4>";echo "PK  : ".$jumlah_pk12A."<br>"; echo "Time : ".$data_12['last']."<br>"; if(!empty($tgl12)) {$diff = $tgl12->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk11A < 1){ echo'style=background-color:#37BF07;';}if($data_11['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>11</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body11."</h4>";echo "PK  : ".$jumlah_pk11A."<br>"; echo "Time : ".$data_11['last']."<br>"; if(!empty($tgl11)) {$diff = $tgl11->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk10A < 1){ echo'style=background-color:#37BF07;';}if($data_10['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>10</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body10."</h4>";echo "PK  : ".$jumlah_pk10A."<br>"; echo "Time : ".$data_10['last']."<br>"; if(!empty($tgl10)) {$diff = $tgl10->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk9A < 1){ echo'style=background-color:#37BF07;';}if($data_9['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>9</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body9."</h4>";echo "PK  : ".$jumlah_pk9A."<br>"; echo "Time : ".$data_9['last']."<br>"; if(!empty($tgl9)) {$diff = $tgl9->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk8A < 1){ echo'style=background-color:#37BF07;';}if($data_8['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>8</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body8."</h4>";echo "PK  : ".$jumlah_pk8A."<br>"; echo "Time : ".$data_8['last']."<br>"; if(!empty($tgl8)) {$diff = $tgl8->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk7A < 1){ echo'style=background-color:#37BF07;';}if($data_7['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>7</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body7."</h4>";echo "PK  : ".$jumlah_pk7A."<br>"; echo "Time : ".$data_7['last']."<br>"; if(!empty($tgl7)) {$diff = $tgl7->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk6A < 1){ echo'style=background-color:#37BF07;';}if($data_6['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>6</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body6."</h4>";echo "PK  : ".$jumlah_pk6A."<br>"; echo "Time : ".$data_6['last']."<br>"; if(!empty($tgl6)) {$diff = $tgl6->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk5A < 1){ echo'style=background-color:#37BF07;';}if($data_5['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>5</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body5."</h4>";echo "PK  : ".$jumlah_pk5A."<br>"; echo "Time : ".$data_5['last']."<br>"; if(!empty($tgl5)) {$diff = $tgl5->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk4A < 1){ echo'style=background-color:#37BF07;';}if($data_4['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>4</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body4."</h4>";echo "PK  : ".$jumlah_pk4A."<br>"; echo "Time : ".$data_4['last']."<br>"; if(!empty($tgl4)) {$diff = $tgl4->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk3A < 1){ echo'style=background-color:#37BF07;';}if($data_3['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>3</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body3."</h4>";echo "PK  : ".$jumlah_pk3A."<br>"; echo "Time : ".$data_3['last']."<br>"; if(!empty($tgl3)) {$diff = $tgl3->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk2A < 1){ echo'style=background-color:#37BF07;';}if($data_2['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>2</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body2."</h4>";echo "PK  : ".$jumlah_pk2A."<br>"; echo "Time : ".$data_2['last']."<br>"; if(!empty($tgl2)) {$diff = $tgl2->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="bis2">
+                <div class="isikategori2"
+                    <?php if($jumlah_pk1A < 1){ echo'style=background-color:#37BF07;';}if($data_1['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
+                    <div class="nomor1"
+                        style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>1</strong>
+                    </div>
+                    <?php 
+ 	echo "<h4>".$bay_body1."</h4>";echo "PK  : ".$jumlah_pk1A."<br>"; echo "Time : ".$data_1['last']."<br>"; if(!empty($tgl1)) {$diff = $tgl1->diff($kini); echo "BM : ".$diff->d, D;} ?>
+                </div><strong></strong>
+            </div>
+            <div class="jarak_kiri1"></div>
+            <div class="keteranganpk">
+                <div class="isiketeranganpk">
+                    <div class="nomor1"
+                        style='background-color: #258DFA; color:#F8F8F8; text-shadow:#000000; font-style: !important;'>
+                        <strong>KETERANGAN</strong>
+                    </div>
+                    <table width="100%" border="0">
+                        <tbody>
+                            <tr>
+                                <th width="19" bgcolor="#37BF07">&nbsp;</th>
+                                <th width="76" style="font-size:12px; text-align:left;"> : Bay Kosong</th>
+                            </tr>
+                            <tr>
+                                <th bgcolor="#E6F408">&nbsp;</th>
+                                <th width="76" style="font-size:12px;text-align:left;"> : Bay Pause</th>
+                            </tr>
+                            <tr>
+                                <th bgcolor="#FFFFFF">&nbsp;</th>
+                                <th width="76" style="font-size:12px;text-align:left;"> : Bay Aktif</th>
+                            </tr>
+                            <tr>
+                                <th>BM</th>
+                                <th style="font-size:12px;text-align:left;">: Bis Masuk</th>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php } ?>
+                </div><strong></strong>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <div class="kategoritengah">
-     
-  <div class="jarak_kiri"></div>
-  <div class="bis1" <?php if($jumlah_pk36A < 1){ echo'style=background-color:#37BF07;';}if($data_36['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-  <div class="nomor2" style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>  <?php 
- 	echo "<h10>".$bay_body36."</h10>"."<br>";echo "PK  : ".$jumlah_pk36A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_36['last']."<br>"; if(!empty($tgl36)) {$diff = $tgl36->diff($kini); echo "BM : ".$diff->d, D;} ?>
-    </div> 
-       <div class="jarak_mobil"></div>
-     <div class="bis1" <?php if($jumlah_pk37A < 1){ echo'style=background-color:#37BF07;';}if($data_37['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>	<div class="nomor2" style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>2</strong></div>
-       <?php 
- 	echo "<h10>".$bay_body37."</h10>"."<br>";echo "PK  : ".$jumlah_pk37A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_37['last']."<br>"; if(!empty($tgl37)) {$diff = $tgl37->diff($kini); echo "BM : ".$diff->d, D;} ?>
-     </div><div class="jarak_mobil"></div>
-     <div class="bis1" <?php if($jumlah_pk38A < 1){ echo'style=background-color:#37BF07;';}if($data_38['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>	<div class="nomor2" style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>3</strong></div>
-       <?php 
- 	echo "<h10>".$bay_body38."</h10>"."<br>";echo "PK  : ".$jumlah_pk38A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_38['last']."<br>"; if(!empty($tgl38)) {$diff = $tgl38->diff($kini); echo "BM : ".$diff->d, D;} ?>
-     </div><div class="jarak_mobil"></div>
-  <div class="bis1" <?php if($jumlah_pk39A < 1){ echo'style=background-color:#37BF07;';}if($data_39['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-    <div class="nomor2" style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>4</strong></div>
-    <?php 
- 	echo "<h10>".$bay_body39."</h10>"."<br>";echo "PK  : ".$jumlah_pk39A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_39['last']."<br>"; if(!empty($tgl39)) {$diff = $tgl39->diff($kini); echo "BM : ".$diff->d, D;} ?>
-  </div><div class="jarak_mobil"></div>
-     <div class="bis1 bis2 bis5" <?php if($jumlah_pk40A < 1){ echo'style=background-color:#37BF07;';}if($data_40['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-       <div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>5</strong></div>		
-							<?php 
- 	echo "<h10>".$bay_body40."</h10>"."<br>";echo "PK  : ".$jumlah_pk40A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_40['last']."<br>"; if(!empty($tgl40)) {$diff = $tgl40->diff($kini); echo "BM : ".$diff->d, D;} ?>
-     </div><div class="jarak_mobil"></div>
-     <div class="bis1 bis2 bis5" <?php if($jumlah_pk45A < 1){ echo'style=background-color:#37BF07;';}if($data_45['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-       <div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>6</strong></div>		
-							<?php 
- 	echo "<h10>".$bay_body45."</h10>"."<br>";echo "PK  : ".$jumlah_pk45A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_45['last']."<br>"; if(!empty($tgl45)) {$diff = $tgl45->diff($kini); echo "BM : ".$diff->d, D;} ?>
-     </div>
-</div><br /><div class="kategoritengah">
-     
-  <div class="jarak_kiri"></div>
-  <div class="bis1" <?php if($jumlah_pk31A < 1){ echo'style=background-color:#37BF07;';}if($data_31['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-    <div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>		
-						 <?php 
- 	echo "<h10>".$bay_body31."</h10>"."<br>";echo "PK  : ".$jumlah_pk31A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_31['last']."<br>"; if(!empty($tgl31)) {$diff = $tgl31->diff($kini); echo "BM : ".$diff->d, D;} ?>
-    </div><div class="jarak_mobil"></div>
-  <div class="bis1" <?php if($jumlah_pk32A < 1){ echo'style=background-color:#37BF07;';}if($data_32['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>	<div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>2</strong></div>	
-							<?php 
- 	echo "<h10>".$bay_body31."</h10>"."<br>";echo "PK  : ".$jumlah_pk31A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_32['last']."<br>"; if(!empty($tgl32)) {$diff = $tgl32->diff($kini); echo "BM : ".$diff->d, D;} ?>
-  </div><div class="jarak_mobil"></div>
-     <div class="bis1" <?php if($jumlah_pk33A < 1){ echo'style=background-color:#37BF07;';}if($data_33['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>	<div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>3</strong></div>	
-							<?php 
- 	echo "<h10>".$bay_body33."</h10>"."<br>";echo "PK  : ".$jumlah_pk33A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_33['last']."<br>"; if(!empty($tgl33)) {$diff = $tgl33->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><div class="jarak_mobil"></div>
-  <div class="bis1" <?php if($jumlah_pk34A < 1){ echo'style=background-color:#37BF07;';}if($data_34['last'] < 1){ echo'style=background-color:#E6F408;';} ?> >	<div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>4</strong></div>
-						 <?php 
- 	echo $bay_body34."&nbsp;&nbsp;&nbsp;";echo "PK  : ".$jumlah_pk34A."<br>"; echo "Time : ".$data_34['last']."<br>"; if(!empty($tgl34)) {$diff = $tgl34->diff($kini); echo "BM : ".$diff->d, D;} ?>
-  </div><div class="jarak_mobil"></div>
-     <div class="bis1" <?php if($jumlah_pk35A < 1){ echo'style=background-color:#37BF07;';}if($data_35['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>	<div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>5</strong></div>
-						 <?php 
- 	echo "<h10>".$bay_body35."</h10>"."<br>";echo "PK  : ".$jumlah_pk35A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_35['last']."<br>"; if(!empty($tgl35)) {$diff = $tgl35->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><div class="jarak_mobil"></div>
-  <div class="bis1" <?php if($jumlah_pk46A < 1){ echo'style=background-color:#37BF07;';}if($data_46['last'] < 1){ echo'style=background-color:#E6F408;';} ?>>
-    <div class="nomor2"style='border-radius:0 10px 10px 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>6</strong></div>
-      <?php 
- 	echo "<h10>".$bay_body46."</h10>"."<br>";echo "PK  : ".$jumlah_pk46A."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; echo "Time : ".$data_46['last']."<br>"; if(!empty($tgl46)) {$diff = $tgl46->diff($kini); echo "BM : ".$diff->d, D;} ?>
-</div></div>
-     <div class="bis5">
-     <br />
-  <div class="jarak_kiri"></div>
-<div class="kategoriatas" >
-   <div class="jarak_kiri1"></div>
-   <div class="bis2"><div class="isikategori2" <?php  if($jumlah_pk42A < 1){ echo'style=background-color:#37BF07;';}if($data_42['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>
-							<?php 	echo "<h4>".$bay_body42."</h4>";echo "PK  : ".$jumlah_pk42A."<br>"; echo "Time : ".$data_42['last']."<br>"; if(!empty($tgl42)) {$diff = $tgl42->diff($kini); echo "BM : ".$diff->d, D;} ?>
-    </div></div>
-     <div class="bis2"><div class="isikategori2" <?php if($jumlah_pk43A < 1){ echo'style=background-color:#37BF07;';}if($data_43['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>2</strong></div>
-							<?php echo "<h4>".$bay_body43."</h4>";echo "PK  : ".$jumlah_pk43A."<br>"; echo "Time : ".$data_43['last']."<br>"; if(!empty($tgl43)) {$diff = $tgl43->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div></div><div class="jarak_mobil"></div>
-     <div class="bis2"><div class="isikategori2" <?php  if($jumlah_pk41A < 1){ echo'style=background-color:#37BF07;';}if($data_41['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>
-							<?php 	echo "<h4>".$bay_body41."</h4>";echo "PK  : ".$jumlah_pk41A."<br>"; echo "Time : ".$data_41['last']."<br>"; if(!empty($tgl41)) {$diff = $tgl41->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div></div>
-   <div class="jarak_kiri1"></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk12A < 1){ echo'style=background-color:#37BF07;';}if($data_12['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>12</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body12."</h4>";echo "PK  : ".$jumlah_pk12A."<br>"; echo "Time : ".$data_12['last']."<br>"; if(!empty($tgl12)) {$diff = $tgl12->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk11A < 1){ echo'style=background-color:#37BF07;';}if($data_11['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>11</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body11."</h4>";echo "PK  : ".$jumlah_pk11A."<br>"; echo "Time : ".$data_11['last']."<br>"; if(!empty($tgl11)) {$diff = $tgl11->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk10A < 1){ echo'style=background-color:#37BF07;';}if($data_10['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>10</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body10."</h4>";echo "PK  : ".$jumlah_pk10A."<br>"; echo "Time : ".$data_10['last']."<br>"; if(!empty($tgl10)) {$diff = $tgl10->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk9A < 1){ echo'style=background-color:#37BF07;';}if($data_9['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>9</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body9."</h4>";echo "PK  : ".$jumlah_pk9A."<br>"; echo "Time : ".$data_9['last']."<br>"; if(!empty($tgl9)) {$diff = $tgl9->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk8A < 1){ echo'style=background-color:#37BF07;';}if($data_8['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>8</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body8."</h4>";echo "PK  : ".$jumlah_pk8A."<br>"; echo "Time : ".$data_8['last']."<br>"; if(!empty($tgl8)) {$diff = $tgl8->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk7A < 1){ echo'style=background-color:#37BF07;';}if($data_7['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>7</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body7."</h4>";echo "PK  : ".$jumlah_pk7A."<br>"; echo "Time : ".$data_7['last']."<br>"; if(!empty($tgl7)) {$diff = $tgl7->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk6A < 1){ echo'style=background-color:#37BF07;';}if($data_6['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>6</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body6."</h4>";echo "PK  : ".$jumlah_pk6A."<br>"; echo "Time : ".$data_6['last']."<br>"; if(!empty($tgl6)) {$diff = $tgl6->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk5A < 1){ echo'style=background-color:#37BF07;';}if($data_5['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>5</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body5."</h4>";echo "PK  : ".$jumlah_pk5A."<br>"; echo "Time : ".$data_5['last']."<br>"; if(!empty($tgl5)) {$diff = $tgl5->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk4A < 1){ echo'style=background-color:#37BF07;';}if($data_4['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>4</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body4."</h4>";echo "PK  : ".$jumlah_pk4A."<br>"; echo "Time : ".$data_4['last']."<br>"; if(!empty($tgl4)) {$diff = $tgl4->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk3A < 1){ echo'style=background-color:#37BF07;';}if($data_3['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>3</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body3."</h4>";echo "PK  : ".$jumlah_pk3A."<br>"; echo "Time : ".$data_3['last']."<br>"; if(!empty($tgl3)) {$diff = $tgl3->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-     <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk2A < 1){ echo'style=background-color:#37BF07;';}if($data_2['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>2</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body2."</h4>";echo "PK  : ".$jumlah_pk2A."<br>"; echo "Time : ".$data_2['last']."<br>"; if(!empty($tgl2)) {$diff = $tgl2->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div>
-    <div class="bis2">	<div class="isikategori2" <?php if($jumlah_pk1A < 1){ echo'style=background-color:#37BF07;';}if($data_1['last'] < 1){ echo'style=background-color:#E6F408;';} ?>><div class="nomor1"style='background-color: #258DFA; border-radius:10px 10px 0 0 ; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>1</strong></div>
-							<?php 
- 	echo "<h4>".$bay_body1."</h4>";echo "PK  : ".$jumlah_pk1A."<br>"; echo "Time : ".$data_1['last']."<br>"; if(!empty($tgl1)) {$diff = $tgl1->diff($kini); echo "BM : ".$diff->d, D;} ?>
-	 </div><strong></strong></div><div class="jarak_kiri1"></div>
-     <div class="keteranganpk">	<div class="isiketeranganpk"><div class="nomor1"style='background-color: #258DFA; color:#F8F8F8; text-shadow:#000000; font-style: !important;'><strong>KETERANGAN</strong></div>
-         <table width="100%" border="0">
-           <tbody>
-             <tr>
-               <th width="19" bgcolor="#37BF07">&nbsp;</th>
-               <th width="76" style="font-size:12px; text-align:left;"> : Bay Kosong</th>
-             </tr>
-             <tr>
-               <th bgcolor="#E6F408">&nbsp;</th>
-               <th width="76" style="font-size:12px;text-align:left;"> : Bay Pause</th>
-             </tr>
-             <tr>
-               <th bgcolor="#FFFFFF">&nbsp;</th>
-               <th width="76" style="font-size:12px;text-align:left;"> : Bay Aktif</th>
-             </tr>
-             <tr>
-               <th>BM</th>
-               <th style="font-size:12px;text-align:left;">: Bis Masuk</th>
-             </tr>
-             <tr>
-               <th>&nbsp;</th>
-               <th>&nbsp;</th>
-             </tr>
-           </tbody>
-         </table>
-         <?php } ?>
-     </div><strong></strong></div></div></div></div>
-     </div><div class="kategoritengah"><div class="jarak_mobil3"></div>
-     <div class="judul4"><strong>LUAR</strong></div><div class="jarak_mobil"></div>
-     <div class="judul2"><strong>S.BOTH</strong></div><div class="jarak_mobil2"></div><div class="jarak_mobil3"></div><div class="judul"><strong>DEMPUL & CAT</strong></div><div class="jarak_mobil2"></div>
-     <div class="judul"><strong>BODY WELDING</strong></div><div class="jarak_mobil3"></div><div class="jarak_mobil"></div>
-  <div class="judul">TRIMMING Ext &amp; Int</div>
+    <div class="jarak_mobil3"></div>
+    <div class="judul4"><strong>LUAR</strong></div>
+    <div class="jarak_mobil"></div>
+    <div class="judul2"><strong>S.BOTH</strong></div>
+    <div class="jarak_mobil2"></div>
+    <div class="jarak_mobil3"></div>
+    <div class="judul"><strong>DEMPUL & CAT</strong></div>
+    <div class="jarak_mobil2"></div>
+    <div class="judul"><strong>BODY WELDING</strong></div>
+    <div class="jarak_mobil3"></div>
+    <div class="jarak_mobil"></div>
+    <div class="judul">TRIMMING Ext &amp; Int</div>
 </div>
- 
-     <div id="bawah2" >
-<ul id="bawah_01" class="bawah"><marquee direction="left" behavior="scroll" scrollamount="5">
-	      <?php
+
+<div id="bawah2">
+    <ul id="bawah_01" class="bawah">
+        <marquee direction="left" behavior="scroll" scrollamount="5">
+            <?php
 		 
              $antrian_pk=mysql_query("SELECT * FROM pk_aktif WHERE status='S' AND tgl_selesai='".date('Y-m-d')."'");
               while($dpk=mysql_fetch_array($antrian_pk)){
 				echo "<td width=0 style=text-transform:capitalize;><img src=images/centang.png width=30 height=30>$dpk[no_body]($dpk[jns_pk])&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
               }
             ?>
-	      
-</marquee></div> <?php
+
+        </marquee>
+</div> <?php
  function DateToIndo($date){
 		$BulanIndo = array("01", "02", "03",
 						   "04", "05", "06",
@@ -988,25 +1313,26 @@ window.onload=beginrefresh
 	}
 ?>
 <div id="page1">
-<ul id="ticker_02" class="ticker">
-      <div align="center">
-        <table width="100%">
-              <td width="100%" class="keterangan_lanjutan"><strong>D A F T A R &nbsp;&nbsp; P E K E R J A A N &nbsp;&nbsp; AKTIF</strong></td>
-        </table>
-    </div>
-    <div align="left">
-        <table width="100%">
-          <td width="3%"class="keterangan_judul" >No.</td>
-            <td width="7%"class="keterangan_judul">Tgl-Masuk</td>
-            <td width="10%"class="keterangan_judul">NoBody</td>
-            <td width="10%"class="keterangan_judul">Status</td>
-            <td width="20%"class="keterangan_judul">Spv</td>
-            <td width="20%"class="keterangan_judul">Leader</td>
-            <td width="100%"class="keterangan_judul">Keterangan</td>
-      </table>
-    </div>
-		<li>
-	      <?php
+    <ul id="ticker_02" class="ticker">
+        <div align="center">
+            <table width="100%">
+                <td width="100%" class="keterangan_lanjutan"><strong>D A F T A R &nbsp;&nbsp; P E K E R J A A N
+                        &nbsp;&nbsp; AKTIF</strong></td>
+            </table>
+        </div>
+        <div align="left">
+            <table width="100%">
+                <td width="3%" class="keterangan_judul">No.</td>
+                <td width="7%" class="keterangan_judul">Tgl-Masuk</td>
+                <td width="10%" class="keterangan_judul">NoBody</td>
+                <td width="10%" class="keterangan_judul">Status</td>
+                <td width="20%" class="keterangan_judul">Spv</td>
+                <td width="20%" class="keterangan_judul">Leader</td>
+                <td width="100%" class="keterangan_judul">Keterangan</td>
+            </table>
+        </div>
+        <li>
+            <?php
              $antrian=mysql_query("SELECT * FROM pk_aktif WHERE status ='N' ORDER BY jam_mulai ASC LIMIT 50");
               while($d=mysql_fetch_array($antrian)){
 				  $noUrutberatbanget++;
@@ -1021,26 +1347,28 @@ window.onload=beginrefresh
 				<td width=30$ class=isi_slider ><font size=1>$d[ket_pk]</td></font></table></li>";
               }
             ?>
-  </ul>
-</div><div id="page2">
-<ul id="ticker_03" class="ticker">
-      <div align="center">
-        <table width="100%">
-              <td width="100%" class="keterangan_lanjutan"><strong>D A F T A R &nbsp;&nbsp; ANTRIAN &nbsp;&nbsp; B O D Y &nbsp;&nbsp; R E P A I R</strong></td>
-        </table>
-    </div>
-    <div align="left">
-        <table width="100%">
-          <td width="3%"class="keterangan_judul" >No.</td>
-            <td width="7%"class="keterangan_judul">Tgl-Masuk</td>
-            <td width="10%"class="keterangan_judul">NoBody</td>
-            <td width="20%"class="keterangan_judul">Kategori</td>
-            <td width="20%"class="keterangan_judul">Pelapor</td>
-            <td width="100%"class="keterangan_judul">Keterangan</td>
-      </table>
-    </div>
-		<li>
-	      <?php
+    </ul>
+</div>
+<div id="page2">
+    <ul id="ticker_03" class="ticker">
+        <div align="center">
+            <table width="100%">
+                <td width="100%" class="keterangan_lanjutan"><strong>D A F T A R &nbsp;&nbsp; ANTRIAN &nbsp;&nbsp; B O D
+                        Y &nbsp;&nbsp; R E P A I R</strong></td>
+            </table>
+        </div>
+        <div align="left">
+            <table width="100%">
+                <td width="3%" class="keterangan_judul">No.</td>
+                <td width="7%" class="keterangan_judul">Tgl-Masuk</td>
+                <td width="10%" class="keterangan_judul">NoBody</td>
+                <td width="20%" class="keterangan_judul">Kategori</td>
+                <td width="20%" class="keterangan_judul">Pelapor</td>
+                <td width="100%" class="keterangan_judul">Keterangan</td>
+            </table>
+        </div>
+        <li>
+            <?php
              $antrian1=mysql_query("select * from bus_masuk where status ='N'");
               while($d1=mysql_fetch_array($antrian1)){
 				  $noUrutberatbanget1++;
@@ -1054,7 +1382,7 @@ window.onload=beginrefresh
 				<td width=30$ class=isi_slider ><font size=2>$d1[keterangan]</td></font></table></li>";
               }
             ?>
-                <?php
+            <?php
 						 function selisih($jam_a,$jam_b){
 						list ($h,$m,$s)= explode (":",$jam_a);
 						$dtAwal= mktime($h,$m,$s,"1","1","1");
@@ -1067,74 +1395,97 @@ window.onload=beginrefresh
 						$sisamenit2=$sisamenit*60;
 						return "$jam[0] ";//jam $sisamenit2 menit
 						} ?>
-  </ul>
+    </ul>
 </div>
 <script>
-
-	function tick(){
-		$('#ticker_01 li:first').slideUp( function () { $(this).appendTo($('#ticker_01')).slideDown(); });
-	}
-	setInterval(function(){ tick () }, 5000);
-	
-
-
-	function tick2(){
-		$('#ticker_02 li:first').slideUp( function () { $(this).appendTo($('#ticker_02')).slideDown(); });
-	}
-	setInterval(function(){ tick2 () }, 3000);
+function tick() {
+    $('#ticker_01 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_01')).slideDown();
+    });
+}
+setInterval(function() {
+    tick()
+}, 5000);
 
 
-	function tick3(){
-		$('#ticker_03 li:first').slideUp( function () { $(this).appendTo($('#ticker_03')).slideDown(); });
-	}
-	setInterval(function(){ tick3 () }, 3000);
 
-	function tick4(){
-		$('#ticker_04 li:first').slideUp( function () { $(this).appendTo($('#ticker_04')).slideDown(); });
-	}
-
-	function tick5(){
-		$('#ticker_05 li:first').slideUp( function () { $(this).appendTo($('#ticker_05')).slideDown(); });
-	}
-	setInterval(function(){ tick5 () }, 3000);
-	function tick6(){
-		$('#ticker_06 li:first').slideUp( function () { $(this).appendTo($('#ticker_06')).slideDown(); });
-	}
-	setInterval(function(){ tick6 () }, 3000);
+function tick2() {
+    $('#ticker_02 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_02')).slideDown();
+    });
+}
+setInterval(function() {
+    tick2()
+}, 3000);
 
 
-	/**
-	 * USE TWITTER DATA
-	 */
+function tick3() {
+    $('#ticker_03 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_03')).slideDown();
+    });
+}
+setInterval(function() {
+    tick3()
+}, 3000);
 
-	 $.ajax ({
-		 url: 'http://search.twitter.com/search.json',
-		 data: 'q=%23javascript',
-		 dataType: 'jsonp',
-		 timeout: 10000,
-		 success: function(data){
-		 	if (!data.results){
-		 		return false;
-		 	}
+function tick4() {
+    $('#ticker_04 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_04')).slideDown();
+    });
+}
 
-		 	for( var i in data.results){
-		 		var result = data.results[i];
-		 		var $res = $("<li />");
-		 		$res.append('<img src="' + result.profile_image_url + '" />');
-		 		$res.append(result.text);
+function tick5() {
+    $('#ticker_05 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_05')).slideDown();
+    });
+}
+setInterval(function() {
+    tick5()
+}, 3000);
 
-		 		console.log(data.results[i]);
-		 		$res.appendTo($('#ticker_04'));
-		 	}
-			setInterval(function(){ tick4 () }, 4000);	
-
-			$('#example_4').show();
-
-		 }
-	});
+function tick6() {
+    $('#ticker_06 li:first').slideUp(function() {
+        $(this).appendTo($('#ticker_06')).slideDown();
+    });
+}
+setInterval(function() {
+    tick6()
+}, 3000);
 
 
-  </script>
-  
+/**
+ * USE TWITTER DATA
+ */
+
+$.ajax({
+    url: 'http://search.twitter.com/search.json',
+    data: 'q=%23javascript',
+    dataType: 'jsonp',
+    timeout: 10000,
+    success: function(data) {
+        if (!data.results) {
+            return false;
+        }
+
+        for (var i in data.results) {
+            var result = data.results[i];
+            var $res = $("<li />");
+            $res.append('<img src="' + result.profile_image_url + '" />');
+            $res.append(result.text);
+
+            console.log(data.results[i]);
+            $res.appendTo($('#ticker_04'));
+        }
+        setInterval(function() {
+            tick4()
+        }, 4000);
+
+        $('#example_4').show();
+
+    }
+});
+</script>
+
 </body>
+
 </html>

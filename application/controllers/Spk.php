@@ -105,7 +105,7 @@ public function showPart()
 	public function tambahNote()
 	{
         $id = $_POST['id'];
-		$data['dataPo'] = $this->Mod_spk->insertNote($id);
+		$data['dataPo'] = $this->Mod_chasis_retail->insertNote($id);
 	}
 	public function prosesSpk()
 	{
@@ -206,7 +206,7 @@ public function showPart()
 	}
 	public function tampilDetail()
 	{
-		$id 				= $_POST['id_estimasi_penawaran'];
+		$id 				= $_POST['no_ref'];
 		$data['dataDetail'] = $this->Mod_spk->select_detail($id);
 		$this->load->view('marketing/detail_estimasi_penawaran', $data);
 	}

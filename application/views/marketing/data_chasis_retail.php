@@ -71,82 +71,76 @@
         border-radius: 50%;
     }
 </style>
-<section class="content">
-    <div class="card-body card-outline">
-        <div class="card-header bg-light">
-                        <div class="text-right">
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-chasis-retail" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
-                        </div>
-                    </div>
-        <div class="card card-primary card-outline card-outline-tabs">
-            <div class="card-header p-0 border-bottom-0">
-                <ul class="nav nav-tabs " id="custom-content-above-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="tab-chasis-retail" data-toggle="pill" href="#tab-chasis" role="tab">
-                            <i class="fa fa-bus"></i>
-                            Chasis Retail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" hidden="hidden" id="tab-spk-tab" data-toggle="pill" href="#tab-spk"
-                            role="tab">
-                            <i class="fas fa-luggage-cart"></i>
-                            Proses SPK</a>
-                    </li>
+<div class="text-right">
+    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-chasis-retail" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
+</div>
+<div class="card card-primary card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+        <ul class="nav nav-tabs " id="custom-content-above-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab-chasis-retail" data-toggle="pill" href="#tab-chasis" role="tab">
+                    <i class="fa fa-bus"></i>
+                    Chasis Retail</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" hidden="hidden" id="tab-spk-tab" data-toggle="pill" href="#tab-spk"
+                    role="tab">
+                    <i class="fas fa-luggage-cart"></i>
+                    Proses SPK</a>
+            </li>
 
-                </ul>
-                <div class="tab-content" id="custom-content-below-tabContent">
+        </ul>
+        <div class="tab-content" id="custom-content-below-tabContent">
 
-                    <div class="tab-pane fade show active" id="tab-chasis" role="tabpanel" aria-labelledby="tab-chasis-retail">
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover text-nowrap" id="tabel-chasis">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Tgl Masuk</th>
-                                            <th>Retail</th>
-                                            <th>Pemesan</th>
-                                            <th>Alamat</th>
-                                            <th>No NPWP</th>
-                                            <th>Nama NPWP</th>
-                                            <th>Alamat NPWP</th>
-                                            <th>Tlp Pemesan</th>
-                                            <th>Contact Person</th>
-                                            <th>Nama BPKB</th>
-                                            <th>No KTP</th>
-                                            <th>Alamat BPKP</th>
-                                            <th>Type</th>
-                                            <th>No Rangka</th>
-                                            <th>No Mesin</th>
-                                            <th>Plat Kendaraan</th>
-                                            <th>Sales</th>
-                                            <th>Gesekan</th>
-                                            <th>Thn Produksi</th>
-                                            <th>Pengiriman</th>
-                                            <th>Harga Retail</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tempat-modal"></div>
-                    <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
-
-
-                        <div id="data-proses-spk"></div>
-
+            <div class="tab-pane fade show active" id="tab-chasis" role="tabpanel" aria-labelledby="tab-chasis-retail">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover text-nowrap" id="tabel-chasis">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tgl Masuk</th>
+                                    <th>Retail</th>
+                                    <th>Pemesan</th>
+                                    <th>Alamat</th>
+                                    <th>No NPWP</th>
+                                    <th>Nama NPWP</th>
+                                    <th>Alamat NPWP</th>
+                                    <th>Tlp Pemesan</th>
+                                    <th>Contact Person</th>
+                                    <th>Nama BPKB</th>
+                                    <th>No KTP</th>
+                                    <th>Alamat BPKP</th>
+                                    <th>Type</th>
+                                    <th>No Rangka</th>
+                                    <th>No Mesin</th>
+                                    <th>Plat Kendaraan</th>
+                                    <th>Sales</th>
+                                    <th>Gesekan</th>
+                                    <th>Thn Produksi</th>
+                                    <th>Pengiriman</th>
+                                    <th>Harga Retail</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+            <div id="tempat-modal"></div>
+            <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
 
+
+                <div id="data-proses-spk"></div>
+
+            </div>
         </div>
     </div>
-</section>
+
+</div>
 
 <?php
 show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
@@ -399,32 +393,33 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
             }
         });
     })
+
     function cariChasis() {
-		//var tgl_po = document.getElementById("tgl_po").value;
-		$.get('<?php echo base_url('ChasisRetail/dataChasis'); ?>',
-			function(data) {
-				// success: function (data) {
-				//MyTable.fnDestroy(); //refresh();
-				$('#data-chasis').html(data);
-			})
-	}
+        //var tgl_po = document.getElementById("tgl_po").value;
+        $.get('<?php echo base_url('ChasisRetail/dataChasis'); ?>',
+            function(data) {
+                // success: function (data) {
+                //MyTable.fnDestroy(); //refresh();
+                $('#data-chasis').html(data);
+            })
+    }
     var MyTable = $('#list-chasis').dataTable({
-		"responsive": false,
-		"paging": true,
-		"lengthChange": true,
-		"searching": true,
-		"ordering": true,
-		"info": true
-	});
-    function selectData(no_rangka,type,no_mesin,thn_produksi) {
+        "responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true
+    });
 
-		$('[name = "no_rangka"]').val(no_rangka);
-		$('[name = "type"]').val(type);
-		$('[name = "no_mesin"]').val(no_mesin);
-		$('[name = "thn_produksi"]').val(thn_produksi);
+    function selectData(no_rangka, type, no_mesin, thn_produksi) {
+
+        $('[name = "no_rangka"]').val(no_rangka);
+        $('[name = "type"]').val(type);
+        $('[name = "no_mesin"]').val(no_mesin);
+        $('[name = "thn_produksi"]').val(thn_produksi);
 
 
-		$('#modal_chasis').modal('hide');
-	}
-
+        $('#modal_chasis').modal('hide');
+    }
 </script>

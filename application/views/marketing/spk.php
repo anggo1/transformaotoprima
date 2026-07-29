@@ -232,7 +232,6 @@
                                         placeholder="No Telepon">
                                 </div>
                             </div>
-                    </div>
 
                     <h1 style="display:block; text-align:center;">
                     </h1>
@@ -377,7 +376,7 @@
                                     <div class="col-12">
                                         <label class="col-form-label">Harga Off The Road</label>
                                         <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="<?php echo !empty($ch->harga_retail) ? $ch->harga_retail : ''; ?>"
-                                            onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
+                                            onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
 
 
                                             class="form-control" placeholder="0" style="text-align:right;">
@@ -464,7 +463,7 @@
                                                 <label class="col-form-label">Total Harga Jual</label>
                                                 <input type="text" name="total_harga_jual" id="total_harga_jual"
                                                     value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
+                                                    onchange="formatNumber(this);" onblur="formatNumber(this);" class="form-control"
                                                     placeholder="Total Harga Jual" style="text-align:right;" readonly>
                                             </div>
                                         </div>
@@ -479,8 +478,9 @@
                         <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden" data-id=""
                             title="Add Data"><i class="fas fa-print"></i>
                             Cetak Data</button>
-                        </form>
                     </div>
+                    </div>
+                        </form>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -490,9 +490,9 @@
                             <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
                                 Keterangan</h3>
                             <div class="text-right">
-                                <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i
+                                <!--<button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i
                                         class="fas fa-plus"></i>
-                                    Standart Keterangan</button>
+                                    Standart Keterangan</button>-->
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
                                     Add</button>
@@ -526,33 +526,6 @@
             <div id="data-po-cache"></div>
         </div>
         <div class="modal fade" id="modal_form" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body form">
-                        <div class="card card-first card-outline">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table width="100%" class="table no-wrap table-hover nowrap" id="table-part">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>No Part</th>
-                                                <th>Nama Part</th>
-                                                <th>Satuan</th>
-                                                <th>Stok</th>
-                                                <th>Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        <tfoot></tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 </section>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
@@ -579,14 +552,6 @@
         date: moment()
     });
 
-    var MyTable = $('#list-po').dataTable({
-        "responsive": true,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true
-    });
 
     var tableKeterangan = $('#list-keterangan').dataTable({
         "responsive": false,
@@ -625,16 +590,17 @@
     //function ganti(",");
     function Calculate() {
 
-        var a = document.formSpk.jml_unit.value;
-        var b = document.formSpk.hrg_off_the_road.value.replace(/\D/g, '');
-        var c = document.formSpk.biaya_bbn.value.replace(/\D/g, '');
-        var d = document.formSpk.hrg_tambahan_1.value.replace(/\D/g, '');
-        var e = document.formSpk.hrg_tambahan_2.value.replace(/\D/g, '');
-        var f = document.formSpk.hrg_tambahan_3.value.replace(/\D/g, '');
-        var g = document.formSpk.hrg_tambahan_4.value.replace(/\D/g, '');
-        document.formSpk.hrg_on_the_road.value = NilaiRupiah(((b * 1) + (c * 1)) * a);
-        document.formSpk.hrg_jual_perunit.value = NilaiRupiah((b * 1) + (c * 1) + (d * a) + (e * a) + (f * a) + (g * a) / (a * 1));
-        document.formSpk.total_harga_jual.value = NilaiRupiah((((b * 1) + (c * 1)) * a) + (d * a) + (e * a) + (f * a) + (g * a));
+        //var a = document.formSpk.jml_unit.value;
+        var a = document.getElementById("jml_unit").value;
+        var b = document.getElementById("hrg_off_the_road").value.replace(/\D/g, '');
+        var c = document.getElementById("biaya_bbn").value.replace(/\D/g, '');
+        var d = document.getElementById("hrg_tambahan_1").value.replace(/\D/g, '');
+        var e = document.getElementById("hrg_tambahan_2").value.replace(/\D/g, '');
+        var f = document.getElementById("hrg_tambahan_3").value.replace(/\D/g, '');
+        var g = document.getElementById("hrg_tambahan_4").value.replace(/\D/g, '');
+        document.getElementById("hrg_on_the_road").value = NilaiRupiah(((b * 1) + (c * 1)) * a);
+        document.getElementById("hrg_jual_perunit").value = NilaiRupiah((b * 1) + (c * 1) + (d * a) + (e * a) + (f * a) + (g * a) / (a * 1));
+        document.getElementById("total_harga_jual").value = NilaiRupiah((((b * 1) + (c * 1)) * a) + (d * a) + (e * a) + (f * a) + (g * a));
         //document.formSpk.hrg_on_the_road.value = NilaiRupiah(((b * 1) + (c * 1)+ (d * 1)+ (e * 1)+ (f * 1)+ (g * 1)) * a);
 
     }
@@ -644,7 +610,7 @@
     }
 
     function next(dataPo, dataRef) {
-        document.getElementById('id_estimasi_penawaran').value = dataPo;
+        document.getElementById('no_ref').value = dataPo;
         document.getElementById('kode_ref').value = dataRef;
         var d = document.getElementById("cetak");
         d.setAttribute('data-id', dataPo);
@@ -662,11 +628,11 @@
     }
 
     function insertNote() {
-        var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value;
+        var no_ref = document.getElementById('no_ref').value;
         $.ajax({
             type: 'POST',
-            url: '<?php echo base_url('Spk/tambahNote'); ?>',
-            data: 'id=' + id_estimasi_penawaran,
+            url: '<?php echo base_url('ChasisRetail/tambahNote'); ?>',
+            data: 'id=' + no_ref,
             success: function(hasil) {
                 tampilKeterangan()
             }
@@ -677,7 +643,7 @@
         var no_urut = document.getElementById('no_urut').value;
         $.ajax({
             type: 'POST',
-            url: '<?php echo base_url('Spk/tampilKeterangan'); ?>',
+            url: '<?php echo base_url('ChasisRetail/tampilKeterangan'); ?>',
             data: 'no_urut=' + no_urut,
             success: function(hasil) {
                 tableKeterangan.fnDestroy();
@@ -695,7 +661,7 @@
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Spk/tambahKeterangan'); ?>',
+                url: '<?php echo base_url('ChasisRetail/tambahKeterangan'); ?>',
                 data: data + "&id=" + id + "&no_spk=" + no_spk
             })
             .done(function(data) {
@@ -761,12 +727,12 @@
     /** end Keterangan */
     function tampilDetailCache(dataPo) {
         //var out = jQuery.parseJSON(data);
-        var id_estimasi_penawaran = document.getElementById('id_estimasi_penawaran').value = dataPo;
+        var no_ref = document.getElementById('no_ref').value = dataPo;
         $.ajax({
             type: 'GET',
-            url: '<?php echo base_url('EstimasiPenawaran/tampilDetailCache'); ?>?id_estimasi_penawaran=' +
-                id_estimasi_penawaran,
-            data: 'id_estimasi_penawaran=' + id_estimasi_penawaran,
+            url: '<?php echo base_url('ChasisRetail/tampilDetailCache'); ?>?no_ref=' +
+                no_ref,
+            data: 'no_ref=' + no_ref,
             success: function(hasil) {
                 MyTable.fnDestroy();
                 $('#data-po-cache').html(hasil);
@@ -779,7 +745,7 @@
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Spk/prosesSpk'); ?>',
+                url: '<?php echo base_url('ChasisRetail/prosesSpk'); ?>',
                 data: data
             })
             .done(function(data) {
@@ -829,7 +795,7 @@
         //var id = document.getElementById('next_proses').value=datakode;
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Spk/cetak'); ?>",
+                url: "<?php echo base_url('ChasisRetail/cetak'); ?>",
                 data: "id=" + id
             })
             .done(function(data) {
@@ -846,7 +812,7 @@
 
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Spk/deleteKeterangan'); ?>",
+                url: "<?php echo base_url('ChasisRetail/deleteKeterangan'); ?>",
                 data: "id=" + id
             })
             .done(function(data) {
