@@ -93,15 +93,12 @@ table.dataTable td {
                                 <tr>
                                     <th>No</th>
                                     <th>Tgl Masuk</th>
-                                    <th>Retail</th>
                                     <th>Type</th>
                                     <th>No Rangka</th>
                                     <th>No Mesin</th>
-                                    <th>Sales</th>
-                                    <th>Gesekan</th>
                                     <th>Thn Produksi</th>
-                                    <th>Customer</th>
-                                    <th>Pengiriman</th>
+                                    <th>Jumlah</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -159,14 +156,14 @@ $(document).ready(function() {
             "type": "POST"
         },
         "columnDefs": [{
-            "targets": [0, 11],
+            "targets": [0, 8],
             "orderable": false,
         }, ],
 
     });
 
 });
-$('#form-tambah-chasis').submit(function(e) {
+$('#form-tambah-chasis-retail').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
@@ -181,8 +178,8 @@ $('#form-tambah-chasis').submit(function(e) {
                 $('.form-msg').html(out.msg);
                 effect_msg_form();
             } else {
-                document.getElementById("form-tambah-chasis").reset();
-                $('#tambah-chasis').modal('hide');
+                document.getElementById("form-tambah-chasis-retail").reset();
+                $('#tambah-chasis-retail').modal('hide');
                 $('.msg').html(out.msg);
                 table.ajax.reload();
                 Swal.fire({
@@ -198,7 +195,7 @@ $('#form-tambah-chasis').submit(function(e) {
     e.preventDefault();
 });
 
-$(document).on("click", ".update-chasis", function() {
+$(document).on("click", ".update-chasis-retail", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
@@ -209,12 +206,12 @@ $(document).on("click", ".update-chasis", function() {
         .done(function(data) {
             //var out = jQuery.parseJSON(data);
             $('#tempat-modal').html(data);
-            $('#update-chasis').modal('show');
+            $('#update-chasis-retail').modal('show');
 
         })
 
 })
-$(document).on('submit', '#form-update-chasis', function(e) {
+$(document).on('submit', '#form-update-chasis-retail', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
@@ -230,8 +227,8 @@ $(document).on('submit', '#form-update-chasis', function(e) {
                 $('.form-msg').html(out.msg);
                 effect_msg_form();
             } else {
-                document.getElementById("form-update-chasis").reset();
-                $('#update-chasis').modal('hide');
+                document.getElementById("form-update-chasis-retail").reset();
+                $('#update-chasis-retail').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -246,11 +243,11 @@ $(document).on('submit', '#form-update-chasis', function(e) {
     e.preventDefault();
 });
 
-$('#tambah-chasis').on('hidden.bs.modal', function() {
+$('#tambah-chasis-retail').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 
-$('#update-chasis').on('hidden.bs.modal', function() {
+$('#update-chasis-retail').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 $(document).on("click", ".delete-chasis", function() {

@@ -115,17 +115,14 @@ class Mod_chasis extends CI_Model
     $tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         $sql = "INSERT INTO tbl_mk_chasis SET
         tgl_masuk		='".$tgl_masuknya."',
-        retail 			='".$data['retail']."',
         type 			='".$data['type']."',
         no_rangka 		='".$data['no_rangka']."',
         no_mesin  		='".$data['no_mesin']."',
-        sales			='".$data['sales']."',
-        gesekan    		='".$data['gesekan']."',
         thn_produksi	='".$data['thn_produksi']."',
-        nama_customer	='".$data['nama_customer']."',
-        pengiriman      ='".$data['pengiriman']."',
         status_chasis  	='S',
         tgl_input  		='".$tgl_input."',
+        jumlah  		='".$data['jumlah']."',
+        keterangan 		='".$data['keterangan']."',
         user  			='".$data['user']."'
 		";
 
@@ -135,16 +132,17 @@ class Mod_chasis extends CI_Model
     }
     function updateChasis( $data)
     {
+        $tgl_input = date('Y-m-d H:i:s');
         $sql = "UPDATE tbl_mk_chasis SET
         retail 			='".$data['retail']."',
         type 			='".$data['type']."',
         no_rangka 		='".$data['no_rangka']."',
         no_mesin  		='".$data['no_mesin']."',
-        sales			='".$data['sales']."',
-        gesekan    		='".$data['gesekan']."',
         thn_produksi	='".$data['thn_produksi']."',
-        nama_customer	='".$data['nama_customer']."',
-        pengiriman      ='".$data['pengiriman']."'
+        status_chasis  	='S',
+        tgl_input  		='".$tgl_input."',
+        jumlah  		='".$data['jumlah']."',
+        keterangan 		='".$data['keterangan']."'
         WHERE id_chasis='".$data['id_chasis']."'";
 
 		$this->db->query($sql);

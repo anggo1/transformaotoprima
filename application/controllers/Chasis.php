@@ -58,15 +58,12 @@ class Chasis extends MY_Controller
             $row = array();
             $row[] = $no;
             $row[] = $cs->tgl_masuk;
-            $row[] = $cs->retail;
             $row[] = $cs->type;
             $row[] = $cs->no_rangka;
             $row[] = $cs->no_mesin;
-            $row[] = $cs->sales;
-            $row[] = $cs->gesekan;
             $row[] = $cs->thn_produksi;
-            $row[] = $cs->nama_customer;
-            $row[] = $cs->pengiriman;
+            $row[] = $cs->jumlah;
+            $row[] = $cs->keterangan;
             if($b->edit_level=="Y" && $b->delete_level=="Y"){
                 $row[]='
                 <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->id_chasis.'">

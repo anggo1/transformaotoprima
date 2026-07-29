@@ -1,0 +1,61 @@
+
+<table class="table table-striped  table-bordered table-hover nowrap responsive" id="list-chasis">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>No Rangka</th>
+											<th>Type</th>
+											<th>No Mesin</th>
+										</tr>
+									</thead>
+									<tbody>
+                        <?php
+            $no = 1;
+            if (!empty($dataChasis)):
+                foreach ($dataChasis as $s):
+            ?>
+            <tr>
+              <td><?php echo $no; ?></td>
+              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              '<?php echo $s->type; ?>',
+              '<?php echo $s->retail; ?>',
+              '<?php echo $s->no_mesin; ?>',
+              '<?php echo $s->sales; ?>',
+              '<?php echo $s->gesekan; ?>',
+              '<?php echo $s->thn_produksi; ?>')"><?php echo $s->no_rangka; ?></td>
+              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              '<?php echo $s->type; ?>',
+              '<?php echo $s->retail; ?>',
+              '<?php echo $s->no_mesin; ?>',
+              '<?php echo $s->sales; ?>',
+              '<?php echo $s->gesekan; ?>',
+              '<?php echo $s->thn_produksi; ?>')"><?php echo $s->type; ?></td>
+              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              '<?php echo $s->type; ?>',
+              '<?php echo $s->retail; ?>',
+              '<?php echo $s->no_mesin; ?>',
+              '<?php echo $s->sales; ?>',
+              '<?php echo $s->gesekan; ?>',
+              '<?php echo $s->thn_produksi; ?>')"><?php echo $s->no_mesin; ?></td>
+            </tr>
+          <?php
+              $no++;
+                endforeach;
+            endif;
+            ?>
+            </tbody>
+            <tfoot></tfoot>
+          </table>
+
+                <script language="javascript">
+		var MyTable = $('#list-chasis').DataTable({
+				"responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "pageLength": 5
+			});
+        </script>
