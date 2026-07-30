@@ -127,8 +127,8 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
     }
 </style>
 
-<?php if (!empty($dataPart)) {
-    foreach ($dataPart as $part) {
+<?php if (!empty($dataSpk)) {
+    foreach ($dataSpk as $ch) {
     }
 } ?>
 <section class="content">
@@ -157,10 +157,11 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                             }
                         }
                         ?>
-                        <form id="formSpk" name="formSpk" method="POST">
+                        <form <?php echo !empty($ch->id_chasis) ? 'id="editSpk"' : 'id="formSpk"'; ?> name="formSpk" method="POST">
                             <div class="row">
 
                                 <input type="hidden" name="id_chasis" id="id_chasis" value="<?php echo !empty($ch->id_chasis) ? $ch->id_chasis : ''; ?>" class="form-control">
+                                <input type="hidden" name="id_spk" id="id_spk" value="<?php echo !empty($ch->id_spk) ? $ch->id_spk : ''; ?>" class="form-control">
                                 <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>"
@@ -320,7 +321,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                         <span class="radio-tick"></span> Bus
                                     </label>
                                     <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == '...') ? 'checked' : ''; ?>  value="..." checked id="radio_t9">
+                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == '...') ? 'checked' : ''; ?>  value="..." id="radio_t9">
                                         <span class="radio-tick"></span> ........
                                     </label>
                                 </div>
@@ -343,24 +344,24 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 
                                     <div class="col-12">
                                         <label class="col-form-label">Jumlah Unit</label>
-                                        <input type="text" name="jml_unit" id="jml_unit" value="<?php echo !empty($ch->jumlah) ? $ch->jumlah : ''; ?>" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
+                                        <input type="text" name="jml_unit" id="jml_unit" value="<?php echo !empty($ch->jml_unit) ? $ch->jml_unit : ''; ?>" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
                                             placeholder="Jumlah Unit">
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Kategori</label>
                                         <div class="radio-buttons">
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" value="BUS" />
+                                                <input type="radio" name="kategori" <?php echo (!empty($ch->kategori) && $ch->kategori == 'BUS') ? 'checked' : ''; ?> value="BUS" />
                                                 <span class="radio-tick-lain"></span>
                                                 BUS
                                             </label>
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" value="TA" checked />
+                                                <input type="radio" name="kategori" value="TA" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TA') ? 'checked' : ''; ?> />
                                                 <span class="radio-tick-lain"></span>
                                                 TA
                                             </label>
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" value="TE" />
+                                                <input type="radio" name="kategori" value="TE" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TE') ? 'checked' : ''; ?> />
                                                 <span class="radio-tick-lain"></span>
                                                 TE
                                             </label>
@@ -368,17 +369,17 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Type</label>
-                                        <input type="text" name="type_kendaraan" id="type_kendaraan"  value="<?php echo !empty($ch->type) ? $ch->type : ''; ?>"
+                                        <input type="text" name="type_kendaraan" id="type_kendaraan"  value="<?php echo !empty($ch->type_kendaraan) ? $ch->type_kendaraan : ''; ?>"
                                             class="form-control" placeholder="Type Kendaraan">
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Warna / Tahun</label>
-                                        <input type="text" name="warna_tahun" id="warna_tahun"  value="<?php echo !empty($ch->thn_produksi) ? $ch->thn_produksi : ''; ?>"
+                                        <input type="text" name="warna_tahun" id="warna_tahun"  value="<?php echo !empty($ch->warna_tahun) ? $ch->warna_tahun : ''; ?>"
                                             class="form-control" placeholder="Warna / Tahun" />
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Harga Off The Road</label>
-                                        <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="<?php echo !empty($ch->harga_retail) ? number_format($ch->harga_retail) : ''; ?>"
+                                        <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="<?php echo !empty($ch->hrg_off_the_road) ? number_format($ch->hrg_off_the_road) : ''; ?>"
                                             onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
 
 
@@ -386,7 +387,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Biaya BBN</label>
-                                        <input type="text" name="biaya_bbn" id="biaya_bbn" value="0"
+                                        <input type="text" name="biaya_bbn" id="biaya_bbn" value="<?php echo !empty($ch->biaya_bbn) ? number_format($ch->biaya_bbn) : ''; ?>"
                                             onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
                                             class="form-control" placeholder="Biaya BBN"
                                             style="text-align:right;">
@@ -409,48 +410,48 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Tambahan 1 </label>
-                                                <input type="text" name="tambahan_1" id="tambahan_1"
+                                                <input type="text" name="tambahan_1" id="tambahan_1" value="<?php echo !empty($ch->tambahan_1) ? $ch->tambahan_1 : ''; ?>"
                                                     class="form-control" placeholder="Keterangan Tambahan">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1"
+                                                <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1" value="<?php echo !empty($ch->hrg_tambahan_1) ? number_format($ch->hrg_tambahan_1) : ''; ?>"
                                                     value="0" onkeyup="formatNumber(this)"
                                                     onchange="formatNumber(this);" class="form-control"
                                                     placeholder="Harga Tambahan" style="text-align:right;">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Tambahan 2 </label>
-                                                <input type="text" name="tambahan_2" id="tambahan_2"
+                                                <input type="text" name="tambahan_2" id="tambahan_2" value="<?php echo !empty($ch->tambahan_2) ? $ch->tambahan_2 : ''; ?>"
                                                     class="form-control" placeholder="Keterangan Tambahan">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2"
+                                                <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2" value="<?php echo !empty($ch->hrg_tambahan_2) ? number_format($ch->hrg_tambahan_2) : ''; ?>"
                                                     value="0" onkeyup="formatNumber(this)"
                                                     onchange="formatNumber(this);" class="form-control"
                                                     placeholder="Harga Tambahan" style="text-align:right;">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Tambahan 3 </label>
-                                                <input type="text" name="tambahan_3" id="tambahan_3"
+                                                <input type="text" name="tambahan_3" id="tambahan_3" value="<?php echo !empty($ch->tambahan_3) ? $ch->tambahan_3 : ''; ?>"
                                                     class="form-control" placeholder="Keterangan Tambahan">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3"
+                                                <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3" value="<?php echo !empty($ch->hrg_tambahan_3) ? number_format($ch->hrg_tambahan_3) : ''; ?>"
                                                     value="0" onkeyup="formatNumber(this)"
                                                     onchange="formatNumber(this);" class="form-control"
                                                     placeholder="Harga Tambahan" style="text-align:right;">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Tambahan 4 </label>
-                                                <input type="text" name="tambahan_4" id="tambahan_4"
+                                                <input type="text" name="tambahan_4" id="tambahan_4" value="<?php echo !empty($ch->tambahan_4) ? $ch->tambahan_4 : ''; ?>"
                                                     class="form-control" placeholder="Keterangan Tambahan">
                                             </div>
                                             <div class="col-6">
                                                 <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4"
+                                                <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4" value="<?php echo !empty($ch->hrg_tambahan_4) ? number_format($ch->hrg_tambahan_4) : ''; ?>"
                                                     value="0" onkeyup="formatNumber(this)"
                                                     onchange="formatNumber(this);" class="form-control"
                                                     placeholder="Harga Tambahan" style="text-align:right;">
@@ -749,6 +750,53 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
         $.ajax({
                 method: 'POST',
                 url: '<?php echo base_url('ChasisRetail/prosesSpk'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                if (out.status == 'form') {
+                    //toastr.error(out.msg);
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    $('.msg').html(out.msg);
+                    $('.dataPo').html(out.dataPo);
+                    //tampilDetail(out.dataPo)
+                    //document.getElementById("formSpk").reset();
+
+                    var d = document.getElementById("cetak");
+                    d.setAttribute('data-id', out.dataPo);
+                    var d = document.getElementById("cetak-ulang");
+                    d.setAttribute('data-id', out.dataPo);
+                    document.getElementById("cetak").hidden = false;
+                    document.getElementById("data-po").hidden = true;
+                    document.getElementById("simpan").hidden = true;
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+     $('#editSpk').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('ChasisRetail/Proses_updateSpk'); ?>',
                 data: data
             })
             .done(function(data) {

@@ -321,4 +321,12 @@ class Mod_chasis_retail extends CI_Model
 
         return $data->result();
     }
+	function select_by_id_spk($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_mk_spk');
+		$this->db->where('id_chasis=', $id);
+		$data = $this->db->get();
+		return $data->result();
+	}
 }

@@ -157,26 +157,25 @@
 show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 <script type="text/javascript">
-    
-$('#customer').select2({
-  escapeMarkup: function(markup) {
-    return markup; // Allow HTML in results
-  },
-  templateResult: function(data) {
-    if (!data.id) {
-      return data.text; // Return placeholder for empty search
-    }
-    // Read custom data attributes or split your content
-    var col1 = data.text;
-    var col2 = $(data.element).data('details') || '';
-    
-    // Return custom multi-column HTML
-    return '<div style="display: flex; justify-content: space-between;">' +
-             '<span style="font-weight: bold;">' + col1 + '</span>' +
-             '<span style="color: gray;">' + col2 + '</span>' +
-           '</div>';
-  }
-});
+    $('#customer').select2({
+        escapeMarkup: function(markup) {
+            return markup; // Allow HTML in results
+        },
+        templateResult: function(data) {
+            if (!data.id) {
+                return data.text; // Return placeholder for empty search
+            }
+            // Read custom data attributes or split your content
+            var col1 = data.text;
+            var col2 = $(data.element).data('details') || '';
+
+            // Return custom multi-column HTML
+            return '<div style="display: flex; justify-content: space-between;">' +
+                '<span style="font-weight: bold;">' + col1 + '</span>' +
+                '<span style="color: gray;">' + col2 + '</span>' +
+                '</div>';
+        }
+    });
 
     $('#tgl_masuk').datetimepicker({
         format: 'DD-MM-YYYY',
@@ -407,6 +406,62 @@ $('#customer').select2({
             })
     })
 
+    //SPK
+
+     $(document).on("click", ".update-spk", function() {
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url('ChasisRetail/updateSpk'); ?>',
+            data: 'id=' + id,
+            success: function(hasil) {
+                //$('#id_lapor').val(id);
+                //MyTable.fnDestroy();
+
+                //$('#tabel-operation').DataTable();
+                $('#data-proses-spk').html(hasil);
+                document.getElementById("tab-spk-tab").hidden = false;
+                $("a[href='#tab-spk']").tab('show');
+                startCalculate();
+                //tampilLabor();
+                //refresh();
+            }
+        });
+    })
+    $(document).on('submit', '#form-update-spk', function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('Chasis/prosesUchasis'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                table.ajax.reload();
+                if (out.status == 'form') {
+                    $('.form-msg').html(out.msg);
+                    effect_msg_form();
+                } else {
+                    document.getElementById("form-update-chasis").reset();
+                    $('#update-chasis').modal('hide');
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
+    });
+
+
     $(document).on("click", ".proses-spk", function() {
         var id = $(this).attr("data-id");
 
@@ -458,7 +513,7 @@ $('#customer').select2({
 
         $('#modal_chasis').modal('hide');
     }
-        $(document).on("click", ".print-spk", function() {
+    $(document).on("click", ".print-spk", function() {
         var id = $(this).attr("data-id");
         //var id = document.getElementById('next_proses').value=datakode;
         $.ajax({
