@@ -1,3 +1,5 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');?>
 <style>
     .radio-buttons {
         height: auto;
@@ -158,6 +160,7 @@
                         <form id="formSpk" name="formSpk" method="POST">
                             <div class="row">
 
+                                <input type="hidden" name="id_chasis" id="id_chasis" value="<?php echo !empty($ch->id_chasis) ? $ch->id_chasis : ''; ?>" class="form-control">
                                 <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>"
@@ -340,7 +343,7 @@
 
                                     <div class="col-12">
                                         <label class="col-form-label">Jumlah Unit</label>
-                                        <input type="text" name="jml_unit" id="jml_unit" value="0" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
+                                        <input type="text" name="jml_unit" id="jml_unit" value="<?php echo !empty($ch->jumlah) ? $ch->jumlah : ''; ?>" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
                                             placeholder="Jumlah Unit">
                                     </div>
                                     <div class="col-12">
@@ -365,17 +368,17 @@
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Type</label>
-                                        <input type="text" name="type_kendaraan" id="type_kendaraan" value=""
+                                        <input type="text" name="type_kendaraan" id="type_kendaraan"  value="<?php echo !empty($ch->type) ? $ch->type : ''; ?>"
                                             class="form-control" placeholder="Type Kendaraan">
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Warna / Tahun</label>
-                                        <input type="text" name="warna_tahun" id="warna_tahun" value=""
+                                        <input type="text" name="warna_tahun" id="warna_tahun"  value="<?php echo !empty($ch->thn_produksi) ? $ch->thn_produksi : ''; ?>"
                                             class="form-control" placeholder="Warna / Tahun" />
                                     </div>
                                     <div class="col-12">
                                         <label class="col-form-label">Harga Off The Road</label>
-                                        <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="<?php echo !empty($ch->harga_retail) ? $ch->harga_retail : ''; ?>"
+                                        <input type="text" name="hrg_off_the_road" id="hrg_off_the_road" value="<?php echo !empty($ch->harga_retail) ? number_format($ch->harga_retail) : ''; ?>"
                                             onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
 
 
@@ -765,12 +768,13 @@
                     $('.msg').html(out.msg);
                     $('.dataPo').html(out.dataPo);
                     //tampilDetail(out.dataPo)
-                    document.getElementById("formSpk").reset();
+                    //document.getElementById("formSpk").reset();
 
                     var d = document.getElementById("cetak");
                     d.setAttribute('data-id', out.dataPo);
+                    var d = document.getElementById("cetak-ulang");
+                    d.setAttribute('data-id', out.dataPo);
                     document.getElementById("cetak").hidden = false;
-                    document.getElementById("tambah").hidden = false;
                     document.getElementById("data-po").hidden = true;
                     document.getElementById("simpan").hidden = true;
 

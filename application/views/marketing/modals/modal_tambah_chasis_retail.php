@@ -59,6 +59,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Nama Pemesan</label>
                                 <div class="col-sm-4">
+                                    <input type="hidden" name="chasis_id" id="chasis_id" value="<?php if (!empty($ch->chasis_id)) { echo $ch->chasis_id;} ?>" class="form-control">
                                     <input type="text" name="nama_pemesan" id="nama_pemesan"
                                         onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->nama_pemesan)) {
                                                                                                     echo $ch->nama_pemesan;
@@ -226,12 +227,22 @@
                                     </div>
                                 </div>
                                 <label class="col-sm-2 col-form-label">Customer</label>
-                                <div class="col-sm-4"> <input type="text" name="nama_customer" id="nama_customer"
-                                        onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->nama_customer)) {
-                                                                                                    echo $ch->nama_customer;
-                                                                                                } ?>"
-                                        class="form-control">
-                                </div>
+                        <div class="col-sm-4">
+                            <select name="customer" id="customer" class="form-control select2">
+                                <option value="">Customer...
+                                </option>
+                                <?php
+											if (!empty($dataCus)) {
+												foreach ($dataCus as $sp) {   ?>
+                                <option value="<?php echo $sp->kode_cus . '|' . $sp->nama_customer; ?>">
+                                    <?php echo $sp->nama_customer; ?>
+                                </option>
+                                <?php
+												}
+											}
+											?>
+                            </select>
+                        </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Pengiriman</label>
@@ -245,9 +256,7 @@
 
                                 <label class="col-sm-2 col-form-label">Jumlah</label>
                                 <div class="col-sm-4"> <input type="text" name="jumlah" id="jumlah"
-                                        onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->jumlah)) {
-                                                                                                    echo $ch->jumlah;
-                                                                                                } ?>"
+                                        onkeyup="this.value = this.value.toUpperCase();" value="0"
                                         class="form-control">
                                 </div>
                             </div>
@@ -260,10 +269,8 @@
                                                                                                 } ?>"class="form-control">
                                 </div>                                    
                                 <label class="col-sm-2 col-form-label">Harga</label>
-                            <div class="col-sm-4"> <input type="text" name="harga_retail" id="harga_retail"
-                                    onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->jumlah)) {
-                                                                                                echo $ch->jumlah;
-                                                                                            } ?>" class="form-control">
+                            <div class="col-sm-4"> <input type="text" name="harga_retail" id="harga_retail" value="0" onkeyup="formatNumber(this)"
+                                                    onchange="formatNumber(this);" onblur="formatNumber(this);" value="0"class="form-control">
                             </div>
 
                             </div>

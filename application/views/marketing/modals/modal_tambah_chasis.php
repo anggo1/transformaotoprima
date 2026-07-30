@@ -145,8 +145,8 @@
                             </div>
                             <input type="hidden" name="user" id="user" value="<?php echo $this->session->userdata['full_name']; ?>"
                                 class="form-control">
-                            <input type="hidden" name="id_chasis" id="id_chasis" value="<?php if (!empty($ch->id_chasis)) {
-                                                                                            echo $ch->id_chasis;
+                            <input type="hidden" name="chasis_id" id="chasis_id" value="<?php if (!empty($ch->chasis_id)) {
+                                                                                            echo $ch->chasis_id;
                                                                                         } ?>" class="form-control">
 
                         </div>

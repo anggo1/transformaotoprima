@@ -6,7 +6,7 @@ class Mod_chasis extends CI_Model
 	var $table = 'tbl_mk_chasis';
 	var $column_search = array('tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman'); 
 	var $column_order = array('null','tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman');
-	var $order = array('id_chasis' => 'desc'); 
+	var $order = array('chasis_id' => 'desc'); 
 	function __construct()
 	{
 		parent::__construct();
@@ -103,7 +103,7 @@ class Mod_chasis extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_mk_chasis');
-        $this->db->where('tbl_mk_chasis.id_chasis=',$id);
+        $this->db->where('tbl_mk_chasis.chasis_id=',$id);
         $data = $this->db->get();
         return $data->result();
     }
@@ -143,7 +143,7 @@ class Mod_chasis extends CI_Model
         tgl_input  		='".$tgl_input."',
         jumlah  		='".$data['jumlah']."',
         keterangan 		='".$data['keterangan']."'
-        WHERE id_chasis='".$data['id_chasis']."'";
+        WHERE chasis_id='".$data['chasis_id']."'";
 
 		$this->db->query($sql);
 
@@ -158,7 +158,7 @@ class Mod_chasis extends CI_Model
 
 	function deleteChasis($id)
     {
-        $sql = "DELETE FROM tbl_mk_chasis WHERE id_chasis='{$id}'";
+        $sql = "DELETE FROM tbl_mk_chasis WHERE chasis_id='{$id}'";
 
 		$this->db->query($sql);
 

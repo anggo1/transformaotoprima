@@ -163,7 +163,7 @@ $(document).ready(function() {
     });
 
 });
-$('#form-tambah-chasis-retail').submit(function(e) {
+$('#form-tambah-chasis').submit(function(e) {
     var data = $(this).serialize();
 
     $.ajax({
@@ -178,8 +178,8 @@ $('#form-tambah-chasis-retail').submit(function(e) {
                 $('.form-msg').html(out.msg);
                 effect_msg_form();
             } else {
-                document.getElementById("form-tambah-chasis-retail").reset();
-                $('#tambah-chasis-retail').modal('hide');
+                document.getElementById("form-tambah-chasis").reset();
+                $('#tambah-chasis').modal('hide');
                 $('.msg').html(out.msg);
                 table.ajax.reload();
                 Swal.fire({
@@ -195,7 +195,7 @@ $('#form-tambah-chasis-retail').submit(function(e) {
     e.preventDefault();
 });
 
-$(document).on("click", ".update-chasis-retail", function() {
+$(document).on("click", ".update-chasis", function() {
     var id = $(this).attr("data-id");
 
     $.ajax({
@@ -206,12 +206,12 @@ $(document).on("click", ".update-chasis-retail", function() {
         .done(function(data) {
             //var out = jQuery.parseJSON(data);
             $('#tempat-modal').html(data);
-            $('#update-chasis-retail').modal('show');
+            $('#update-chasis').modal('show');
 
         })
 
 })
-$(document).on('submit', '#form-update-chasis-retail', function(e) {
+$(document).on('submit', '#form-update-chasis', function(e) {
     var data = $(this).serialize();
 
     $.ajax({
@@ -227,8 +227,8 @@ $(document).on('submit', '#form-update-chasis-retail', function(e) {
                 $('.form-msg').html(out.msg);
                 effect_msg_form();
             } else {
-                document.getElementById("form-update-chasis-retail").reset();
-                $('#update-chasis-retail').modal('hide');
+                document.getElementById("form-update-chasis").reset();
+                $('#update-chasis').modal('hide');
                 $('.msg').html(out.msg);
                 Swal.fire({
                     position: 'center',
@@ -243,18 +243,18 @@ $(document).on('submit', '#form-update-chasis-retail', function(e) {
     e.preventDefault();
 });
 
-$('#tambah-chasis-retail').on('hidden.bs.modal', function() {
+$('#tambah-chasis').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 
-$('#update-chasis-retail').on('hidden.bs.modal', function() {
+$('#update-chasis').on('hidden.bs.modal', function() {
     $('.form-msg').html('');
 })
 $(document).on("click", ".delete-chasis", function() {
-    id_chasis = $(this).attr("data-id");
+    chasis_id = $(this).attr("data-id");
 })
 $(document).on("click", ".hapus-chasis", function() {
-    var id = id_chasis;
+    var id = chasis_id;
 
     $.ajax({
             method: "POST",

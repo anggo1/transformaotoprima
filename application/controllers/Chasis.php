@@ -66,13 +66,13 @@ class Chasis extends MY_Controller
             $row[] = $cs->keterangan;
             if($b->edit_level=="Y" && $b->delete_level=="Y"){
                 $row[]='
-                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->id_chasis.'">
-                <i class="fa fa-edit"></i></button><button class="btn btn-sm btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="'.$cs->id_chasis.'"><i class="fa fa-trash"></i>
+                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->chasis_id.'">
+                <i class="fa fa-edit"></i></button><button class="btn btn-sm btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="'.$cs->chasis_id.'"><i class="fa fa-trash"></i>
                 </button>';
             }
             if($b->edit_level=="Y" && $b->delete_level=="N"){
                 $row[]='
-                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->id_chasis.'"><i class="fa fa-edit"></i>
+                <button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="'.$cs->chasis_id.'"><i class="fa fa-edit"></i>
                 </button>';
             }else{
                 $row[]='';

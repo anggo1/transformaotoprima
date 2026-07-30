@@ -17,6 +17,7 @@ class ChasisRetail extends MY_Controller
         $data['judul']         = "Chasis Retail";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
+		$data['dataCus'] = $this->Mod_chasis_retail->select_customer();
 
         $link = $this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
@@ -72,20 +73,31 @@ class ChasisRetail extends MY_Controller
                 $row[] = $cs->type;
                 $row[] = $cs->no_rangka;
                 $row[] = $cs->no_mesin;
-                $row[] = ($cs->plat_kendaraan == 'K' ? 'Kuning' : ($cs->plat_kendaraan == 'H' ? 'Hitam' : 'Merah'));
                 $row[] = $cs->sales;
                 $row[] = $cs->gesekan;
                 $row[] = $cs->thn_produksi;
                 $row[] = $cs->pengiriman;
-                $row[] = $cs->harga_retail;
+                $row[] = number_format($cs->harga_retail);
                 if ($b->edit_level == "Y" && $b->delete_level == "Y") {
-                    $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"></i></button>'
-                        . '<button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i></button>'
-                        . '<button class="btn btn-sm btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="' . $cs->id_chasis . '"><i class="fa fa-trash"></i></button>';
+                    if ($cs->status == 'N') {
+                        $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"> Edit</i></button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="' . $cs->id_chasis .'|'.$cs->chasis_id. '|'.$cs->jumlah. '"><i class="fa fa-trash"></i> Delete</button>';
+                    } elseif ($cs->status == 'P') {
+                        $row[] = '<button class="btn btn-sm btn-outline-info print-spk" title="Edit" id="cetak-ulang" data-id="' . $cs->id_chasis . '"><i class="fa fa-print"></i> Print SPK</button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success update-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i> Edit SPK</button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success close-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-close"></i> Closing</button> &nbsp;';
+                    }
                 }
                 if ($b->edit_level == "Y" && $b->delete_level == "N") {
-                    $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"></i></button>'
-                        . '<button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i></button>';
+                    if ($cs->status == 'N') {
+                        $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"> Edit</i></button> &nbsp;';
+                    } elseif ($cs->status == 'P') {
+                        $row[] = '<button class="btn btn-sm btn-outline-info print-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-print"></i> Print SPK</button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success update-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i> Edit SPK</button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success close-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-close"></i> Closing</button> &nbsp;';
+                    }
                 } else {
                     $row[] = '';
                 }
@@ -159,8 +171,12 @@ class ChasisRetail extends MY_Controller
 
     public function deleteChasis()
     {
-        $id = $_POST['id'];
-        $result = $this->Mod_chasis_retail->deleteChasis($id);
+        $idS = $_POST['id'];
+        $kat = explode('|', $idS);
+        $id = $kat[0];
+        $chasis_id = $kat[1];
+        $jumlah = $kat[2];
+        $result = $this->Mod_chasis_retail->deleteChasis($id,$chasis_id,$jumlah);
 
         if ($result > 0) {
             $out['status'] = '';
@@ -216,6 +232,9 @@ class ChasisRetail extends MY_Controller
 		
 		$sekarang= date("Y-m");
 		$this->form_validation->set_rules('nama_pemesan', 'Nama Pemesan', 'trim|required');
+		$this->form_validation->set_rules('plat_kendaraan', 'Plat Kendaraan', 'trim|required');
+		$this->form_validation->set_rules('type_body', 'Type Body', 'trim|required');
+		$this->form_validation->set_rules('kategori', 'Kategori', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
@@ -258,6 +277,7 @@ class ChasisRetail extends MY_Controller
 				'no_spk'   => $no_spk,
 				'tgl_spk'  	=> date("Y-m-d"),
 				'nama_pemesan'	=> $data['nama_pemesan'],
+				'id_chasis'	=> $data['id_chasis'],
 				'alamat_pemesan'	=> $data['alamat_pemesan'],
 				'telp_pemesan' => $data['telp_pemesan'],
 				'faktur_pajak' => $data['faktur_pajak'],
@@ -288,10 +308,13 @@ class ChasisRetail extends MY_Controller
 				'hrg_tambahan_4' => $tambah4,
 				'hrg_jual_perunit' => $perunit,
 				'total_hrg_jual' => $total_harga,
-				'user'   	=> $data['user']
+				'user'   	=> $data['user'],
+                'status' => 'P'
 			);
 				$data['dataPo'] = $this->db->insert('tbl_mk_spk', $data);
+				$this->db->where('id_chasis', $data['id_chasis'])->update('tbl_mk_chasis_retail', array('status' => 'P'));
 				$data 	= $this->input->post();
+                //$sql2 = "UPDATE tbl_mk_chasis SET status = 'P' WHERE id_chasis='" . $data['id_chasis'] . "'";
 				
 			if ($result > 0) {
 				$out['dataRef'] = $data['no_urut'];
@@ -347,6 +370,18 @@ class ChasisRetail extends MY_Controller
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
+		$data['dataSpk'] = $this->Mod_chasis_retail->select_by_id($id);
+		$data['detailSpk'] = $this->Mod_chasis_retail->select_keterangan($id);
+
+		echo show_my_print('marketing/modals/modal_cetak_spk', 'cetak-po', $data, ' modal-xl');
+	}
+    public function cetak_ulang()
+	{
+		$idS 				= $_POST['id'];
+        $ci_kons = get_instance();
+                        $query = "SELECT no_urut FROM tbl_mk_spk WHERE id_chasis ='".$idS."'";
+                        $hasil = $ci_kons->db->query($query)->row_array();$id= $hasil['no_urut'];
+
 		$data['dataSpk'] = $this->Mod_chasis_retail->select_by_id($id);
 		$data['detailSpk'] = $this->Mod_chasis_retail->select_keterangan($id);
 

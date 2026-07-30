@@ -16,26 +16,17 @@
             ?>
             <tr>
               <td><?php echo $no; ?></td>
-              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              <td onClick="selectData('<?php echo $s->chasis_id; ?>','<?php echo $s->no_rangka; ?>',
               '<?php echo $s->type; ?>',
-              '<?php echo $s->retail; ?>',
               '<?php echo $s->no_mesin; ?>',
-              '<?php echo $s->sales; ?>',
-              '<?php echo $s->gesekan; ?>',
               '<?php echo $s->thn_produksi; ?>')"><?php echo $s->no_rangka; ?></td>
-              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              <td onClick="selectData('<?php echo $s->chasis_id; ?>','<?php echo $s->no_rangka; ?>',
               '<?php echo $s->type; ?>',
-              '<?php echo $s->retail; ?>',
               '<?php echo $s->no_mesin; ?>',
-              '<?php echo $s->sales; ?>',
-              '<?php echo $s->gesekan; ?>',
               '<?php echo $s->thn_produksi; ?>')"><?php echo $s->type; ?></td>
-              <td onClick="selectData('<?php echo $s->no_rangka; ?>',
+              <td onClick="selectData('<?php echo $s->chasis_id; ?>','<?php echo $s->no_rangka; ?>',
               '<?php echo $s->type; ?>',
-              '<?php echo $s->retail; ?>',
               '<?php echo $s->no_mesin; ?>',
-              '<?php echo $s->sales; ?>',
-              '<?php echo $s->gesekan; ?>',
               '<?php echo $s->thn_produksi; ?>')"><?php echo $s->no_mesin; ?></td>
             </tr>
           <?php

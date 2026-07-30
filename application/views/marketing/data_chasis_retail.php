@@ -70,6 +70,16 @@
     .tombol-warning {
         border-radius: 50%;
     }
+
+    .select2-container {
+        width: 100% !important;
+        /* Memastikan container tidak mengecil */
+    }
+
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+        /* Menjaga tinggi tetap konsisten */
+    }
 </style>
 <div class="text-right">
     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-chasis-retail" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
@@ -115,7 +125,6 @@
                                     <th>Type</th>
                                     <th>No Rangka</th>
                                     <th>No Mesin</th>
-                                    <th>Plat Kendaraan</th>
                                     <th>Sales</th>
                                     <th>Gesekan</th>
                                     <th>Thn Produksi</th>
@@ -131,6 +140,8 @@
                 </div>
             </div>
             <div id="tempat-modal"></div>
+            <div id="modal-po"></div>
+            <div id="data-po"></div>
             <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
 
 
@@ -146,6 +157,27 @@
 show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');
 ?>
 <script type="text/javascript">
+    
+$('#customer').select2({
+  escapeMarkup: function(markup) {
+    return markup; // Allow HTML in results
+  },
+  templateResult: function(data) {
+    if (!data.id) {
+      return data.text; // Return placeholder for empty search
+    }
+    // Read custom data attributes or split your content
+    var col1 = data.text;
+    var col2 = $(data.element).data('details') || '';
+    
+    // Return custom multi-column HTML
+    return '<div style="display: flex; justify-content: space-between;">' +
+             '<span style="font-weight: bold;">' + col1 + '</span>' +
+             '<span style="color: gray;">' + col2 + '</span>' +
+           '</div>';
+  }
+});
+
     $('#tgl_masuk').datetimepicker({
         format: 'DD-MM-YYYY',
         date: moment()
@@ -173,7 +205,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                         $(node).removeClass('btn-secondary')
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
                     }
                 },
                 {
@@ -186,7 +218,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                         $(node).removeClass('btn-secondary')
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
                     }
                 },
                 {
@@ -199,7 +231,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                         $(node).removeClass('btn-secondary')
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
                     }
                 },
                 {
@@ -212,7 +244,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                         $(node).removeClass('btn-secondary')
                     },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
                     }
                 },
                 {
@@ -250,8 +282,10 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                 "type": "POST"
             },
             "columnDefs": [{
-                "targets": [0, 22],
+                "targets": [0, 19],
                 "orderable": false,
+                "visible": false,
+                "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12]
             }, ],
 
         });
@@ -352,7 +386,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Chasis/deleteChasis'); ?>",
+                url: "<?php echo base_url('ChasisRetail/deleteChasis'); ?>",
                 data: "id=" + id
             })
 
@@ -388,6 +422,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                 $('#data-proses-spk').html(hasil);
                 document.getElementById("tab-spk-tab").hidden = false;
                 $("a[href='#tab-spk']").tab('show');
+                startCalculate();
                 //tampilLabor();
                 //refresh();
             }
@@ -412,8 +447,9 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
         "info": true
     });
 
-    function selectData(no_rangka, type, no_mesin, thn_produksi) {
+    function selectData(chasis_id, no_rangka, type, no_mesin, thn_produksi) {
 
+        $('[name = "chasis_id"]').val(chasis_id);
         $('[name = "no_rangka"]').val(no_rangka);
         $('[name = "type"]').val(type);
         $('[name = "no_mesin"]').val(no_mesin);
@@ -422,4 +458,17 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
         $('#modal_chasis').modal('hide');
     }
+        $(document).on("click", ".print-spk", function() {
+        var id = $(this).attr("data-id");
+        //var id = document.getElementById('next_proses').value=datakode;
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('ChasisRetail/cetak_ulang'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#data-po').html(data);
+                $('#cetak-po').modal('show');
+            })
+    })
 </script>
