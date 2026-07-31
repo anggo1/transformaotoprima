@@ -327,7 +327,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
         $.ajax({
                 method: "POST",
-                url: "<?php echo base_url('Chasis/updateChasis'); ?>",
+                url: "<?php echo base_url('ChasisRetail/updateChasis'); ?>",
                 data: "id=" + id
             })
             .done(function(data) {
@@ -338,12 +338,12 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
             })
 
     })
-    $(document).on('submit', '#form-update-chasis', function(e) {
+    $(document).on('submit', '#form-update-chasis-retail', function(e) {
         var data = $(this).serialize();
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Chasis/prosesUchasis'); ?>',
+                url: '<?php echo base_url('ChasisRetail/prosesUchasis'); ?>',
                 data: data
             })
             .done(function(data) {
@@ -351,10 +351,15 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
                 table.ajax.reload();
                 if (out.status == 'form') {
-                    $('.form-msg').html(out.msg);
-                    effect_msg_form();
+                   Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 } else {
-                    document.getElementById("form-update-chasis").reset();
+                    //document.getElementById("form-update-chasis").reset();
                     $('#update-chasis').modal('hide');
                     $('.msg').html(out.msg);
                     Swal.fire({
@@ -434,7 +439,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
         $.ajax({
                 method: 'POST',
-                url: '<?php echo base_url('Chasis/prosesUchasis'); ?>',
+                url: '<?php echo base_url('ChasisRetail/prosesUchasis'); ?>',
                 data: data
             })
             .done(function(data) {
@@ -526,4 +531,5 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                 $('#cetak-po').modal('show');
             })
     })
+    
 </script>

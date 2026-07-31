@@ -50,7 +50,8 @@
                                 </div>
                                 <label class="col-sm-2 col-form-label">No rangka</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="no_rangka" id="no_rangka" data-toggle="modal" data-target="#modal_chasis"  onclick="cariChasis()" value="<?php if (!empty($ch->no_rangka)) {
+                                    <input type="text" name="no_rangka" id="no_rangka" data-toggle="modal"
+                                        data-target="#modal_chasis" onclick="cariChasis()" value="<?php if (!empty($ch->no_rangka)) {
                                                                                             echo $ch->no_rangka;
                                                                                         } ?>" class="form-control">
                                 </div>
@@ -59,7 +60,9 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Nama Pemesan</label>
                                 <div class="col-sm-4">
-                                    <input type="hidden" name="chasis_id" id="chasis_id" value="<?php if (!empty($ch->chasis_id)) { echo $ch->chasis_id;} ?>" class="form-control">
+                                    <input type="hidden" name="chasis_id" id="chasis_id"
+                                        value="<?php if (!empty($ch->chasis_id)) { echo $ch->chasis_id;} ?>"
+                                        class="form-control">
                                     <input type="text" name="nama_pemesan" id="nama_pemesan"
                                         onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->nama_pemesan)) {
                                                                                                     echo $ch->nama_pemesan;
@@ -227,22 +230,28 @@
                                     </div>
                                 </div>
                                 <label class="col-sm-2 col-form-label">Customer</label>
-                        <div class="col-sm-4">
-                            <select name="customer" id="customer" class="form-control select2">
-                                <option value="">Customer...
-                                </option>
-                                <?php
-											if (!empty($dataCus)) {
-												foreach ($dataCus as $sp) {   ?>
-                                <option value="<?php echo $sp->kode_cus . '|' . $sp->nama_customer; ?>">
-                                    <?php echo $sp->nama_customer; ?>
-                                </option>
-                                <?php
-												}
-											}
-											?>
-                            </select>
-                        </div>
+                                <div class="col-sm-4">
+                                    <select name="customer" id="customer" class="form-control select2" required>
+                                        <option value="">Customer..
+                                        </option>
+                                        <?php
+                                                                    if (empty($ch->kode_cus)) {
+                                                                        foreach ($dataCus as $kt) {
+                                                                    ?>
+                                        <option <?php echo $kt == $kt->kode_cus ? 'selected="selected"' : '' ?>
+                                            value="<?php echo $kt->kode_cus . '|' . $kt->nama_customer; ?>">
+                                            <?php echo $kt->nama_customer  ?><?php } ?>
+                                        </option>
+                                        <?php
+                                                                        } else {
+                                                                            foreach ($dataCus as $tk) { ?>
+                                        <option value="<?php echo $tk->kode_cus . '|' . $tk->nama_customer; ?>"
+                                            <?php if ($tk->nama_customer == $ch->nama_customer) {  echo "selected='selected'"; } ?>>
+                                            <?php echo $tk->nama_customer; ?>
+                                        </option>
+                                        <?php } } ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Pengiriman</label>
@@ -255,9 +264,10 @@
                                 </div>
 
                                 <label class="col-sm-2 col-form-label">Jumlah</label>
-                                <div class="col-sm-4"> <input type="text" name="jumlah" id="jumlah"
-                                        onkeyup="this.value = this.value.toUpperCase();" value="0"
-                                        class="form-control">
+                                <div class="col-sm-4"> <input type="text" name="jumlah" id="jumlah" value="<?php if (!empty($ch->jumlah)) {
+                                                                                                    echo number_format($ch->jumlah);
+                                                                                                } ?>"
+                                        onkeyup="this.value = this.value.toUpperCase();" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -266,12 +276,15 @@
                                     <input type="text" name="keterangan" id="keterangan"
                                         onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->keterangan)) {
                                                                                                     echo $ch->keterangan;
-                                                                                                } ?>"class="form-control">
-                                </div>                                    
+                                                                                                } ?>"
+                                        class="form-control">
+                                </div>
                                 <label class="col-sm-2 col-form-label">Harga</label>
-                            <div class="col-sm-4"> <input type="text" name="harga_retail" id="harga_retail" value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" onblur="formatNumber(this);" value="0"class="form-control">
-                            </div>
+                                <div class="col-sm-4"> <input type="text" name="harga_retail" id="harga_retail" 
+                                onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php if (!empty($ch->harga_retail)) {
+                                                                                                    echo number_format( $ch->harga_retail);
+                                                                                                } ?>" onblur="formatNumber(this);" class="form-control">
+                                </div>
 
                             </div>
                             <input type="hidden" name="user" id="user"
@@ -292,18 +305,19 @@
     </div>
 </div>
 <div class="modal fade" id="modal_chasis" role="dialog">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-body form">
-							<div class="card card-first card-outline">
-								<div class="card-body">
-									<div class="table-responsive">
-										<div id="data-chasis"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body form">
+                <div class="card card-first card-outline">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="data-chasis"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <!-- Tempusdominus Bootstrap 4 -->

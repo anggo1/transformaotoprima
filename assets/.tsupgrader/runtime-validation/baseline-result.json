@@ -1,0 +1,26 @@
+{
+  "planHash": "6d6aae569b20c93e542932cff1db669d7491d458a4ea8ea941554fd32b9a0d87",
+  "phase": "baseline",
+  "recordedAtUtc": "2026-07-31T01:34:56.8986738Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "Build CSS assets",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": false,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "\u003Cspawn error: An error occurred trying to start process \u0027npm.cmd run css\u0027 with working directory \u0027c:\\xampp\\htdocs\\top\\assets\u0027. The system cannot find the file specified.\u003E\n",
+        "durationMs": 34
+      }
+    ]
+  }
+}

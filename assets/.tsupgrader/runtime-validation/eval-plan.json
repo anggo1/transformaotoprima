@@ -1,0 +1,14 @@
+{
+  "projectType": "webapp",
+  "assertions": [
+    {
+      "id": "build-css",
+      "name": "Build CSS assets",
+      "type": "command",
+      "command": "npm.cmd run css",
+      "cwd": "c:/xampp/htdocs/top/assets",
+      "expected": "success",
+      "expectSuccess": true
+    }
+  ]
+}

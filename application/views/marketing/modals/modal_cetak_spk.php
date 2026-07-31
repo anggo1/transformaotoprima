@@ -401,7 +401,7 @@ th {
                         <tr>
                             <td width="13%">Jumlah Unit</td>
                             <td width="3%">:</td>
-                            <td colspan="4"><?php echo  $k->jml_unit; ?></td>
+                            <td colspan="4"><?php echo  $k->jumlah; ?></td>
                             <td width="18%">&nbsp;</td>
                             <td width="1%">&nbsp;</td>
                             <td width="1%">1.</td>
@@ -444,7 +444,7 @@ th {
                         <tr>
                             <td>Harga Off The Road</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo number_format($k->hrg_off_the_road); ?></td>
+                            <td colspan="3" align="right"><?php echo number_format($k->harga_retail); ?></td>
                             <td width="2%" align="right">&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>

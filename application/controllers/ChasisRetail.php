@@ -1,13 +1,24 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property CI_Form_validation $form_validation
+ * @property CI_Input $input
+ * @property CI_Model $Mod_chasis_retail
+ * @property CI_DB_query_builder $db
+ */
 class ChasisRetail extends MY_Controller
 {
 
     function __construct()
     {
         parent::__construct();
-        $this->load->model(array('marketing_model/Mod_chasis_retail', 'Mod_menu'));
+        // ensure database is loaded for $this->db usage
+        $this->load->database();
+        $this->load->library('form_validation');
+        // load models with explicit property names to avoid undefined property errors
+        $this->load->model('marketing_model/Mod_chasis_retail', 'Mod_chasis_retail');
+        $this->load->model('Mod_menu');
         $this->load->helper('tgl_indo_helper');
     }
 
@@ -139,6 +150,7 @@ class ChasisRetail extends MY_Controller
     public function updateChasis()
     {
         $id                 = trim($_POST['id']);
+        $data['dataCus'] = $this->Mod_chasis_retail->select_customer();
         $data['dataChasis'] = $this->Mod_chasis_retail->select_by_id_chasis($id);
         //echo json_encode($data);
 
@@ -215,6 +227,20 @@ class ChasisRetail extends MY_Controller
     }
     public function prosesSpk()
     {
+        $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$h = $this->db->query($cari)->row();
+		$dataJumlah = $h->jumlah;
+		$hsl = $data['jml_unit'];
+		if ($hsl > $dataJumlah) {
+			$hasil = $dataJumlah - $hsl ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+		if ($hsl < $dataJumlah) {
+			$hasil = $hsl - $dataJumlah ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
 
         $sekarang = date("Y-m");
         $this->form_validation->set_rules('nama_pemesan', 'Nama Pemesan', 'trim|required');
@@ -225,7 +251,7 @@ class ChasisRetail extends MY_Controller
         if ($this->form_validation->run() == TRUE) {
             $result = $this->input->post();
 
-            $hrg_ofr = $data['hrg_off_the_road'];
+            $hrg_ofr = $data['hrg_on_the_road'];
             $ofr = str_replace(",", "", $hrg_ofr);
             $bbn = $data['biaya_bbn'];
             $h_bbn = str_replace(",", "", $bbn);
@@ -277,11 +303,11 @@ class ChasisRetail extends MY_Controller
                 'alamat_faktur' => $data['alamat_faktur'],
                 'plat_kendaraan' => $data['plat_kendaraan'],
                 'type_body' => $data['type_body'],
-                'jml_unit' => $data['jml_unit'],
+                'jumlah' => $data['jml_unit'],
                 'kategori' => $data['kategori'],
                 'type_kendaraan' => $data['type_kendaraan'],
                 'warna_tahun' => $data['warna_tahun'],
-                'hrg_off_the_road' => $ofr,
+                'harga_retail' => $ofr,
                 'biaya_bbn' => $h_bbn,
                 'hrg_on_the_road' => $otr,
                 'tambahan_1' => $data['tambahan_1'],
@@ -297,7 +323,9 @@ class ChasisRetail extends MY_Controller
                 'user'       => $data['user'],
                 'status' => 'P'
             );
-            $data['dataPo'] = $this->db->insert('tbl_mk_spk', $data);
+            $this->db->insert('tbl_mk_spk', $data);
+            // determine if insert succeeded
+            $result = $this->db->affected_rows();
             $this->db->where('id_chasis', $data['id_chasis'])->update('tbl_mk_chasis_retail', array('status' => 'P'));
             $data     = $this->input->post();
             //$sql2 = "UPDATE tbl_mk_chasis SET status = 'P' WHERE id_chasis='" . $data['id_chasis'] . "'";
@@ -319,6 +347,20 @@ class ChasisRetail extends MY_Controller
     }
     public function Proses_updateSpk()
     {
+        $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$h = $this->db->query($cari)->row();
+		$dataJumlah = $h->jumlah;
+		$hsl = $data['jml_unit'];
+		if ($hsl > $dataJumlah) {
+			$hasil = $dataJumlah - $hsl ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+		if ($hsl < $dataJumlah) {
+			$hasil = $hsl - $dataJumlah ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
 
         $sekarang = date("Y-m");
         $this->form_validation->set_rules('nama_pemesan', 'Nama Pemesan', 'trim|required');
@@ -329,7 +371,7 @@ class ChasisRetail extends MY_Controller
         if ($this->form_validation->run() == TRUE) {
             $result = $this->input->post();
 
-            $hrg_ofr = $data['hrg_off_the_road'];
+            $hrg_ofr = $data['harga_retail'];
             $ofr = str_replace(",", "", $hrg_ofr);
             $bbn = $data['biaya_bbn'];
             $h_bbn = str_replace(",", "", $bbn);
@@ -354,15 +396,6 @@ class ChasisRetail extends MY_Controller
             $thp = $data['total_harga_jual'];
             $total_harga = str_replace(",", "", $thp);
 
-            $no_spk1 = $data['no_ref'];
-            $id_spk = $data['id_spk'];
-            $ciri = $data['kode'];
-            if (empty($ciri)) {
-                $no_spk = $no_spk1;
-            } else {
-                $no_spk = $no_spk1 . '-' . $ciri;
-            }
-
             $data = array(
                 'nama_pemesan'    => $data['nama_pemesan'],
                 'id_chasis'    => $data['id_chasis'],
@@ -379,11 +412,11 @@ class ChasisRetail extends MY_Controller
                 'alamat_faktur' => $data['alamat_faktur'],
                 'plat_kendaraan' => $data['plat_kendaraan'],
                 'type_body' => $data['type_body'],
-                'jml_unit' => $data['jml_unit'],
+                'jumlah' => $data['jumlah'],
                 'kategori' => $data['kategori'],
                 'type_kendaraan' => $data['type_kendaraan'],
                 'warna_tahun' => $data['warna_tahun'],
-                'hrg_off_the_road' => $ofr,
+                'harga_retail' => $ofr,
                 'biaya_bbn' => $h_bbn,
                 'hrg_on_the_road' => $otr,
                 'tambahan_1' => $data['tambahan_1'],
@@ -397,7 +430,9 @@ class ChasisRetail extends MY_Controller
                 'hrg_jual_perunit' => $perunit,
                 'total_hrg_jual' => $total_harga
             );
-            $data['dataPo'] = $this->db->update('tbl_mk_spk', $data, array('id_spk' => $id_spk));
+            $this->db->update('tbl_mk_spk', $data, array('id_spk' => $id_spk));
+            // determine if update succeeded
+            $result = $this->db->affected_rows();
             $data     = $this->input->post();
             //$sql2 = "UPDATE tbl_mk_chasis SET status = 'P' WHERE id_chasis='" . $data['id_chasis'] . "'";
 
@@ -424,10 +459,10 @@ class ChasisRetail extends MY_Controller
         //$id = $kat[0];
 
         $data['apl'] = $this->db->get("aplikasi")->row();
-        $data['dataRetail'] = $this->Mod_chasis_retail->select_by_id_chasis($id);
+        $data['dataRetail'] = $this->Mod_chasis_retail->select_by_id_chasis_spk($id);
         echo show_my_modal('marketing/modals/modal_keterangan', 'tambah-keterangan', $data);
 
-        $this->load->view('marketing/spk', $data);
+        $this->load->view('marketing/new_spk', $data);
 
         //echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
     }
@@ -437,7 +472,7 @@ class ChasisRetail extends MY_Controller
         $data['dataSpk'] = $this->Mod_chasis_retail->select_by_id_spk($id);
         echo show_my_modal('marketing/modals/modal_keterangan', 'tambah-keterangan', $data);
 
-        $this->load->view('marketing/spk', $data);
+        $this->load->view('marketing/edit_spk', $data);
     }
 
     public function prosesUspk()

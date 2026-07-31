@@ -16,8 +16,8 @@ class Mod_chasis_retail extends CI_Model
 	private function _get_datatables_query()
 	{
 
-		$this->db->select('a.*', true);
-		$this->db->from('tbl_mk_chasis_retail AS a');
+		$this->db->select('*', true);
+		$this->db->from('tbl_mk_chasis_retail');
 		$this->db->where('status !=', 'Y');
 		$i = 0;
 
@@ -106,6 +106,14 @@ class Mod_chasis_retail extends CI_Model
 		$data = $this->db->get();
 		return $data->result();
 	}
+	function select_by_id_chasis_spk($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_mk_chasis_retail');
+		$this->db->where('tbl_mk_chasis_retail.id_chasis=', $id);
+		$data = $this->db->get();
+		return $data->result();
+	}
 	function insertChasis($data)
 	{
 		$nama_customer = trim($_POST['customer']);
@@ -157,6 +165,31 @@ class Mod_chasis_retail extends CI_Model
 
 	function updateChasis($data)
 	{
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$h = $this->db->query($cari)->row();
+		$dataJumlah = $h->jumlah;
+		$hsl = $data['jumlah'];
+		if ($hsl > $dataJumlah) {
+			$hasil = $dataJumlah - $hsl ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+		if ($hsl < $dataJumlah) {
+			$hasil = $hsl - $dataJumlah ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+
+		$nama_customer = trim($_POST['customer']);
+        $kat = explode('|', $nama_customer);
+        $nama_cus = $kat[1];
+        $kode_cus = $kat[0];
+		$hrg	= $data['harga_retail'];
+		$harga = str_replace(",", "", $hrg);
+		$tgl_input = date('Y-m-d H:i:s');
+		$tgl_masuk = $data['tgl_masuk'];
+		$tgl1 = explode('-', $tgl_masuk);
+		$tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
 		$sql = "UPDATE tbl_mk_chasis_retail SET
         retail 			='" . $data['retail'] . "',
         nama_pemesan 		='" . $data['nama_pemesan'] . "',
@@ -175,14 +208,15 @@ class Mod_chasis_retail extends CI_Model
         sales			='" . $data['sales'] . "',
         gesekan    		='" . $data['gesekan'] . "',
         thn_produksi	='" . $data['thn_produksi'] . "',
-        nama_customer	='" . $data['nama_customer'] . "',
+        kode_cus	='" . $kode_cus . "',
+        nama_customer	='" . $nama_cus . "',
         pengiriman      ='" . $data['pengiriman'] . "',
-        status_chasis  	='S',
-        harga_retail      ='" . $data['harga_retail'] . "'
+        harga_retail      ='" . $harga. "',
+        jumlah      	='" . $data['jumlah'] . "'
         WHERE id_chasis='" . $data['id_chasis'] . "'";
 
 		$this->db->query($sql);
-
+		
 		return $this->db->affected_rows();
 	}
 
@@ -323,9 +357,11 @@ class Mod_chasis_retail extends CI_Model
     }
 	function select_by_id_spk($id)
 	{
-		$this->db->select('*');
-		$this->db->from('tbl_mk_spk');
-		$this->db->where('id_chasis=', $id);
+		$this->db->select('a.*', true);
+		$this->db->select('b.chasis_id', false);
+		$this->db->from('tbl_mk_spk as a');
+		$this->db->join('tbl_mk_chasis_retail as b', 'b.id_chasis=a.id_chasis', 'left');
+		$this->db->where('a.id_chasis=', $id);
 		$data = $this->db->get();
 		return $data->result();
 	}
