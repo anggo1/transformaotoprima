@@ -113,4 +113,30 @@ class Mod_spk extends CI_Model
 
         return $this->db->affected_rows();
     }
+    public function select_customer()
+    {
+        $sql = " SELECT kode_cus, nama_cus AS nama_customer FROM tbl_customer";
+
+        $data = $this->db->query($sql);
+
+        return $data->result();
+    }
+    public function get_by_nama($link)
+	{
+		$this->db->select('id_submenu');
+		$this->db->from('tbl_submenu');
+		$this->db->where('link', $link);
+		$query = $this->db->get();
+		return $query->result();
+	}
+    function select_by_level($idlevel, $id_sub)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_akses_submenu');
+		//$this->db->join('tbl_akses_submenu','tbl_akses_submenu.id_submenu=tbl_akses_menu.id_menu','inner');
+		$this->db->where('tbl_akses_submenu.id_level=', $idlevel);
+		$this->db->where('tbl_akses_submenu.id_submenu=', $id_sub);
+		$data = $this->db->get();
+		return $data->result();
+	}
 }

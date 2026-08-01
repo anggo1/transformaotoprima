@@ -218,7 +218,7 @@ class ChasisRetail extends MY_Controller
         $id = $_POST['id'];
         $no_spk = $_POST['no_spk'];
         $keterangan = $_POST['keterangan'];
-        $data['dataPo'] = $this->Mod_chasis_retail->insertKEterangan($id, $no_spk, $keterangan);
+        $data['dataPo'] = $this->Mod_chasis_retail->insertKeterangan($id, $no_spk, $keterangan);
     }
     public function tambahNote()
     {

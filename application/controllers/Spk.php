@@ -1,25 +1,51 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+/**
+ * @property CI_Form_validation $form_validation
+ * @property CI_Input $input
+ * @property CI_Model $Mod_spk
+ * @property CI_DB_query_builder $db
+ */
+
 class Spk extends MY_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->database();
+        $this->load->library('form_validation');
 		$this->load->model(array('marketing_model/Mod_spk'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
+        $this->load->model('Mod_menu');
+        $this->load->helper('tgl_indo_helper');
 	}
 
 	public function index()
 	{
-		$data['page'] 		= "Surat Pesanan Kendaraan";
-		$data['judul'] 		= "SPK";
-		$this->load->helper('url');
+		$data['page']         = "Surat Pesanan Kendaraan";
+        $data['judul']         = "S P K";
+        $this->load->helper('url');
+        $data['menu'] = $this->Mod_menu->getAll()->result();
+        $data['dataCus'] = $this->Mod_spk->select_customer();
+
+        $link = $this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $get_id = $this->Mod_spk->get_by_nama($link);
+        foreach ($get_id as $idnye) {
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub = $idnye->id_submenu;
+        }
+        $data['viewLevel']  = $this->Mod_spk->select_by_level($idlevel, $id_sub);
+
         echo show_my_modal('marketing/modals/modal_keterangan', 'tambah-keterangan', $data);
 		$this->template->load('layoutbackend', 'marketing/spk', $data);
-	}
+    }
+
 public function showPart()
     {
 		$sup = $_GET['sup'];
@@ -28,38 +54,84 @@ public function showPart()
     }
 	public function ajax_list()
 	{
-		ini_set('memory_limit', '512M');
-		set_time_limit(3600);
-		$list = $this->Mod_spk->get_datatables();
-		$data = array();
-		$no = $_POST['start'];
-		foreach ($list as $pel) {
-			$no++;
-			$row = array();
-			$row[] = "<button class='btn btn-sm btn-outline-success' onClick=s=selectPart('$pel->id_part')>$no</button>";
-			$row[] = $pel->no_part;
-                $row[] = $pel->nama_part;
-                $row[] = $pel->satuan;
-                $row[] = $pel->stok;
-                $row[] = number_format($pel->harga_baru);
-                $row[] = $pel->diskon;
-                $row[] = number_format($pel->harga_net);
-                $row[] = number_format($pel->harga_rata);
-                $row[] = $pel->ppn;
-                $row[] = number_format($pel->harga_valid);
-                $row[] = $pel->ket_harga;
-			$data[] = $row;
-		}
+		 $link = $this->uri->segment(1);
+        $idlevel = $this->session->userdata['id_level'];
+        $get_id = $this->Mod_spk->get_by_nama($link);
+        foreach ($get_id as $idnye) {
+            $row1 = array();
+            $row1[] = $idnye->id_submenu;
+            $id_sub = $idnye->id_submenu;
+        }
+        $viewLevel = $this->Mod_spk->select_by_level($idlevel, $id_sub);
 
-		$output = array(
-			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->Mod_spk->count_all(),
-			"recordsFiltered" => $this->Mod_spk->count_filtered(),
-			"data" => $data,
-		);
-		//output to json format
-		echo json_encode($output);
-	}
+        foreach ($viewLevel as $b) {
+            $row1 = array();
+            $row1[] = $b->id_submenu;
+
+            ini_set('memory_limit', '512M');
+            set_time_limit(3600);
+            $list = $this->Mod_spk->get_datatables();
+            $data = array();
+            $no = $_POST['start'];
+            foreach ($list as $cs) {
+                $no++;
+                $row = array();
+                $row[] = $no;
+                $row[] = tglIndoSedang($cs->tgl_masuk);
+                $row[] = $cs->retail;
+                $row[] = $cs->nama_pemesan;
+                $row[] = $cs->alamat_pemesan;
+                $row[] = $cs->no_npwp;
+                $row[] = $cs->nama_npwp;
+                $row[] = $cs->alamat_npwp;
+                $row[] = $cs->telp_pemesan;
+                $row[] = $cs->contact_person;
+                $row[] = $cs->nama_bpkb;
+                $row[] = $cs->no_ktp;
+                $row[] = $cs->alamat_faktur;
+                $row[] = $cs->type;
+                $row[] = $cs->no_rangka;
+                $row[] = $cs->no_mesin;
+                $row[] = $cs->sales;
+                $row[] = $cs->gesekan;
+                $row[] = $cs->thn_produksi;
+                $row[] = $cs->pengiriman;
+                $row[] = number_format($cs->harga_retail);
+                if ($b->edit_level == "Y" && $b->delete_level == "Y") {
+                    if ($cs->status == 'N') {
+                        $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'
+                            . '<button class="btn btn-sm btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"> Edit</i></button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-danger delete-chasis" title="Delete" data-toggle="modal" data-target="#hapusChasis" data-id="' . $cs->id_chasis . '|' . $cs->chasis_id . '|' . $cs->jumlah . '"><i class="fa fa-trash"></i> Delete</button>';
+                    } elseif ($cs->status == 'P') {
+                        $row[] = '<button class="btn btn-xs btn-outline-info print-spk" title="Edit" id="cetak-ulang" data-id="' . $cs->id_chasis . '"><i class="fa fa-print"></i> Print SPK</button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-success update-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i> Edit SPK</button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-primary close-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-close"></i> Closing</button> &nbsp;';
+                    }
+                }
+                if ($b->edit_level == "Y" && $b->delete_level == "N") {
+                    if ($cs->status == 'N') {
+                        $row[] = '<button class="btn btn-xs btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-success update-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"> Edit</i></button> &nbsp;';
+                    } elseif ($cs->status == 'P') {
+                        $row[] = '<button class="btn btn-xs btn-outline-info print-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-print"></i> Print SPK</button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-success update-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-edit"></i> Edit SPK</button> &nbsp;'
+                            . '<button class="btn btn-xs btn-outline-success close-chasis" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-close"></i> Closing</button> &nbsp;';
+                    }
+                } else {
+                    $row[] = '';
+                }
+                $data[] = $row;
+            }
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Mod_spk->count_all(),
+            "recordsFiltered" => $this->Mod_spk->count_filtered(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 	public function cariKode($id)
 	{
 		$data = $this->Mod_spk->get_part($id);
@@ -105,7 +177,7 @@ public function showPart()
 	public function tambahNote()
 	{
         $id = $_POST['id'];
-		$data['dataPo'] = $this->Mod_chasis_retail->insertNote($id);
+		$data['dataPo'] = $this->Mod_spk->insertNote($id);
 	}
 	public function prosesSpk()
 	{
