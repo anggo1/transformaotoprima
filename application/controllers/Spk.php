@@ -52,6 +52,20 @@ public function showPart()
         $data['dataDetail'] = $this->Mod_spk->select_part($sup);
         $this->load->view('marketing/data_part_with_supplier', $data);
     }
+	public function dataChasis()
+    {
+        //$tgl_po = $_GET['tgl_po'];
+        $data['dataChasis'] = $this->Mod_spk->select_chasis();
+        //$this->load->view('warehouse/data_po_partmasuk', $data);
+        $this->load->view('marketing/data_cari_chasis', $data);
+    }
+	public function dataCustomer()
+    {
+        //$tgl_po = $_GET['tgl_po'];
+        $data['dataCustomer'] = $this->Mod_spk->select_customer();
+        //$this->load->view('warehouse/data_po_partmasuk', $data);
+        $this->load->view('marketing/data_cari_customer', $data);
+    }
 	public function ajax_list()
 	{
 		 $link = $this->uri->segment(1);
