@@ -59,8 +59,8 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Type</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="type" id="type" onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->type)) {
-                                                                                                                                            echo $ch->type;
+                                    <input type="text" name="type_body" id="type_body" onkeyup="this.value = this.value.toUpperCase();" value="<?php if (!empty($ch->type_body)) {
+                                                                                                                                            echo $ch->type_body;
                                                                                                                                         } ?>" class="form-control">
                                 </div>
 

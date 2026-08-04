@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Mod_chasis extends CI_Model
 {
 	var $table = 'tbl_mk_chasis';
-	var $column_search = array('tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman'); 
-	var $column_order = array('null','tgl_masuk','retail','type','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman');
+	var $column_search = array('tgl_masuk','retail','type_body','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman'); 
+	var $column_order = array('null','tgl_masuk','retail','type_body','no_rangka','no_mesin','sales','gesekan','thn_produksi','nama_customer','pengiriman');
 	var $order = array('chasis_id' => 'desc'); 
 	function __construct()
 	{
@@ -115,7 +115,7 @@ class Mod_chasis extends CI_Model
     $tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         $sql = "INSERT INTO tbl_mk_chasis SET
         tgl_masuk		='".$tgl_masuknya."',
-        type 			='".$data['type']."',
+        type_body 			='".$data['type_body']."',
         no_rangka 		='".$data['no_rangka']."',
         no_mesin  		='".$data['no_mesin']."',
         thn_produksi	='".$data['thn_produksi']."',
@@ -135,7 +135,7 @@ class Mod_chasis extends CI_Model
         $tgl_input = date('Y-m-d H:i:s');
         $sql = "UPDATE tbl_mk_chasis SET
         retail 			='".$data['retail']."',
-        type 			='".$data['type']."',
+        type_body 			='".$data['type_body']."',
         no_rangka 		='".$data['no_rangka']."',
         no_mesin  		='".$data['no_mesin']."',
         thn_produksi	='".$data['thn_produksi']."',

@@ -116,10 +116,6 @@ class Mod_chasis_retail extends CI_Model
 	}
 	function insertChasis($data)
 	{
-		$nama_customer = trim($_POST['customer']);
-        $kat = explode('|', $nama_customer);
-        $nama_cus = $kat[1];
-        $kode_cus = $kat[0];
 		$hrg	= $data['harga_retail'];
 		$harga = str_replace(",", "", $hrg);
 		$tgl_input = date('Y-m-d H:i:s');
@@ -130,6 +126,7 @@ class Mod_chasis_retail extends CI_Model
         tgl_masuk		='" . $tgl_masuknya . "',
         chasis_id 		='" . $data['chasis_id'] . "',
         retail 			='" . $data['retail'] . "',
+        kode_cus 		='" . $data['kode_cus'] . "',
         nama_pemesan 		='" . $data['nama_pemesan'] . "',
         alamat_pemesan 		='" . $data['alamat_pemesan'] . "',
         no_npwp 			='" . $data['no_npwp'] . "',
@@ -138,22 +135,23 @@ class Mod_chasis_retail extends CI_Model
         contact_person 		='" . $data['contact_person'] . "',
         telp_contact_person ='" . $data['telp_contact_person'] . "',
         nama_bpkb 			='" . $data['nama_bpkb'] . "',
+        alamat_faktur 			='" . $data['alamat_faktur'] . "',
         no_ktp 			='" . $data['no_ktp'] . "',
         nama_npwp 		='" . $data['nama_npwp'] . "',
-        type 			='" . $data['type'] . "',
+        type_body 			='" . $data['type_body'] . "',
         no_rangka 		='" . $data['no_rangka'] . "',
         no_mesin  		='" . $data['no_mesin'] . "',
         sales			='" . $data['sales'] . "',
         gesekan    		='" . $data['gesekan'] . "',
         thn_produksi	='" . $data['thn_produksi'] . "',
-        kode_cus	='" . $kode_cus . "',
-        nama_customer	='" . $nama_cus . "',
+        warna			='" . $data['warna'] . "',
         pengiriman      ='" . $data['pengiriman'] . "',
         status_chasis  	='S',
-        harga_retail      ='" . $harga. "',
+        harga_retail      ='" . $harga . "',
         jumlah      ='" . $data['jumlah'] . "',
         tgl_input  		='" . $tgl_input . "',
-        user  			='" . $data['user'] . "'
+        user  			='" . $data['user'] . "',
+        keterangan      ='" . $data['keterangan'] . "'
 		";
 
 		$this->db->query($sql);
@@ -170,6 +168,60 @@ class Mod_chasis_retail extends CI_Model
 		$dataJumlah = $h->jumlah;
 		$hsl = $data['jumlah'];
 		if ($hsl > $dataJumlah) {
+			$hasil = $dataJumlah - $hsl;
+			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+			$this->db->query($sql2);
+		}
+		if ($hsl < $dataJumlah) {
+			$hasil = $hsl - $dataJumlah;
+			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+			$this->db->query($sql2);
+		}
+
+		$hrg	= $data['harga_retail'];
+		$harga = str_replace(",", "", $hrg);
+		$tgl_input = date('Y-m-d H:i:s');
+		$tgl_masuk = $data['tgl_masuk'];
+		$tgl1 = explode('-', $tgl_masuk);
+		$tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
+		$sql = "UPDATE tbl_mk_chasis_retail SET
+        retail 			='" . $data['retail'] . "',
+        kode_cus 		='" . $data['kode_cus'] . "',
+        nama_pemesan 		='" . $data['nama_pemesan'] . "',
+        alamat_pemesan 		='" . $data['alamat_pemesan'] . "',
+        no_npwp 			='" . $data['no_npwp'] . "',
+        alamat_npwp 		='" . $data['alamat_npwp'] . "',
+        telp_pemesan 		='" . $data['telp_pemesan'] . "',
+        contact_person 		='" . $data['contact_person'] . "',
+        telp_contact_person ='" . $data['telp_contact_person'] . "',
+        nama_bpkb 			='" . $data['nama_bpkb'] . "',
+        alamat_faktur 			='" . $data['alamat_faktur'] . "',
+        no_ktp 			='" . $data['no_ktp'] . "',
+        nama_npwp 		='" . $data['nama_npwp'] . "',
+        type_body 			='" . $data['type_body'] . "',
+        no_rangka 		='" . $data['no_rangka'] . "',
+        no_mesin  		='" . $data['no_mesin'] . "',
+        sales			='" . $data['sales'] . "',
+        gesekan    		='" . $data['gesekan'] . "',
+        thn_produksi	='" . $data['thn_produksi'] . "',
+        warna			='" . $data['warna'] . "',
+        pengiriman      ='" . $data['pengiriman'] . "',
+        harga_retail      ='" . $harga . "',
+        jumlah      	='" . $data['jumlah'] . "',
+        keterangan      ='" . $data['keterangan'] . "'
+        WHERE id_chasis='" . $data['id_chasis'] . "'";
+
+		$this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+	function Proses_inputSpk($data)
+	{
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$h = $this->db->query($cari)->row();
+		$dataJumlah = $h->jumlah;
+		$hsl = $data['jml_unit'];
+		if ($hsl > $dataJumlah) {
 			$hasil = $dataJumlah - $hsl ;
 		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
 		$this->db->query($sql2);
@@ -180,43 +232,168 @@ class Mod_chasis_retail extends CI_Model
 		$this->db->query($sql2);
 		}
 
-		$nama_customer = trim($_POST['customer']);
-        $kat = explode('|', $nama_customer);
-        $nama_cus = $kat[1];
-        $kode_cus = $kat[0];
-		$hrg	= $data['harga_retail'];
-		$harga = str_replace(",", "", $hrg);
-		$tgl_input = date('Y-m-d H:i:s');
-		$tgl_masuk = $data['tgl_masuk'];
-		$tgl1 = explode('-', $tgl_masuk);
-		$tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
-		$sql = "UPDATE tbl_mk_chasis_retail SET
-        retail 			='" . $data['retail'] . "',
-        nama_pemesan 		='" . $data['nama_pemesan'] . "',
-        alamat_pemesan 		='" . $data['alamat_pemesan'] . "',
-        no_npwp 			='" . $data['no_npwp'] . "',
-        alamat_npwp 		='" . $data['alamat_npwp'] . "',
-        telp_pemesan 		='" . $data['telp_pemesan'] . "',
-        contact_person 		='" . $data['contact_person'] . "',
-        telp_contact_person ='" . $data['telp_contact_person'] . "',
-        nama_bpkb 			='" . $data['nama_bpkb'] . "',
-        no_ktp 			='" . $data['no_ktp'] . "',
-        nama_npwp 		='" . $data['nama_npwp'] . "',
-        type 			='" . $data['type'] . "',
-        no_rangka 		='" . $data['no_rangka'] . "',
-        no_mesin  		='" . $data['no_mesin'] . "',
-        sales			='" . $data['sales'] . "',
-        gesekan    		='" . $data['gesekan'] . "',
-        thn_produksi	='" . $data['thn_produksi'] . "',
-        kode_cus	='" . $kode_cus . "',
-        nama_customer	='" . $nama_cus . "',
-        pengiriman      ='" . $data['pengiriman'] . "',
-        harga_retail      ='" . $harga. "',
-        jumlah      	='" . $data['jumlah'] . "'
-        WHERE id_chasis='" . $data['id_chasis'] . "'";
+        $sekarang = date("Y-m");
+        
 
+            $hrg_ofr = $data['hrg_on_the_road'];
+            $ofr = str_replace(",", "", $hrg_ofr);
+            $bbn = $data['biaya_bbn'];
+            $h_bbn = str_replace(",", "", $bbn);
+            $hrg_otr = $data['hrg_on_the_road'];
+            $otr = str_replace(",", "", $hrg_otr);
+
+            $t_1 = $data['hrg_tambahan_1'];
+            $tambah1 = str_replace(",", "", $t_1);
+
+            $t_2 = $data['hrg_tambahan_2'];
+            $tambah2 = str_replace(",", "", $t_2);
+
+            $t_3 = $data['hrg_tambahan_3'];
+            $tambah3 = str_replace(",", "", $t_3);
+
+            $t_4 = $data['hrg_tambahan_4'];
+            $tambah4 = str_replace(",", "", $t_4);
+
+            $hjp = $data['hrg_jual_perunit'];
+            $perunit = str_replace(",", "", $hjp);
+
+            $thp = $data['total_harga_jual'];
+            $total_harga = str_replace(",", "", $thp);
+
+            $no_spk1 = $data['no_ref'];
+            $ciri = $data['kode'];
+            if (empty($ciri)) {
+                $no_spk = $no_spk1;
+            } else {
+                $no_spk = $no_spk1 . '-' . $ciri;
+            }
+		$sql = "INSERT INTO tbl_mk_spk SET
+            no_urut       		='" . $data['no_urut'] . "',
+            no_spk   			='" . $no_spk . "',
+            tgl_spk         	='" . date("Y-m-d") . "',
+            nama_pemesan        ='" . $data['nama_pemesan'] . "',
+            id_chasis       	='" . $data['id_chasis'] . "',
+            alamat_pemesan      ='" . $data['alamat_pemesan'] . "',
+            telp_pemesan        ='" . $data['telp_pemesan'] . "',
+            faktur_pajak        ='" . $data['faktur_pajak'] . "',
+            npwp_pemesan    	='" . $data['npwp_pemesan'] . "',
+			nama_npwp_pemesan   ='" . $data['nama_npwp_pemesan'] . "',
+			alamat_npwp    		='" . $data['alamat_npwp'] . "',
+			contact_person    	='" . $data['contact_person'] . "',
+			telp_contact_person ='" . $data['telp_contact_person'] . "',
+			nama_bpkb    		='" . $data['nama_bpkb'] . "',
+			no_ktp    			='" . $data['no_ktp'] . "',
+			alamat_faktur    	='" . $data['alamat_faktur'] . "',
+			plat_kendaraan    	='" . $data['plat_kendaraan'] . "',
+			type_body    		='" . $data['type_body'] . "',
+			jumlah    			='" . $data['jml_unit'] . "',
+			kategori    		='" . $data['kategori'] . "',
+			type_kendaraan    	='" . $data['type_kendaraan'] . "',
+			thn_produksi   		='" . $data['thn_produksi'] . "',
+			warna	    		='" . $data['warna'] . "',
+			harga_retail    	='" . $ofr . "',
+			biaya_bbn    		='" . $h_bbn . "',
+			hrg_on_the_road    	='" . $otr . "',
+			tambahan_1    		='" . $data['tambahan_1'] . "',
+			hrg_tambahan_1    	='" . $tambah1 . "',
+			tambahan_2    		='" . $data['tambahan_2'] . "',
+			hrg_tambahan_2    	='" . $tambah2 . "',
+			tambahan_3    		='" . $data['tambahan_3'] . "',
+			hrg_tambahan_3    	='" . $tambah3 . "',
+			tambahan_4    		='" . $data['tambahan_4'] . "',
+			hrg_tambahan_4    	='" . $tambah4 . "',
+			hrg_jual_perunit    ='" . $perunit . "',
+			total_hrg_jual    	='" . $total_harga . "',
+			user    			='" . $data['user'] . "',
+			status    ='P'";
 		$this->db->query($sql);
 		
+            $result = $this->db->affected_rows();
+            $this->db->where('id_chasis', $data['id_chasis'])->update('tbl_mk_chasis_retail', array('status' => 'P'));
+            $data     = $this->input->post();
+
+		return $this->db->affected_rows();
+	}
+	function updateSpk($data)
+	{
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$h = $this->db->query($cari)->row();
+		$dataJumlah = $h->jumlah;
+		$hsl = $data['jml_unit'];
+		if ($hsl > $dataJumlah) {
+			$hasil = $dataJumlah - $hsl ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+		if ($hsl < $dataJumlah) {
+			$hasil = $hsl - $dataJumlah ;
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$this->db->query($sql2);
+		}
+		
+		 $hrg_ofr = $data['hrg_on_the_road'];
+            $ofr = str_replace(",", "", $hrg_ofr);
+            $bbn = $data['biaya_bbn'];
+            $h_bbn = str_replace(",", "", $bbn);
+            $hrg_otr = $data['hrg_on_the_road'];
+            $otr = str_replace(",", "", $hrg_otr);
+
+            $t_1 = $data['hrg_tambahan_1'];
+            $tambah1 = str_replace(",", "", $t_1);
+
+            $t_2 = $data['hrg_tambahan_2'];
+            $tambah2 = str_replace(",", "", $t_2);
+
+            $t_3 = $data['hrg_tambahan_3'];
+            $tambah3 = str_replace(",", "", $t_3);
+
+            $t_4 = $data['hrg_tambahan_4'];
+            $tambah4 = str_replace(",", "", $t_4);
+
+            $hjp = $data['hrg_jual_perunit'];
+            $perunit = str_replace(",", "", $hjp);
+
+            $thp = $data['total_harga_jual'];
+            $total_harga = str_replace(",", "", $thp);
+
+		$sql = "UPDATE tbl_mk_spk SET
+            nama_pemesan        ='" . $data['nama_pemesan'] . "',
+            id_chasis       	='" . $data['id_chasis'] . "',
+            alamat_pemesan      ='" . $data['alamat_pemesan'] . "',
+            telp_pemesan        ='" . $data['telp_pemesan'] . "',
+            faktur_pajak        ='" . $data['faktur_pajak'] . "',
+            npwp_pemesan    	='" . $data['npwp_pemesan'] . "',
+			nama_npwp_pemesan   ='" . $data['nama_npwp_pemesan'] . "',
+			alamat_npwp    		='" . $data['alamat_npwp'] . "',
+			contact_person    	='" . $data['contact_person'] . "',
+			telp_contact_person ='" . $data['telp_contact_person'] . "',
+			nama_bpkb    		='" . $data['nama_bpkb'] . "',
+			no_ktp    			='" . $data['no_ktp'] . "',
+			alamat_faktur    	='" . $data['alamat_faktur'] . "',
+			plat_kendaraan    	='" . $data['plat_kendaraan'] . "',
+			type_body    		='" . $data['type_body'] . "',
+			jumlah    			='" . $data['jml_unit'] . "',
+			kategori    		='" . $data['kategori'] . "',
+			type_kendaraan    	='" . $data['type_kendaraan'] . "',
+			thn_produksi   		='" . $data['thn_produksi'] . "',
+			warna	    		='" . $data['warna'] . "',
+			harga_retail    	='" . $ofr . "',
+			biaya_bbn    		='" . $h_bbn . "',
+			hrg_on_the_road    	='" . $otr . "',
+			tambahan_1    		='" . $data['tambahan_1'] . "',
+			hrg_tambahan_1    	='" . $tambah1 . "',
+			tambahan_2    		='" . $data['tambahan_2'] . "',
+			hrg_tambahan_2    	='" . $tambah2 . "',
+			tambahan_3    		='" . $data['tambahan_3'] . "',
+			hrg_tambahan_3    	='" . $tambah3 . "',
+			tambahan_4    		='" . $data['tambahan_4'] . "',
+			hrg_tambahan_4    	='" . $tambah4 . "',
+			hrg_jual_perunit    ='" . $perunit . "',
+			total_hrg_jual    	='" . $total_harga . "'
+        WHERE id_spk='" . $data['id_spk'] . "'";
+
+		$this->db->query($sql);
+
 		return $this->db->affected_rows();
 	}
 
@@ -226,7 +403,7 @@ class Mod_chasis_retail extends CI_Model
 		return $this->db->get('tbl_mk_chasis')->row();
 	}
 
-	function deleteChasis($id,$chasis_id,$jumlah)
+	function deleteChasis($id, $chasis_id, $jumlah)
 	{
 		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $jumlah . " WHERE chasis_id='{$chasis_id}'";
 		$this->db->query($sql2);
@@ -264,9 +441,9 @@ class Mod_chasis_retail extends CI_Model
 		return $this->db->affected_rows();
 		//return $data->row();
 	}
-	function insertKeterangan($id, $no_spk, $keterangan)
+	function insertKeterangan($id, $no_spk, $keterangan, $id_chasis)
 	{
-		$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '$id', no_spk='$no_spk', keterangan ='$keterangan'";
+		$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '$id', no_spk='$no_spk', keterangan ='$keterangan', id_chasis='$id_chasis'";
 		$this->db->query($sql_update);
 		return $this->db->affected_rows();
 		//return $data->row();
@@ -328,11 +505,14 @@ class Mod_chasis_retail extends CI_Model
 		$data = $this->db->query($sql);
 		return $data->result();
 	}
-	public function select_ulang_keterangan($no_urut)
+	public function select_ulang_keterangan($id)
 	{
-		$sql = "SELECT * FROM tbl_mk_keterangan_spk WHERE no_urut ='{$id}' ORDER BY id_ket_spk ASC";
-
-		$data = $this->db->query($sql);
+		$this->db->select('a.no_urut', true);
+		$this->db->select('b.*', false);
+		$this->db->from('tbl_mk_spk as a');
+		$this->db->join('tbl_mk_keterangan_spk as b', 'b.no_urut=a.no_urut', 'left');
+		$this->db->where('a.no_urut=', $id);
+		$data = $this->db->get();
 		return $data->result();
 	}
 	function updatePo($a, $b, $c, $d)
@@ -348,13 +528,12 @@ class Mod_chasis_retail extends CI_Model
 		return $this->db->affected_rows();
 	}
 	public function select_customer()
-    {
-        $sql = " SELECT kode_cus, nama_cus AS nama_customer FROM tbl_customer";
-
-        $data = $this->db->query($sql);
-
-        return $data->result();
-    }
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_customer');
+		$data = $this->db->get();
+		return $data->result();
+	}
 	function select_by_id_spk($id)
 	{
 		$this->db->select('a.*', true);

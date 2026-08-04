@@ -131,68 +131,6 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
     foreach ($dataSpk as $ch) {
     }
 } ?>
-<div class="text-right">
-    <button type="button" class="btn btn-sm btn-outline-primary" data-target="#tab-spk-tab" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
-</div>
-<div class="card card-primary card-outline card-outline-tabs">
-    <div class="card-header p-0 border-bottom-0">
-        <ul class="nav nav-tabs " id="custom-content-above-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="tab-chasis-retail" data-toggle="pill" href="#tab-chasis" role="tab">
-                    <i class="fa fa-bus"></i>
-                    Chasis Retail</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"  id="tab-spk-tab" data-toggle="pill" href="#tab-spk"
-                    role="tab">
-                    <i class="fas fa-luggage-cart"></i>
-                    Proses SPK</a>
-            </li>
-
-        </ul>
-        <div class="tab-content" id="custom-content-below-tabContent">
-
-            <div class="tab-pane fade show active" id="tab-chasis" role="tabpanel" aria-labelledby="tab-chasis-retail">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover text-nowrap" id="tabel-chasis">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Tgl SPK</th>
-                                    <th>Pemesan</th>
-                                    <th>Alamat</th>
-                                    <th>No NPWP</th>
-                                    <th>Nama NPWP</th>
-                                    <th>Alamat NPWP</th>
-                                    <th>Tlp Pemesan</th>
-                                    <th>Contact Person</th>
-                                    <th>Nama BPKB</th>
-                                    <th>No KTP</th>
-                                    <th>Alamat BPKP</th>
-                                    <th>Type</th>
-                                    <th>No Rangka</th>
-                                    <th>No Mesin</th>
-                                    <th>Sales</th>
-                                    <th>Gesekan</th>
-                                    <th>Thn Produksi</th>
-                                    <th>Warna</th>
-                                    <th>Harga Retail</th>
-                                    <th>Total Harga</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div id="tempat-modal"></div>
-            <div id="modal-po"></div>
-            <div id="data-po"></div>
-            <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -201,64 +139,32 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                     <!-- /.card-header -->
                     <div class="modal-body">
 
-
-                        <?php
-                        $date = date("Y-m");
-                        $ci_kons = get_instance();
-                        $query = "SELECT max(no_urut) AS maxKode FROM tbl_mk_spk WHERE no_urut LIKE '%$date%'";
-                        $hasil = $ci_kons->db->query($query)->row_array();
-                        $noOrder = $hasil['maxKode'];
-                        $noUrut = (int)substr($noOrder, 8, 3);
-                        $noUrut++;
-                        $tahun = substr($date, 0, 4);
-                        $bulan = substr($date, 5, 2);
-                        $kode_po  = $tahun . '-' . $bulan . '-' . sprintf("%03s", $noUrut);
-                        $kode_ref = 'TOP-' . sprintf("%03s", $noUrut) . '-' . $bulan . '-SBY-' . $tahun;
-                        if (!empty($dataRetail)) {
-                            foreach ($dataRetail as $ch) {
-                            }
-                        }
-                        ?>
-                        <form id="formSpk" name="editSpk" method="POST">
+                        <form id="editSpk" name="editSpk" method="POST">
                             <div class="row">
 
                                 <input type="hidden" name="chasis_id" id="chasis_id" value="<?php echo !empty($ch->chasis_id) ? $ch->chasis_id : ''; ?>" class="form-control">
                                 <input type="hidden" name="id_chasis" id="id_chasis" value="<?php echo !empty($ch->id_chasis) ? $ch->id_chasis : ''; ?>" class="form-control">
+                                <input type="hidden" name="no_urut" id="no_urut" value="<?php echo !empty($ch->no_urut) ? $ch->no_urut : ''; ?>" class="form-control">
                                 <input type="hidden" name="id_spk" id="id_spk" value="<?php echo !empty($ch->id_spk) ? $ch->id_spk : ''; ?>" class="form-control">
-                                <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>"
                                     class="form-control">
 
                                 <div class="col-2">
                                     <label class="col-form-label">Nomor</label>
-                                    <input type="text" name="no_ref" id="no_ref" value="<?php echo $kode_ref ?>"
+                                    <input type="text" name="no_ref" id="no_ref" value="<?php echo !empty($ch->no_spk) ? $ch->no_spk : ''; ?>"
                                         class="form-control" placeholder="Nomor Referensi" readonly>
                                 </div>
                                 <div class="col-1">
                                     <label class="col-form-label">Kode</label>
                                     <input type="text" name="kode" id="kode" class="form-control" placeholder="Kode">
                                 </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-2">
-                                    <label class="col-form-label">Nomor Rangka</label>
-                                    <input type="text" name="no_rangka" id="no_rangka" value="<?php echo !empty($ch->no_rangka) ? $ch->no_rangka : ''; ?>"
-                                        class="form-control" placeholder="Nomor Rangka" data-toggle="modal"
-                                        data-target="#modal_chasis" onclick="cariChasis()" value="<?php if (!empty($ch->no_rangka)) {
-                                                                                                        echo $ch->no_rangka;
-                                                                                                    } ?>" class="form-control" readonly>
-                                </div>
                                 <div class="col-3">
                                     <label class="col-form-label">Nama Pemesan</label>
-                                   <input type="text" name="nama_pemesan" id="nama_pemesan" value="<?php echo !empty($ch->nama_pemesan) ? $ch->nama_pemesan : ''; ?>"
-                                        class="form-control" placeholder="Nama Pemesan" data-toggle="modal"
-                                        data-target="#modal_customer" onclick="cariCustomer()" value="<?php if (!empty($ch->nama_pemesan)) {
-                                                                                                        echo $ch->nama_pemesan;
-                                                                                                    } ?>" class="form-control" readonly>
+                                    <input type="text" name="nama_pemesan" id="nama_pemesan" value="<?php echo !empty($ch->nama_pemesan) ? $ch->nama_pemesan : ''; ?>"
+                                        class="form-control" placeholder="Nama Pemesan">
                                 </div>
-                                <div class="col-7">
+                                <div class="col-6">
                                     <label class="col-form-label">Alamat Pemesan</label>
                                     <input type="text" name="alamat_pemesan" id="no_reg" value="<?php echo !empty($ch->alamat_pemesan) ? $ch->alamat_pemesan : ''; ?>"
                                         class="form-control" placeholder="Alamat">
@@ -449,10 +355,17 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                                 <input type="text" name="type_kendaraan" id="type_kendaraan" value="<?php echo !empty($ch->type_kendaraan) ? $ch->type_kendaraan : ''; ?>"
                                                     class="form-control" placeholder="Type Kendaraan">
                                             </div>
-                                            <div class="col-12">
-                                                <label class="col-form-label">Warna / Tahun</label>
-                                                <input type="text" name="warna_tahun" id="warna_tahun" value="<?php echo !empty($ch->warna_tahun) ? $ch->warna_tahun : ''; ?>"
-                                                    class="form-control" placeholder="Warna / Tahun" />
+                                            <div class="form-group row">
+                                                <div class="col-6">
+                                                    <label class="col-form-label">Warna</label>
+                                                    <input type="text" name="warna" id="warna" value="<?php echo !empty($ch->warna) ? $ch->warna : ''; ?>"
+                                                        class="form-control" placeholder="Warna" />
+                                                </div>
+                                                <div class="col-6">
+                                                    <label class="col-form-label">Tahun</label>
+                                                    <input type="text" name="thn_produksi" id="thn_produksi" value="<?php echo !empty($ch->thn_produksi) ? $ch->thn_produksi : ''; ?>"
+                                                        class="form-control" placeholder="Tahun" />
+                                                </div>
                                             </div>
                                             <div class="col-12">
                                                 <label class="col-form-label">Harga Off The Road</label>
@@ -571,9 +484,9 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                             <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp;
                                 Keterangan</h3>
                             <div class="text-right">
-                                <button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i
+                                <!--<button type="button" class="btn btn-sm btn-dark" onclick="insertNote()"><i
                                         class="fas fa-plus"></i>
-                                    Standart Keterangan</button>
+                                    Standart Keterangan</button>-->
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                                     data-target="#tambah-keterangan" title="Add Data"><i class="fas fa-plus"></i>
                                     Add</button>
@@ -606,44 +519,8 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
             <div id="data-po"></div>
             <div id="data-po-cache"></div>
         </div>
-        <div class="modal fade" id="modal_chasis" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body form">
-                        <div class="card card-first card-outline">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="data-chasis"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modal_customer" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body form">
-                        <div class="card card-first card-outline">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="data-customer"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="modal fade" id="modal_form" role="dialog">
-
 </section>
-</div>
-        </div>
-    </div>
-
-</div>
 <?php show_my_confirm('hapusDetail', 'hapus-detail', 'Hapus Data PO Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
 
 </section><!-- /.modal-content -->
@@ -680,109 +557,9 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         "autoWidth": true,
         "pageLength": 5
     });
-$(document).ready(function() {
 
-        //datatables
-        table = $("#tabel-chasis").DataTable({
-            "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
-            "buttons": [{
-                    extend: 'copyHtml5',
-                    text: '<i class="fas fa-copy"></i> Copy',
-                    titleAttr: 'Copy',
-                    title: 'Data Chasis Retail',
-                    className: 'btn btn-sm  btn-outline-secondary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    },
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    text: '<i class="fas fa-file-excel"></i> Excel',
-                    titleAttr: 'Excel',
-                    title: 'MoData Chasis Retail',
-                    className: 'btn btn-outline-secondary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    },
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    text: '<i class="fas fa-file-pdf"></i> PDF',
-                    titleAttr: 'PDF',
-                    title: 'MoData Chasis Retail',
-                    className: 'btn btn-outline-secondary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    },
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: '<i class="fas fa-print"></i> Cetak',
-                    titleAttr: 'Print',
-                    title: 'MoData Chasis Retail',
-                    className: 'btn btn-outline-secondary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    },
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: '<i class="fas fa-eye"></i> Tampilan',
-                    titleAttr: 'Costum Tampilan',
-                    className: 'btn btn-outline-secondary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    }
-                }
 
-            ],
-            "responsive": false,
-            "autoWidth": true,
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
 
-            "language": {
-                "sEmptyTable": "Data Chasis Belum Ada"
-            },
-            "processing": true, //Feature control the processing indicator.
-            "serverSide": true,
-            "language": {
-                processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
-            },
-            "order": [],
-
-            // Load data for the table's content from an Ajax source
-            "ajax": {
-                "url": "<?php echo site_url('Spk/ajax_list') ?>",
-                "type": "POST"
-            },
-            "columnDefs": [{
-                "targets": [0, 19],
-                "orderable": false,
-                "visible": false,
-                "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12]
-            }, ],
-
-        });
-
-    });
     function NilaiRupiah(jumlah) {
         var titik = ",";
         var nilai = new String(jumlah);
@@ -858,11 +635,12 @@ $(document).ready(function() {
     }
 
     function tampilKeterangan() {
+        var id_chasis = document.getElementById('id_chasis').value;
         var no_urut = document.getElementById('no_urut').value;
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url('ChasisRetail/tampilKeterangan'); ?>',
-            data: 'no_urut=' + no_urut,
+            data: 'no_urut=' + no_urut+'&id_chasis=' + id_chasis,
             success: function(hasil) {
                 tableKeterangan.fnDestroy();
                 $('#data-keterangan').html(hasil);
@@ -876,11 +654,12 @@ $(document).ready(function() {
         var data = $(this).serialize();
         var id = document.getElementById('no_urut').value;
         var no_spk = document.getElementById('no_ref').value;
+        var id_chasis = document.getElementById('id_chasis').value;
 
         $.ajax({
                 method: 'POST',
                 url: '<?php echo base_url('ChasisRetail/tambahKeterangan'); ?>',
-                data: data + "&id=" + id + "&no_spk=" + no_spk
+                data: data + "&id=" + id + "&no_spk=" + no_spk + "&id_chasis=" + id_chasis
             })
             .done(function(data) {
                 tampilKeterangan();
@@ -958,7 +737,9 @@ $(document).ready(function() {
             }
         });
     }
+
     $('#editSpk').submit(function(e) {
+        var no_urut = document.getElementById('no_urut').value;
         var data = $(this).serialize();
 
         $.ajax({
@@ -984,11 +765,13 @@ $(document).ready(function() {
                     $('.dataPo').html(out.dataPo);
                     //tampilDetail(out.dataPo)
                     //document.getElementById("formSpk").reset();
+                    $("a[href='#tab-chasis-retail']").tab('show');
+                    document.getElementById("tab-spk-tab").hidden = true;
 
                     var d = document.getElementById("cetak");
-                    d.setAttribute('data-id', out.dataPo);
+                    d.setAttribute('data-id', no_urut);
                     var d = document.getElementById("cetak-ulang");
-                    d.setAttribute('data-id', out.dataPo);
+                    d.setAttribute('data-id', id_chasis);
                     document.getElementById("cetak").hidden = false;
                     document.getElementById("data-po").hidden = true;
                     document.getElementById("simpan").hidden = true;
@@ -1039,7 +822,7 @@ $(document).ready(function() {
                 if (out.status != 'form') {
                     //$('.msg').html(out.msg);
                     $('#hapusKeterangan').modal('hide');
-                    var no_urut = document.formSpk.no_urut.value;
+                    var no_urut = document.editSpk.no_urut.value;
                     //next(next_proses);
                     tampilKeterangan(no_urut);
                 }
@@ -1079,47 +862,5 @@ $(document).ready(function() {
 
     function startPpn() {
         interval = setInterval("Ppn()", 10);
-    }
-
-    function selectData(chasis_id, no_rangka, type, no_mesin, thn_produksi) {
-
-        $('[name = "chasis_id"]').val(chasis_id);
-        $('[name = "no_rangka"]').val(no_rangka);
-        $('[name = "type_kendaraan"]').val(type);
-        $('[name = "no_mesin"]').val(no_mesin);
-        $('[name = "warna_tahun"]').val(thn_produksi);
-
-
-        $('#modal_chasis').modal('hide');
-    }
-
-    function selectCustomer(kode_cus, nama_cus, alamat, no_telp, tlp_person) {
-
-        $('[name = "kode_cus"]').val(kode_cus);
-        $('[name = "nama_pemesan"]').val(nama_cus);
-        $('[name = "alamat_pemesan"]').val(alamat);
-        $('[name = "telp_pemesan"]').val(no_telp);
-        $('[name = "contact_person"]').val(tlp_person);
-
-
-        $('#modal_customer').modal('hide');
-    }
-    function cariChasis() {
-        //var tgl_po = document.getElementById("tgl_po").value;
-        $.get('<?php echo base_url('Spk/dataChasis'); ?>',
-            function(data) {
-                // success: function (data) {
-                //MyTable.fnDestroy(); //refresh();
-                $('#data-chasis').html(data);
-            })
-    }
-    function cariCustomer() {
-        //var tgl_po = document.getElementById("tgl_po").value;
-        $.get('<?php echo base_url('Spk/dataCustomer'); ?>',
-            function(data) {
-                // success: function (data) {
-                //MyTable.fnDestroy(); //refresh();
-                $('#data-customer').html(data);
-            })
     }
 </script>

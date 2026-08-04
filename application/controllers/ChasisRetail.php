@@ -28,7 +28,7 @@ class ChasisRetail extends MY_Controller
         $data['judul']         = "Chasis Retail";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
-        $data['dataCus'] = $this->Mod_chasis_retail->select_customer();
+        $dataCus = $this->Mod_chasis_retail->select_customer();
 
         $link = $this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
@@ -40,6 +40,7 @@ class ChasisRetail extends MY_Controller
         }
         $data['viewLevel']  = $this->Mod_chasis_retail->select_by_level($idlevel, $id_sub);
 
+        //echo show_my_modal('marketing/data_cari_customer', 'data-customer', $dataCus, ' modal-lg');
         echo show_my_modal('marketing/modals/modal_tambah_chasis_retail', 'tambah-chasis-retail', $data, ' modal-lg');
         $this->template->load('layoutbackend', 'marketing/data_chasis_retail', $data);
     }
@@ -81,7 +82,7 @@ class ChasisRetail extends MY_Controller
                 $row[] = $cs->nama_bpkb;
                 $row[] = $cs->no_ktp;
                 $row[] = $cs->alamat_faktur;
-                $row[] = $cs->type;
+                $row[] = $cs->type_body;
                 $row[] = $cs->no_rangka;
                 $row[] = $cs->no_mesin;
                 $row[] = $cs->sales;
@@ -127,7 +128,7 @@ class ChasisRetail extends MY_Controller
 
     public function prosesTchasis()
     {
-        $this->form_validation->set_rules('type', 'Type', 'trim|required');
+        $this->form_validation->set_rules('type_body', 'Type', 'trim|required');
 
         $data     = $this->input->post();
         if ($this->form_validation->run() == TRUE) {
@@ -203,10 +204,14 @@ class ChasisRetail extends MY_Controller
     {
         //$tgl_po = $_GET['tgl_po'];
         $data['dataChasis'] = $this->Mod_chasis_retail->select_chasis();
-        //$this->load->view('warehouse/data_po_partmasuk', $data);
-        $this->load->view('marketing/data_cari_chasis', $data);
+        echo show_my_modal('marketing/modals/data_cari_chasis', 'cari-chasis', $data, ' modal-md');
     }
-
+    public function dataCustomer()
+    {
+        //$tgl_po = $_GET['tgl_po'];
+        $data['dataCustomer'] = $this->Mod_chasis_retail->select_customer();
+        echo show_my_modal('marketing/modals/data_cari_customer', 'cari-customer', $data, ' modal-md');
+    }
     public function updateKeterangan()
     {
         $id = $_POST['id'];
@@ -218,7 +223,8 @@ class ChasisRetail extends MY_Controller
         $id = $_POST['id'];
         $no_spk = $_POST['no_spk'];
         $keterangan = $_POST['keterangan'];
-        $data['dataPo'] = $this->Mod_chasis_retail->insertKeterangan($id, $no_spk, $keterangan);
+        $id_chasis = $_POST['id_chasis'];
+        $data['dataPo'] = $this->Mod_chasis_retail->insertKeterangan($id, $no_spk, $keterangan, $id_chasis);
     }
     public function tambahNote()
     {
@@ -227,111 +233,19 @@ class ChasisRetail extends MY_Controller
     }
     public function prosesSpk()
     {
-        $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
-		$h = $this->db->query($cari)->row();
-		$dataJumlah = $h->jumlah;
-		$hsl = $data['jml_unit'];
-		if ($hsl > $dataJumlah) {
-			$hasil = $dataJumlah - $hsl ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
-		$this->db->query($sql2);
-		}
-		if ($hsl < $dataJumlah) {
-			$hasil = $hsl - $dataJumlah ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
-		$this->db->query($sql2);
-		}
 
-        $sekarang = date("Y-m");
+        
         $this->form_validation->set_rules('nama_pemesan', 'Nama Pemesan', 'trim|required');
         $this->form_validation->set_rules('plat_kendaraan', 'Plat Kendaraan', 'trim|required');
         $this->form_validation->set_rules('type_body', 'Type Body', 'trim|required');
         $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required');
+
         $data     = $this->input->post();
         if ($this->form_validation->run() == TRUE) {
-            $result = $this->input->post();
-
-            $hrg_ofr = $data['hrg_on_the_road'];
-            $ofr = str_replace(",", "", $hrg_ofr);
-            $bbn = $data['biaya_bbn'];
-            $h_bbn = str_replace(",", "", $bbn);
-            $hrg_otr = $data['hrg_on_the_road'];
-            $otr = str_replace(",", "", $hrg_otr);
-
-            $t_1 = $data['hrg_tambahan_1'];
-            $tambah1 = str_replace(",", "", $t_1);
-
-            $t_2 = $data['hrg_tambahan_2'];
-            $tambah2 = str_replace(",", "", $t_2);
-
-            $t_3 = $data['hrg_tambahan_3'];
-            $tambah3 = str_replace(",", "", $t_3);
-
-            $t_4 = $data['hrg_tambahan_4'];
-            $tambah4 = str_replace(",", "", $t_4);
-
-            $hjp = $data['hrg_jual_perunit'];
-            $perunit = str_replace(",", "", $hjp);
-
-            $thp = $data['total_harga_jual'];
-            $total_harga = str_replace(",", "", $thp);
-
-            $no_spk1 = $data['no_ref'];
-            $ciri = $data['kode'];
-            if (empty($ciri)) {
-                $no_spk = $no_spk1;
-            } else {
-                $no_spk = $no_spk1 . '-' . $ciri;
-            }
-
-            $data = array(
-                'no_urut'      => $data['no_urut'],
-                'no_spk'   => $no_spk,
-                'tgl_spk'      => date("Y-m-d"),
-                'nama_pemesan'    => $data['nama_pemesan'],
-                'id_chasis'    => $data['id_chasis'],
-                'alamat_pemesan'    => $data['alamat_pemesan'],
-                'telp_pemesan' => $data['telp_pemesan'],
-                'faktur_pajak' => $data['faktur_pajak'],
-                'npwp_pemesan' => $data['npwp_pemesan'],
-                'nama_npwp_pemesan' => $data['nama_npwp_pemesan'],
-                'alamat_npwp' => $data['alamat_npwp'],
-                'contact_person' => $data['contact_person'],
-                'telp_contact_person' => $data['telp_contact_person'],
-                'nama_bpkb' => $data['nama_bpkb'],
-                'no_ktp' => $data['no_ktp'],
-                'alamat_faktur' => $data['alamat_faktur'],
-                'plat_kendaraan' => $data['plat_kendaraan'],
-                'type_body' => $data['type_body'],
-                'jumlah' => $data['jml_unit'],
-                'kategori' => $data['kategori'],
-                'type_kendaraan' => $data['type_kendaraan'],
-                'warna_tahun' => $data['warna_tahun'],
-                'harga_retail' => $ofr,
-                'biaya_bbn' => $h_bbn,
-                'hrg_on_the_road' => $otr,
-                'tambahan_1' => $data['tambahan_1'],
-                'hrg_tambahan_1' => $tambah1,
-                'tambahan_2' => $data['tambahan_2'],
-                'hrg_tambahan_2' => $tambah2,
-                'tambahan_3' => $data['tambahan_3'],
-                'hrg_tambahan_3' => $tambah3,
-                'tambahan_4' => $data['tambahan_4'],
-                'hrg_tambahan_4' => $tambah4,
-                'hrg_jual_perunit' => $perunit,
-                'total_hrg_jual' => $total_harga,
-                'user'       => $data['user'],
-                'status' => 'P'
-            );
-            $this->db->insert('tbl_mk_spk', $data);
-            // determine if insert succeeded
-            $result = $this->db->affected_rows();
-            $this->db->where('id_chasis', $data['id_chasis'])->update('tbl_mk_chasis_retail', array('status' => 'P'));
-            $data     = $this->input->post();
-            //$sql2 = "UPDATE tbl_mk_chasis SET status = 'P' WHERE id_chasis='" . $data['id_chasis'] . "'";
+            $result = $this->Mod_chasis_retail->Proses_inputSpk($data);
 
             if ($result > 0) {
-                $out['dataRef'] = $data['no_urut'];
+               $out['dataRef'] = $data['no_urut'];
                 $out['dataPo'] = $data['no_urut'];
                 $out['status'] = '';
                 $out['msg'] = show_ok_msg('Data  ditambahkan!', '20px');
@@ -343,9 +257,34 @@ class ChasisRetail extends MY_Controller
             $out['status'] = 'form';
             $out['msg'] = show_err_msg(validation_errors());
         }
+
         echo json_encode($out);
     }
+   
     public function Proses_updateSpk()
+    {
+
+        $this->form_validation->set_rules('id_chasis', 'Chasis', 'trim|required');
+
+        $data     = $this->input->post();
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_chasis_retail->updateSpk($data);
+
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Data Gagal diupdate', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
+
+        echo json_encode($out);
+    }
+    public function Proses_updateSpk2()
     {
         $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
 		$h = $this->db->query($cari)->row();
@@ -551,7 +490,7 @@ class ChasisRetail extends MY_Controller
         $id = $hasil['no_urut'];
 
         $data['dataSpk'] = $this->Mod_chasis_retail->select_by_id($id);
-        $data['detailSpk'] = $this->Mod_chasis_retail->select_keterangan($id);
+        $data['detailSpk'] = $this->Mod_chasis_retail->select_ulang_keterangan($id);
 
         echo show_my_print('marketing/modals/modal_cetak_spk', 'cetak-po', $data, ' modal-xl');
     }

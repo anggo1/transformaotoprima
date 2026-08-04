@@ -139,8 +139,10 @@
                     </div>
                 </div>
             </div>
-            <div id="tempat-modal"></div>
             <div id="modal-po"></div>
+            <div id="tempat-modal"></div>
+            <div id="modal-chasis"></div>
+            <div id="modal-customer"></div>
             <div id="data-po"></div>
             <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
 
@@ -351,7 +353,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
                 table.ajax.reload();
                 if (out.status == 'form') {
-                   Swal.fire({
+                    Swal.fire({
                         position: 'center',
                         icon: 'error',
                         title: out.msg,
@@ -413,7 +415,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
 
     //SPK
 
-     $(document).on("click", ".update-spk", function() {
+    $(document).on("click", ".update-spk", function() {
         var id = $(this).attr("data-id");
 
         $.ajax({
@@ -489,35 +491,8 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
         });
     })
 
-    function cariChasis() {
-        //var tgl_po = document.getElementById("tgl_po").value;
-        $.get('<?php echo base_url('ChasisRetail/dataChasis'); ?>',
-            function(data) {
-                // success: function (data) {
-                //MyTable.fnDestroy(); //refresh();
-                $('#data-chasis').html(data);
-            })
-    }
-    var MyTable = $('#list-chasis').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true
-    });
-
-    function selectData(chasis_id, no_rangka, type, no_mesin, thn_produksi) {
-
-        $('[name = "chasis_id"]').val(chasis_id);
-        $('[name = "no_rangka"]').val(no_rangka);
-        $('[name = "type"]').val(type);
-        $('[name = "no_mesin"]').val(no_mesin);
-        $('[name = "thn_produksi"]').val(thn_produksi);
 
 
-        $('#modal_chasis').modal('hide');
-    }
     $(document).on("click", ".print-spk", function() {
         var id = $(this).attr("data-id");
         //var id = document.getElementById('next_proses').value=datakode;
@@ -531,5 +506,55 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                 $('#cetak-po').modal('show');
             })
     })
-    
+
+    function selectData(chasis_id, no_rangka, type_body, no_mesin, thn_produksi) {
+
+        $('[name = "chasis_id"]').val(chasis_id);
+        $('[name = "no_rangka"]').val(no_rangka);
+        $('[name = "type_body"]').val(type_body);
+        $('[name = "no_mesin"]').val(no_mesin);
+        $('[name = "thn_produksi"]').val(thn_produksi);
+
+
+        $('#cari-chasis').modal('hide');
+    }
+    function selectCustomer(kode_cus, nama_cus, alamat, no_telp, tlp_person) {
+
+        $('[name = "kode_cus"]').val(kode_cus);
+        $('[name = "nama_pemesan"]').val(nama_cus);
+        $('[name = "alamat_pemesan"]').val(alamat);
+        $('[name = "telp_pemesan"]').val(no_telp);
+        $('[name = "contact_person"]').val(tlp_person);
+
+
+        $('#cari-customer').modal('hide');
+    }
+    $(document).on("click", ".cari-chasis", function() {
+        var id = $(this).attr("data-id");
+
+
+        $.get('<?php echo base_url('ChasisRetail/dataChasis'); ?>',
+            function(data) {
+                // success: function (data) {
+                //MyTable.fnDestroy(); //refresh();
+
+                $('#modal-chasis').html(data);
+                $('#cari-chasis').modal('show');
+
+            })
+    })
+    $(document).on("click", ".cari-customer", function() {
+        var id = $(this).attr("data-id");
+
+
+        $.get('<?php echo base_url('ChasisRetail/dataCustomer'); ?>',
+            function(data) {
+                // success: function (data) {
+                //MyTable.fnDestroy(); //refresh();
+
+                $('#modal-customer').html(data);
+                $('#cari-customer').modal('show');
+
+            })
+    })
 </script>

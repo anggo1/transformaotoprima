@@ -58,7 +58,7 @@ class Chasis extends MY_Controller
             $row = array();
             $row[] = $no;
             $row[] = $cs->tgl_masuk;
-            $row[] = $cs->type;
+            $row[] = $cs->type_body;
             $row[] = $cs->no_rangka;
             $row[] = $cs->no_mesin;
             $row[] = $cs->thn_produksi;
@@ -92,7 +92,7 @@ class Chasis extends MY_Controller
 
     public function prosesTchasis()
     {
-        $this->form_validation->set_rules('type', 'Type', 'trim|required');
+        $this->form_validation->set_rules('type_body', 'Type', 'trim|required');
 
         $data     = $this->input->post();
         if ($this->form_validation->run() == TRUE) {
@@ -122,7 +122,7 @@ class Chasis extends MY_Controller
 
 	public function prosesUchasis() {
 		
-		$this->form_validation->set_rules('type', 'Type', 'trim|required');
+		$this->form_validation->set_rules('type_body', 'Type', 'trim|required');
 
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {

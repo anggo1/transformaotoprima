@@ -435,7 +435,7 @@ th {
                         <tr>
                             <td>Warna/Tahun</td>
                             <td>:</td>
-                            <td colspan="4"><?php echo  $k->warna_tahun; ?></td>
+                            <td colspan="4"><?php echo  $k->warna; ?> / <?php echo  $k->thn_produksi; ?></td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>

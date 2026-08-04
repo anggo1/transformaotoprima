@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');?>
+defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <style>
     .radio-buttons {
         height: auto;
@@ -161,6 +161,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                             <div class="row">
 
                                 <input type="hidden" name="id_chasis" id="id_chasis" value="<?php echo !empty($ch->id_chasis) ? $ch->id_chasis : ''; ?>" class="form-control">
+                                <input type="text" name="id_ch" id="id_ch" value="<?php echo !empty($ch->id_chasis) ? $ch->id_chasis : ''; ?>" class="form-control">
                                 <input type="hidden" name="id_spk" id="id_spk" value="<?php echo !empty($ch->id_spk) ? $ch->id_spk : ''; ?>" class="form-control">
                                 <input type="hidden" name="no_urut" id="no_urut" value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="user" id="user"
@@ -237,254 +238,262 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                                 </div>
                             </div>
 
-                    <h1 style="display:block; text-align:center;">
-                    </h1>
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i>&nbsp; Data Faktur Kendaraan
-                        </h3>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-3">
-                                <label class="col-form-label">Nama BPKB/STNK</label>
-                                <input type="text" name="nama_bpkb" id="nama_bpkb" value="<?php echo !empty($ch->nama_bpkb) ? $ch->nama_bpkb : ''; ?>" class="form-control"
-                                    placeholder="Nama BPKB / STNK">
+                            <h1 style="display:block; text-align:center;">
+                            </h1>
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-alt"></i>&nbsp; Data Faktur Kendaraan
+                                </h3>
                             </div>
-                            <div class="col-3">
-                                <label class="col-form-label">No KTP/No TDP</label>
-                                <input type="text" name="no_ktp" id="no_ktp" value="<?php echo !empty($ch->no_ktp) ? $ch->no_ktp : ''; ?>" class="form-control"
-                                    placeholder="Nomor KTP">
-                            </div>
-                            <div class="col-6">
-                                <label class="col-form-label">Alamat</label>
-                                <input type="text" name="alamat_faktur" id="alamat_faktur" value="<?php echo !empty($ch->alamat_faktur) ? $ch->alamat_faktur : ''; ?>" class="form-control"
-                                    placeholder="Received by">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-3">
-                                <label class="col-form-label">Plat Kendaraan</label>
 
-                                <div class="radio-buttons">
-                                    <label class="radio-button">
-                                        <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'K') ? 'checked' : ''; ?> value="K" />
-                                        <span class="radio-tick-kuning"></span>
-                                        Kuning
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'H') ? 'checked' : ''; ?>  value="H" />
-                                        <span class="radio-tick"></span>
-                                        Hitam
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'M') ? 'checked' : ''; ?>  value="M" />
-                                        <span class="radio-tick-merah"></span>Merah
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <label class="col-form-label">Type Body</label>
+                            <div class="modal-body">
 
-                                <div class="radio-buttons">
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'LosBak') ? 'checked' : ''; ?>  value="LosBak" id="radio_t1">
-                                        <span class="radio-tick"></span>Los Bak
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Box') ? 'checked' : ''; ?> value="Box" id="radio_t2">
-                                        <span class="radio-tick"></span> Box
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Tangki') ? 'checked' : ''; ?>  value="Tangki" id="radio_t3">
-                                        <span class="radio-tick"></span> Tangki
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Dump') ? 'checked' : ''; ?>  value="Dump" id="radio_t4">
-                                        <span class="radio-tick"></span> Dump
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Mixer') ? 'checked' : ''; ?>  value="Mixer" id="radio_t5">
-                                        <span class="radio-tick"></span> Mixer
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'TractorHead') ? 'checked' : ''; ?>  value="TranctorHead" id="radio_t6">
-                                        <span class="radio-tick"></span> Tranctor Head
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'TangkiTrailer') ? 'checked' : ''; ?>  value="TangkiTrailer" id="radio_t7">
-                                        <span class="radio-tick"></span> Tangki Trailer
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Bus') ? 'checked' : ''; ?>  value="Bus" id="radio_t8">
-                                        <span class="radio-tick"></span> Bus
-                                    </label>
-                                    <label class="radio-button">
-                                        <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == '...') ? 'checked' : ''; ?>  value="..." id="radio_t9">
-                                        <span class="radio-tick"></span> ........
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h1 style="display:block; text-align:center;">
-                    </h1>
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i>&nbsp; Keterangan Unit dan Estimasi
-                            Harga
-                        </h3>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <div class="card card-body">
-
-                                    <div class="col-12">
-                                        <label class="col-form-label">Jumlah Unit</label>
-                                        <input type="text" name="jml_unit" id="jml_unit" readonly value="<?php echo !empty($ch->jumlah) ? $ch->jumlah : ''; ?>" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
-                                            placeholder="Jumlah Unit">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="col-form-label">Nama BPKB/STNK</label>
+                                        <input type="text" name="nama_bpkb" id="nama_bpkb" value="<?php echo !empty($ch->nama_bpkb) ? $ch->nama_bpkb : ''; ?>" class="form-control"
+                                            placeholder="Nama BPKB / STNK">
                                     </div>
-                                    <div class="col-12">
-                                        <label class="col-form-label">Kategori</label>
+                                    <div class="col-3">
+                                        <label class="col-form-label">No KTP/No TDP</label>
+                                        <input type="text" name="no_ktp" id="no_ktp" value="<?php echo !empty($ch->no_ktp) ? $ch->no_ktp : ''; ?>" class="form-control"
+                                            placeholder="Nomor KTP">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="col-form-label">Alamat</label>
+                                        <input type="text" name="alamat_faktur" id="alamat_faktur" value="<?php echo !empty($ch->alamat_faktur) ? $ch->alamat_faktur : ''; ?>" class="form-control"
+                                            placeholder="Received by">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-3">
+                                        <label class="col-form-label">Plat Kendaraan</label>
+
                                         <div class="radio-buttons">
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" <?php echo (!empty($ch->kategori) && $ch->kategori == 'BUS') ? 'checked' : ''; ?> value="BUS" />
-                                                <span class="radio-tick-lain"></span>
-                                                BUS
+                                                <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'K') ? 'checked' : ''; ?> value="K" />
+                                                <span class="radio-tick-kuning"></span>
+                                                Kuning
                                             </label>
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" value="TA" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TA') ? 'checked' : ''; ?> />
-                                                <span class="radio-tick-lain"></span>
-                                                TA
+                                                <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'H') ? 'checked' : ''; ?> value="H" />
+                                                <span class="radio-tick"></span>
+                                                Hitam
                                             </label>
                                             <label class="radio-button">
-                                                <input type="radio" name="kategori" value="TE" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TE') ? 'checked' : ''; ?> />
-                                                <span class="radio-tick-lain"></span>
-                                                TE
+                                                <input type="radio" name="plat_kendaraan" <?php echo (!empty($ch->plat_kendaraan) && $ch->plat_kendaraan == 'M') ? 'checked' : ''; ?> value="M" />
+                                                <span class="radio-tick-merah"></span>Merah
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <label class="col-form-label">Type</label>
-                                        <input type="text" name="type_kendaraan" id="type_kendaraan"  value="<?php echo !empty($ch->type) ? $ch->type : ''; ?>"
-                                            class="form-control" placeholder="Type Kendaraan">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="col-form-label">Warna / Tahun</label>
-                                        <input type="text" name="warna_tahun" id="warna_tahun"  value="<?php echo !empty($ch->thn_produksi) ? $ch->thn_produksi : ''; ?>"
-                                            class="form-control" placeholder="Warna / Tahun" />
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="col-form-label">Harga Off The Road</label>
-                                        <input type="text" name="harga_unit" id="harga_unit" value="<?php echo !empty($ch->harga_retail) ? number_format($ch->harga_retail) : ''; ?>"
-                                            onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
+                                    <div class="col-9">
+                                        <label class="col-form-label">Type Body</label>
 
-
-                                            class="form-control" placeholder="0" style="text-align:right;">
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="col-form-label">Biaya BBN</label>
-                                        <input type="text" name="biaya_bbn" id="biaya_bbn" value="<?php echo !empty($ch->biaya_bbn) ? number_format($ch->biaya_bbn) : ''; ?>"
-                                            onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
-                                            class="form-control" placeholder="Biaya BBN"
-                                            style="text-align:right;">
-                                        <p></p>
+                                        <div class="radio-buttons">
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'LosBak') ? 'checked' : ''; ?> value="LosBak" id="radio_t1">
+                                                <span class="radio-tick"></span>Los Bak
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Box') ? 'checked' : ''; ?> value="Box" id="radio_t2">
+                                                <span class="radio-tick"></span> Box
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Tangki') ? 'checked' : ''; ?> value="Tangki" id="radio_t3">
+                                                <span class="radio-tick"></span> Tangki
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Dump') ? 'checked' : ''; ?> value="Dump" id="radio_t4">
+                                                <span class="radio-tick"></span> Dump
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Mixer') ? 'checked' : ''; ?> value="Mixer" id="radio_t5">
+                                                <span class="radio-tick"></span> Mixer
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'TractorHead') ? 'checked' : ''; ?> value="TranctorHead" id="radio_t6">
+                                                <span class="radio-tick"></span> Tranctor Head
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'TangkiTrailer') ? 'checked' : ''; ?> value="TangkiTrailer" id="radio_t7">
+                                                <span class="radio-tick"></span> Tangki Trailer
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == 'Bus') ? 'checked' : ''; ?> value="Bus" id="radio_t8">
+                                                <span class="radio-tick"></span> Bus
+                                            </label>
+                                            <label class="radio-button">
+                                                <input type="radio" name="type_body" <?php echo (!empty($ch->type_body) && $ch->type_body == '...') ? 'checked' : ''; ?> value="..." id="radio_t9">
+                                                <span class="radio-tick"></span> ........
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <div class="card">
+
+                            <h1 style="display:block; text-align:center;">
+                            </h1>
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-alt"></i>&nbsp; Keterangan Unit dan Estimasi
+                                    Harga
+                                </h3>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="card-body">
-                                        <div class="form-group row">
+                                        <div class="card card-body">
+
                                             <div class="col-12">
-                                                <label class="col-form-label">Harga On The Road</label>
-                                                <input type="text" name="hrg_on_the_road" id="hrg_on_the_road" value="0"
-                                                    onkeyup="formatNumber(this)" onchange="formatNumber(this);"
-                                                    class="form-control" placeholder="Bea Pengiriman Barang" readonly
+                                                <label class="col-form-label">Jumlah Unit</label>
+                                                <input type="text" name="jml_unit" id="jml_unit" readonly value="<?php echo !empty($ch->jumlah) ? $ch->jumlah : ''; ?>" onkeypress="startCalculate()" onkeyup="startCalculate()" class="form-control"
+                                                    placeholder="Jumlah Unit">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="col-form-label">Kategori</label>
+                                                <div class="radio-buttons">
+                                                    <label class="radio-button">
+                                                        <input type="radio" name="kategori" <?php echo (!empty($ch->kategori) && $ch->kategori == 'BUS') ? 'checked' : ''; ?> value="BUS" />
+                                                        <span class="radio-tick-lain"></span>
+                                                        BUS
+                                                    </label>
+                                                    <label class="radio-button">
+                                                        <input type="radio" name="kategori" value="TA" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TA') ? 'checked' : ''; ?> />
+                                                        <span class="radio-tick-lain"></span>
+                                                        TA
+                                                    </label>
+                                                    <label class="radio-button">
+                                                        <input type="radio" name="kategori" value="TE" <?php echo (!empty($ch->kategori) && $ch->kategori == 'TE') ? 'checked' : ''; ?> />
+                                                        <span class="radio-tick-lain"></span>
+                                                        TE
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="col-form-label">Type</label>
+                                                <input type="text" name="type_kendaraan" id="type_kendaraan" value="<?php echo !empty($ch->type) ? $ch->type : ''; ?>"
+                                                    class="form-control" placeholder="Type Kendaraan">
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-6">
+                                                    <label class="col-form-label">Warna</label>
+                                                    <input type="text" name="warna" id="warna" value="<?php echo !empty($ch->warna) ? $ch->warna : ''; ?>"
+                                                        class="form-control" placeholder="Warna" />
+                                                </div>
+                                                <div class="col-6">
+                                                    <label class="col-form-label">Tahun</label>
+                                                    <input type="text" name="thn_produksi" id="thn_produksi" value="<?php echo !empty($ch->thn_produksi) ? $ch->thn_produksi : ''; ?>"
+                                                        class="form-control" placeholder="Tahun" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="col-form-label">Harga Off The Road</label>
+                                                <input type="text" name="harga_unit" id="harga_unit" value="<?php echo !empty($ch->harga_retail) ? number_format($ch->harga_retail) : ''; ?>"
+                                                    onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
+
+
+                                                    class="form-control" placeholder="0" style="text-align:right;">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="col-form-label">Biaya BBN</label>
+                                                <input type="text" name="biaya_bbn" id="biaya_bbn" value="<?php echo !empty($ch->biaya_bbn) ? number_format($ch->biaya_bbn) : ''; ?>"
+                                                    onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
+                                                    class="form-control" placeholder="Biaya BBN"
                                                     style="text-align:right;">
+                                                <p></p>
                                             </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Tambahan 1 </label>
-                                                <input type="text" name="tambahan_1" id="tambahan_1" value="<?php echo !empty($ch->tambahan_1) ? $ch->tambahan_1 : ''; ?>"
-                                                    class="form-control" placeholder="Keterangan Tambahan">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1" value="<?php echo !empty($ch->hrg_tambahan_1) ? number_format($ch->hrg_tambahan_1) : ''; ?>"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
-                                                    placeholder="Harga Tambahan" style="text-align:right;">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Tambahan 2 </label>
-                                                <input type="text" name="tambahan_2" id="tambahan_2" value="<?php echo !empty($ch->tambahan_2) ? $ch->tambahan_2 : ''; ?>"
-                                                    class="form-control" placeholder="Keterangan Tambahan">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2" value="<?php echo !empty($ch->hrg_tambahan_2) ? number_format($ch->hrg_tambahan_2) : ''; ?>"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
-                                                    placeholder="Harga Tambahan" style="text-align:right;">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Tambahan 3 </label>
-                                                <input type="text" name="tambahan_3" id="tambahan_3" value="<?php echo !empty($ch->tambahan_3) ? $ch->tambahan_3 : ''; ?>"
-                                                    class="form-control" placeholder="Keterangan Tambahan">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3" value="<?php echo !empty($ch->hrg_tambahan_3) ? number_format($ch->hrg_tambahan_3) : ''; ?>"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
-                                                    placeholder="Harga Tambahan" style="text-align:right;">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Tambahan 4 </label>
-                                                <input type="text" name="tambahan_4" id="tambahan_4" value="<?php echo !empty($ch->tambahan_4) ? $ch->tambahan_4 : ''; ?>"
-                                                    class="form-control" placeholder="Keterangan Tambahan">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Harga</label>
-                                                <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4" value="<?php echo !empty($ch->hrg_tambahan_4) ? number_format($ch->hrg_tambahan_4) : ''; ?>"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
-                                                    placeholder="Harga Tambahan" style="text-align:right;">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Harga Jual Per Unit</label>
-                                                <input type="text" name="hrg_jual_perunit" id="hrg_jual_perunit"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" class="form-control"
-                                                    placeholder="Total Harga Jual" style="text-align:right;" readonly>
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="col-form-label">Total Harga Jual</label>
-                                                <input type="text" name="total_harga_jual" id="total_harga_jual"
-                                                    value="0" onkeyup="formatNumber(this)"
-                                                    onchange="formatNumber(this);" onblur="formatNumber(this);" class="form-control"
-                                                    placeholder="Total Harga Jual" style="text-align:right;" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-12">
+                                                        <label class="col-form-label">Harga On The Road</label>
+                                                        <input type="text" name="hrg_on_the_road" id="hrg_on_the_road" value="0"
+                                                            onkeyup="formatNumber(this)" onchange="formatNumber(this);"
+                                                            class="form-control" placeholder="Bea Pengiriman Barang" readonly
+                                                            style="text-align:right;">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Tambahan 1 </label>
+                                                        <input type="text" name="tambahan_1" id="tambahan_1" value="<?php echo !empty($ch->tambahan_1) ? $ch->tambahan_1 : ''; ?>"
+                                                            class="form-control" placeholder="Keterangan Tambahan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Harga</label>
+                                                        <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1" value="<?php echo !empty($ch->hrg_tambahan_1) ? number_format($ch->hrg_tambahan_1) : ''; ?>"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" class="form-control"
+                                                            placeholder="Harga Tambahan" style="text-align:right;">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Tambahan 2 </label>
+                                                        <input type="text" name="tambahan_2" id="tambahan_2" value="<?php echo !empty($ch->tambahan_2) ? $ch->tambahan_2 : ''; ?>"
+                                                            class="form-control" placeholder="Keterangan Tambahan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Harga</label>
+                                                        <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2" value="<?php echo !empty($ch->hrg_tambahan_2) ? number_format($ch->hrg_tambahan_2) : ''; ?>"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" class="form-control"
+                                                            placeholder="Harga Tambahan" style="text-align:right;">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Tambahan 3 </label>
+                                                        <input type="text" name="tambahan_3" id="tambahan_3" value="<?php echo !empty($ch->tambahan_3) ? $ch->tambahan_3 : ''; ?>"
+                                                            class="form-control" placeholder="Keterangan Tambahan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Harga</label>
+                                                        <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3" value="<?php echo !empty($ch->hrg_tambahan_3) ? number_format($ch->hrg_tambahan_3) : ''; ?>"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" class="form-control"
+                                                            placeholder="Harga Tambahan" style="text-align:right;">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Tambahan 4 </label>
+                                                        <input type="text" name="tambahan_4" id="tambahan_4" value="<?php echo !empty($ch->tambahan_4) ? $ch->tambahan_4 : ''; ?>"
+                                                            class="form-control" placeholder="Keterangan Tambahan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Harga</label>
+                                                        <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4" value="<?php echo !empty($ch->hrg_tambahan_4) ? number_format($ch->hrg_tambahan_4) : ''; ?>"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" class="form-control"
+                                                            placeholder="Harga Tambahan" style="text-align:right;">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Harga Jual Per Unit</label>
+                                                        <input type="text" name="hrg_jual_perunit" id="hrg_jual_perunit"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" class="form-control"
+                                                            placeholder="Total Harga Jual" style="text-align:right;" readonly>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="col-form-label">Total Harga Jual</label>
+                                                        <input type="text" name="total_harga_jual" id="total_harga_jual"
+                                                            value="0" onkeyup="formatNumber(this)"
+                                                            onchange="formatNumber(this);" onblur="formatNumber(this);" class="form-control"
+                                                            placeholder="Total Harga Jual" style="text-align:right;" readonly>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
+                                    Simpan Data</button>
+                                <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden" data-id=""
+                                    title="Add Data"><i class="fas fa-print"></i>
+                                    Cetak Data</button>
+                            </div>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
-                            Simpan Data</button>
-                        <button type="button" class="btn btn-info cetak-po" id="cetak" hidden="hidden" data-id=""
-                            title="Add Data"><i class="fas fa-print"></i>
-                            Cetak Data</button>
-                    </div>
-                    </div>
-                        </form>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -663,11 +672,12 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
         var data = $(this).serialize();
         var id = document.getElementById('no_urut').value;
         var no_spk = document.getElementById('no_ref').value;
+        var id_ch = document.getElementById('id_ch').value;
 
         $.ajax({
                 method: 'POST',
                 url: '<?php echo base_url('ChasisRetail/tambahKeterangan'); ?>',
-                data: data + "&id=" + id + "&no_spk=" + no_spk
+                data: data + "&id=" + id + "&no_spk=" + no_spk + "&id_chasis=" + id_ch
             })
             .done(function(data) {
                 tampilKeterangan();
@@ -771,11 +781,12 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
                     $('.dataPo').html(out.dataPo);
                     //tampilDetail(out.dataPo)
                     //document.getElementById("formSpk").reset();
+                    $("a[href='#tab-chasis-retail']").tab('show');
+                    document.getElementById("tab-spk-tab").hidden = true;
 
                     var d = document.getElementById("cetak");
                     d.setAttribute('data-id', out.dataPo);
-                    var d = document.getElementById("cetak-ulang");
-                    d.setAttribute('data-id', out.dataPo);
+                    table.ajax.reload();
                     document.getElementById("cetak").hidden = false;
                     document.getElementById("data-po").hidden = true;
                     document.getElementById("simpan").hidden = true;
@@ -792,7 +803,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 
         e.preventDefault();
     });
-     $('#editSpk').submit(function(e) {
+    $('#editSpk').submit(function(e) {
         var data = $(this).serialize();
 
         $.ajax({

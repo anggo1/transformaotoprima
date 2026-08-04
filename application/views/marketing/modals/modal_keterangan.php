@@ -23,16 +23,18 @@
             echo 'id="form-update-keterangan"';
           } ?> method="POST">
       <div class="form-group">
+        
+        <input type="hidden" name="id_chasis" id="id_chasis" value="<?php echo !empty($dataKet->chasis_id) ? $dataKet->chasis_id : ''; ?>" class="form-control">
         <input type="hidden" name="id_detail_note" value="<?php if (!empty($dataKet->id_ket_spk)) {
-                                                        echo $dataKet->id_ket_spk;
-                                                      } ?>">
+                                                            echo $dataKet->id_ket_spk;
+                                                          } ?>">
       </div>
       <div class="input-group form-group">
         <input type="text" class="form-control" placeholder="Keterangan" value="<?php
-                                                                                  if (!empty($dataKet->keterangan)) {
-                                                                                    echo $dataKet->keterangan;
-                                                                                  }
-                                                                                  ?>" name="keterangan" aria-describedby="sizing-addon2">
+                                                                                if (!empty($dataKet->keterangan)) {
+                                                                                  echo $dataKet->keterangan;
+                                                                                }
+                                                                                ?>" name="keterangan" aria-describedby="sizing-addon2">
 
       </div>
 
