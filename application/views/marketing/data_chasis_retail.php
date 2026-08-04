@@ -80,6 +80,9 @@
         height: 38px !important;
         /* Menjaga tinggi tetap konsisten */
     }
+    .modal {
+    overflow-y: auto !important;
+}
 </style>
 <div class="text-right">
     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-chasis-retail" title="Add Data"><i class="fas fa-plus"></i> Tambah Data</button>
@@ -144,6 +147,7 @@
             <div id="modal-chasis"></div>
             <div id="modal-customer"></div>
             <div id="data-po"></div>
+        </div>
             <div class="tab-pane show" id="tab-spk" role="tabpanel" aria-labelledby="tab-spk-tab">
 
 
@@ -286,7 +290,7 @@ show_my_confirm('hapusChasis', 'hapus-chasis', 'Hapus Data Ini?', 'Ya, Hapus Dat
                 "targets": [0, 19],
                 "orderable": false,
                 "visible": false,
-                "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12]
+                "targets": [4, 5, 6, 7, 8, 9, 10, 11, 12, 17, 18,19]
             }, ],
 
         });

@@ -46,7 +46,6 @@
           </div>
         </div>
       </div>
-    </div>
 
                 <script language="javascript">
 		var MyTable = $('#list-chasis').DataTable({

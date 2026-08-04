@@ -45,7 +45,6 @@
           </div>
         </div>
       </div>
-    </div>
 
 <script language="javascript">
   var MyTable = $('#list-customer').DataTable({
