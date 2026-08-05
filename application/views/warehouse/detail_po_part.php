@@ -26,18 +26,6 @@
             $idlokasi = $this->session->userdata['lokasi'];
             $no = 1;
             foreach ($dataPo as $s) {
-                if($idlokasi=='Cibitung'){
-            $stok=$s->stok_cbt;
-                }
-          if($idlokasi=='Jakarta'){
-            $stok=$s->stok_jkt;
-          $total += $s->hrg_net_jkt* $s->jumlah;
-          }
-          if($idlokasi=='Surabaya'){
-            $stok=$s->stok_sby;
-          $total += $s->hrg_net_sby * $s->jumlah;
-          }
-            
             ?>
         <tr>
             <td><?php echo $no; ?></td>
@@ -50,11 +38,12 @@
                     value="<?php echo $s->jml_masuk; ?>"
                     onkeypress="saveData(event,'<?php echo $s->id_detail; ?>','<?php echo $s->jumlah; ?>',$(this).val() )"
                     class="form-control col-sm-10">
+                <input type="hidden" name="id_detail[]" id="id_detail[]" value="<?php echo $s->id_detail; ?>">
                 <input type="hidden" name="harga[]" id="harga[]" value="<?php echo $s->harga; ?>">
                 <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
-                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok ?>">
+                <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir ?>">
             </td>
             <td><?php echo number_format($s->jml_masuk * $s->harga); ?></td>
             <td class="text-center">
@@ -92,7 +81,7 @@ function saveData(e, id, qty_awal, qty_masuk) {
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('Part_masuk/updatePart')?>",
+            url: "<?php echo base_url('Part_masuk_po/updatePart')?>",
             data: {
                 'id': id,
                 'qty_awal': qty_awal,
@@ -106,7 +95,7 @@ function saveData(e, id, qty_awal, qty_masuk) {
     }
 }
 function delData(e, id, sisa) {
-    var id_po = document.getElementById("id_po").value;
+    var id_part_order = document.getElementById("id_part_order").value;
     var no_po = document.getElementById("no_po").value;
     var status = document.getElementById("status").value;
     var kode_sup = document.getElementById("kode_sup").value;
@@ -120,7 +109,7 @@ function delData(e, id, sisa) {
             },
 
             success: function(response) {
-                showPart(id_po, no_po, kode_sup, supplier, status);
+                showPart(id_part_order, no_po, kode_sup, supplier, status);
             }
         });
     }

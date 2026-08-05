@@ -1,6 +1,6 @@
 <?php if (!empty($dataPart)) {
-	foreach ($dataPart as $part) {
-	}
+    foreach ($dataPart as $part) {
+    }
 } ?>
 <section class="content">
     <div class="container-fluid">
@@ -20,18 +20,18 @@
                         <div class="modal-body">
 
                             <?php
-						$date = date("y-m");
-						$ci_kons = get_instance();
-						$query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
-						$hasil = $ci_kons->db->query($query)->row_array();
-						$noOrder = $hasil['maxKode'];
-						$noUrut = (int)substr($noOrder, 6, 5);
-						$noUrut++;
-						$tahun = substr($date, 0, 2);
-						$bulan = substr($date, 3, 2);
-						$kode_po  = $tahun.'-'.$bulan.sprintf("%05s", $noUrut);
-						$kode_po2  = sprintf("%05s", $noUrut);
-						?>
+                            $date = date("y-m");
+                            $ci_kons = get_instance();
+                            $query = "SELECT max(id_part_order) AS maxKode FROM tbl_wh_part_order WHERE id_part_order LIKE '%$date%'";
+                            $hasil = $ci_kons->db->query($query)->row_array();
+                            $noOrder = $hasil['maxKode'];
+                            $noUrut = (int)substr($noOrder, 6, 5);
+                            $noUrut++;
+                            $tahun = substr($date, 0, 2);
+                            $bulan = substr($date, 3, 2);
+                            $kode_po  = $tahun . '-' . $bulan . sprintf("%05s", $noUrut);
+                            $kode_po2  = sprintf("%05s", $noUrut);
+                            ?>
                             <form id="formPo" name="formPo" method="POST">
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Tanggal</label>
@@ -55,15 +55,15 @@
                                             <option value="">Kode...
                                             </option>
                                             <?php
-											if (!empty($dataKode)) {
-												foreach ($dataKode as $k) {   ?>
-                                            <option value="<?php echo $k->kode_po.'|'.$k->keterangan; ?>">
-                                                <?php echo $k->kode_po.'|'.$k->keterangan; ?>
-                                            </option>
+                                            if (!empty($dataKode)) {
+                                                foreach ($dataKode as $k) {   ?>
+                                                    <option value="<?php echo $k->kode_po . '|' . $k->keterangan; ?>">
+                                                        <?php echo $k->kode_po . '|' . $k->keterangan; ?>
+                                                    </option>
                                             <?php
-												}
-											}
-											?>
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                         <input type="text" name="no_order" id="no_order" value="<?php echo $kode_po2 ?>"
                                             class="col-sm-6 form-control" placeholder="No Pesanan" readonly>
@@ -76,15 +76,15 @@
                                             <option value="">Supplier...
                                             </option>
                                             <?php
-											if (!empty($dataSupplier)) {
-												foreach ($dataSupplier as $sp) {   ?>
-                                            <option value="<?php echo $sp->kode_sup; ?>">
-                                                <?php echo $sp->nama_sup; ?>
-                                            </option>
+                                            if (!empty($dataSupplier)) {
+                                                foreach ($dataSupplier as $sp) {   ?>
+                                                    <option value="<?php echo $sp->kode_sup; ?>">
+                                                        <?php echo $sp->nama_sup; ?>
+                                                    </option>
                                             <?php
-												}
-											}
-											?>
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                     <label class="col-sm-1 col-form-label">Keterangan</label>
@@ -93,31 +93,13 @@
                                             class="form-control" placeholder="Keterangan">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                   
-                                <label class="col-sm-2 col-form-label">Stok Cabang</label>
-                                    <div class="col-sm-4">
-                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
-                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
-                                            <option value="">Cabang Dealer...
-                                            </option>
-                                            <?php
-                                            $lok = $this->session->userdata['lokasi'];
-                                                                    foreach ($dataKota as $kel) { ?>
-                                                                <option
-                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
-                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
-                                                                    <?php echo $kel->nama_kota; ?>
-                                                                </option>
-                                                                <?php }  ?>
-                                        </select>
-                                    </div>
-                                </div>
                                 <input type="hidden" name="id_part_order" id="id_part_order"
                                     value="<?php echo $kode_po ?>" class="form-control">
                                 <input type="hidden" name="kode_ref" id="kode_ref" class="form-control">
                                 <input type="hidden" name="user" id="user"
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
+                                <input type="hidden" name="lokasi" id="lokasi"
+                                    value="<?php echo $this->session->userdata['lokasi']; ?>" class="form-control">
                                 <div class="modal-footer right-content-between">
                                     <button class="btn btn-primary" id="simpan" type="submit"><span
                                             class="fa fa-save"></span> Simpan Data</button>
@@ -131,7 +113,7 @@
                             <div id="modal-po"></div>
                             <div id="data-po"></div>
                             <div id="data-po-cache"></div>
-                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
+                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part" onclick="panggilPart()"
                                 title="Add Part" data-toggle="modal" data-target="#modal_form"><i
                                     class="fas fa-plus"></i> Tambah Barang PO</button>
                         </div>
@@ -173,42 +155,62 @@
 
 </section><!-- /.modal-content -->
 <script type="text/javascript">
-function fn(o) {
-    o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
-}
-$('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
-    format: 'DD-MM-YYYY',
-    date: moment()
-});
-$(document).ready(function() {
-    table = $('#table-part').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
-        "serverSide": true,
-        "pageLength": 10, // Defaults number of rows to display in table
-        "order": [],
-        "ajax": {
-            "url": "<?php echo site_url('PartOrder/ajax_list') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "orderable": false,
-        }, ]
+    function fn(o) {
+        o.value = o.value.toUpperCase().replace(/([^0-9(),-/])/g, '');
+    }
+    $('#tgl_part_order,#tgl_awal,#tgl_akhir').datetimepicker({
+        format: 'DD-MM-YYYY',
+        date: moment()
     });
+
+$('#modal_form').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#table-part')) {
+        $('#table-part').DataTable().destroy();
+        $('#table-part tbody').empty();
+    }
 });
+    function panggilPart() {
+        //datatables
+        table = $("#table-part").DataTable({
 
-$(document).ready(function() {
-    var table = $('#table-part').DataTable();
-    var tgl_part_order = document.formPo.tgl_part_order.value;
-    var id_part_order = document.formPo.id_part_order.value;
+            "responsive": false,
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "processing": true,
+            "serverSide": true,
+            "pageLength": 5,
 
-    $('#table-part tbody').on('click', 'tr', function() {
+
+            "language": {
+                "sEmptyTable": "Data Service Appointment Belum Ada"
+            },
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true,
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+            },
+            "order": [],
+
+            // Load data for the table's content from an Ajax source
+            "ajax": {
+                "url": "<?php echo site_url('PartOrder/ajax_list') ?>",
+                "type": "POST"
+            },
+            "columnDefs": [{
+                "targets": [0, 3], //first column / numbering column
+                "orderable": false,
+            }, ],
+
+        })
+    }
+    $('#table-part tbody').on('click', 'tr', function(e) {
+        var table = $('#table-part').DataTable();
+        var tgl_part_order = document.formPo.tgl_part_order.value;
+        var id_part_order = document.formPo.id_part_order.value;
+
         var data = table.row(this).data();
         var id_part = data[0];
         var no_part = data[1];
@@ -218,6 +220,49 @@ $(document).ready(function() {
         var harga_baru = data[5];
         var tgl_part_order = document.formPo.tgl_part_order.value;
         var id_part_order = document.formPo.id_part_order.value;
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
+                data: "tgl_part_order=" + tgl_part_order +
+                    "&id_part_order=" + id_part_order +
+                    "&id_part=" + id_part +
+                    "&no_part=" + no_part +
+                    "&nama_part=" + nama_part +
+                    "&satuan=" + satuan +
+                    "&stok=" + stok +
+                    "&harga_baru=" + harga_baru
+            })
+            .done(function(data) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    class: 'bg-success',
+                    //title: 'Mantap',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                tampilDetail(id_part_order);
+                //document.getElementById("simpan").hidden = false;
+                $('#modal_form').modal('hide');
+            })
+        e.preventDefault();
+    });
+
+
+
+    var MyTable = $('#list-po').dataTable({
+        "responsive": true,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true
+    });
+
+    function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
+        var tgl_part_order = document.formPo.tgl_part_order.value;
+        var id_part_order = document.formPo.id_part_order.value;
+
         $.ajax({
             method: 'POST',
             url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
@@ -230,217 +275,187 @@ $(document).ready(function() {
                 "&stok=" + stok +
                 "&harga_baru=" + harga_baru
         })
-        tampilDetail();
+
+        tampilDetail(id_part_order);
+
         $('#modal_form').modal('hide');
-        tampilDetail();
+
+    }
+
+    function next(dataPo, dataRef) {
+        document.getElementById('id_part_order').value = dataPo;
+        document.getElementById('kode_ref').value = dataRef;
+        var d = document.getElementById("cetak");
+        d.setAttribute('data-id', dataPo);
+
+        document.getElementById("cetak").hidden = false;
+        //document.getElementById("alamat").readonly = true;
+    }
+
+    function nextref(dataRef) {
+        document.getElementById('kode_ref').value = dataRef;
+    }
+
+    function refresh() {
+        MyTable = $('#list-po').dataTable();
+    }
+
+    function tampilDetail() {
+        //var out = jQuery.parseJSON(data);
+        //var id_part_order = document.getElementById('id_part_order').value = dataPo;
+        var id_part_order = document.getElementById('id_part_order').value;
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url('PartOrder/tampilDetail'); ?>',
+            data: 'id_part_order=' + id_part_order,
+            success: function(hasil) {
+                //MyTable.fnDestroy();
+                $('#data-po').html(hasil);
+            }
+        });
+    }
+
+    function tampilDetailCache(dataPo) {
+        //var out = jQuery.parseJSON(data);
+        var id_part_order = document.getElementById('id_part_order').value = dataPo;
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo base_url('PartOrder/tampilDetailCache'); ?>?id_part_order=' + id_part_order,
+            data: 'id_part_order=' + id_part_order,
+            success: function(hasil) {
+                MyTable.fnDestroy();
+                $('#data-po-cache').html(hasil);
+                refresh();
+            }
+        });
+    }
+    $('#formPo').submit(function(e) {
+        var data = $(this).serialize();
+
+        $.ajax({
+                method: 'POST',
+                url: '<?php echo base_url('PartOrder/prosesPo'); ?>',
+                data: data
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+
+                if (out.status == 'form') {
+                    //toastr.error(out.msg);
+                    $('.msg').html(out.msg);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    $('.msg').html(out.msg);
+                    $('.dataPo').html(out.dataPo);
+                    //tampilDetail(out.dataPo)
+                    document.getElementById("formPo"); //reset()	
+                    $('#tgl_part_order').attr('readonly', 'readonly');
+                    $('#top').attr('readonly', 'readonly');
+                    $('#status').attr('readonly', 'readonly');
+                    $('#supplier').attr('readonly', 'readonly');
+                    $('#keterangan').attr('readonly', 'readonly');
+                    $('#ppn').attr('readonly', 'readonly');
+
+                    var d = document.getElementById("cetak");
+                    d.setAttribute('data-id', out.dataPo);
+                    document.getElementById("cetak").hidden = false;
+                    document.getElementById("tambah").hidden = false;
+                    document.getElementById("tambah-part").hidden = true;
+                    document.getElementById("data-po").hidden = true;
+                    document.getElementById("simpan").hidden = true;
+                    tampilDetailCache(out.dataPo);
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: out.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
+        e.preventDefault();
     });
-});
-var MyTable = $('#list-po').dataTable({
-    "responsive": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true
-});
 
-function selectPart(id_part, no_part, nama_part, satuan, stok, harga_baru) {
-    var tgl_part_order = document.formPo.tgl_part_order.value;
-    var id_part_order = document.formPo.id_part_order.value;
+    function cetakPo(datakode) {}
 
-    $.ajax({
-        method: 'POST',
-        url: '<?php echo base_url('PartOrder/prosesDetailPo'); ?>',
-        data: "tgl_part_order=" + tgl_part_order +
-            "&id_part_order=" + id_part_order +
-            "&id_part=" + id_part +
-            "&no_part=" + no_part +
-            "&nama_part=" + nama_part +
-            "&satuan=" + satuan +
-            "&stok=" + stok +
-            "&harga_baru=" + harga_baru
+
+    $(document).on("click", ".cetak-po", function() {
+        var id = $(this).attr("data-id");
+        //var id = document.getElementById('next_proses').value=datakode;
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('PartOrder/cetak'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                $('#modal-po').html(data);
+                $('#cetak-po').modal('show');
+            })
+    })
+    var data_id;
+    $(document).on("click", ".delete-detail", function() {
+        data_id = $(this).attr("data-id");
+    })
+    $(document).on("click", ".delete-detail", function() {
+        var id = data_id;
+
+        $.ajax({
+                method: "POST",
+                url: "<?php echo base_url('PartOrder/deleteDetail'); ?>",
+                data: "id=" + id
+            })
+            .done(function(data) {
+                var out = jQuery.parseJSON(data);
+                if (out.status != 'form') {
+                    //$('.msg').html(out.msg);
+                    $('#hapusDetail').modal('hide');
+                    var id_part_order = document.formPo.id_part_order.value;
+                    //next(next_proses);
+                    tampilDetail(id_part_order);
+                }
+            })
     })
 
-    tampilDetail(id_part_order);
+    function startHitung() {
+        interval = setInterval("Hitung()", 10);
+    }
 
-    $('#modal_form').modal('hide');
+    function Hitung() {
 
-}
+        var a = document.formPo.jumlah.value;
+        var b = document.formPo.hrg_awal.value;
+        document.formPo.total_harga.value = (a * b);
+    }
 
-function next(dataPo, dataRef) {
-    document.getElementById('id_part_order').value = dataPo;
-    document.getElementById('kode_ref').value = dataRef;
-    var d = document.getElementById("cetak");
-    d.setAttribute('data-id', dataPo);
+    function stopHitung() {
+        clearInterval(startHitung);
+    }
 
-    document.getElementById("cetak").hidden = false;
-    //document.getElementById("alamat").readonly = true;
-}
+    function startDiskon() {
+        interval = setInterval("Diskon()", 10);
+    }
 
-function nextref(dataRef) {
-    document.getElementById('kode_ref').value = dataRef;
-}
+    function Diskon() {
 
-function refresh() {
-    MyTable = $('#list-po').dataTable();
-}
+        var a = document.formPo.jumlah.value;
+        var b = document.formPo.hrg_awal.value;
+        var c = document.formPo.diskon.value;
+        document.formPo.total_diskon.value = (a * b) * c / 100;
+    }
 
-function tampilDetail() {
-    //var out = jQuery.parseJSON(data);
-    //var id_part_order = document.getElementById('id_part_order').value = dataPo;
-    var id_part_order = document.getElementById('id_part_order').value;
-    $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('PartOrder/tampilDetail'); ?>',
-        data: 'id_part_order=' + id_part_order,
-        success: function(hasil) {
-            //MyTable.fnDestroy();
-            $('#data-po').html(hasil);
-        }
-    });
-}
+    function stopDiskon() {
+        clearInterval(startDiskon);
+    }
 
-function tampilDetailCache(dataPo) {
-    //var out = jQuery.parseJSON(data);
-    var id_part_order = document.getElementById('id_part_order').value = dataPo;
-    $.ajax({
-        type: 'GET',
-        url: '<?php echo base_url('PartOrder/tampilDetailCache'); ?>?id_part_order=' + id_part_order,
-        data: 'id_part_order=' + id_part_order,
-        success: function(hasil) {
-            MyTable.fnDestroy();
-            $('#data-po-cache').html(hasil);
-            refresh();
-        }
-    });
-}
-$('#formPo').submit(function(e) {
-    var data = $(this).serialize();
-
-    $.ajax({
-            method: 'POST',
-            url: '<?php echo base_url('PartOrder/prosesPo'); ?>',
-            data: data
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-
-            if (out.status == 'form') {
-                //toastr.error(out.msg);
-                $('.msg').html(out.msg);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } else {
-                $('.msg').html(out.msg);
-                $('.dataPo').html(out.dataPo);
-                //tampilDetail(out.dataPo)
-                document.getElementById("formPo"); //reset()	
-                $('#tgl_part_order').attr('readonly', 'readonly');
-                $('#top').attr('readonly', 'readonly');
-                $('#status').attr('readonly', 'readonly');
-                $('#supplier').attr('readonly', 'readonly');
-                $('#keterangan').attr('readonly', 'readonly');
-                $('#ppn').attr('readonly', 'readonly');
-
-                var d = document.getElementById("cetak");
-                d.setAttribute('data-id', out.dataPo);
-                document.getElementById("cetak").hidden = false;
-                document.getElementById("tambah").hidden = false;
-                document.getElementById("tambah-part").hidden = true;
-                document.getElementById("data-po").hidden = true;
-                document.getElementById("simpan").hidden = true;
-                tampilDetailCache(out.dataPo);
-
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: out.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-
-    e.preventDefault();
-});
-
-function cetakPo(datakode) {}
-
-
-$(document).on("click", ".cetak-po", function() {
-    var id = $(this).attr("data-id");
-    //var id = document.getElementById('next_proses').value=datakode;
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('PartOrder/cetak'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            $('#modal-po').html(data);
-            $('#cetak-po').modal('show');
-        })
-})
-var data_id;
-$(document).on("click", ".delete-detail", function() {
-    data_id = $(this).attr("data-id");
-})
-$(document).on("click", ".delete-detail", function() {
-    var id = data_id;
-
-    $.ajax({
-            method: "POST",
-            url: "<?php echo base_url('PartOrder/deleteDetail'); ?>",
-            data: "id=" + id
-        })
-        .done(function(data) {
-            var out = jQuery.parseJSON(data);
-            if (out.status != 'form') {
-                //$('.msg').html(out.msg);
-                $('#hapusDetail').modal('hide');
-                var id_part_order = document.formPo.id_part_order.value;
-                //next(next_proses);
-                tampilDetail(id_part_order);
-            }
-        })
-})
-
-function startHitung() {
-    interval = setInterval("Hitung()", 10);
-}
-
-function Hitung() {
-
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    document.formPo.total_harga.value = (a * b);
-}
-
-function stopHitung() {
-    clearInterval(startHitung);
-}
-
-function startDiskon() {
-    interval = setInterval("Diskon()", 10);
-}
-
-function Diskon() {
-
-    var a = document.formPo.jumlah.value;
-    var b = document.formPo.hrg_awal.value;
-    var c = document.formPo.diskon.value;
-    document.formPo.total_diskon.value = (a * b) * c / 100;
-}
-
-function stopDiskon() {
-    clearInterval(startDiskon);
-}
-
-function startPpn() {
-    interval = setInterval("Ppn()", 10);
-}
+    function startPpn() {
+        interval = setInterval("Ppn()", 10);
+    }
 </script>

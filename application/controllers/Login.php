@@ -43,11 +43,11 @@ class Login extends CI_Controller {
                     'aplikasi'    => $apl->nama_aplikasi,
                     'title'       => $apl->title,
                     'logo'        => $apl->logo,
-                    'nama_owner'     => $apl->nama_owner,
+                    'nama_owner'  => $apl->nama_owner,
                     'image'       => $db->image,
-                    'id_lokasi'       => $db->id_lokasi,
+                    'id_lokasi'    => $db->id_lokasi,
                     'lokasi'       => $db->lokasi,
-                    'footer'       => $db->footer,
+                    'footer'       => $apl->footer,
                     'logged_in'    => TRUE
                 );
 

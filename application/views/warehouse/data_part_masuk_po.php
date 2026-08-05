@@ -16,10 +16,10 @@
             ?>
             <tr>
               <td><?php echo $no; ?></td>
-              <td onClick="showPart('<?php echo $s->id_po; ?>','<?php echo $s->kode_po; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->kode_po; ?></td>
-              <td onClick="showPart('<?php echo $s->id_po; ?>','<?php echo $s->kode_po; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->tgl_po; ?></td>
-              <td onClick="showPart('<?php echo $s->id_po; ?>','<?php echo $s->kode_po; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->supplier; ?></td>
-              <td onClick="showPart('<?php echo $s->id_po; ?>','<?php echo $s->kode_po; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->keterangan; ?></td>
+              <td onClick="showPart('<?php echo $s->id_part_order; ?>','<?php echo $s->kode_part_order; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->kode_part_order; ?></td>
+              <td onClick="showPart('<?php echo $s->id_part_order; ?>','<?php echo $s->kode_part_order; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo tglIndoSedang($s->tgl_part_order); ?></td>
+              <td onClick="showPart('<?php echo $s->id_part_order; ?>','<?php echo $s->kode_part_order; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->supplier; ?></td>
+              <td onClick="showPart('<?php echo $s->id_part_order; ?>','<?php echo $s->kode_part_order; ?>','<?php echo $s->kode_sup; ?>','<?php echo $s->supplier; ?>','<?php echo $s->status; ?>')"><?php echo $s->keterangan; ?></td>
             </tr>
           <?php
               $no++;

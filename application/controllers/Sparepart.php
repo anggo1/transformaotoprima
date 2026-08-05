@@ -17,8 +17,8 @@ class Sparepart extends MY_Controller
 
     public function index()
     {
-		$data['page'] 		= "Data Barang";
-		$data['judul'] 		= "Sparepart";
+        $data['page']         = "Data Barang";
+        $data['judul']         = "Sparepart";
         $this->load->helper('url');
         $data['menu'] = $this->Mod_menu->getAll()->result();
 
@@ -28,30 +28,30 @@ class Sparepart extends MY_Controller
         $data['dataKelompok'] = $this->Mod_sparepart->select_kelompok();
         $data['dataSupplier'] = $this->Mod_sparepart->select_supplier();
 
-        $link=$this->uri->segment(1);
+        $link = $this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
         $get_id = $this->Mod_sparepart->get_by_nama($link);
-        foreach ($get_id as $idnye){
+        foreach ($get_id as $idnye) {
             $row1 = array();
             $row1[] = $idnye->id_submenu;
-            $id_sub=$idnye->id_submenu;
+            $id_sub = $idnye->id_submenu;
         }
         $data['viewLevel']  = $this->Mod_sparepart->select_by_level($idlevel, $id_sub);
-        
-		echo show_my_modal('warehouse/modals/modal_tambah_part', 'tambah-sparepart', $data, ' modal-lg');
+
+        echo show_my_modal('warehouse/modals/modal_tambah_part', 'tambah-sparepart', $data, ' modal-lg');
         $this->template->load('layoutbackend', 'warehouse/sparepart_data', $data);
     }
 
     public function ajax_list()
     {
-        $link=$this->uri->segment(1);
+        $link = $this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
         $idlokasi = $this->session->userdata['lokasi'];
         $get_id = $this->Mod_sparepart->get_by_nama($link);
-        foreach ($get_id as $idnye){
+        foreach ($get_id as $idnye) {
             $row1 = array();
             $row1[] = $idnye->id_submenu;
-            $id_sub=$idnye->id_submenu;
+            $id_sub = $idnye->id_submenu;
         }
         $viewLevel = $this->Mod_sparepart->select_by_level($idlevel, $id_sub);
 
@@ -64,7 +64,7 @@ class Sparepart extends MY_Controller
             $data = array();
             $no = $_POST['start'];
             foreach ($list as $p) {
-                
+
                 //$stok1 = $p->stok_a;
                 //$stok2 = $p->stok_a;
                 //$min1  = $p->minstok_a;
@@ -77,7 +77,7 @@ class Sparepart extends MY_Controller
                 //    </button>';
                 //}
                 //if($min1 == $stok1){
-                    $status_a='<button class="tombol-warning Blink-warning peringatan-a"><i class="fa fa-info-circle">A</i>
+                $status_a = '<button class="tombol-warning Blink-warning peringatan-a"><i class="fa fa-info-circle">A</i>
                     </button>';
                 //}
                 //if($min1 > $stok1){
@@ -99,56 +99,57 @@ class Sparepart extends MY_Controller
                 $row[] = $p->no_part;
                 $row[] = $p->nama_part;
                 $row[] = $p->satuan;
-                if($idlevel=='1' or $idlevel=='12'){
-                    $row[] = $p->stok_cbt+$p->stok_jkt+$p->stok_sby;
+                if ($idlevel == '1' or $idlevel == '12') {
+                    $row[] = $p->stok_cbt + $p->stok_jkt + $p->stok_sby;
                     $row[] = $p->stok_cbt;
                     $row[] = $p->lok_cbt;
                     $row[] = $p->stok_jkt;
                     $row[] = $p->lok_jkt;
                     $row[] = $p->stok_sby;
                     $row[] = $p->lok_sby;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi =='Cibitung'){
+                } elseif (($idlevel != '1' or $idlevel != '12') && $idlokasi == 'Cibitung') {
                     $row[] = $p->stok_cbt;
                     $row[] = $p->lok_cbt;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Jakarta'){
-                        $row[] = $p->stok_jkt;
-                        $row[] = $p->lok_jkt;
-                }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
-                            $row[] = $p->stok_sby;
-                            $row[] = $p->lok_sby;}
-                
+                } elseif (($idlevel != '1' or $idlevel != '12') && $idlokasi == 'Jakarta') {
+                    $row[] = $p->stok_jkt;
+                    $row[] = $p->lok_jkt;
+                } elseif (($idlevel != '1' or $idlevel != '12') && $idlokasi == 'Surabaya') {
+                    $row[] = $p->stok_sby;
+                    $row[] = $p->lok_sby;
+                }
+
                 $row[] = $p->kode_sup;
                 $row[] = $p->type;
                 $row[] = $p->kategori;
-                if($pel1->edit_level=="Y"){
-                    $edit='                    
-                    <button class="btn btn-sm btn-outline-success update-sparepart" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-edit"></i>
+                if ($pel1->edit_level == "Y") {
+                    $edit = '                    
+                    <button class="btn btn-sm btn-outline-success update-sparepart" title="Edit" data-id="' . $p->id_part . '"><i class="fa fa-edit"></i>
                     </button>';
-                }                
-                if($pel1->delete_level=="Y"){
-                    $delete='
-                    <button class="btn btn-sm btn-outline-danger delete-part" title="Delete" data-toggle="modal" data-target="#hapusPart" data-id="'.$p->id_part.'">
+                }
+                if ($pel1->delete_level == "Y") {
+                    $delete = '
+                    <button class="btn btn-sm btn-outline-danger delete-part" title="Delete" data-toggle="modal" data-target="#hapusPart" data-id="' . $p->id_part . '">
                     <i class="fa fa-trash"></i></button>';
                 }
-                if($pel1->upload_level=="Y"){
-                    $upload='
-                    <button class="btn btn-sm btn-outline-info update-stok" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-random"></i>
+                if ($pel1->upload_level == "Y") {
+                    $upload = '
+                    <button class="btn btn-sm btn-outline-info update-stok" title="Edit" data-id="' . $p->id_part . '"><i class="fa fa-random"></i>
                     </button>
                     ';
                 }
-                if($pel1->delete_level=="N"){
-                    $delete='';
+                if ($pel1->delete_level == "N") {
+                    $delete = '';
                 }
-                if($pel1->edit_level=="N"){
-                    $edit='';
+                if ($pel1->edit_level == "N") {
+                    $edit = '';
                 }
-                if($pel1->upload_level=="N"){
-                    $upload='';
+                if ($pel1->upload_level == "N") {
+                    $upload = '';
                 }
-                $lainnya='<a href="#" onclick="testPrint('.$p->id_part.')">
-                <button class="btn btn-sm btn-outline-primary" title="Cetak" data-cetak="'.$p->no_part.'" data-id="'.$p->id_part.'"><i class="fa fa-qrcode"></i>
+                $lainnya = '<a href="#" onclick="testPrint(' . $p->id_part . ')">
+                <button class="btn btn-sm btn-outline-primary" title="Cetak" data-cetak="' . $p->no_part . '" data-id="' . $p->id_part . '"><i class="fa fa-qrcode"></i>
                 </button></a>';
-                $akses_system=$lainnya.$edit.$delete.$upload;
+                $akses_system = $lainnya . $edit . $delete . $upload;
                 $row[] = $akses_system;
                 $data[] = $row;
             }
@@ -163,56 +164,57 @@ class Sparepart extends MY_Controller
         echo json_encode($output);
     }
 
-    public function cetak_label() {
-        
-		$id 				= $_POST['id'];
+    public function cetak_label()
+    {
+
+        $id                 = $_POST['id'];
         $data['dataPart'] = $this->Mod_sparepart->cetak_label($id);
-        
-	echo json_encode($data);
+
+        echo json_encode($data);
         //$data['dataqr'] = 'testah';
         //$this->ciqrcode->generate($data);
 
         echo show_my_print('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
-	}
+    }
     public function viewsparepart()
     {
-        $id 				= trim($_POST['id']);
-        $idc 				= trim($_POST['idc']);
-		$data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
+        $id                 = trim($_POST['id']);
+        $idc                 = trim($_POST['idc']);
+        $data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
 
         $qr['data'] = $idc;
         $qr['level'] = 'H';
         $qr['size'] = 450;
-        $qr['savename'] = './assets/img_qr/'.$idc.'.png';
-        $qrnye=$this->ciqrcode->generate($qr);
+        $qr['savename'] = './assets/img_qr/' . $idc . '.png';
+        $qrnye = $this->ciqrcode->generate($qr);
 
-		echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
+        echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
     }
     public function viewsparepart2()
     {
-        $id 				= trim($_GET['id']);
+        $id                 = trim($_GET['id']);
         $ci_part = get_instance();
-		$query = "SELECT max(no_part) AS no_part FROM tbl_wh_barang WHERE id_part='$id'";
-		$hasil = $ci_part->db->query($query)->row_array();
-		$nomornye = $hasil['no_part'];
-		$data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
+        $query = "SELECT max(no_part) AS no_part FROM tbl_wh_barang WHERE id_part='$id'";
+        $hasil = $ci_part->db->query($query)->row_array();
+        $nomornye = $hasil['no_part'];
+        $data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
 
         $qr['data'] = $nomornye;
         $qr['level'] = 'H';
         $qr['size'] = 450;
-        $qr['savename'] = './assets/img_qr/'.$nomornye.'.png';
-        $qrnye=$this->ciqrcode->generate($qr);
+        $qr['savename'] = './assets/img_qr/' . $nomornye . '.png';
+        $qrnye = $this->ciqrcode->generate($qr);
         //$this->load('layoutbackend', 'warehouse/modals/modal_cetak_label', $data);
 
-		echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
+        echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
     }
-    
+
 
     public function cetakPart()
-	{
-		$data['dataPart'] = $this->Mod_sparepart->cetak_sparepart();
-		echo show_my_print('warehouse/modals/modal_cetak_all_part', 'cetak-part', $data, ' modal-xl');
-	}
+    {
+        $data['dataPart'] = $this->Mod_sparepart->cetak_sparepart();
+        echo show_my_print('warehouse/modals/modal_cetak_all_part', 'cetak-part', $data, ' modal-xl');
+    }
 
     public function prosesTsparepart()
     {
@@ -220,12 +222,12 @@ class Sparepart extends MY_Controller
         $this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
 
         $data     = $this->input->post();
-		//$kategori = trim($_POST['kategori']);
+        //$kategori = trim($_POST['kategori']);
         //$kat = explode('|', $kategori);
         //$kdKat = $kat[1];
         //$idKat = $kat[0];
 
-		//$kelompok = trim($_POST['kelompok']);
+        //$kelompok = trim($_POST['kelompok']);
         //$kel = explode('|', $kelompok);
         //$kdKel = $kel[1];
         //$idKel = $kel[0];
@@ -247,75 +249,77 @@ class Sparepart extends MY_Controller
 
         echo json_encode($out);
     }
-    public function updateSparepart() {
-		$id 				= trim($_POST['id']);
+    public function updateSparepart()
+    {
+        $id                 = trim($_POST['id']);
         $data['apl'] = $this->db->get("aplikasi")->row();
         $data['dataSatuan'] = $this->Mod_sparepart->select_satuan();
         $data['dataType'] = $this->Mod_sparepart->select_type();
         $data['dataKategori'] = $this->Mod_sparepart->select_kategori();
         $data['dataKelompok'] = $this->Mod_sparepart->select_kelompok();
         $data['dataSupplier'] = $this->Mod_sparepart->select_supplier();
-		$data['dataPart'] = $this->Mod_sparepart->select_by_id_part($id);
+        $data['dataPart'] = $this->Mod_sparepart->select_by_id_part($id);
 
-		echo show_my_modal('warehouse/modals/modal_tambah_part', 'update-sparepart', $data, ' modal-lg');
-	}
+        echo show_my_modal('warehouse/modals/modal_tambah_part', 'update-sparepart', $data, ' modal-lg');
+    }
 
-	public function prosesUsparepart() {
-		
-		$this->form_validation->set_rules('no_part', 'no Part', 'trim|required');
-		$this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
+    public function prosesUsparepart()
+    {
 
-		$data 	= $this->input->post();
+        $this->form_validation->set_rules('no_part', 'no Part', 'trim|required');
+        $this->form_validation->set_rules('nama_part', 'Nama Barang', 'trim|required');
+
+        $data     = $this->input->post();
         //$kategori = trim($_POST['kategori']);
         //$kat = explode('|', $kategori);
         //$kdKat = $kat[1];
         //$idKat = $kat[0];
-		if ($this->form_validation->run() == TRUE) {
-			$result = $this->Mod_sparepart->updateSparepart($data);
+        if ($this->form_validation->run() == TRUE) {
+            $result = $this->Mod_sparepart->updateSparepart($data);
 
-			if ($result > 0) {
-				$out['status'] = '';
-				$out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
-			} else {
-				$out['status'] = '';
-				$out['msg'] = show_err_msg('Data Batal diupdate', '20px');
-			}
-		} else {
-			$out['status'] = 'form';
-			$out['msg'] = show_err_msg(validation_errors());
-		}
+            if ($result > 0) {
+                $out['status'] = '';
+                $out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
+            } else {
+                $out['status'] = '';
+                $out['msg'] = show_err_msg('Data Batal diupdate', '20px');
+            }
+        } else {
+            $out['status'] = 'form';
+            $out['msg'] = show_err_msg(validation_errors());
+        }
 
-		echo json_encode($out);
-	}
-    public function updateStok() {
-		$id 				= trim($_POST['id']);
+        echo json_encode($out);
+    }
+    public function updateStok()
+    {
+        $id                 = trim($_POST['id']);
         $data['apl'] = $this->db->get("aplikasi")->row();
         $data['dataSatuan'] = $this->Mod_sparepart->select_satuan();
         $data['dataType'] = $this->Mod_sparepart->select_type();
         $data['dataKategori'] = $this->Mod_sparepart->select_kategori();
         $data['dataKelompok'] = $this->Mod_sparepart->select_kelompok();
         $data['dataSupplier'] = $this->Mod_sparepart->select_supplier();
-		$data['dataPart'] = $this->Mod_sparepart->select_by_id_part($id);
+        $data['dataPart'] = $this->Mod_sparepart->select_by_id_part($id);
 
-		echo show_my_modal('warehouse/modals/modal_stok_manual', 'update-stok', $data, ' modal-md');
-	}
+        echo show_my_modal('warehouse/modals/modal_stok_manual', 'update-stok', $data, ' modal-md');
+    }
 
-	public function prosesUstok() 
+    public function prosesUstok()
     {
-		
-		$data 	= $this->input->post();
-			$result = $this->Mod_sparepart->updateStok($data);
 
-			if ($result > 0) {
-				$out['status'] = '';
-				$out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
-			} else {
-				$out['status'] = '';
-				$out['msg'] = show_err_msg('Data Gagal diupdate', '20px');
-			}
-		echo json_encode($out);
-		
-	}
+        $data     = $this->input->post();
+        $result = $this->Mod_sparepart->updateStok($data);
+
+        if ($result > 0) {
+            $out['status'] = '';
+            $out['msg'] = show_ok_msg('Data Berhasil diupdate', '20px');
+        } else {
+            $out['status'] = '';
+            $out['msg'] = show_err_msg('Data Gagal diupdate', '20px');
+        }
+        echo json_encode($out);
+    }
 
 
     public function deleteSparepart()

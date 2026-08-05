@@ -172,6 +172,7 @@ class Mod_partorder extends CI_Model
     {
         $kodenya = "";
         $koderefnya = "";
+		$idlokasi = $this->session->userdata['lokasi'];
         if (empty($data['id_part_order'])) {
             $kodenya = $kodePo;
             $koderefnya = $koderef;
@@ -195,7 +196,8 @@ class Mod_partorder extends CI_Model
             diskon          ='" . $data['diskon'] . "',
             total_diskon    ='" . $data['total_diskon'] . "',
             total_harga     ='$total_harga',
-            stok_akhir     ='" . $data['stok_awal'] . "'";
+            stok_akhir     ='" . $data['stok_awal'] . "',
+            lokasi     ='" . $idlokasi . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
