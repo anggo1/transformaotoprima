@@ -236,7 +236,7 @@
                 </th>
                 <th>&nbsp;</th>
                 <th>
-                  <div align="left"><?php echo  $apl1->alamat; ?></div>
+                  <div align="left"></div>
                 </th>
                 <th>&nbsp;</th>
               </tr>
@@ -249,7 +249,7 @@
                 </th>
                 <th>&nbsp;</th>
                 <th>
-                  <div align="left"><?php echo  $apl1->kota . ' ' . $apl1->kode_pos; ?> Indonesia</div>
+                  <div align="left"></div>
                 </th>
                 <th>&nbsp;</th>
               </tr>
@@ -262,7 +262,7 @@
                 </th>
                 <th>&nbsp;</th>
                 <th>
-                  <div align="left"><?php echo  $apl1->tlp; ?></div>
+                  <div align="left"></div>
                 </th>
                 <th>&nbsp;</th>
               </tr>
@@ -533,7 +533,7 @@
               <td><?php echo $this->session->userdata['full_name'] ?></td>
             </tr>
           </table>
-          <!--</table>-->
+          <img src="<?php echo base_url(); ?>assets\foto\logo\<?php echo  $apl1->footer; ?>" width="100%">
 
   </div>
 

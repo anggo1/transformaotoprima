@@ -94,7 +94,7 @@ class Mod_aplikasi extends CI_Model
     function updateAplikasi($id, $data)
     {
         $this->db->where('id', $id);
-		$this->db->update('aplikasi', $data);
+		$this->db->update('aplikas1i', $data);
     }
 
     function getImage($id)
@@ -149,5 +149,11 @@ class Mod_aplikasi extends CI_Model
 
 		return $this->db->affected_rows();
 	}
+    function userlokasi()
+    {
+       return $this->db->order_by('id_kota ASC')
+                        ->get('tbl_kota')
+                        ->result();
+    }
 
 }

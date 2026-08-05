@@ -181,21 +181,21 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th><div align="left">Address</div></th>
         <th><div align="left">: <?php echo $c->alamat ?></div></th>
         <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->alamat; ?></div></th>
+        <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th height="20"><div align="left">City</div></th>
         <th height="20"><div align="left">: <?php echo $c->kota ?></div></th>
         <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->kota.' '.$apl1->kode_pos; ?> Indonesia</div></th>
+        <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
         <th height="20"><div align="left">Up</div></th>
         <th height="20"><div align="left">: <?php echo $c->tlp_person ?></div></th>
         <th>&nbsp;</th>
-        <th><div align="left"><?php echo  $apl1->tlp; ?></div></th>
+        <th><div align="left"></div></th>
         <th>&nbsp;</th>
       </tr>
       <tr>
@@ -490,7 +490,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
                       <td><?php echo $this->session->userdata['full_name'] ?></td>
                     </tr>
       </table>
-      <!--</table>-->
+      <img src="<?php echo base_url(); ?>assets\foto\logo\<?php echo  $apl1->footer; ?>" width="100%">
 
 </div>
         

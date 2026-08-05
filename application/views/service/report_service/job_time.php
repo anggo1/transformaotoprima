@@ -19,7 +19,22 @@
 
 
 					<div class="card-body">
+						<div class="form-group row">
+							<label class="col-sm-1 col-form-label">No SPK</label>
+							<div class="col-sm-3">
+								<div class="input-group date" id="reservationdate" data-target-input="nearest">
 
+									<input type="text" name="no_spk" id="no_spk" class="form-control">
+
+								</div>
+							</div>
+							<label class="col-sm-1 col-form-label">No WO</label>
+							<div class="col-sm-3">
+								<div class="input-group date" id="reservationdate" data-target-input="nearest">
+									<input type="text" name="wo_no" id="wo_no" class="form-control">
+								</div>
+							</div>
+						</div>
 						<div class="form-group row">
 							<label class="col-sm-1 col-form-label">Tanggal Awal</label>
 							<div class="col-sm-3">
@@ -47,7 +62,7 @@
 							</div>
 							<div class="col-sm-1">
 								<button class="btn bg-gradient-primary col-sm-12" onclick="listService()" type="submit"><span class="fa fa-search"></span> Cari</button>
-							
+
 							</div>
 						</div>
 						<div id="data-po">

@@ -20,7 +20,7 @@ class Mod_work_order extends CI_Model
         $this->db->from('tbl_after_sales');
         $this->db->where('status !=', 'F');
         //$this->db->where('pre_order <>', 'empty');
-        $this->db->where('free_service', 'Y');
+        //$this->db->where('free_service', 'Y');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

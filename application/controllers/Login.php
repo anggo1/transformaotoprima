@@ -47,6 +47,7 @@ class Login extends CI_Controller {
                     'image'       => $db->image,
                     'id_lokasi'       => $db->id_lokasi,
                     'lokasi'       => $db->lokasi,
+                    'footer'       => $db->footer,
                     'logged_in'    => TRUE
                 );
 

@@ -152,6 +152,8 @@
             
             <div class="row form-group row">
                 <label class="col-sm-2 col-form-label">Status Service</label>
+                
+                <div class="col-sm-4">
                 <div class="custom-control custom-radio">
                     <input class="custom-control-input" type="radio" id="free_service1" value="N" name="free_service" required>
                     <label for="free_service1" class="custom-control-label">Non Free</label>
@@ -160,6 +162,27 @@
                     <input class="custom-control-input" type="radio" id="free_service2" value="Y" name="free_service">
                     <label for="free_service2" class="custom-control-label">Free</label>
                 </div>
+                </div>
+                <label class="col-sm-2 col-form-label">CIW / GW</label>
+                
+                <div class="col-sm-4">
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="status_service1" value="C" name="status_service" required>
+                    <label for="status_service1" class="custom-control-label">Cash</label>
+                </div> &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="status_service2" value="I" name="status_service">
+                    <label for="status_service2" class="custom-control-label">Internal</label>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="status_service3" value="W" name="status_service">
+                    <label for="status_service3" class="custom-control-label">Warranty</label>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="custom-control custom-radio">
+                    <input class="custom-control-input" type="radio" id="status_service4" value="GW" name="status_service">
+                    <label for="status_service4" class="custom-control-label">GoodWill</label>
+                </div>
+            </div>
             </div>
             <input type="hidden" name="pembuat" id="pembuat"
                 value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">

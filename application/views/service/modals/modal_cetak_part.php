@@ -474,8 +474,7 @@ th {
                             <td></td>
                         </tr>
                     </table>
-                    <!--</table>-->
-
+                    <img src="<?php echo base_url(); ?>assets\foto\logo\<?php echo  $apl1->footer; ?>" width="100%">
     </div>
 
 

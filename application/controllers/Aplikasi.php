@@ -18,6 +18,7 @@ class Aplikasi extends MY_Controller
 	{
 		$data['page'] 		= "Setting Nama Perusahan";
 		$data['judul'] 		= "Perusahaan";
+        $data['user_lokasi'] = $this->Mod_aplikasi->userlokasi();
         echo show_my_modal('admin/modals/modal_tambah_pool', 'tambah-pool', $data);
 		$this->template->load('layoutbackend', 'admin/aplikasi',$data);
 	}
@@ -42,6 +43,7 @@ class Aplikasi extends MY_Controller
             $row[] = $apl->tahun;
             $row[] = $apl->status;
             $row[] = $apl->logo;  
+            $row[] = $apl->footer;  
             $row[] = $apl->id;
             $data[] = $row;
         }
@@ -148,9 +150,9 @@ class Aplikasi extends MY_Controller
         $nama = slug($this->input->post('logo'));
         $config['upload_path']   = './assets/foto/logo/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
-        $config['max_size']      = '1000';
-        $config['max_width']     = '2000';
-        $config['max_height']    = '1024';
+        $config['max_size']      = '2000';
+        $config['max_width']     = '4000';
+        $config['max_height']    = '2024';
         $config['file_name']     = $nama; 
         
             $this->upload->initialize($config);
@@ -174,11 +176,14 @@ class Aplikasi extends MY_Controller
             if ($g != null) {
                 //hapus gambar yg ada diserver
                 unlink('assets/foto/logo/'.$g['logo']);
-            }
+            } 
+            
            
             $this->Mod_aplikasi->updateAplikasi($id, $save);
             echo json_encode(array("status" => TRUE));
-            }else{//Apabila tidak ada gambar yang di upload
+            }
+            
+            else{//Apabila tidak ada gambar yang di upload
                 $save  = array(
                 'nama_owner' => $this->input->post('nama_owner'),
                 'title' => $this->input->post('title'),
@@ -192,7 +197,83 @@ class Aplikasi extends MY_Controller
                 $this->Mod_aplikasi->updateAplikasi($id, $save);
                 echo json_encode(array("status" => TRUE));
             }
-        }else{
+        }
+        else{
+            $this->_validate();
+            $id = $this->input->post('id');
+            $save  = array(
+                'nama_owner' => $this->input->post('nama_owner'),
+                'alamat'    => $this->input->post('alamat'),
+                'kota'    => $this->input->post('kota'),
+                'kode_pos'    => $this->input->post('kode_pos'),
+                'tlp'       => $this->input->post('tlp'),
+                'title' => $this->input->post('title'),
+                'nama_aplikasi'  => $this->input->post('nama_aplikasi'),
+                'copy_right'  => $this->input->post('copy_right'),
+                'tahun' => $this->input->post('tahun'),
+                'versi' => $this->input->post('versi'),
+                'npwp' => $this->input->post('npwp'),
+                'status' => $this->input->post('status')
+            );
+            $this->Mod_aplikasi->updateAplikasi($id, $save);
+            echo json_encode(array("status" => TRUE));
+        }
+        if(!empty($_FILES['imagefooter']['name'])) {
+        $this->_validate();
+        $id = $this->input->post('id');
+        
+        $nama = slug($this->input->post('footer'));
+        $config['upload_path']   = './assets/foto/logo/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png'; //mencegah upload backdor
+        $config['max_size']      = '2000';
+        $config['max_width']     = '4000';
+        $config['max_height']    = '2024';
+        $config['file_name']     = $nama; 
+        
+            $this->upload->initialize($config);
+            
+            if ($this->upload->do_upload('imagefooter')){
+            $gambar_footer = $this->upload->data();
+            $save  = array(
+                'nama_owner' => $this->input->post('nama_owner'),
+                'title' => $this->input->post('title'),
+                'nama_aplikasi'  => $this->input->post('nama_aplikasi'),
+                'copy_right'  => $this->input->post('copy_right'),
+                'tahun' => $this->input->post('tahun'),
+                'versi' => $this->input->post('versi'),
+                'npwp' => $this->input->post('npwp'),
+                'status' => $this->input->post('status'),
+                'footer' => $gambar_footer['file_name']
+            );
+            
+            $f = $this->Mod_aplikasi->getImage($id)->row_array();
+
+            if ($f != null) {
+                //hapus gambar yg ada diserver
+                unlink('assets/foto/logo/'.$f['footer']);
+            } 
+            
+           
+            $this->Mod_aplikasi->updateAplikasi($id, $save);
+            echo json_encode(array("status" => TRUE));
+            }
+            
+            else{//Apabila tidak ada gambar yang di upload
+                $save  = array(
+                'nama_owner' => $this->input->post('nama_owner'),
+                'title' => $this->input->post('title'),
+                'nama_aplikasi'  => $this->input->post('nama_aplikasi'),
+                'copy_right'  => $this->input->post('copy_right'),
+                'tahun' => $this->input->post('tahun'),
+                'versi' => $this->input->post('versi'),
+                'npwp' => $this->input->post('npwp'),
+                'status' => $this->input->post('status')
+            );
+                $this->Mod_aplikasi->updateAplikasi($id, $save);
+                echo json_encode(array("status" => TRUE));
+            }
+        }
+        else{
             $this->_validate();
             $id = $this->input->post('id');
             $save  = array(

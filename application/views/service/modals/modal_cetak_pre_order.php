@@ -246,11 +246,11 @@ th {
                                 <th>
                                     <div align="left">: <?php echo $c->nama_cus; ?></div>
                                 </th>
-                                <th width="138">&nbsp;</th>
-                                <th width="513">
+                                <th width="307">&nbsp;</th>
+                                <th width="266">
                                     <div align="left"><?php echo  $apl1->status; ?></div>
                                 </th>
-                                <th width="71">&nbsp;</th>
+                                <th width="119">&nbsp;</th>
                             </tr>
                             <tr>
                                 <th>
@@ -261,7 +261,7 @@ th {
                                 </th>
                                 <th>&nbsp;</th>
                                 <th>
-                                    <div align="left"><?php echo  $apl1->alamat; ?></div>
+                                    <div align="left"></div>
                                 </th>
                                 <th>&nbsp;</th>
                             </tr>
@@ -274,7 +274,7 @@ th {
                                 </th>
                                 <th>&nbsp;</th>
                                 <th>
-                                    <div align="left"><?php echo  $apl1->kota.' '.$apl1->kode_pos; ?> Indonesia</div>
+                                    <div align="left"></div>
                                 </th>
                                 <th>&nbsp;</th>
                             </tr>
@@ -287,7 +287,7 @@ th {
                                 </th>
                                 <th>&nbsp;</th>
                                 <th>
-                                    <div align="left"><?php echo  $apl1->tlp; ?></div>
+                                    <div align="left"></div>
                                 </th>
                                 <th>&nbsp;</th>
                             </tr>
@@ -309,8 +309,8 @@ th {
                                 <th>&nbsp;</th>
                             </tr>
                             <tr>
-                                <th width="185" height="19">&nbsp;</th>
-                                <th width="489">&nbsp;</th>
+                                <th width="179" height="19">&nbsp;</th>
+                                <th width="467">&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
@@ -580,8 +580,7 @@ th {
                                 <td height="21">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td colspan="2" align="center">E    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      1/4    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     1/2     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   3/4    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   F</td>
                             </tr>
                     </table>
                     <table width="100%" border="0" cellpadding="5" cellspacing="0"
@@ -657,7 +656,7 @@ th {
                         </tr>
                     </table>
                     <!--</table>-->
-
+<img src="<?php echo base_url(); ?>assets\foto\logo\<?php echo  $apl1->footer; ?>" width="100%">
     </div>
 
 

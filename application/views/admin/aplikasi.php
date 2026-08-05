@@ -33,6 +33,7 @@
                                     <th>Tahun</th>
                                     <th>Status</th>
                                     <th>Logo</th>
+                                    <th>Footer</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -250,18 +251,20 @@ $(document).ready(function() {
                 "render": function(data, type, row) {
 
                     return "<a class=\"btn btn-xs btn-outline-primary\" href=\"javascript:void(0)\" title=\"Edit\" onclick=\"edit_aplikasi(" +
-                        row[10] + ")\"><i class=\"fas fa-edit\"></i></a>";
+                        row[11] + ")\"><i class=\"fas fa-edit\"></i></a>";
 
                 },
 
                 "orderable": false, //set not orderable
             },
             {
-                "targets": [9],
+                "targets": [9,10],
                 "render": function(data, type, row) {
-                    if (row[9] != null) {
+                    if (row[9] != null && row[10] != null) {
                         return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/logo/");?>" +
-                            row[9] + "' width=\"100px\" height=\"100px\">";
+                            row[9] + "' width=\"100px\" height=\"100px\"><img class=\"myImgx\"  src='<?php echo base_url("assets/foto/logo/");?>" +
+                            row[10] + "' width=\"100px\" height=\"100px\">";
+                            
                     } else {
                         return "<img class=\"myImgx\"  src='<?php echo base_url("assets/foto/logo/Logo.png");?>' width=\"100px\" height=\"100px\">";
                     }
@@ -335,6 +338,13 @@ function edit_aplikasi(id) {
                 var image = "<?php echo base_url('assets/foto/logo/')?>";
                 $("#v_image").attr("src", image + data.logo);
             }
+            if (data.footer == null) {
+                var image = "<?php echo base_url('assets/foto/logo/Footer.png')?>";
+                $("#v_footer").attr("src", image);
+            } else {
+                var image = "<?php echo base_url('assets/foto/logo/')?>";
+                $("#v_footer").attr("src", image + data.footer);
+            }
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
             $('.modal-title').text('Edit Aplikasi'); // Set title to Bootstrap modal title
 
@@ -392,6 +402,11 @@ function save() {
 var loadFile = function(event) {
     var image = document.getElementById('v_image');
     image.src = URL.createObjectURL(event.target.files[0]);
+    
+};
+var loadFooter = function(event) {
+    var footer = document.getElementById('v_footer');
+    footer.src = URL.createObjectURL(event.target.files[0]);
 };
 
 /** Start Pool */
@@ -629,6 +644,15 @@ $('#form-tambah-pool').submit(function(e) {
                                 <img id="v_image" width="100px" height="100px">
                                 <input type="file" class="form-control btn-file" onchange="loadFile(event)"
                                     name="imagefile" id="imagefile" placeholder="Image" value="UPLOAD">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row ">
+                            <label for="footer" class="col-sm-3 col-form-label">Image Footer</label>
+                            <div class="col-sm-9 kosong">
+                                <img id="v_footer" width="100%" height="100px">
+                                <input type="file" class="form-control btn-file" onchange="loadFooter(event)"
+                                    name="imagefooter" id="imagefooter" placeholder="Image" value="UPLOAD">
                             </div>
                         </div>
                     </div>

@@ -230,6 +230,7 @@ class Mod_service_appointment extends CI_Model
         clockin   ='".$data['clockin']."',
         status    ='N',
         free_service    ='".$data['free_service']."',
+        status_service    ='".$data['status_service']."',
         pembuat   ='".$data['pembuat']."'";
 
 		$this->db->query($sql);
@@ -263,7 +264,7 @@ class Mod_service_appointment extends CI_Model
         storing   ='".$data['storing']."',
         date_open_wo  ='".$data['date_open_wo']."',
         clockin   ='".$data['clockin']."',
-        free_service    ='".$data['free_service']."' WHERE id='".$data['id']."'";
+        status_service    ='".$data['status_service']."' WHERE id='".$data['id']."'";
 
 		$this->db->query($sql);
 
