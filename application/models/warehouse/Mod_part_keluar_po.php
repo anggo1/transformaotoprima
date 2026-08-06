@@ -115,7 +115,7 @@ class Mod_part_keluar_po extends CI_Model
         return $data = $query_result->result();
     }
 
-    public function insert_part($no_po, $kode_keluar, $no_part, $nama_part, $jumlah, $harga_penawaran, $harga, $jml_keluar, $sisa, $stok)
+    public function insert_part($kode_keluar, $data)
     {
         //$id = md5(DATE('ymdhms') . rand());
         $idlokasi = $this->session->userdata['lokasi'];
@@ -126,6 +126,7 @@ class Mod_part_keluar_po extends CI_Model
         $jumlah = $this->input->post('jumlah');
         $harga = $this->input->post('harga');
         $jml_keluar = $this->input->post('jml_keluar');
+        $total_harga = $this->input->post('total_harga');
 
 
         $tgl_keluar =  date("y-m-d");

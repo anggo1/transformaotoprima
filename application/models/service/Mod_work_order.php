@@ -19,6 +19,7 @@ class Mod_work_order extends CI_Model
         $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('status !=', 'F');
+        $this->db->where('service_only', 'Y');
         //$this->db->where('pre_order <>', 'empty');
         //$this->db->where('free_service', 'Y');
         $i = 0;

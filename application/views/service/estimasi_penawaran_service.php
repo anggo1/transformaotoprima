@@ -7,6 +7,77 @@
 table.dataTable td {
     padding-bottom: 9px;
 }
+/* Container styling */
+.elegant-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  color: #2d3748;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hide default checkbox safely */
+.elegant-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The custom checkbox frame */
+.elegant-checkbox .checkmark {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  position: relative;
+  background-color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Elegant checkmark line via pseudo-element */
+.elegant-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45s) scale(0);
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover state interaction */
+.elegant-checkbox:hover input ~ .checkmark {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Checked state frame transformation */
+.elegant-checkbox input:checked ~ .checkmark {
+  background-color: #6366f1;
+  border-color: #6366f1;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+/* Pop-in animation for the checkmark icon */
+.elegant-checkbox input:checked ~ .checkmark::after {
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+}
+
+/* Focus indicator for keyboard accessibility */
+.elegant-checkbox input:focus-visible ~ .checkmark {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
 </style>
 <section class="content">
     <div class="card-body card-outline">
@@ -60,11 +131,7 @@ table.dataTable td {
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card-body card-outline">
-                                        <div class="modal-body">
                                             <div id="data-proses-estimasi"></div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -9,8 +9,8 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $this->load->database();
     }
     var $table = 'tbl_wh_barang';
-    var $column_search = array('a.no_part','a.nama_part','a.satuan');
-    var $column_order = array('null','a.no_part','a.nama_part','a.satuan');
+    var $column_search = array('a.no_part', 'a.nama_part', 'a.satuan');
+    var $column_order = array('null', 'a.no_part', 'a.nama_part', 'a.satuan');
     var $order = array('id_part' => 'desc'); // default order 
 
     private function _get_datatables_query($term = '')
@@ -75,13 +75,13 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     //tabele work order
     var $table_estimasi = 'tbl_after_sales';
-    var $column_search_estimasi = array('wo_no','sa_name','customer','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
-    var $column_order_estimasi = array('null','wo_no','sa_name','customer','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','pembuat');
+    var $column_search_estimasi = array('wo_no', 'sa_name', 'customer', 'customer_name', 'customer_complain', 'vin', 'no_pol', 'type', 'storing', 'date_open_wo', 'clockin', 'date_close_wo', 'clockout', 'status', 'work_order', 'pembuat');
+    var $column_order_estimasi = array('null', 'wo_no', 'sa_name', 'customer', 'customer_name', 'customer_complain', 'vin', 'no_pol', 'type', 'storing', 'date_open_wo', 'clockin', 'date_close_wo', 'clockout', 'status', 'work_order', 'pembuat');
     var $order_estimasi = array('id' => 'asc'); // default order 
 
     private function _get_datatables_query_estimasi($term = '')
     {
-    $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,estimasi,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,estimasi,pembuat');
         $this->db->from('tbl_after_sales');
         //$this->db->where('estimasi !=', 'Y');
         $this->db->where('status !=', 'F');
@@ -149,18 +149,18 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-    
+
     function select_by_level($idlevel, $id_sub)
     {
         $this->db->select('*');
         $this->db->from('tbl_akses_submenu');
         //$this->db->join('tbl_akses_submenu','tbl_akses_submenu.id_submenu=tbl_akses_menu.id_menu','inner');
-        $this->db->where('tbl_akses_submenu.id_level=',$idlevel);
-        $this->db->where('tbl_akses_submenu.id_submenu=',$id_sub);
+        $this->db->where('tbl_akses_submenu.id_level=', $idlevel);
+        $this->db->where('tbl_akses_submenu.id_submenu=', $id_sub);
         $data = $this->db->get();
         return $data->result();
     }
-    
+
     function select_part($sup)
     {
         $this->db->select('a.*,b.kategori,c.satuan,d.type_mesin,e.kelompok');
@@ -195,9 +195,9 @@ class Mod_estimasi_penawaran_service extends CI_Model
     }
     function select_sa($id)
     {
-       $this->db->select('*');
+        $this->db->select('*');
         $this->db->from('tbl_after_sales');
-         $this->db->where('wo_no',$id);
+        $this->db->where('wo_no', $id);
 
         $data = $this->db->get();
 
@@ -207,26 +207,24 @@ class Mod_estimasi_penawaran_service extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_customer');
-        $this->db->where('kode_cus',$kode_cus);
+        $this->db->where('kode_cus', $kode_cus);
 
-         $data = $this->db->get();
+        $data = $this->db->get();
 
         return $data->result();
     }
-    
+
     public function deleteDetail_po($id, $spk, $validasi_jenis)
     {
-        if($validasi_jenis == 'S'){
+        if ($validasi_jenis == 'S') {
             $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE spk='" . $spk . "'";
 
             $this->db->query($sql2);
-            
+
             $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "' or spk='" . $spk . "'";
 
             $this->db->query($sql);
-
-        }
-         else if($validasi_jenis == 'P'){
+        } else if ($validasi_jenis == 'P') {
             $sql2 = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
 
             $this->db->query($sql2);
@@ -243,64 +241,65 @@ class Mod_estimasi_penawaran_service extends CI_Model
         return $this->db->affected_rows();
     }
     public function insertNote($id)
-    {        
+    {
         $sql_detil = "INSERT INTO tbl_af_detail_estimasi_penawaran_note (wo_no,remark) 
-        VALUES ('".$id."','Masa berlaku 7 hari'), 
-        ('".$id."','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
-        ('".$id."','Harga dapat berubah sewaktu-waktu'),
-        ('".$id."','Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
-        ('".$id."','Term of Payment Cash Before Delivery'),
-        ('".$id."','Harga Sudah Termasuk Diskon'),
-        ('".$id."','Barga Belum termasuk ongkos kirim'),
-        ('".$id."','Harga Belum termasuk jasa'),
-        ('".$id."','Semua sparepart yang kami tawarkan original Merced...'),
-        ('".$id."','Jika ada sparepart yang Tidak Ready maka Indent'),
-        ('".$id."','Pembayaran harap ditransfer atau Bilyet Giro atas ...')";
+        VALUES ('" . $id . "','Masa berlaku 7 hari'), 
+        ('" . $id . "','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
+        ('" . $id . "','Harga dapat berubah sewaktu-waktu'),
+        ('" . $id . "','Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
+        ('" . $id . "','Term of Payment Cash Before Delivery'),
+        ('" . $id . "','Harga Sudah Termasuk Diskon'),
+        ('" . $id . "','Barga Belum termasuk ongkos kirim'),
+        ('" . $id . "','Harga Belum termasuk jasa'),
+        ('" . $id . "','Semua sparepart yang kami tawarkan original Merced...'),
+        ('" . $id . "','Jika ada sparepart yang Tidak Ready maka Indent'),
+        ('" . $id . "','Pembayaran harap ditransfer atau Bilyet Giro atas ...')";
         $this->db->query($sql_detil);
         return $this->db->affected_rows();
     }
     public function insertDetailPo($kode_po, $kode_ref, $data)
     {
-        
+
         $datenow = date("Y-m-d");
-		$harga=$data['harga_baru'];
-		$harga_baru =str_replace(",","", $harga);
+        $harga = $data['harga_baru'];
+        $harga_baru = str_replace(",", "", $harga);
         $grand_total = $harga_baru * $data['jumlah'];
 
-        $kd='SPK';
-			$tgl_keluar = date("y-m-d");
-			$date = date("ym");
-			$ci_kons = get_instance();
-			$query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-			$noOrder = $hasil['maxKode'];
-			$noUrut = (int)substr($noOrder, 8, 4);
-			$noUrut++;
-			$tahun = substr($date, 0, 2);
-			$bulan = substr($date, 2, 2);
+        $kd = 'SPK';
+        $tgl_keluar = date("y-m-d");
+        $date = date("ym");
+        $ci_kons = get_instance();
+        $query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
+        $hasil = $ci_kons->db->query($query)->row_array();
+        $noOrder = $hasil['maxKode'];
+        $noUrut = (int)substr($noOrder, 8, 4);
+        $noUrut++;
+        $tahun = substr($date, 0, 2);
+        $bulan = substr($date, 2, 2);
 
-			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
-			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+        $id_keluar  = $tahun . $bulan . sprintf("%04s", $noUrut);
+        $kode_keluar  = $kd . $tahun . $bulan . sprintf("%04s", $noUrut);
 
         $jenis = $data['jenis'];
-        if($jenis == 'S'){
-           $spk=$kode_keluar;
+        if ($jenis == 'S') {
+            $spk = $kode_keluar;
 
-        $sql2 = "INSERT INTO tbl_after_sales_detail_wo SET
+            $sql2 = "INSERT INTO tbl_after_sales_detail_wo SET
         id_detail   ='',
         wo_no       ='" . $data['wo_no'] . "',
-        spk       ='".$kode_keluar."',
+        spk       ='" . $kode_keluar . "',
         operation   ='" . $data['no_part'] . "',
         hours       ='" . $data['jumlah'] . "',
         type_of_work  ='" . $data['nama_part'] . "',
         jumlah      ='" . $data['jumlah'] . "',
-        harga       ='" . $harga_baru. "',
-        total_harga   ='" . $grand_total. "'";
+        harga       ='" . $harga_baru . "',
+        total_harga   ='" . $grand_total . "'";
 
-		$this->db->query($sql2);
-           }else{
-             $spk='';}
-              
+            $this->db->query($sql2);
+        } else {
+            $spk = '';
+        }
+
         $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             wo_no     ='" . $data['wo_no'] . "',
             id_estimasi_penawaran   ='" . $kode_po . "',
@@ -308,9 +307,9 @@ class Mod_estimasi_penawaran_service extends CI_Model
             no_part     ='" . $data['no_part'] . "',
             nama_part   ='" . $data['nama_part'] . "',
             satuan      ='" . $data['satuan'] . "',
-            harga       ='" . $harga_baru. "',
-            harga_net   ='" . $harga_baru. "',
-            total_harga   ='" . $grand_total. "',
+            harga       ='" . $harga_baru . "',
+            harga_net   ='" . $harga_baru . "',
+            total_harga   ='" . $grand_total . "',
             jumlah      ='" . $data['jumlah'] . "',
             stok_akhir  ='" . $data['stok'] . "',
             validasi_jenis = '" . $data['jenis'] . "',
@@ -319,47 +318,61 @@ class Mod_estimasi_penawaran_service extends CI_Model
         $this->db->query($sql);
         return $this->db->affected_rows();
     }
-    function update_detailDiskon($id,$diskon,$hrg_part)
-		{			
-		$jml_diskon =str_replace(" ","", $diskon);
-		$total=$hrg_part * $jml_diskon / 100;
+    function update_detailDiskon($id, $diskon, $hrg_part)
+    {
+        $jml_diskon = str_replace(" ", "", $diskon);
+        $total = $hrg_part * $jml_diskon / 100;
         $harga_asli = $hrg_part;
         $totalnya = $harga_asli - $total;
-			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+        $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'";
+        $this->db->query($sql_update);
 
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
-    function update_detailHarga($id,$hrg_part)
-		{			
-		$harga =str_replace(" ","", $hrg_part);
-			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET harga_net ='$harga' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+        return $this->db->affected_rows();
+        //return $data->row();
+    }
+    function update_detailHarga($id, $hrg_part)
+    {
+        $harga = str_replace(" ", "", $hrg_part);
+        $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET harga_net ='$harga' WHERE id_detail ='{$id}'";
+        $this->db->query($sql_update);
 
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
-    function update_detailPo($id,$jml_part,$hrg_part,$total)
-		{			
-		//$jml =str_replace(" ","", $jml_part);
-		//$total=$hrg_part*$jml_part;
-			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+        return $this->db->affected_rows();
+        //return $data->row();
+    }
+    function update_detailPo($id, $jml_part, $hrg_part, $total)
+    {
+        //$jml =str_replace(" ","", $jml_part);
+        //$total=$hrg_part*$jml_part;
+        $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'";
+        $this->db->query($sql_update);
 
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
-    function update_remark($id,$remark)
-		{
-			$sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
-    function insertRemark($id,$remark)
-		{
-			$sql_update = "INSERT tbl_af_detail_estimasi_penawaran_note SET wo_no = '$id', remark ='$remark'";
-            $this->db->query($sql_update);
-		return $this->db->affected_rows();
-			//return $data->row();
-		}
+        return $this->db->affected_rows();
+        //return $data->row();
+    }
+    function update_remark($id, $remark)
+    {
+        $sql_update = "UPDATE tbl_af_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'";
+        $this->db->query($sql_update);
+        return $this->db->affected_rows();
+        //return $data->row();
+    }
+    function update_yes($id)
+    {
+        $this->db->update('tbl_after_sales', ['service_only' => 'Y'], ['wo_no' => $id]);
+        return $this->db->affected_rows();
+    }
+    function update_no($id)
+    {
+        $this->db->update('tbl_after_sales', ['service_only' => 'N'], ['wo_no' => $id]);
+        return $this->db->affected_rows();
+    }
+    function insertRemark($id, $remark)
+    {
+        $sql_update = "INSERT tbl_af_detail_estimasi_penawaran_note SET wo_no = '$id', remark ='$remark'";
+        $this->db->query($sql_update);
+        return $this->db->affected_rows();
+        //return $data->row();
+    }
     public function insertDetail($kodePo, $koderef, $data)
     {
         $kodenya = "";
@@ -402,17 +415,17 @@ class Mod_estimasi_penawaran_service extends CI_Model
         return $data->result();
         //return $data->row();
     }
-    
+
     public function select_detail($id)
     {
         $ci = get_instance();
-                $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_af_detail_estimasi_penawaran as a 
+        $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_af_detail_estimasi_penawaran as a 
                     LEFT JOIN tbl_af_estimasi_penawaran as b ON b.wo_no=a.wo_no
                     WHERE a.wo_no='{$id}'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         $ppn       = $d_data['ppn'];
-        if(empty($ppn)){
+        if (empty($ppn)) {
             $ppn = 0;
         }
         $total_ppn = $total * $ppn / 100;

@@ -94,7 +94,7 @@ class PartKeluarPo extends MY_Controller
 			
 			$data = array(
 				'kode_keluar'  	=> $kode_keluar,
-				'id_po_masuk'  		=> $data['no_po'],
+				'no_po'  		=> $data['no_po'],
 				'kode_po'  		=> $data['kode_po'],
 				'tgl_po'  		=> $tgl_keluar,
 				'kode_cus'  	=> $data['kode_cus'],
@@ -105,10 +105,9 @@ class PartKeluarPo extends MY_Controller
 				'pengguna'		=> $data['pengguna']
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_part_keluar_po', $data);
-
+				$this->db->update('tbl_wh_po_masuk', array('status_po' => 'Y'), array('id_po_masuk' => $data['no_po']));
 				$data 	= $this->input->post();
-
-				$this->Mod_part_keluar_po->insert_part($no_po,$kode_keluar, $data);
+				$this->Mod_part_keluar_po->insert_part($kode_keluar, $data);
 			if ($result > 0) {
 				$out['dataPo'] = $kode_keluar;
 				$out['status'] = '';
@@ -171,9 +170,9 @@ class PartKeluarPo extends MY_Controller
 	public function cetak()
 	{
 		$id 				= $_POST['id'];
-		$data['dataKeluar'] = $this->Mod_part_keluar_wo->select_by_id($id);
-		$data['detailKeluar'] = $this->Mod_part_keluar_wo->select_detail_cetak($id);
+		$data['dataKeluar'] = $this->Mod_part_keluar_po->select_by_id($id);
+		$data['detailKeluar'] = $this->Mod_part_keluar_po->select_detail_cetak($id);
 
-		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_wo', 'cetak-keluar', $data, ' modal-xl');
+		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_po', 'cetak-keluar', $data, ' modal-xl');
 	}
 }

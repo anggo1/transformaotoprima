@@ -55,6 +55,8 @@
                     <input type="hidden" name="stok_jkt[]" id="stok_jkt[]" value="<?php echo $s->stok_jkt; ?>">
                     <input type="hidden" name="stok_cbt[]" id="stok_cbt[]" value="<?php echo $s->stok_cbt; ?>">
                     <input type="hidden" name="stok_sby[]" id="stok_sby[]" value="<?php echo $s->stok_sby; ?>">
+                    <input type="hidden" name="harga[]" id="harga[]" value="<?php echo $s->harga; ?>">
+                    <input type="hidden" name="jumlah[]" id="jumlah[]" value="<?php echo $s->jumlah; ?>">
                     <input type="hidden" name="total_harga[]" id="total_harga[]" value="<?php echo $s->harga * $s->jumlah; ?>">
                 </td>
                 <td><?php

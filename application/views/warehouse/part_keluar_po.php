@@ -140,7 +140,7 @@
 		document.getElementById("fndisc2").hidden = false;
 	}
 
-	function showPart(no_po, kode_po, customer, kode_pesan, keterangan) {
+	function showPart(no_po, kode_po, nama_cus, kode_cus, kode_pesan, keterangan) {
 		//var no_po = document.getElementById("no_po").value;
 		//var no_po=document.getElementById("showPart");
 		$.ajax({
@@ -153,7 +153,7 @@
 				$('#data_po_detail').html(hasil);
 				$('[name = "no_po"]').val(no_po);
 				$('[name = "kode_po"]').val(kode_po);
-				$('[name = "nama_cus"]').val(customer);
+				$('[name = "nama_cus"]').val(nama_cus);
 				$('[name = "kode_cus"]').val(kode_cus);
 				$('[name = "kode_pesan"]').val(kode_pesan);
 				$('[name = "keterangan"]').val(keterangan);
@@ -278,7 +278,7 @@
 		//var id = document.getElementById('next_proses').value=datakode;
 		$.ajax({
 				method: "POST",
-				url: "<?php echo base_url('PartKeluarWo/cetak'); ?>",
+				url: "<?php echo base_url('PartKeluarPo/cetak'); ?>",
 				data: "id=" + id
 			})
 			.done(function(data) {

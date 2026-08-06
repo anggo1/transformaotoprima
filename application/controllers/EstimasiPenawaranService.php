@@ -247,6 +247,22 @@ class EstimasiPenawaranService extends MY_Controller
 		$remark = $_POST['remark'];
 		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->update_remark($id, $remark);
 	}
+	public function update_serviceYes()
+	{
+		$id = $_POST['id'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->update_yes($id);
+
+		return $this->db->affected_rows();
+		//return $data->row();
+	}
+	public function update_serviceNo()
+	{
+		$id = $_POST['id'];
+		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->update_no($id);
+
+		return $this->db->affected_rows();
+		//return $data->row();
+	}
 	public function tambahKeterangan()
 	{
 		$id = $_POST['id'];
