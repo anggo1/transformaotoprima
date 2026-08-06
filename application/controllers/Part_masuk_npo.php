@@ -103,15 +103,12 @@ class Part_masuk_npo extends MY_Controller
 		$tgl_masuk = date("y-m-d");
 
 
+        $idlokasi = $this->session->userdata['lokasi'];
 		$this->form_validation->set_rules('date1', 'Tanggal Masuk', 'trim|required');
 		$data 	= $this->input->post();
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
 
-			$lokasi = $this->input->post('lokasi');				
-			$kl = explode('|',$lokasi);
-			$kd_lok = $kl[0];
-			$nm_lok = $kl[1];
 
 			$idnye=$data['kode_masuk'];
 			$kode_masuk  = $data['id_masuk'];
@@ -121,13 +118,13 @@ class Part_masuk_npo extends MY_Controller
 				'kode_masuk'  	=> $data['kode_masuk'],
 				'id_masuk'  	=> $data['id_masuk'],
 				'tgl_masuk'  	=> $tgl_masuk,
-				'status'      	=> $kd_lok ,
+				'status'      	=> $idlokasi,
 				'keterangan'  	=> $data['keterangan'],
 				'status_po'		=> 'N',
 				'no_sj_sup'		=> $data['no_sj_sup'],
 				'no_inv_sup'	=> $data['no_inv_sup'],
 				'kode_sup'		=> $data['supplier'],
-				'lokasi'   		=> $nm_lok,
+				'lokasi'   		=> $idlokasi,
 				'user'   		=> $data['user'],
 				'part_return'	=> $ret
 			);
@@ -140,12 +137,8 @@ class Part_masuk_npo extends MY_Controller
 				$stok_jkt = $this->input->post('stok_jkt');
 				$stok_cbt = $this->input->post('stok_cbt');
 				$stok_sby = $this->input->post('stok_sby');
-				$lokasi = $this->input->post('lokasi');
-				$kl = explode('|',$lokasi);
-				$kd_lok = $kl[0];
-				$nm_lok = $kl[1];
 				//$kode_po=$data['id_po'];
-				$this->Mod_part_masuknpo->insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok);
+				$this->Mod_part_masuknpo->insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby);
 			if ($result > 0) {
 				$out['dataPo'] = $idnye;
 				$out['status'] = '';

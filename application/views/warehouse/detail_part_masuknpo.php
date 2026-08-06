@@ -6,6 +6,8 @@
     padding: 0;
 }
 </style>
+
+    <div class="table-responsive">
 <table class="table table-striped  table-bordered table-hover nowrap" id="listpomasuk">
     <thead>
         <tr>
@@ -34,29 +36,27 @@
           if($idlokasi=='Jakarta'){
             $stok=$d->stok_jkt;
             $harga=$d->hrg_net_jkt;
-          $total += $d->hrg_net_jkt* $d->jumlah;
           }
           if($idlokasi=='Surabaya'){
             $stok=$d->stok_sby;
             $harga=$d->hrg_net_sby;
-          $total += $d->hrg_net_sby * $d->jumlah;
           }
           //$total += $harga * $d->jumlah;
             ?>
         <tr>
-            <td><?php echo $no; ?></td>
-            <td><?php echo $d->no_part; ?></td>
-            <td><?php echo $d->nama_part; ?></td>
-            <td><?php echo $d->nama_satuan; ?></td>
-            <td><?php echo $stok; ?></td>
-            <td><?php echo $harga; ?></td>
-            <td class="qty">
+            <td width="2%"><?php echo $no; ?></td>
+            <td width="8%"><?php echo $d->no_part; ?></td>
+            <td width="15%"><?php echo $d->nama_part; ?></td>
+            <td width="10%"><?php echo $d->nama_satuan; ?></td>
+            <td width="5%"><?php echo $stok; ?></td>
+            <td width="10%"><?php echo $harga; ?></td>
+            <td class="qty" width="10%">
                 <input type="number" name="harga[]" id="harga[]"
                     value="<?php if(empty($harga)){echo $harga; }else{echo $harga;} ?>"
                     onkeypress="saveHarga(event,'<?php echo $d->id; ?>','<?php echo $d->id_masuk; ?>',$(this).val() )"
                     class="form-control col-sm-10">
             </td>
-            <td class="hrg">
+            <td class="hrg" width="10%">
                 <input type="number" name="qty_masuk[]" id="qty_masuk[]" value="<?php echo $d->jumlah ?>"
                     onkeypress="saveJumlah(event,'<?php echo $d->id; ?>','<?php echo $d->id_masuk; ?>',$(this).val() )"
                     class="form-control col-sm-10">
@@ -89,10 +89,11 @@
     </tbody>
     <tfoot></tfoot>
 </table>
+    </div>
 <script language="javascript">
     
 var MyTable = $('#listpomasuk').dataTable({
-    "responsive": true,
+    "responsive": false,
     "paging": true,
     "lengthChange": true,
     "searching": true,

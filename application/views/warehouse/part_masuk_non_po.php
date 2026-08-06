@@ -88,27 +88,11 @@
 
 
                                     </div>
-                                    <label class="col-sm-2 col-form-label">Status</label>
-
-                                    <div class="col-sm-2">
-                                        <select name="lokasi" id="lokasi" class="form-control" <?php $lvl = $this->session->userdata['id_level'];
-                                                                                                if ($lvl != '1' && $lvl != '12') {
-                                                                                                    echo 'disabled';
-                                                                                                } ?>>
-                                            <option value="">Cabang Dealer...
-                                            </option>
-                                            <?php
-                                            $lok = $this->session->userdata['lokasi'];
-                                            foreach ($dataKota as $kel) { ?>
-                                                <option value="<?php echo $kel->kode_kota . '|' . $kel->nama_kota; ?>"
-                                                    <?php if ($kel->nama_kota == $lok) {
-                                                        echo "selected='selected'";
-                                                    } ?>>
-                                                    <?php echo $kel->nama_kota; ?>
-                                                </option>
-                                            <?php }  ?>
-                                        </select>
+                                    <label class="col-sm-2 col-form-label">No SJ</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="no_sj_sup" id="no_sj_sup" class="form-control">
                                     </div>
+
                                     <!--
                                     <div class="col-sm-1">
                                         <select name="status" id="status" class="form-control"
@@ -124,16 +108,10 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">No SJ</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" name="no_sj_sup" id="no_sj_sup" class="form-control">
-                                    </div>
                                     <label class="col-sm-2 col-form-label">No INV</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="no_inv_sup" id="no_inv_sup" class="form-control">
                                     </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Supplier</label>
                                     <div class="col-sm-4">
                                         <select name="supplier" id="supplier" class="form-control">
@@ -151,12 +129,12 @@
                                             ?>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Keterangan</label>
                                     <div class="col-sm-4">
                                         <input type="text" name="keterangan" id="keterangan" class="form-control">
                                     </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Barang Kembali ? </label>
                                     <div class="col-sm-4">
                                         <input type="checkbox" name="return" id="return" value="Y"> Ya
@@ -174,7 +152,7 @@
                                     value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
                                 <input type="hidden" name="id_masuk" id="id_masuk" class="form-control" value="<?php echo $kode_awal ?>" required readonly>
                                 <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-xl btn-outline-primary" id="tambahBarang"
+                                    <button type="button" class="btn btn-xl btn-outline-primary" id="tambahBarang"  onclick="panggilPart()"
                                         title="Add Part" data-toggle="modal" data-target="#modal_form"><i
                                             class="fas fa-plus"></i> Tambah Barang</button>
                                     <button class="btn btn-primary" id="simpan" type="submit"><span
@@ -271,31 +249,53 @@
             }
         });
     }
-    $(document).ready(function() {
-        table = $('#table-part').DataTable({
-            "responsive": false,
+    $('#modal_form').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#table-part')) {
+        $('#table-part').DataTable().destroy();
+        $('#table-part tbody').empty();
+    }
+});
+    function panggilPart() {
+        //datatables
+        table = $("#table-part").DataTable({
+
+            "responsive": true,
+            "paging": true,
             "lengthChange": true,
             "searching": true,
             "ordering": true,
             "info": true,
+            "processing": true,
             "serverSide": true,
-            "pageLength": 10, // Defaults number of rows to display in table
+            "pageLength": 5,
+
+
+            "language": {
+                "sEmptyTable": "Data Service Appointment Belum Ada"
+            },
+            "processing": true, //Feature control the processing indicator.
+            "serverSide": true,
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+            },
             "order": [],
+
+            // Load data for the table's content from an Ajax source
             "ajax": {
                 "url": "<?php echo site_url('Part_masuk_npo/ajax_list') ?>",
                 "type": "POST"
             },
             "columnDefs": [{
-                "targets": [0],
+                "targets": [0], //first column / numbering column
                 "orderable": false,
-            }, ]
-        });
-    });
-    $(document).ready(function() {
+            }, ],
+
+        })
+    }
+        $('#table-part tbody').on('click', 'tr', function() {
         var table = $('#table-part').DataTable();
         var tgl_masuk = document.formpartmasuk.date1.value;
         var kode_masuk = document.formpartmasuk.kode_masuk.value;
-        $('#table-part tbody').on('click', 'tr', function() {
             var data = table.row(this).data();
             var id_part = data[6];
             var no_part = data[1];
@@ -318,8 +318,6 @@
             tampilDetail(kode_masuk);
             $('#modal_form').modal('hide');
         });
-
-    });
 
     function tampilDetailCache() {
         //var out = jQuery.parseJSON(data);

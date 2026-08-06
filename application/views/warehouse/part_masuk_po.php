@@ -73,25 +73,6 @@ table.dataTable td {
                                     </div>
                                 </div>
                                 
-                                <div class="row form-group row">
-                                    <label class="col-sm-2 col-form-label">Stok Cabang</label>
-                                    <div class="col-sm-4">
-                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
-                                        if ($lvl !='1' && $lvl !='12'){ echo 'disabled';} ?>>
-                                            <option value="">Cabang Dealer...
-                                            </option>
-                                            <?php
-                                            $lok = $this->session->userdata['lokasi'];
-                                                                    foreach ($dataKota as $kel) { ?>
-                                                                <option
-                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
-                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
-                                                                    <?php echo $kel->nama_kota; ?>
-                                                                </option>
-                                                                <?php }  ?>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div id="data_po_detail"></div>
 
                                 <input type="hidden" name="status" id="status" class="form-control">

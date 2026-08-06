@@ -44,6 +44,8 @@
                 <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
                 <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $s->stok_akhir ?>">
+                <input type="hidden" name="qty_request[]" id="qty_request[]" value="<?php echo $s->jumlah ?>">
+                <input type="hidden" name="id_part_order[]" id="id_part_order[]" value="<?php echo $s->id_part_order ?>">
             </td>
             <td><?php echo number_format($s->jml_masuk * $s->harga); ?></td>
             <td class="text-center">
@@ -95,7 +97,7 @@ function saveData(e, id, qty_awal, qty_masuk) {
     }
 }
 function delData(e, id, sisa) {
-    var id_part_order = document.getElementById("id_part_order").value;
+    var id_po = document.getElementById("id_po").value;
     var no_po = document.getElementById("no_po").value;
     var status = document.getElementById("status").value;
     var kode_sup = document.getElementById("kode_sup").value;

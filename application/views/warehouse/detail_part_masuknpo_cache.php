@@ -32,12 +32,10 @@
             if ($idlokasi == 'Jakarta') {
                 $stok = $d->stok_jkt;
                 $harga = $d->hrg_net_jkt;
-                $total += $d->hrg_net_jkt * $d->jumlah;
             }
             if ($idlokasi == 'Surabaya') {
                 $stok = $d->stok_sby;
                 $harga = $d->hrg_net_sby;
-                $total += $d->hrg_net_sby * $d->jumlah;
             }
         ?>
             <tr>

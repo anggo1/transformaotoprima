@@ -115,8 +115,7 @@ class Part_masuk_po extends MY_Controller
 				//$stok_cbt = $this->input->post('stok_cbt');
 				//$stok_sby = $this->input->post('stok_sby');
 
-				$id_po=$data['id_po'];
-				$this->Mod_part_masuk_po->insert_part($kode_awal,$kode_masuk, $data,$no_part,$harga,$nama_part,$qty_masuk,$satuan,$id_po);
+				$this->Mod_part_masuk_po->insert_part($kode_awal,$kode_masuk, $data);
 			if ($result > 0) {
 				$out['dataPo'] = $kode_awal;
 				$out['status'] = '';

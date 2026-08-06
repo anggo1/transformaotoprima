@@ -78,7 +78,7 @@ class Mod_part_masuk_po extends CI_Model
         $sql    = "SELECT a.*,b.kode_sup as kode_sup, b.nama_sup as supplier
         FROM tbl_wh_part_order AS a
         LEFT JOIN tbl_wh_supplier AS b ON b.kode_sup=a.supplier
-        WHERE a.status !='Y' ";
+        WHERE a.status_po !='Y' ";
         $data = $this->db->query($sql);
 
 
@@ -124,18 +124,27 @@ class Mod_part_masuk_po extends CI_Model
         return $data = $query_result->result();
     }
 
-    public function insert_part($kode_awal, $data, $no_part, $harga, $nama_part, $qty_masuk, $satuan, $stok, $stok_jkt, $stok_cbt, $stok_sby)
+    public function insert_part($kode_awal,$kode_masuk, $data)
     {
         //$id = md5(DATE('ymdhms') . rand());
         $tgl_masuk =  date("y-m-d");
         
         //$stok_awal       = $d_data['stok'];
 		$idlokasi = $this->session->userdata['lokasi'];
+        $no_part = $this->input->post('no_part');
+        $stok=$this->input->post('stok');
+        $qty_masuk = $this->input->post('qty_masuk');
+        $satuan = $this->input->post('satuan');
+        $harga = $this->input->post('harga');
+        $qty_awal = $this->input->post('qty_request');
+        $id_po = $this->input->post('id_po');
+        $status_barang = $idlokasi;
+        $nama_part = $this->input->post('nama_part');
+
         if ($idlokasi == "Jakarta") {
             $data1 = array();
             foreach ($no_part as $key => $value) {
-                $total = $stok[$key] + $qty_masuk[$key];
-                $total_jkt = $stok_jkt[$key] + $qty_masuk[$key];
+                $total_jkt = $stok[$key] + $qty_masuk[$key];
                 $data1[]  = array(
                     'no_part' => $no_part[$key],
                     'stok_jkt' => $total_jkt
@@ -145,8 +154,7 @@ class Mod_part_masuk_po extends CI_Model
         if ($idlokasi == "Cibitung") {
             $data1 = array();
             foreach ($no_part as $key => $value) {
-                $total = $stok[$key] + $qty_masuk[$key];
-                $total_cbt = $stok_cbt[$key] + $qty_masuk[$key];
+                $total_cbt = $stok[$key] + $qty_masuk[$key];
                 $data1[]  = array(
                     'no_part' => $no_part[$key],
                     'stok_cbt' => $total_cbt
@@ -156,8 +164,7 @@ class Mod_part_masuk_po extends CI_Model
         if ($idlokasi == "Surabaya") {
             $data1 = array();
             foreach ($no_part as $key => $value) {
-                $total = $stok[$key] + $qty_masuk[$key];
-                $total_sby = $stok_sby[$key] + $qty_masuk[$key];
+                $total_sby = $stok[$key] + $qty_masuk[$key];
                 $data1[]  = array(
                     'no_part' => $no_part[$key],
                     'stok_sby' => $total_sby
@@ -168,6 +175,14 @@ class Mod_part_masuk_po extends CI_Model
 
 
         $data = array();
+        if($qty_awal == $qty_masuk){
+            $status = 'Y';
+        }
+        else{
+            $status = 'P';
+        }
+        $sql_update = "UPDATE tbl_wh_part_order SET status_po='".$status."' WHERE id_part_order ='{$id_po}'";
+        $this->db->query($sql_update);
         foreach ($no_part as $key => $value) { // Kita buat perulangan berdasarkan nis sampai data terakhir
             $data[]  = array(
                 'id_masuk' => $kode_awal,

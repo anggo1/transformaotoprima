@@ -41,14 +41,17 @@ class Part_keluar extends MY_Controller
 			$row[] = $p->satuan;
 			 if ($idlokasi =='Cibitung'){
                     $row[] = $p->stok_cbt;
+                    $row[] = $p->hrg_net_cbt;
                     //$row[] = $p->lok_cbt;
                     $row[] = number_format($p->hrg_net_cbt);
                 }elseif ($idlokasi=='Jakarta'){
                         $row[] = $p->stok_jkt;
+                        $row[] = $p->hrg_net_jkt;
                         //$row[] = $p->lok_jkt;
                     $row[] = number_format($p->hrg_net_jkt);
                 }elseif ($idlokasi=='Surabaya'){
                             $row[] = $p->stok_sby;
+                            $row[] = $p->hrg_net_sby;
                             //$row[] = $p->lok_sby;
                     		$row[] = number_format($p->hrg_net_sby);
 							}
@@ -92,6 +95,7 @@ class Part_keluar extends MY_Controller
 	}
 	public function prosesKeluar()
 	{
+        $idlokasi = $this->session->userdata['lokasi'];
 		$this->form_validation->set_rules('tgl_keluar', 'Tanggal Keluar', 'trim|required');
 		$data 	= $this->input->post();
 		$kode_keluar = $data['id_keluar'];
@@ -112,16 +116,12 @@ class Part_keluar extends MY_Controller
 				$id_div = $div[0];
 				$nama_div = $div[1];
 			}
-				$lokasi 	= $data['lokasi'];
-				$loknye = explode('|',$lokasi);
-				$kd_lok = $loknye[0];
-				$nm_lok = $loknye[1];
 				$data = array(
 				'kode_keluar' 	=> $data['kode_keluar'],
 				'id_keluar' 	=> $data['id_keluar'],
 				'tgl_keluar' 	=> $tgl_fix,
 				'tujuan'		=> $data['tujuan'],
-				'lokasi'		=> $data['lokasi'],
+				'lokasi'		=> $idlokasi,
 				'no_spk'		=> "NON",
 				'keterangan'	=> $data['ket_surat'],
 				'user'   		=> $data['user'],
@@ -136,15 +136,7 @@ class Part_keluar extends MY_Controller
 				$no_part 	= $this->input->post('no_part');
 				$nama_part 	= $this->input->post('nama_part');
 				$qty_keluar = $this->input->post('qty_keluar');
-				$stok 		= $this->input->post('stok');
-				$stok_jkt 	= $this->input->post('stok_jkt');
-				$stok_cbt 	= $this->input->post('stok_cbt');
-				$stok_sby 	= $this->input->post('stok_sby');
-				$lokasi 	= $this->input->post('lokasi');
-				$lokasinye = explode('|',$lokasi);
-				$kd_lok = $lokasinye[0];
-				$nm_lok = $lokasinye[1];
-				$this->Mod_part_keluar->insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok);
+				$this->Mod_part_keluar->insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar);
 				
 			if ($result > 0) {
 				$out['dataKeluar'] = $kode_keluar;

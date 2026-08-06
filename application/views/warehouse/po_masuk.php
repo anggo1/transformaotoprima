@@ -101,7 +101,7 @@
                             <div id="modal-po"></div>
                             <div id="data-po"></div>
                             <div id="data-po-cache"></div>
-                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part"
+                            <button type="button" class="btn btn-xl bg-gradient-success" id="tambah-part" onclick="panggilPart()"
                                 title="Add Part" data-toggle="modal" data-target="#modal_form"><i
                                     class="fas fa-plus"></i> Tambah Barang PO</button>
                         </div>
@@ -150,35 +150,55 @@ $('#tgl_po_masuk,#tgl_awal,#tgl_akhir').datetimepicker({
     format: 'DD-MM-YYYY',
     date: moment()
 });
-$(document).ready(function() {
-    table = $('#table-part').dataTable({
-        "responsive": false,
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "processing": true,
-        "serverSide": true,
-        "pageLength": 10, // Defaults number of rows to display in table
-        "order": [],
-        "ajax": {
-            "url": "<?php echo site_url('PoMasuk/ajax_list') ?>",
-            "type": "POST"
-        },
-        "columnDefs": [{
-            "targets": [0],
-            "orderable": false,
-        }, ]
-    });
-});
 
-$(document).ready(function() {
+	$('#modal_form').on('hidden.bs.modal', function() {
+		if ($.fn.DataTable.isDataTable('#table-part')) {
+			$('#table-part').DataTable().destroy();
+			$('#table-part tbody').empty();
+		}
+	});
+    function panggilPart() {
+		//datatables
+		table = $("#table-part").DataTable({
+
+			"responsive": true,
+			"paging": true,
+			"lengthChange": true,
+			"searching": true,
+			"ordering": true,
+			"info": true,
+			"processing": true,
+			"serverSide": true,
+			"pageLength": 5,
+
+
+			"language": {
+				"sEmptyTable": "Data Service Appointment Belum Ada"
+			},
+			"processing": true, //Feature control the processing indicator.
+			"serverSide": true,
+			"language": {
+				processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+			},
+			"order": [],
+
+			// Load data for the table's content from an Ajax source
+			"ajax": {
+				"url": "<?php echo site_url('Part_keluar/ajax_list') ?>",
+				"type": "POST"
+			},
+			"columnDefs": [{
+				"targets": [0], //first column / numbering column
+				"orderable": false,
+			}, ],
+
+		})
+	}
+
+    $('#table-part tbody').on('click', 'tr', function () {
     var table = $('#table-part').DataTable();
 		var tgl_po_masuk = document.formPo.tgl_po_masuk.value;
 		var id_po_masuk = document.formPo.id_po_masuk.value;
-
-    $('#table-part tbody').on('click', 'tr', function () {
         var data = table.row( this ).data();
 		var id_part = data[0];
 		var no_part		= data[1];
@@ -205,7 +225,6 @@ $(document).ready(function() {
 		$('#modal_form').modal('hide');
 			tampilDetail();
     });
-	});
 var MyTable = $('#list-po').dataTable({
     "responsive": true,
     "paging": true,

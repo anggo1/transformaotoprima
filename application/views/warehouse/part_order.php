@@ -251,7 +251,7 @@ $('#modal_form').on('hidden.bs.modal', function() {
 
 
     var MyTable = $('#list-po').dataTable({
-        "responsive": true,
+        "responsive": false,
         "paging": true,
         "lengthChange": true,
         "searching": true,

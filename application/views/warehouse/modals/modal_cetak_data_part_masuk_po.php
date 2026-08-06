@@ -147,20 +147,8 @@ th {
             <span>Tutup</span>
         </button>
 <?php
-$judul="";
+$judul="PENERIMAAN BARANG PO";
 $subB="";
-if($sub_status=="PPU"){
-$judul="REKAPITULASI PENERIMAAN BARANG PO";
-$subB="PRIMAJASA PERDANARAYA UTAMA";
-}
-if($sub_status=="MPU") {
-$judul="REKAPITULASI PENERIMAAN BARANG PO";
-$subB="MAMERA PERDANA UTAMA";
-}
-if($sub_status=="GLOBAL") {
-$judul="LAPORAN PENERIMAAN BARANG PO GLOBAL";
-$subB="PPU & MPU";
-}
 ?>
 <div class="modal-body">
 <div id="printThis">

@@ -25,26 +25,26 @@
 							<button type="button" class="btn btn-success" id="tambah" hidden="hidden" onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> Data Baru</button>
 						</div>
 						<div class="modal-body">
-						<?php
-						$kd='TOP-';
-								$tgl_keluar = date("y-m-d");
-								$date = date("ym");
-								$ci_kons = get_instance();
-								$query = "SELECT max(kode_keluar) AS maxKode FROM tbl_wh_part_keluar WHERE kode_keluar LIKE '%$date%'";
-								$hasil = $ci_kons->db->query($query)->row_array();
-								$noOrder = $hasil['maxKode'];
-								$noUrut = (int)substr($noOrder, 4, 5);
-								$noUrut++;
-								$tahun = substr($date, 0, 2);
-								$bulan = substr($date, 2, 2);
+							<?php
+							$kd = 'TOP-';
+							$tgl_keluar = date("y-m-d");
+							$date = date("ym");
+							$ci_kons = get_instance();
+							$query = "SELECT max(kode_keluar) AS maxKode FROM tbl_wh_part_keluar WHERE kode_keluar LIKE '%$date%'";
+							$hasil = $ci_kons->db->query($query)->row_array();
+							$noOrder = $hasil['maxKode'];
+							$noUrut = (int)substr($noOrder, 4, 5);
+							$noUrut++;
+							$tahun = substr($date, 0, 2);
+							$bulan = substr($date, 2, 2);
 
-								$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
-								$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+							$id_keluar  = $tahun . $bulan . sprintf("%04s", $noUrut);
+							$kode_keluar  = $kd . $tahun . $bulan . sprintf("%04s", $noUrut);
 							?>
 							<form id="formKeluar" name="formKeluar" method="POST">
 
-							<input type="hidden" name="id_keluar" id="id_keluar" value="<?php echo $kode_keluar ?>" class="form-control">
-							<input type="hidden" name="kode_keluar" id="kode_keluar" value="<?php echo $id_keluar ?>" class="form-control">
+								<input type="hidden" name="id_keluar" id="id_keluar" value="<?php echo $kode_keluar ?>" class="form-control">
+								<input type="hidden" name="kode_keluar" id="kode_keluar" value="<?php echo $id_keluar ?>" class="form-control">
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Tanggal</label>
 									<div class="col-sm-4">
@@ -64,7 +64,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-								<label class="col-sm-2 col-form-label">No Po</label>
+									<label class="col-sm-2 col-form-label">No Po</label>
 									<div class="col-sm-4">
 										<input type="text" name="no_po_cus" id="no_po_cus" class="form-control" placeholder="No PO">
 									</div>
@@ -74,72 +74,56 @@
 									</div>
 								</div>
 								<div class="form-group row">
-								<label class="col-sm-2 col-form-label">Faktur</label>
+									<label class="col-sm-2 col-form-label">Faktur</label>
 									<div class="col-sm-4">
 										<input type="text" name="faktur" id="faktur" class="form-control" placeholder="No Faktur">
 									</div>
-								<label class="col-sm-2 col-form-label">Ket Keluar</label>
+									<label class="col-sm-2 col-form-label">Ket Keluar</label>
 									<div class="col-sm-4">
 										<input type="text" name="ket_surat" id="ket_surat" class="form-control" placeholder="Keterangan Keluar">
 									</div>
-									</div>
+								</div>
 								<div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Stok Cabang</label>
-                                    <div class="col-sm-4">
-                                        <select name="lokasi" id="lokasi" class="form-control" <?php  $lvl = $this->session->userdata['id_level']; 
-                                        if ($lvl !='1' && $lvl !='12'){ echo 'readonly';} ?>>
-                                            <option value="">Cabang Dealer...
-                                            </option>
-                                            <?php
-                                            $lok = $this->session->userdata['lokasi'];
-                                                                    foreach ($dataKota as $kel) { ?>
-                                                                <option
-                                                                    value="<?php echo $kel->kode_kota.'|'.$kel->nama_kota; ?>"
-                                                                    <?php if ($kel->nama_kota == $lok) { echo "selected='selected'"; } ?>>
-                                                                    <?php echo $kel->nama_kota; ?>
-                                                                </option>
-                                                                <?php }  ?>
-                                        </select>
-                                    </div>
 									<label class="col-sm-2 col-form-label">Kategori</label>
-                                                        <div class="col-sm-4">
-                                                            <select name="divisi" id="divisi" class="form-control">
-                                                                <option value="">Pilih Kategori...
-                                                                </option>
-                                                                <?php
-                                                            if (empty($part->kategori)) { foreach ($dataKategori as $kt) {
-                                                            ?>
-                                                                <option
-                                                                    <?php echo $kt == $kt->id_kategori ? 'selected="selected"' : '' ?>
-                                                                    value="<?php echo $kt->id_kategori ?>|<?php echo $kt->kategori; ?>">
-                                                                    <?php echo $kt->kategori  ?><?php } ?>
-                                                                </option>
-                                                                <?php
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
+									<div class="col-sm-4">
+										<select name="divisi" id="divisi" class="form-control">
+											<option value="">Pilih Kategori...
+											</option>
+											<?php
+											if (empty($part->kategori)) {
+												foreach ($dataKategori as $kt) {
+											?>
+													<option
+														<?php echo $kt == $kt->id_kategori ? 'selected="selected"' : '' ?>
+														value="<?php echo $kt->id_kategori ?>|<?php echo $kt->kategori; ?>">
+														<?php echo $kt->kategori  ?><?php } ?>
+													</option>
+												<?php
+											}
+												?>
+										</select>
+									</div>
 								</div>
 								<div class="form-group row">
-								<label for="Barang" class="col-sm-2 col-form-label"></label>
-								<div class="col-sm-4"></div>
+									<label for="Barang" class="col-sm-2 col-form-label"></label>
+									<div class="col-sm-4"></div>
 								</div>
-						<div id="data-keluar"></div>
-						<div id="data-keluar-cache"></div>
+								<div id="data-keluar"></div>
+								<div id="data-keluar-cache"></div>
 						</div>
 						<input type="hidden" name="user" id="user" value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
 						<div class="modal-footer justify-content-between">
-								<button type="button" class="btn btn-xl btn-success" id="tambahBarang" title="Add Part" data-toggle="modal" data-target="#modal_form"><i class="fas fa-plus"></i> Tambah Barang</button>
-									<button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span> Simpan</button>
-								<button type="button" class="btn bg-gradient-info cetak-keluar" id="cetak" hidden="hidden" data-id="" title="Cetak"><i class="fas fa-print"></i> Surat Jalan</button>
-                                <button type="button" class="btn bg-gradient-indigo cetak-bon-keluar" id="cetakBon" hidden="hidden" title="Cetak Bon"><i
-                                            class="fas fa-print"></i> Bon</button>
+							<button type="button" class="btn btn-xl btn-success" id="tambahBarang" title="Add Part" data-toggle="modal" onclick="panggilPart()" data-target="#modal_form"><i class="fas fa-plus"></i> Tambah Barang</button>
+							<button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span> Simpan</button>
+							<button type="button" class="btn bg-gradient-info cetak-keluar" id="cetak" hidden="hidden" data-id="" title="Cetak"><i class="fas fa-print"></i> Surat Jalan</button>
+							<button type="button" class="btn bg-gradient-indigo cetak-bon-keluar" id="cetakBon" hidden="hidden" title="Cetak Bon"><i
+									class="fas fa-print"></i> Bon</button>
 						</div>
 
 						</form>
 					</div>
-				<div id="modal-keluar"></div>
-				<div id="modal-pk-bon"></div>
+					<div id="modal-keluar"></div>
+					<div id="modal-pk-bon"></div>
 				</div>
 			</div>
 			<div class="modal fade" id="modal_form" role="dialog">
@@ -180,15 +164,16 @@
 		format: 'DD-MM-YYYY',
 		date: moment()
 	});
+
 	function myFunction() {
-  var x = document.getElementById("status_part").value;
-        if(x == ""){
-            document.getElementById("tambahBarang").disabled = true;
-		}else{
-			
+		var x = document.getElementById("status_part").value;
+		if (x == "") {
+			document.getElementById("tambahBarang").disabled = true;
+		} else {
+
 			document.getElementById("tambahBarang").disabled = false;
 		}
-        }
+	}
 	var MyTable = $('#list-keluar').dataTable({
 		"responsive": true,
 		"paging": true,
@@ -197,9 +182,12 @@
 		"ordering": true,
 		"info": true
 	});
-	$(document).ready(function() {
-		table = $('#table-part').dataTable({
-			"responsive": false,
+
+	function panggilPart() {
+		//datatables
+		table = $("#table-part").DataTable({
+
+			"responsive": true,
 			"paging": true,
 			"lengthChange": true,
 			"searching": true,
@@ -207,62 +195,67 @@
 			"info": true,
 			"processing": true,
 			"serverSide": true,
-			"pageLength": 10, // Defaults number of rows to display in table
+			"pageLength": 5,
+
+
+			"language": {
+				"sEmptyTable": "Data Service Appointment Belum Ada"
+			},
+			"processing": true, //Feature control the processing indicator.
+			"serverSide": true,
+			"language": {
+				processing: '<i class="fa fa-spinner fa-spin fa-3x"></i>'
+			},
 			"order": [],
+
+			// Load data for the table's content from an Ajax source
 			"ajax": {
 				"url": "<?php echo site_url('Part_keluar/ajax_list') ?>",
 				"type": "POST"
 			},
 			"columnDefs": [{
-				"targets": [0],
+				"targets": [0], //first column / numbering column
 				"orderable": false,
-			}, ]
-		});
-	});
-	$(document).ready(function() {
-    var table = $('#table-part').DataTable();
+			}, ],
 
-    $('#table-part tbody').on('click', 'tr', function () {
-        var data = table.row( this ).data();
-        var id_part = data[5];
-        var no_part = data[1];
-        var nama_part = data[2];
-        var stok = data[3];
-        var satuan = data[4];
-        var stok_jkt = data[6];
-        var stok_cbt = data[7];
-        var stok_sby = data[8];
-        var harga_baru = data[9];
-        selectPart(id_part,no_part,nama_part,satuan,stok,stok_jkt,stok_cbt,stok_sby,harga_baru);
-    } );
-} );
-	function refresh() {
-		//MyTable = $('#table-part').dataTable();
+		})
 	}
-    
-	function selectPart(id_part,no_part,nama_part,satuan,stok,harga_baru) {
+	$('#modal_form').on('hidden.bs.modal', function() {
+		if ($.fn.DataTable.isDataTable('#table-part')) {
+			$('#table-part').DataTable().destroy();
+			$('#table-part tbody').empty();
+		}
+	});
+	$('#table-part tbody').on('click', 'tr', function() {
+		var data = table.row(this).data();
+		var no_part = data[1];
+		var nama_part = data[2];
+		var satuan = data[3];
+		var stok = data[4];
+		var harga = data[5];
+		selectPart(no_part, nama_part, satuan, stok, harga);
+	});
+
+
+	function selectPart(no_part, nama_part, satuan, stok, harga) {
 		var tgl_keluar = document.formKeluar.tgl_keluar.value;
 		var id_keluar = document.formKeluar.id_keluar.value;
-		var lokasi = document.formKeluar.lokasi.value;
-		
-				$.ajax({
-				method: 'POST',
-				url: '<?php echo base_url('Part_keluar/prosesDetailInput'); ?>',
-				data: 
-				"tgl_keluar=" + tgl_keluar +
+
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Part_keluar/prosesDetailInput'); ?>',
+			data: "tgl_keluar=" + tgl_keluar +
 				"&id_keluar=" + id_keluar +
-				"&id_part="+id_part + 
-				"&no_part="+no_part + 
-				"&nama_part="+nama_part + 
-				"&satuan="+satuan + 
-				"&lokasi="+lokasi + 
-				"&stok="+stok + 
-				"&harga_baru="+harga_baru 
-			})
-			
-			tampilDetail(id_keluar);
-			$('#modal_form').modal('hide');
-			}
+				"&no_part=" + no_part +
+				"&nama_part=" + nama_part +
+				"&satuan=" + satuan +
+				"&stok=" + stok +
+				"&harga=" + harga
+		})
+
+		tampilDetail(id_keluar);
+		$('#modal_form').modal('hide');
+	}
 
 	function tampilDetail(id_keluar) {
 		var id_keluar = document.getElementById('id_keluar').value = id_keluar;
@@ -277,6 +270,7 @@
 			}
 		});
 	}
+
 	function tampilDetailCache(id_keluar) {
 		//var out = jQuery.parseJSON(data);
 		var id_keluar = document.getElementById('id_keluar').value = id_keluar;
@@ -313,11 +307,11 @@
 					document.getElementById("formKeluar"); //reset()	
 					$('#tgl_keluar').attr('readonly', 'readonly');
 					$('#ket_surat').attr('readonly', 'readonly');
-					$('#status_part').attr('disabled','disabled');
-					$('#tujuan').attr('readonly','readonly');
-					$('#alamat').attr('readonly','readonly');
-					$('#no_po_cus').attr('readonly','readonly');
-					$('#faktur').attr('readonly','readonly');
+					$('#status_part').attr('disabled', 'disabled');
+					$('#tujuan').attr('readonly', 'readonly');
+					$('#alamat').attr('readonly', 'readonly');
+					$('#no_po_cus').attr('readonly', 'readonly');
+					$('#faktur').attr('readonly', 'readonly');
 					var d = document.getElementById("cetak");
 					d.setAttribute('data-id', out.dataKeluar);
 					var d = document.getElementById("cetakBon");
@@ -341,21 +335,21 @@
 
 		e.preventDefault();
 	});
-	
+
 	function cetakPo(datakode) {}
 	$(document).on("click", ".cetak-bon-keluar", function() {
-        var id = $(this).attr("data-id");
-        $.ajax({
-                method: "POST",
-                url: "<?php echo base_url('Part_keluar/cetak_bon'); ?>",
-                data: "id=" + id
-            })
-            .done(function(data) {
-                // $('#part-pk').modal('hide');
-                $('#modal-pk-bon').html(data);
-                $('#cetak-bon-keluar').modal('show');
-            })
-    })
+		var id = $(this).attr("data-id");
+		$.ajax({
+				method: "POST",
+				url: "<?php echo base_url('Part_keluar/cetak_bon'); ?>",
+				data: "id=" + id
+			})
+			.done(function(data) {
+				// $('#part-pk').modal('hide');
+				$('#modal-pk-bon').html(data);
+				$('#cetak-bon-keluar').modal('show');
+			})
+	})
 
 	$(document).on("click", ".cetak-keluar", function() {
 		var id = $(this).attr("data-id");
@@ -376,8 +370,8 @@
 	})
 	$(document).on("click", ".hapus-detail", function() {
 		var id = data_id;
-		
-        var dataPo = document.getElementById("id_keluar").value;
+
+		var dataPo = document.getElementById("id_keluar").value;
 
 		$.ajax({
 				method: "POST",
@@ -401,6 +395,4 @@
 				}
 			})
 	})
-
-
 </script>

@@ -100,13 +100,11 @@ class Mod_part_keluar extends CI_Model
     public function insert_part($data)
     {
         
+        $idlokasi = $this->session->userdata['lokasi'];
         $date = $data['tgl_keluar'];
         $tgl1 = explode('-', $date);
         $tgl_keluar = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         
-		$lokasi 	= $data['lokasi'];
-		$loknye = explode('|',$lokasi);
-		$kd_lok = $loknye[0];
         
         $sql = "INSERT INTO tbl_wh_detail_part_keluar SET
         id_keluar   ='".$data['id_keluar']."',
@@ -117,7 +115,7 @@ class Mod_part_keluar extends CI_Model
         hrg_part    ='".$data['harga_baru']."',
         satuan      ='".$data['satuan']."',
         status_po   ='N',
-        lokasi      ='".$kd_lok."',
+        lokasi      ='".$idlokasi."',
         stok_akhir  ='".$data['stok']."'";
         $this->db->query($sql);
 
@@ -135,7 +133,7 @@ class Mod_part_keluar extends CI_Model
 	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
-    public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
+    public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar)
         {
         $nm_lok = $this->session->userdata['lokasi'];
             $date = $data['tgl_keluar'];
@@ -144,6 +142,7 @@ class Mod_part_keluar extends CI_Model
             $id_keluar = $data['id_keluar'];
 
             if($nm_lok=="Jakarta"){
+                $stok_jkt = $this->input->post('stok_jkt');
              $data1 = array();
              foreach($no_part as $key=>$value){ 
                  //$total = $stok[$key] - $qty_keluar[$key];
@@ -154,6 +153,7 @@ class Mod_part_keluar extends CI_Model
              );
                      }}
                      elseif($nm_lok=="Cibitung"){
+                         $stok_cbt = $this->input->post('stok_cbt');
                          $data1 = array();
                          foreach($no_part as $key=>$value){
                              //$total = $stok[$key] - $qty_keluar[$key];
@@ -164,6 +164,7 @@ class Mod_part_keluar extends CI_Model
                          );
                      }}
                      elseif($nm_lok=="Surabaya"){
+                $stok_sby = $this->input->post('stok_sby');
                          $data1 = array();
                          foreach($no_part as $key=>$value){
                              //$total = $stok[$key] - $qty_keluar[$key];

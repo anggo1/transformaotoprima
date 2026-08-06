@@ -141,6 +141,7 @@ class Mod_part_masuknpo extends CI_Model
     {
         
         $idlokasi = $this->session->userdata['lokasi'];
+        $user = $this->session->userdata['full_name'];
 
         $date = $data['tgl_masuk'];
         $tgl1 = explode('-', $date);
@@ -159,7 +160,8 @@ class Mod_part_masuknpo extends CI_Model
         satuan      ='".$data['satuan']."',
         hrg_part    ='".$harga_part."',
         stok_akhir  ='".$data['stok']."',
-        lokasi      ='".$id_lokasi."'";
+        user        ='".$user."',
+        lokasi      ='".$idlokasi."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -177,7 +179,7 @@ class Mod_part_masuknpo extends CI_Model
 	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
-    public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby,$kd_lok,$nm_lok)
+    public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby)
     {
         
         $idlokasi = $this->session->userdata['lokasi'];
@@ -189,7 +191,7 @@ class Mod_part_masuknpo extends CI_Model
         $ret=""; if (!empty($data['return'])){ 
         $ret=$data['return']; }else { $ret='N'; }
         
-       if($nm_lok=="Jakarta"){
+       if($idlokasi=="Jakarta"){
         $data1 = array();
         foreach($no_part as $key=>$value){ 
             //$total = $stok[$key] + $qty_masuk[$key];
@@ -199,7 +201,7 @@ class Mod_part_masuknpo extends CI_Model
             'stok_jkt'=>$total_jkt
         );
     }}
-    if($nm_lok=="Cibitung"){
+    if($idlokasi=="Cibitung"){
         $data1 = array();
         foreach($no_part as $key=>$value){
             //$total = $stok[$key] + $qty_masuk[$key];
@@ -209,7 +211,7 @@ class Mod_part_masuknpo extends CI_Model
             'stok_cbt'=>$total_cbt
         );
     }}
-    if($nm_lok=="Surabaya"){
+    if($idlokasi=="Surabaya"){
         $data1 = array();
         foreach($no_part as $key=>$value){
             //$total = $stok[$key] + $qty_masuk[$key];
@@ -221,7 +223,7 @@ class Mod_part_masuknpo extends CI_Model
     }}
         $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
 
-        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$kd_lok."', tgl_masuk='".$tgl_masuk."', part_return='".$ret."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
+        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$idlokasi."', tgl_masuk='".$tgl_masuk."', part_return='".$ret."', lokasi='".$idlokasi."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
     }
     public function deletepartDetail($id)
