@@ -199,8 +199,6 @@
 
 					document.getElementById("tambah").hidden = false;
 					document.getElementById("simpan").hidden = true;
-					document.getElementById("formpartkeluar"); //reset()
-					
 					var d = document.getElementById("cetak");
 					d.setAttribute('data-id', id_po_masuk);
 					var d = document.getElementById("cetakBon");

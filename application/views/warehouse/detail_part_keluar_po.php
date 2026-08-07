@@ -48,7 +48,6 @@
                         value="<?php echo $s->jumlah ?>"
                         onkeypress="saveJumlah(event,'<?php echo $s->id_detail; ?>','<?php echo $s->jumlah; ?>','<?php echo $s->harga; ?>',$(this).val() )"
                         class="form-control col-sm-10">
-                    <input type="hidden" name="id_po_masuk[]" id="id_po_masuk[]" value="<?php echo $s->id_po_masuk; ?>">
                     <input type="hidden" name="no_part[]" id="no_part[]" value="<?php echo $s->no_part; ?>">
                     <input type="hidden" name="nama_part[]" id="nama_part[]" value="<?php echo $s->nama_part; ?>">
                     <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok; ?>">
