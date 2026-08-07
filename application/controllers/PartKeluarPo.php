@@ -53,11 +53,12 @@ class PartKeluarPo extends MY_Controller
     }
 	public function cari_barang()
     {
-		$no_po = $_GET['no_po'];
-        $data['dataPo']= $this->Mod_part_keluar_po->cari_barang($no_po);
+		$id_po_masuk = $_GET['id_po_masuk'];
+        $data['dataPo']= $this->Mod_part_keluar_po->cari_barang($id_po_masuk);
         //$this->load->view('warehouse/data_po_partmasuk', $data);
         $this->load->view('warehouse/detail_part_keluar_po', $data);
     }
+	
 	public function prosesPartkeluar()
 	{
         $idlokasi = $this->session->userdata['lokasi'];
@@ -94,7 +95,7 @@ class PartKeluarPo extends MY_Controller
 			
 			$data = array(
 				'kode_keluar'  	=> $kode_keluar,
-				'no_po'  		=> $data['no_po'],
+				'id_po_masuk'  		=> $data['id_po_masuk'],
 				'kode_po'  		=> $data['kode_po'],
 				'tgl_po'  		=> $tgl_keluar,
 				'kode_cus'  	=> $data['kode_cus'],
@@ -102,10 +103,9 @@ class PartKeluarPo extends MY_Controller
 				'no_sj'  		=> $data['no_sj'],
 				'lokasi'      	=> $idlokasi,
 				'keterangan'		=> $data['keterangan'],
-				'pengguna'		=> $data['pengguna']
+				'pengguna'		=> $data['pengguna'],
 			);
 				$data['dataPo'] = $this->db->insert('tbl_wh_part_keluar_po', $data);
-				$this->db->update('tbl_wh_po_masuk', array('status_po' => 'Y'), array('id_po_masuk' => $data['no_po']));
 				$data 	= $this->input->post();
 				$this->Mod_part_keluar_po->insert_part($kode_keluar, $data);
 			if ($result > 0) {
@@ -124,10 +124,17 @@ class PartKeluarPo extends MY_Controller
 	}
 	public function tampilDetail()
 	{
-		$no_po 				= $_GET['id_po'];
-		$data['dataPo'] = $this->Mod_part_keluar_po->cari_barang($no_po);
+		$id_po_masuk 				= $_GET['id_po'];
+		$data['dataPo'] = $this->Mod_part_keluar_po->cari_barang($id_po_masuk);
 		$this->load->view('warehouse/detail_part_keluar_po', $data);
 	}
+	public function tampilDetailCache()
+    {
+		$id_po_masuk = $_GET['id_po_masuk'];
+        $data['dataPo']= $this->Mod_part_keluar_po->cari_barang($id_po_masuk);
+        //$this->load->view('warehouse/data_po_partmasuk', $data);
+        $this->load->view('warehouse/detail_part_keluar_po_cache', $data);
+    }
 	public function deleteDetail()
 	{
 		$id = $_POST['id'];
@@ -169,10 +176,18 @@ class PartKeluarPo extends MY_Controller
 
 	public function cetak()
 	{
-		$id 				= $_POST['id'];
-		$data['dataKeluar'] = $this->Mod_part_keluar_po->select_by_id($id);
-		$data['detailKeluar'] = $this->Mod_part_keluar_po->select_detail_cetak($id);
+		$id_po_masuk 				= $_POST['id_po_masuk'];
+		$data['dataKeluar'] = $this->Mod_part_keluar_po->select_by_id($id_po_masuk);
+		$data['detailKeluar'] = $this->Mod_part_keluar_po->select_detail_cetak($id_po_masuk);
 
 		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_po', 'cetak-keluar', $data, ' modal-xl');
+	}
+	public function cetak_bon()
+	{
+		$id_po_masuk 				= $_POST['id_po_masuk'];
+		$data['dataKeluar'] = $this->Mod_part_keluar_po->select_by_id($id_po_masuk);
+		$data['detailKeluar'] = $this->Mod_part_keluar_po->select_detail_cetak($id_po_masuk);
+
+		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_po_bon', 'cetak-keluar', $data, ' modal-xl');
 	}
 }

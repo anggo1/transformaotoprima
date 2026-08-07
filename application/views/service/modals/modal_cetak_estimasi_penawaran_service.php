@@ -173,9 +173,9 @@ font-family:Georgia, "Times New Roman", Times, serif;
       <tr>
         <th><div align="left">Customer Name</div></th>
         <th><div align="left">: <?php echo $c->nama_cus; ?></div></th>
-        <th width="138">&nbsp;</th>
-        <th width="513"><div align="left"><?php echo  $apl1->status; ?></div></th>
-        <th width="71">&nbsp;</th>
+        <th width="171">&nbsp;</th>
+        <th width="305"><div align="left"><?php echo  $apl1->status; ?></div></th>
+        <th width="215">&nbsp;</th>
       </tr>
       <tr>
         <th><div align="left">Address</div></th>
@@ -212,8 +212,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th>&nbsp;</th>
       </tr>
       <tr>
-        <th width="185" height="19">&nbsp;</th>
-        <th width="489">&nbsp;</th>
+        <th width="179" height="19">&nbsp;</th>
+        <th width="468">&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>

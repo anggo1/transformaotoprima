@@ -21,6 +21,7 @@ class Mod_part_request extends CI_Model
         $this->db->where('estimasi','Y');
         $this->db->where('free_service !=','Y');
         $this->db->where('status !=', 'F');
+        $this->db->where('service_only', 'N');
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 

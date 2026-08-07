@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_work_order extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer_name','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','work_order','free_service','pembuat');
+    var $column_search = array('wo_no', 'sa_name', 'customer_name', 'customer_complain', 'vin', 'no_pol', 'type', 'storing', 'date_open_wo', 'clockin', 'date_close_wo', 'clockout', 'status', 'work_order', 'free_service', 'pembuat');
+    var $column_order = array('null', 'wo_no', 'sa_name', 'customer_name', 'customer_complain', 'vin', 'no_pol', 'type', 'storing', 'date_open_wo', 'clockin', 'date_close_wo', 'clockout', 'status', 'work_order', 'free_service', 'pembuat');
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
@@ -18,8 +18,20 @@ class Mod_work_order extends CI_Model
 
         $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,work_order,free_service,pembuat');
         $this->db->from('tbl_after_sales');
-        $this->db->where('status !=', 'F');
+
+$this->db->group_start(); // Buka kurung utama
+
+    $this->db->group_start(); // (service_only = Y dan status != F)
         $this->db->where('service_only', 'Y');
+        $this->db->where('status !=', 'F');
+    $this->db->group_end();
+
+    $this->db->or_group_start(); // ATAU (service_only = N dan status != F)
+        $this->db->where('service_only', 'N');
+        $this->db->where('status !=', 'F');
+    $this->db->group_end();
+
+$this->db->group_end(); // Tutup kurung utama
         //$this->db->where('pre_order <>', 'empty');
         //$this->db->where('free_service', 'Y');
         $i = 0;
@@ -96,7 +108,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_wh_barang');
-        $this->db->where('tbl_wh_barang.id_part=',$id);
+        $this->db->where('tbl_wh_barang.id_part=', $id);
         $data = $this->db->get();
         return $data->result();
     }
@@ -105,16 +117,16 @@ class Mod_work_order extends CI_Model
         $this->db->select('*');
         $this->db->from('tbl_akses_submenu');
         //$this->db->join('tbl_akses_submenu','tbl_akses_submenu.id_submenu=tbl_akses_menu.id_menu','inner');
-        $this->db->where('tbl_akses_submenu.id_level=',$idlevel);
-        $this->db->where('tbl_akses_submenu.id_submenu=',$id_sub);
+        $this->db->where('tbl_akses_submenu.id_level=', $idlevel);
+        $this->db->where('tbl_akses_submenu.id_submenu=', $id_sub);
         $data = $this->db->get();
         return $data->result();
     }
     function select_sa($id)
     {
-       $this->db->select('*');
+        $this->db->select('*');
         $this->db->from('tbl_after_sales');
-         $this->db->where('wo_no',$id);
+        $this->db->where('wo_no', $id);
 
         $data = $this->db->get();
 
@@ -124,9 +136,9 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_customer');
-        $this->db->where('kode_cus',$kode_cus);
+        $this->db->where('kode_cus', $kode_cus);
 
-         $data = $this->db->get();
+        $data = $this->db->get();
 
         return $data->result();
     }
@@ -134,8 +146,8 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_after_sales_detail_wo');
-        $this->db->where('wo_no',$wo_no);
-        
+        $this->db->where('wo_no', $wo_no);
+
 
         $data = $this->db->get();
 
@@ -145,7 +157,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_af_detail_estimasi_penawaran');
-        $this->db->where('spk',$idL);
+        $this->db->where('spk', $idL);
 
         $data = $this->db->get();
 
@@ -155,7 +167,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_after_sales_labor');
-        $this->db->where('spk',$idX);
+        $this->db->where('spk', $idX);
 
         $data = $this->db->get();
 
@@ -165,7 +177,7 @@ class Mod_work_order extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_after_sales_work_order');
-        $this->db->where('wo_no',$wo_no);
+        $this->db->where('wo_no', $wo_no);
 
         $data = $this->db->get();
 
@@ -182,193 +194,192 @@ class Mod_work_order extends CI_Model
     }
     function insertOperation($wo_no, $operation, $hours, $type_of_work, $price)
     {
-        $kd='SPK';
-			$tgl_keluar = date("y-m-d");
-			$date = date("ym");
-			$ci_kons = get_instance();
-			$query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-			$noOrder = $hasil['maxKode'];
-			$noUrut = (int)substr($noOrder, 8, 4);
-			$noUrut++;
-			$tahun = substr($date, 0, 2);
-			$bulan = substr($date, 2, 2);
+        $kd = 'SPK';
+        $tgl_keluar = date("y-m-d");
+        $date = date("ym");
+        $ci_kons = get_instance();
+        $query = "SELECT max(spk) AS maxKode FROM tbl_af_detail_estimasi_penawaran WHERE spk LIKE '%$date%'";
+        $hasil = $ci_kons->db->query($query)->row_array();
+        $noOrder = $hasil['maxKode'];
+        $noUrut = (int)substr($noOrder, 8, 4);
+        $noUrut++;
+        $tahun = substr($date, 0, 2);
+        $bulan = substr($date, 2, 2);
 
-			$id_keluar  = $tahun.$bulan.sprintf("%04s", $noUrut);
-			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
+        $id_keluar  = $tahun . $bulan . sprintf("%04s", $noUrut);
+        $kode_keluar  = $kd . $tahun . $bulan . sprintf("%04s", $noUrut);
 
-		$harga_baru =str_replace(",","", $price);
+        $harga_baru = str_replace(",", "", $price);
         $grand_total = $price * $hours;
         $sql = "INSERT INTO tbl_after_sales_detail_wo SET
         id_detail   ='',
-        wo_no       ='" . $wo_no. "',
-        spk       ='".$kode_keluar."',
-        operation   ='" . $operation. "',
+        wo_no       ='" . $wo_no . "',
+        spk       ='" . $kode_keluar . "',
+        operation   ='" . $operation . "',
         hours       ='" . $hours . "',
         type_of_work  ='" . $type_of_work . "',
         jumlah      ='" . $hours . "',
-        harga       ='" . $harga_baru. "',
-        total_harga   ='" . $grand_total. "'";
-        
+        harga       ='" . $harga_baru . "',
+        total_harga   ='" . $grand_total . "'";
+
         $sql2 = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
             wo_no     ='" . $wo_no . "',
             no_part     ='" . $operation . "',
             nama_part   ='" . $type_of_work . "',
-            harga       ='" . $harga_baru. "',
-            harga_net   ='" . $harga_baru. "',
-            total_harga   ='" . $grand_total. "',
+            harga       ='" . $harga_baru . "',
+            harga_net   ='" . $harga_baru . "',
+            total_harga   ='" . $grand_total . "',
             jumlah      ='" . $hours . "',
             validasi_jenis = 'S',
             spk = '" . $kode_keluar . "'";
 
-		$this->db->query($sql);
-		$this->db->query($sql2);
+        $this->db->query($sql);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
-    
+
     function insertLabor($wo_no, $spk, $nik, $nama)
     {
         $sql = "INSERT INTO tbl_after_sales_labor SET
         id_labor  ='',
-        wo_no       ='".$wo_no."',
-        spk         ='".$spk."',
-        nik         ='".$nik."',
-        nama        ='".$nama."'";
+        wo_no       ='" . $wo_no . "',
+        spk         ='" . $spk . "',
+        nik         ='" . $nik . "',
+        nama        ='" . $nama . "'";
 
-		$this->db->query($sql);
+        $this->db->query($sql);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
     function inputWorkOrder($data)
     {
-        
-        $sql = "INSERT INTO tbl_after_sales_work_order SET
-        wo_no     ='".$data['wo_no']."',
-        wo_date   ='".date('Y-m-d')."',
-        pembuat   ='".$data['pembuat']."'";
 
-		$this->db->query($sql);
+        $sql = "INSERT INTO tbl_after_sales_work_order SET
+        wo_no     ='" . $data['wo_no'] . "',
+        wo_date   ='" . date('Y-m-d') . "',
+        pembuat   ='" . $data['pembuat'] . "'";
+
+        $this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        work_order     ='".$data['wo_no']."',
-        status     ='P' WHERE wo_no='".$data['wo_no']."'";
+        work_order     ='" . $data['wo_no'] . "',
+        status     ='P' WHERE wo_no='" . $data['wo_no'] . "'";
 
-		$this->db->query($sql2);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
     function deleteOperation($id, $spk)
     {
         $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}' or spk='{$spk}'";
 
-		$this->db->query($sql);
+        $this->db->query($sql);
         $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}' OR spk='{$spk}'";
 
-		$this->db->query($sql2);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
     function deleteMechanic($id)
     {
         $sql = "DELETE FROM tbl_after_sales_labor WHERE id_labor='{$id}'";
 
-		$this->db->query($sql);
+        $this->db->query($sql);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
-    function start_work($id_detail,$no_work_order)
+    function start_work($id_detail, $no_work_order)
     {
-	    $tgl_mulai  = date('Y-m-d H:i:s');
-	    $jam_mulai  = date("H:i:s");
+        $tgl_mulai  = date('Y-m-d H:i:s');
+        $jam_mulai  = date("H:i:s");
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
         start_date     = NOW(),
-        status     ='R' WHERE id_detail='".$id_detail."'";
+        status     ='R' WHERE id_detail='" . $id_detail . "'";
 
-		$this->db->query($sql2);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
     //total_pause     ='".$menit.",".$detik."',
-    function pause_work($id_detail,$no_work_order,$total)
+    function pause_work($id_detail, $no_work_order, $total)
     {
-        $waktu_input='';
-            $ci_kons = get_instance();
-			$query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-		    $pause = $hasil['total_pause'];
-            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+        $waktu_input = '';
+        $ci_kons = get_instance();
+        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+        $hasil = $ci_kons->db->query($query)->row_array();
+        $pause = $hasil['total_pause'];
+        empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
 
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
-        total_pause     ='".$waktu_input."',
-        status     ='P' WHERE id_detail='".$id_detail."'";
+        total_pause     ='" . $waktu_input . "',
+        status     ='P' WHERE id_detail='" . $id_detail . "'";
 
-		$this->db->query($sql2);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
 
-    function end_work($id_detail,$no_work_order,$total)
+    function end_work($id_detail, $no_work_order, $total)
     {
-	    $tgl_jam_sekarang  = date("Y-m-d H:i:s");
-        $waktu_input='';
-            $ci_kons = get_instance();
-			$query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-		    $pause = $hasil['total_pause'];
-            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+        $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+        $waktu_input = '';
+        $ci_kons = get_instance();
+        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+        $hasil = $ci_kons->db->query($query)->row_array();
+        $pause = $hasil['total_pause'];
+        empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
-        end_date    ='".$tgl_jam_sekarang."',
-        total_time    ='".$waktu_input."',
-        status     ='F' WHERE id_detail='".$id_detail."'";
+        end_date    ='" . $tgl_jam_sekarang . "',
+        total_time    ='" . $waktu_input . "',
+        status     ='F' WHERE id_detail='" . $id_detail . "'";
 
-		$this->db->query($sql2);
+        $this->db->query($sql2);
 
-		return $this->db->affected_rows();
+        return $this->db->affected_rows();
     }
     function finish_work($wo_no)
     {
-         $tgl_jam_sekarang  = date("Y-m-d H:i:s");
-        $waktu_input='';
-            $ci_kons = get_instance();
-            $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
-			$hasil = $ci_kons->db->query($query)->row_array();
-            if(empty($hasil['total_pause'])){
-                $pause = 0;
-            }else{
-		    $pause = $hasil['total_pause'];
-            }
-            $id_detail = $hasil['id_detail'];
-            
-	    $tgl_jam_mulai  = $hasil['start_date'];
+        $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+        $waktu_input = '';
+        $ci_kons = get_instance();
+        $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
+        $hasil = $ci_kons->db->query($query)->row_array();
+        if (empty($hasil['total_pause'])) {
+            $pause = 0;
+        } else {
+            $pause = $hasil['total_pause'];
+        }
+
+        $id_detail = $hasil['id_detail'];
+
+        $tgl_jam_mulai  = $hasil['start_date'];
         $start = new DateTime($tgl_jam_mulai);
         $end = new DateTime($tgl_jam_sekarang);
         $interval = $start->diff($end);
 
         $jam = $interval->format('%h');
         $menit = $interval->format('%i');
-        $total=$jam.'.'.$menit;
+        $total = $jam . '.' . $menit;
 
-            empty ($pause) ? $waktu_input=$total : $waktu_input=$total+$pause;
+        empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
         $sql = "UPDATE tbl_after_sales_detail_wo SET
-        end_date    ='".$tgl_jam_sekarang."',
-        total_time    ='".$waktu_input."',
-        status     ='F' WHERE id_detail='".$id_detail."'";
+        end_date    ='" . $tgl_jam_sekarang . "',
+        total_time    ='" . $waktu_input . "',
+        status     ='F' WHERE status !='F'";
 
-		$this->db->query($sql);
-        if($query > 0){
-       
-	    $tgl_sekarang  = date("Y-m-d");
-	    $jam_sekarang  = date("H:i:s");
-        $sql1 = "UPDATE tbl_after_sales SET        
-        date_close_wo    ='".$tgl_sekarang."',
-        clockout    ='".$jam_sekarang."',
-        status     ='F' WHERE wo_no='".$wo_no."'";
+        $this->db->query($sql);
 
-		$this->db->query($sql1);
-        }
+            $tgl_sekarang  = date("Y-m-d");
+            $jam_sekarang  = date("H:i:s");
+            $sql1 = "UPDATE tbl_after_sales SET        
+        date_close_wo    ='" . $tgl_sekarang . "',
+        clockout    ='" . $jam_sekarang . "',
+        status     ='F' WHERE wo_no='" . $wo_no . "'";
 
-		return $this->db->affected_rows();
+            $this->db->query($sql1);
+
+        return $this->db->affected_rows();
     }
 }
 

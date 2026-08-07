@@ -205,30 +205,12 @@
         format: 'DD-MM-YYYY',
         date: moment()
     });
-    window.onload = function() {
-        tampilDetail();
-        //startRefresh();
-    }
 
     function startRefresh() {
         setTimeout(startRefresh, 1000);
         $.get('Part_masuk_npo', function(data) {
             $('#data-masuk').html(data);
         });
-    }
-
-    function fungsiKode(event) {
-        var status = event.target;
-        var hasil = status.value;
-        var kode_masuk = document.getElementById("kode_masuk").value;
-        if (hasil == 'PPU') {
-            kd = 'PTB-';
-            document.getElementById('id_masuk').value = kd + kode_masuk;
-        } else if (hasil == 'MPU') {
-            kd = 'MTB-';
-            document.getElementById('id_masuk').value = kd + kode_masuk;
-        }
-
     }
 
     function refresh() {
@@ -315,8 +297,8 @@
                     "&stok=" + stok +
                     "&harga=" + harga
             })
-            tampilDetail(kode_masuk);
             $('#modal_form').modal('hide');
+            tampilDetail(kode_masuk);
         });
 
     function tampilDetailCache() {

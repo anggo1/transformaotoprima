@@ -55,7 +55,7 @@ class Mod_part_keluar_po extends CI_Model
     {
         //$tgl   = explode('-', $tgl_po);
         //$tglnya = $tgl[2] . "-" . $tgl[1] . "-" . $tgl[0] . "";
-        $sql = "SELECT *
+        $sql = "SELECT a.*,c.kode_cus,c.nama_cus
         FROM tbl_wh_po_masuk AS a
         LEFT JOIN tbl_wh_detail_po_masuk AS b ON b.id_po_masuk=a.id_po_masuk
         LEFT JOIN tbl_wh_customer AS c ON c.kode_cus=a.customer
@@ -120,7 +120,7 @@ class Mod_part_keluar_po extends CI_Model
         //$id = md5(DATE('ymdhms') . rand());
         $idlokasi = $this->session->userdata['lokasi'];
 
-        $no_po = $this->input->post('no_po');
+        $id_po_masuk = $this->input->post('id_po_masuk');
         $no_part = $this->input->post('no_part');
         $nama_part = $this->input->post('nama_part');
         $jumlah = $this->input->post('jumlah');
@@ -156,7 +156,7 @@ class Mod_part_keluar_po extends CI_Model
         foreach ($no_part as $key => $value) {
             $data[]  = array(
                 'kode_keluar' => $kode_keluar,
-                'no_po' => $no_po,
+                'id_po_masuk' => $id_po_masuk,
                 'no_part' => $no_part[$key],
                 'nama_part' => isset($nama_part[$key]) ? $nama_part[$key] : null,
                 'jumlah' => isset($jumlah[$key]) ? $jumlah[$key] : null,
@@ -174,17 +174,7 @@ class Mod_part_keluar_po extends CI_Model
         $this->db->select('a.*,b.*', FALSE);
         $this->db->from('tbl_wh_part_keluar_po as a');
         $this->db->join('tbl_wh_detail_part_keluar_po as b', 'b.kode_keluar=a.kode_keluar', 'left');
-        $this->db->where('a.kode_keluar', $id);
-        $query_result = $this->db->get();
-        return $data = $query_result->result();
-    }
-    function select_by_id2($id)
-    {
-        $this->db->select('a.*,b.*,c.*', FALSE);
-        $this->db->from('tbl_wh_part_masuk as a');
-        $this->db->join('tbl_wh_detail_part_masuk as b', 'b.id_masuk=a.id_masuk', 'left');
-        $this->db->join('tbl_wh_supplier as c', 'c.kode_sup=a.kode_sup', 'left');
-        $this->db->where('a.id_masuk', $id);
+        $this->db->where('a.no_po', $id);
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
@@ -194,7 +184,7 @@ class Mod_part_keluar_po extends CI_Model
         $this->db->from('tbl_wh_detail_part_masuk as a');
         $this->db->join('tbl_wh_barang as b', 'b.no_part=a.no_part', 'left');
         $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=b.satuan', 'left');
-        $this->db->where('a.id_masuk', $id);
+        $this->db->where('a.no_po', $id);
         $this->db->order_by('a.id', 'ASC');
 
         $query_result = $this->db->get();

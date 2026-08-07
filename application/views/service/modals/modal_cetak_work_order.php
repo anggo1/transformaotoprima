@@ -221,11 +221,11 @@
                 <th>
                   <div align="left">: <?php echo $c->nama_cus; ?></div>
                 </th>
-                <th width="138">&nbsp;</th>
-                <th width="513">
+                <th width="198">&nbsp;</th>
+                <th width="273">
                   <div align="left"><?php echo  $apl1->status; ?></div>
                 </th>
-                <th width="71">&nbsp;</th>
+                <th width="221">&nbsp;</th>
               </tr>
               <tr>
                 <th>
@@ -284,8 +284,8 @@
                 <th>&nbsp;</th>
               </tr>
               <tr>
-                <th width="185" height="19">&nbsp;</th>
-                <th width="489">&nbsp;</th>
+                <th width="179" height="19">&nbsp;</th>
+                <th width="467">&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>

@@ -446,6 +446,12 @@ $(document).on("click", ".process-work-order", function() {
         }
     });
 })
+    $('#modal-operation').on('hidden.bs.modal', function() {
+    if ($.fn.DataTable.isDataTable('#table-operation')) {
+        $('#table-operation').DataTable().destroy();
+        $('#table-operation tbody').empty();
+    }
+});
 //$(document).ready(function() {
 function panggilTabel() {
     //datatables

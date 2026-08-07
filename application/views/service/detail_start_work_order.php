@@ -46,11 +46,30 @@
         </tbody>
         <tfoot></tfoot>
     </table>
-    <button class="btn btn-xl bg-gradient-red hapus-work-order" title="Edit" data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-stop"></i> Finish
+
+    <?php
+$hasStatusF = false;
+foreach ($dataDetail as $f) {
+    if ($f->status != 'F') {
+        $hasStatusF = true;
+        break; // Stop perulangan jika sudah ketemu satu
+    }
+}
+?>
+
+<?php if ($hasStatusF): ?>
+    <button class="btn btn-xl bg-gradient-red hapus-work-order" title="Finish" id="btnAksi" data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-stop"></i> Finish
                 </button>
+<?php endif; ?>
+
 </div>
 
 <script language="javascript">
+    if (!list-po.includes('F')) {
+        btn.style.display = 'none'; // Sembunyikan tombol
+    }
+
+
 var MyTable = $('#list-po').dataTable({
     "responsive": false,
     "paging": false,
