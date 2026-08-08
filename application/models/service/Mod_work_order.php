@@ -132,6 +132,16 @@ $this->db->group_end(); // Tutup kurung utama
 
         return $data->result();
     }
+    function select_mekanik($nip)
+    {
+        $this->db->select('nip, nama_depan, nama_belakang');
+        $this->db->from('tbl_hrd_pegawai');
+        //$this->db->where('nip', $nip);
+
+        $data = $this->db->get();
+
+        return $data->result();
+    }
     function select_customer($kode_cus)
     {
         $this->db->select('*');

@@ -2,7 +2,6 @@
 			if (!empty($dataCus)) {
 			foreach ($dataCus as $c)
                 foreach ($dataSa as $s)  {{}}} ?>
-<div class="card-body">
     <div class="row">
         <div class="col-lg-8">
             <div class="card-header card-dark card-outline">
@@ -79,7 +78,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Hours</label>
+                            <label class="col-sm-12 col-form-label">Hours</label>
                             <div class="col-sm-12 input-group">
                                 <input type="text" name="hours" id="hours" value="" class="form-control"
                                     placeholder="Hours">
@@ -89,7 +88,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="col-sm-4 col-form-label">Type Of Work</label>
+                            <label class="col-sm-12 col-form-label">Type Of Work</label>
                             <div class="col-sm-12 input-group">
                                 <input type="text" name="type_of_work" id="type_of_work" value="" class="form-control"
                                     placeholder="Type Of Work">
@@ -126,10 +125,8 @@
             </form>
         </div>
 
-
         <div id="data-proses-mechanic"></div>
     </div>
-</div>
 
 
 <div class="modal fade" id="modal-operation">

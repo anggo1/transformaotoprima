@@ -238,7 +238,7 @@ function add_pegawai() {
 	$('.modal-title').text('Penambahan Data Pegawai'); // Set Title to Bootstrap modal title
 }
 
-function edit_pegawai(nip) {
+function edit_pegawai(id) {
 	save_method = 'update';
 	$('#form')[0].reset(); // reset form on modals
 	$('.form-group').removeClass('has-error'); // clear error class
@@ -246,7 +246,7 @@ function edit_pegawai(nip) {
 
 	//Ajax Load data from ajax
 	$.ajax({
-		url: "<?php echo site_url('Pegawai/editpegawai') ?>/" + nip,
+		url: "<?php echo site_url('Pegawai/editpegawai') ?>/" + id,
 		type: "GET",
 		dataType: "JSON",
 		success: function(data) {
@@ -297,9 +297,9 @@ function save() {
 	var url;
 
 	if (save_method == 'add') {
-		url = "<?php echo site_url('pegawai/insert') ?>";
+		url = "<?php echo site_url('Pegawai/insert') ?>";
 	} else {
-		url = "<?php echo site_url('pegawai/update') ?>";
+		url = "<?php echo site_url('Pegawai/update') ?>";
 	}
 
 	// ajax adding data to database
@@ -575,14 +575,14 @@ function batal() {
 																	<div class="col-sm-4">
 																		<div class="form-group">
 																			<label>Berat</label>
-																			<input type="text" class="form-control"
+																			<input type="text" class="form-control" name="berat"
 																				placeholder="Berat ...">
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
 																		<div class="form-group">
 																			<label>Gol Darah</label>
-																			<input type="text" class="form-control"
+																			<input type="text" class="form-control" name="darah"
 																				placeholder="Gol Darah ...">
 																		</div>
 																	</div>

@@ -166,6 +166,7 @@ class WorkOrder extends MY_Controller
 		$data['dataDetail'] = $this->Mod_work_order->select_operation_detail($wo_no);
 		$this->load->view('service/detail_work_order', $data);
 	}
+
     public function tambahLabor()
     {
         $this->form_validation->set_rules('nik', 'NIK', 'trim|required');
