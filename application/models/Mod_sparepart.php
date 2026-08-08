@@ -181,7 +181,6 @@ class Mod_sparepart extends CI_Model
         id_part   ='',
         no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
@@ -196,7 +195,6 @@ class Mod_sparepart extends CI_Model
         id_part   ='',
         no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
@@ -211,7 +209,6 @@ class Mod_sparepart extends CI_Model
         id_part   ='',
         no_part     ='".$data['no_part']."',
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
@@ -239,7 +236,6 @@ class Mod_sparepart extends CI_Model
         if($idlokasi=='Cibitung'){
         $sql = "UPDATE tbl_wh_barang SET
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
@@ -253,7 +249,6 @@ class Mod_sparepart extends CI_Model
         }if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
@@ -267,7 +262,6 @@ class Mod_sparepart extends CI_Model
         }if($idlokasi=='Surabaya'){
         $sql = "UPDATE tbl_wh_barang SET
         nama_part   ='".$data['nama_part']."',
-        nama_part_e ='".$data['nama_part_e']."',
         satuan      ='".$data['satuan']."',
         kelompok    ='".$data['kelompok']."',
         type        ='".$data['type']."',
