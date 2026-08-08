@@ -93,7 +93,6 @@ class PartKeluarPo extends MY_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->input->post();
 			$id_po_masuk = $this->input->post('id_po_masuk');
-			$id = json_encode($id_po_masuk);
 			$data = array(
 				'kode_keluar'  	=> $kode_keluar,
 				'id_po_masuk'  	=> $id_po_masuk,
@@ -192,6 +191,6 @@ class PartKeluarPo extends MY_Controller
 		$data['dataKeluar'] = $this->Mod_part_keluar_po->select_by_id($id_po_masuk);
 		$data['detailKeluar'] = $this->Mod_part_keluar_po->select_detail_cetak($id_po_masuk);
 
-		echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_po_bon', 'cetak-keluar', $data, ' modal-xl');
+		echo show_my_print('warehouse/modals/modal_cetak_faktur_po', 'cetak-bon-keluar', $data, ' modal-xl');
 	}
 }

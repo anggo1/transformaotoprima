@@ -18,9 +18,6 @@ table.dataTable td {
 						<div class="text-right">
 							<button type="button" class="btn btn-sm btn-outline-primary" onclick="add_pegawai()"
 								title="Add Data"><i class="fas fa-plus"></i> Add</button>
-							<a href="<?php echo base_url('pegawai/download'); ?>" type="button"
-								class="btn btn-sm btn-outline-info" id="dwn_pegawai" title="Download"><i
-									class="fas fa-download"></i> Download</a>
 						</div>
 					</div>
 					<!-- /.card-header -->

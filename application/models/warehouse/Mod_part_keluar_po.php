@@ -171,20 +171,22 @@ class Mod_part_keluar_po extends CI_Model
     }
     function select_by_id($id)
     {
-        $this->db->select('a.*,b.*', FALSE);
+        $this->db->select('a.*,b.*,c.*,d.kode_pesan,d.tgl_po', FALSE);
         $this->db->from('tbl_wh_part_keluar_po as a');
         $this->db->join('tbl_wh_detail_part_keluar_po as b', 'b.kode_keluar=a.kode_keluar', 'left');
-        $this->db->where('a.no_po', $id);
+        $this->db->join('tbl_wh_customer as c', 'c.kode_cus=a.kode_cus', 'left');
+        $this->db->join('tbl_wh_po_masuk as d', 'd.id_po_masuk=a.id_po_masuk', 'left');
+        $this->db->where('a.id_po_masuk', $id);
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
     function select_detail_cetak($id)
     {
         $this->db->select('a.*,b.*,c.satuan AS nama_satuan', FALSE);
-        $this->db->from('tbl_wh_detail_part_masuk as a');
+        $this->db->from('tbl_wh_detail_part_keluar_po as a');
         $this->db->join('tbl_wh_barang as b', 'b.no_part=a.no_part', 'left');
         $this->db->join('tbl_wh_satuan as c', 'c.id_satuan=b.satuan', 'left');
-        $this->db->where('a.no_po', $id);
+        $this->db->where('a.id_po_masuk', $id);
         $this->db->order_by('a.id', 'ASC');
 
         $query_result = $this->db->get();

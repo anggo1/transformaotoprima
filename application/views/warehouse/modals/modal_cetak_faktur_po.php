@@ -194,7 +194,7 @@
             <thead>
               <tr>
                 <th colspan="2">
-                  <font size="4">SURAT JALAN</font>
+                  <font size="4">INVOICE</font>
                 </th>
                 <th>&nbsp;</th>
                 <th>
@@ -318,11 +318,14 @@
        <th width="14%">Part No</th>
        <th width="28%">Part Name</th>
        <th width="13%">Unit</th>
+       <th width="15%">Price</th>
        <th width="4%">Qty</th>
+       <th width="22%">Total</th>
        </tr>
      <?php
-       $no=0;
+       $no=0; $grandtotal=0;
        foreach ($detailKeluar as $x): 
+        $grandtotal += $x->harga * $x->jumlah;
 								  
 	     $no++;
 						?>
@@ -331,9 +334,15 @@
         <td><?php echo $x->no_part ?></td>
         <td><?php echo $x->nama_part ?></td>
         <td><?php echo $x->satuan ?></td>
+        <td align="right"><?php echo number_format($x->harga) ?></td>
         <td align="center"><?php echo $x->jumlah ?></td>
-        </tr>
+        <td align="right"><?php echo number_format($x->harga * $x->jumlah) ?></td>
+      </tr>
       <?php  endforeach ?>
+      <tr>
+        <td colspan="6" align="right">Grand Total</td>
+        <td align="right"><?php echo number_format($grandtotal) ?></td>
+      </tr>
      
    </thead>
    <tbody>

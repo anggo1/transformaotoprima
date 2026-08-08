@@ -123,7 +123,6 @@ font-family:Georgia, "Times New Roman", Times, serif;
        <th>No Part</th>
        <th>Nama Part</th>
        <th>Jumlah</th>
-       <th>Keterangan</th>
        </tr>
      <?php
        $no=0;
@@ -136,7 +135,6 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th><?php echo $x->no_part ?></th>
         <th><?php echo $x->nama_part ?></th>
         <th><?php echo $x->jumlah ?></th>
-        <th><?php echo $x->ket_part ?></th>
       </tr><?php  endforeach ?>
       </tr>
      

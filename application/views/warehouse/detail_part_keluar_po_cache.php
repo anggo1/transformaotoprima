@@ -43,7 +43,7 @@
                 <td><?php echo $stok; ?></td>
                 <td><?php echo number_format($s->harga); ?></td>
             <td><?php echo $s->jumlah ?></td>
-            <td><?php if(empty($s->hrg_part)) { echo number_format($harga * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>
+            <td><?php if(!empty($s->harga)) { echo number_format($s->harga * $s->jumlah);} ?></td>
         </tr>
         <?php
             $no++;

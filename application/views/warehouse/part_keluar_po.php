@@ -44,7 +44,7 @@
 									<label class="col-sm-2 col-form-label">No PO</label>
 									<div class="col-sm-1">
 										<input type="text" name="id_po_masuk" id="id_po_masuk" class="form-control" placeholder="Surat Jalan Barang">
-										</div>
+									</div>
 									<div class="col-sm-3">
 										<input type="text" name="kode_po" onclick="showPo()" id="kode_po" data-toggle="modal" data-target="#modal_po" class="form-control" placeholder="Kode Purchase Order">
 									</div>
@@ -62,8 +62,8 @@
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Customer</label>
 									<div class="col-sm-4">
-										<input type="hidden" name="nama_cus" id="nama_cus" class="form-control" placeholder="Customer">
-										<input type="text" name="kode_cus" id="kode_cus" class="form-control" placeholder="Kode Customer">
+										<input type="text" name="nama_cus" id="nama_cus" class="form-control" placeholder="Customer">
+										<input type="hidden" name="kode_cus" id="kode_cus" class="form-control" placeholder="Kode Customer">
 									</div>
 									<label class="col-sm-2 col-form-label">Keterangan</label>
 									<div class="col-sm-4">
@@ -89,8 +89,8 @@
 							</form>
 						</div>
 					</div>
+					<div id="modal-po-bon"></div>
 					<div id="modal-keluar"></div>
-					<div id="cetak-bon-keluar"></div>
 				</div>
 			</div>
 			<div class="modal fade" id="modal_po" role="dialog">
@@ -130,11 +130,6 @@
 	}
 
 
-	function nonPO() {
-		document.getElementById("fndisc").hidden = true;
-		document.getElementById("fndisc2").hidden = false;
-	}
-
 	function showPart(id_po_masuk, kode_po, nama_cus, kode_cus, kode_pesan, keterangan) {
 		//var id_po_masuk = document.getElementById("id_po_masuk").value;
 		//var id_po_masuk=document.getElementById("showPart");
@@ -156,6 +151,7 @@
 			}
 		});
 	}
+
 	function showPo() {
 		//var tgl_po = document.getElementById("tgl_po").value;
 		$.get('<?php echo base_url('PartKeluarPo/showPo'); ?>',
@@ -166,8 +162,8 @@
 			})
 	}
 
-	
-	$('#formpartkeluarPo').submit(function(e) {		
+
+	$('#formpartkeluarPo').submit(function(e) {
 		var data = $(this).serialize();
 		var id_po_masuk = document.getElementById('id_po_masuk').value;
 		//var data = $('td').find('input[name="qty_masuk[]"]').val();
@@ -212,6 +208,8 @@
 					$('#kode_pesan').attr('readonly', 'readonly');
 					$('#nama_cus').attr('readonly', 'readonly');
 					$('#keterangan').attr('readonly', 'readonly');
+					$('#kode_cus').attr('readonly', 'readonly');
+					$('#kode_po').attr('readonly', 'readonly');
 					Swal.fire({
 						position: 'center',
 						icon: 'success',
@@ -224,6 +222,7 @@
 
 		e.preventDefault();
 	});
+
 	function tampilDetail(id_po_masuk) {
 		//var out = jQuery.parseJSON(data);
 		var id_po_masuk = document.getElementById('id_po_masuk').value;
@@ -248,13 +247,12 @@
 			data: 'id_po_masuk=' + id_po_masuk,
 			success: function(hasil) {
 				MyTable.fnDestroy();
-				$('#data-keluar-cache').html(hasil);
+				$('#data_po_detail').html(hasil);
 				refresh();
 			}
 		});
 	}
 
-	function cetakPo(datakode) {}
 	$(document).on("click", ".cetak-bon-keluar", function() {
 		var id_po_masuk = document.getElementById('id_po_masuk').value;
 		$.ajax({
@@ -264,7 +262,7 @@
 			})
 			.done(function(data) {
 				// $('#part-pk').modal('hide');
-				$('#modal-pk-bon').html(data);
+				$('#modal-po-bon').html(data);
 				$('#cetak-bon-keluar').modal('show');
 			})
 	})

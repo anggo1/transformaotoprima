@@ -136,7 +136,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th><?php echo $x->no_part ?></th>
         <th><?php echo $x->nama_part ?></th>
         <th><?php echo $x->jumlah ?></th>
-        <th><?php echo $x->ket_part ?></th>
+        <th><?php echo $x->keterangan ?></th>
       </tr><?php  endforeach ?>
       </tr>
      
