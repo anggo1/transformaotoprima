@@ -1,6 +1,4 @@
 <div class="col-12 ">
-<button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-ppu"><i class="fa fa-id-card-alt"></i>  &nbsp;P P U</button>
-    <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-barang-mpu"><i class="fa fa-id-card-alt"></i>  &nbsp;M P U</button>
     <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-data1">
             <thead>

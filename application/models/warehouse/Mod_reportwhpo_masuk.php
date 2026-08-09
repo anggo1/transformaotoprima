@@ -75,11 +75,14 @@ class Mod_reportwhpo_masuk extends CI_Model
 	
     function cari_po($ttmp1 =null,$ttmp2=null)
     {
-		$this->db->select('tbl_wh_po_masuk.*', FALSE);
-		$this->db->select('tbl_wh_customer.*', FALSE);
-        $this->db->from('tbl_wh_po_masuk');
-        $this->db->join('tbl_wh_customer','tbl_wh_customer.kode_cus=tbl_wh_po_masuk.customer','left');
-		$this->db->where('tbl_wh_po_masuk.tgl_po BETWEEN "'.date($ttmp1).'"AND"'.date($ttmp2).'"');
+		$this->db->select('a.id_po_masuk,a.kode_po,a.tgl_po,a.kode_pesan,a.keterangan', FALSE);
+		$this->db->select('b.kode_cus,b.nama_cus', FALSE);
+		$this->db->select('c.no_part,c.nama_part,c.satuan,c.harga,c.jumlah,c.remark', FALSE);
+        $this->db->from('tbl_wh_po_masuk AS a');
+        $this->db->join('tbl_wh_customer AS b','b.kode_cus=a.customer','left');
+        $this->db->join('tbl_wh_detail_po_masuk AS c','c.id_po_masuk=a.id_po_masuk','left');
+		$this->db->where('a.tgl_po BETWEEN "'.date($ttmp1).'"AND"'.date($ttmp2).'"');
+        $this->db->where('a.status_po','Y');
 
 		
         $query_result = $this->db->get();

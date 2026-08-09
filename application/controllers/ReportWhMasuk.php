@@ -10,7 +10,7 @@ class ReportWhMasuk extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('warehouse/Mod_reportwhpo', 'Mod_menu'));
+        $this->load->model(array('warehouse/Mod_reportwh', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
     }
@@ -22,13 +22,13 @@ class ReportWhMasuk extends MY_Controller
         $this->load->helper('url');
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
-        $get_id = $this->Mod_reportwhpo->get_by_nama($link);
+        $get_id = $this->Mod_reportwh->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
             $row1[] = $idnye->id_submenu;
             $id_sub=$idnye->id_submenu;
         }
-        $data['viewLevel']  = $this->Mod_reportwhpo->select_by_level($idlevel, $id_sub);
+        $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $data['menu'] = $this->Mod_menu->getAll()->result();
         $this->template->load('layoutbackend', 'warehouse/report_wh/part_masuk', $data);
@@ -38,13 +38,14 @@ class ReportWhMasuk extends MY_Controller
         $this->load->helper('url');
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
-        $get_id = $this->Mod_reportwhpo->get_by_nama($link);
+        $idlokasi = $this->session->userdata['lokasi'];
+        $get_id = $this->Mod_reportwh->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
             $row1[] = $idnye->id_submenu;
             $id_sub=$idnye->id_submenu;
         }
-        $data['viewLevel']  = $this->Mod_reportwhpo->select_by_level($idlevel, $id_sub);
+        $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $status_po 				= $_GET['status_po'];
         $date1 				= $_GET['date1'];
@@ -54,7 +55,7 @@ class ReportWhMasuk extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk($ttmp1,$ttmp2,$status_po); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk($ttmp1,$ttmp2,$status_po); 
         if($status_po=='Y'){
         $this->load->view('warehouse/report_wh/data_part_masuk', $data);
         }else{
@@ -69,7 +70,7 @@ class ReportWhMasuk extends MY_Controller
 		$ttmp1 = $tgl1[2]."-".$tgl1[1]."-".$tgl1[0]."";
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-        $data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk($ttmp1,$ttmp2,$status_po);
+        $data['dataMasuk'] = $this->Mod_reportwh->cari_masuk($ttmp1,$ttmp2,$status_po);
         $data['tgl_awal'] = $date1;
         $data['tgl_akhir'] = $date2;
         $data['sub_status'] = "GLOBAL";
@@ -89,7 +90,7 @@ class ReportWhMasuk extends MY_Controller
 
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk_status($ttmp1,$ttmp2,$status_po,$status); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk_status($ttmp1,$ttmp2,$status_po,$status); 
         $data['tgl_awal'] = $date1;
         $data['tgl_akhir'] = $date2;
         $data['sub_status'] = $status;
@@ -103,15 +104,16 @@ class ReportWhMasuk extends MY_Controller
         $this->load->helper('url');
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
-        $get_id = $this->Mod_reportwhpo->get_by_nama($link);
+        $get_id = $this->Mod_reportwh->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
             $row1[] = $idnye->id_submenu;
             $id_sub=$idnye->id_submenu;
         }
-        $data['viewLevel']  = $this->Mod_reportwhpo->select_by_level($idlevel, $id_sub);
+        $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $status_po 				= $_GET['status_po'];
+        $lokasi 				= $_GET['lokasi'];
         $status 				= $_GET['status'];
         $date1 				= $_GET['date1'];
         $date2 				= $_GET['date2'];
@@ -120,7 +122,7 @@ class ReportWhMasuk extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk_status($ttmp1,$ttmp2,$status_po,$status); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk_status($ttmp1,$ttmp2,$status_po,$status,$lokasi); 
         if($status_po=='Y'){
         $this->load->view('warehouse/report_wh/data_part_masuk_po', $data);
         }else{
@@ -136,7 +138,7 @@ class ReportWhMasuk extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk_po($ttmp1,$ttmp2,$status_po); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk_po($ttmp1,$ttmp2,$status_po); 
         $this->load->view('warehouse/report_wh/data_part_masuk_po', $data);
 	}
     
@@ -149,7 +151,7 @@ class ReportWhMasuk extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_masuk_npo($ttmp1,$ttmp2,$status_po); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk_npo($ttmp1,$ttmp2,$status_po); 
         $this->load->view('warehouse/report_wh/data_part_masuk_npo', $data);
 	}
     public function listDetailMasuk() {
@@ -165,7 +167,7 @@ class ReportWhMasuk extends MY_Controller
         $data['tgl_akhir'] = $date2;
         $data['status'] = $status;
         $data['status_po'] = $status_po;
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status); 
         if($status_po=='Y'){
         $this->load->view('warehouse/report_wh/data_detail_part_masuk_po', $data);
         }else{
@@ -185,7 +187,7 @@ class ReportWhMasuk extends MY_Controller
         $data['tgl_akhir'] = $date2;
         $data['status'] = $status;
         $data['status_po'] = $status_po;
-		$data['dataMasuk'] = $this->Mod_reportwhpo->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status); 
         if($status_po=='Y'){
             echo show_my_print('warehouse/modals/modal_cetak_part_masuk_detail_po', 'cetak-masuk-detail', $data, ' modal-xl');
         }else{
@@ -195,8 +197,8 @@ class ReportWhMasuk extends MY_Controller
     public function cetakBon()
 	{
 		$id 				= $_POST['id'];
-		$data['dataPk'] = $this->Mod_reportwhpo->cetak_pk_bon($id);
-		$data['dataDetail'] = $this->Mod_reportwhpo->cetak_bon($id);
+		$data['dataPk'] = $this->Mod_reportwh->cetak_pk_bon($id);
+		$data['dataDetail'] = $this->Mod_reportwh->cetak_bon($id);
 
 		echo show_my_print('warehouse/modals/modal_cetak_bon', 'cetak-bon', $data, ' modal-xl');
 	}
@@ -204,7 +206,7 @@ class ReportWhMasuk extends MY_Controller
     {
         $id = $_POST['id'];
         $data_status = $_POST['status'];
-        $result = $this->Mod_reportwhpo->deleteMasuk($id,$data_status);
+        $result = $this->Mod_reportwh->deleteMasuk($id,$data_status);
 
         if ($result > 0) {
             $out['status'] = '';

@@ -10,7 +10,7 @@ class ReportWhPerbarang extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('warehouse/Mod_reportwhpo', 'Mod_menu'));
+        $this->load->model(array('warehouse/Mod_reportwh', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
     }
@@ -33,14 +33,14 @@ class ReportWhPerbarang extends MY_Controller
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
         $no_part        = trim($_GET['no_part']);
-		$data['dataPart'] = $this->Mod_reportwhpo->cari_part($no_part,$ttmp1,$ttmp2); 
+		$data['dataPart'] = $this->Mod_reportwh->cari_part($no_part,$ttmp1,$ttmp2); 
         $this->load->view('warehouse/report_wh/data_perbarang', $data);
 	}
     public function ajax_list()
 	{
 		ini_set('memory_limit', '512M');
 		set_time_limit(3600);
-		$list = $this->Mod_reportwhpo->get_datatables();
+		$list = $this->Mod_reportwh->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $pel) {
@@ -54,8 +54,8 @@ class ReportWhPerbarang extends MY_Controller
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->Mod_reportwhpo->count_all(),
-			"recordsFiltered" => $this->Mod_reportwhpo->count_filtered(),
+			"recordsTotal" => $this->Mod_reportwh->count_all(),
+			"recordsFiltered" => $this->Mod_reportwh->count_filtered(),
 			"data" => $data,
 		);
 		//output to json format

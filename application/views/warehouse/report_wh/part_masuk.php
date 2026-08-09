@@ -28,6 +28,15 @@
                                                             <option value="N">Non PO</option>
                                                         </select>
 									</div>
+                                    <label class="col-sm-1 col-form-label">Lokasi</label>
+									<div class="col-sm-3">
+									<select name="lokasi" id="lokasi" class="form-control" required>
+                                                            <option value="">Pilih lokasi...</option>
+                                                            <option value="Cibitung">Cibitung</option>
+                                                            <option value="Surabaya">Surabaya</option>
+                                                            <option value="Jakarta">Jakarta</option>
+                                                        </select>
+									</div>
 									</div>
 
 								<div class="form-group row">
@@ -168,6 +177,7 @@
 	
 $(document).on("click", ".list-barang-ppu", function() {
     var status_po = document.getElementById("status_po").value;
+    var lokasi = document.getElementById("lokasi").value;
     var date1 = document.getElementById("tgl_awal").value;
     var date2 = document.getElementById("tgl_akhir").value;
     var status = "PPU";
@@ -183,8 +193,8 @@ Swal.fire({
 } else{
     $.ajax({
         type: 'GET',
-		url: '<?php echo base_url('ReportWhMasuk/listMasukStatus'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
-		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
+		url: '<?php echo base_url('ReportWhMasuk/listMasukStatus'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status+'&lokasi=' +lokasi,
+		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status+'&lokasi=' +lokasi,
         success: function(hasil) {
 			$('#data-masuk').html(hasil);
         }
@@ -221,6 +231,7 @@ Swal.fire({
 
  // Global Non PO	
  $(document).on("click", ".list-barang-npo", function() {
+    var lokasi = document.getElementById("lokasi").value;
     var status_po = document.getElementById("status_po").value;
     var date1 = document.getElementById("tgl_awal").value;
     var date2 = document.getElementById("tgl_akhir").value;
@@ -272,62 +283,6 @@ Swal.fire({
 }
 })
 //** Format Cetak dengan sub bagian */
-$(document).on("click", ".cetak-masuk-ppu", function() {
-    
-    var status_po = document.getElementById("status_po").value;
-    var date1 = document.getElementById("tgl_awal").value;
-    var date2 = document.getElementById("tgl_akhir").value;
-    var status = "PPU";
-    
-if (status_po == ""){
-Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Status Belum ditentukan',
-                    showConfirmButton: false,
-                    timer: 900
-                })
-} else{
-    $.ajax({
-        type: 'GET',
-		url: '<?php echo base_url('ReportWhMasuk/listMasukStatusCetak'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
-		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po,
-        success: function(hasil) {
-                $('#modal-cetak-global').html(hasil);
-                $('#cetak-masuk').modal('show');
-        }
-    });
-}
-})
-$(document).on("click", ".cetak-masuk-mpu", function() {
-    
-    var status_po = document.getElementById("status_po").value;
-    var date1 = document.getElementById("tgl_awal").value;
-    var date2 = document.getElementById("tgl_akhir").value;
-    var status = "MPU";
-    
-if (status_po == ""){
-Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Status Belum ditentukan',
-                    showConfirmButton: false,
-                    timer: 900
-                })
-} else{
-    $.ajax({
-        type: 'GET',
-		url: '<?php echo base_url('ReportWhMasuk/listMasukStatusCetak'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
-		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po,
-        success: function(hasil) {
-                $('#modal-cetak-global').html(hasil);
-                $('#cetak-masuk').modal('show');
-        }
-    });
-}
-})
-// Global Detail Masuk
-	
 $(document).on("click", ".list-detail-barang", function() {
     var status_po = document.getElementById("status_po").value;
     var date1 = document.getElementById("tgl_awal").value;

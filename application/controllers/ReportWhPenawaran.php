@@ -100,19 +100,4 @@ class ReportWhPenawaran extends MY_Controller
 
 		echo show_my_print('warehouse/modals/modal_cetak_estimasi_penawaran_internal', 'cetak-po-int', $data, ' modal-xl');
 	}
-	public function deletePo()
-    {
-        $id = $_POST['id'];
-        $result = $this->Mod_reportwhpenawaran->deletePo($id);
-
-        if ($result > 0) {
-            //$out['datakode']=$kodeBaru;
-            $out['status'] = '';
-            $out['msg'] = show_del_msg('Deleted', '20px');
-        } else {
-            $out['status'] = '';
-            $out['msg'] = show_err_msg('Filed !', '20px');
-        }
-        echo json_encode($out);
-    }
 }
