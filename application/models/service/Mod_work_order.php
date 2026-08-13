@@ -330,9 +330,11 @@ $this->db->group_end(); // Tutup kurung utama
         return $this->db->affected_rows();
     }
 
-    function end_work($id_detail, $no_work_order, $total)
+    function end_work($id_detail, $no_work_order,$wo_no, $total)
     {
         $tgl_jam_sekarang  = date("Y-m-d H:i:s");
+        $tgl_sekarang  = date("Y-m-d");
+        $jam_sekarang  = date("H:i:s");
         $waktu_input = '';
         $ci_kons = get_instance();
         $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
@@ -344,7 +346,32 @@ $this->db->group_end(); // Tutup kurung utama
         total_time    ='" . $waktu_input . "',
         status     ='F' WHERE id_detail='" . $id_detail . "'";
 
+        $cek_data = $this->db->get_where('tbl_after_sales_detail_wo', [
+            'wo_no'  => $wo_no,
+            'status' => 'F'
+        ]);
+
+        // 2. Jika data ditemukan (lebih dari 0 baris)
+        if ($cek_data->num_rows() == 0) {
+
+            // 3. Siapkan data yang akan diubah
+            $data_update = [
+                'date_close_wo' => $tgl_sekarang,
+                'clockout'      => $jam_sekarang,
+                'status'        => 'F'
+            ];
+
+            // 4. Lakukan proses UPDATE menggunakan Query Builder yang aman dari SQL Injection
+            $this->db->where('wo_no', $no_work_order);
+            $this->db->update('tbl_after_sales', $data_update);
+        }
+        
         $this->db->query($sql2);
+        
+
+        
+
+        
 
         return $this->db->affected_rows();
     }
@@ -355,6 +382,8 @@ $this->db->group_end(); // Tutup kurung utama
         $ci_kons = get_instance();
         $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
         $hasil = $ci_kons->db->query($query)->row_array();
+        if (!empty($hasil)) {
+
         if (empty($hasil['total_pause'])) {
             $pause = 0;
         } else {
@@ -377,9 +406,9 @@ $this->db->group_end(); // Tutup kurung utama
         end_date    ='" . $tgl_jam_sekarang . "',
         total_time    ='" . $waktu_input . "',
         status     ='F' WHERE status !='F'";
-
         $this->db->query($sql);
 
+        }
             $tgl_sekarang  = date("Y-m-d");
             $jam_sekarang  = date("H:i:s");
             $sql1 = "UPDATE tbl_after_sales SET        

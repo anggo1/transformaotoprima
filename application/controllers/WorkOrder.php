@@ -357,6 +357,7 @@ class WorkOrder extends MY_Controller
 	{
         $id_detail = $_POST['id_detail'];
         $no_work_order = $_POST['no_work_order'];
+        $wo_no = $_POST['wo_no'];
 	    $tgl_jam_sekarang  = date("Y-m-d H:i:s");
 	    $tgl_jam_mulai  = $_POST['start_date'];
 
@@ -368,7 +369,7 @@ class WorkOrder extends MY_Controller
         $menit = $interval->format('%i');
         $total=$jam.'.'.$menit;
         
-		$data['dataPo'] = $this->Mod_work_order->end_work($id_detail,$no_work_order,$total);
+		$data['dataPo'] = $this->Mod_work_order->end_work($id_detail,$no_work_order,$wo_no,$total);
 	}
     public function finishWorkOrder()
 	{
