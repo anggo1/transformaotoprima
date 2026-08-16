@@ -34,7 +34,7 @@
                         onclick="Pause('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>', '<?php echo $s->start_date; ?>')">
                         Pause</button>
                     <button class="btn btn-xs btn-outline-danger complete-operation ion-android-stop"
-                        onclick="End('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>', '<?php echo $s->start_date; ?>')">
+                        onclick="End('<?php echo $s->id_detail; ?>', '<?php echo $s->spk; ?>', '<?php echo $s->wo_no; ?>','<?php echo $s->start_date; ?>')">
                         Complete</button>
                     <?php } if($s->status=='F') { echo 'Finish';}?>
                 </td>
@@ -58,9 +58,9 @@ foreach ($dataDetail as $f) {
 ?>
 
 <?php if ($hasStatusF): ?>
+<?php endif; ?>
     <button class="btn btn-xl bg-gradient-red hapus-work-order" title="Finish" id="btnAksi" data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-stop"></i> Finish
                 </button>
-<?php endif; ?>
 
 </div>
 
@@ -110,13 +110,14 @@ function Pause(id_detail, no_work_order, start_date) {
     });
 }
 
-function End(id_detail, no_work_order, start_date) {
+function End(id_detail, no_work_order, wo_no, start_date) {
     $.ajax({
         type: "POST",
         url: "<?php echo base_url('WorkOrder/EndWork')?>",
         data: {
             'id_detail': id_detail,
             'no_work_order': no_work_order,
+            'wo_no': wo_no,
             'start_date': start_date
         },
         success: function(response) {
