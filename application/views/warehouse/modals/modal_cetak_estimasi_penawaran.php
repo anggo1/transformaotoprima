@@ -294,7 +294,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
           $ppnnya = $k->ppn;
         
           $grand_total += $d->total_harga;
-          $ppn = $grand_total * $k->ppn / 100;
+          //$ppn = $grand_total * $k->ppn / 100;
 
           ?>
           <tr>

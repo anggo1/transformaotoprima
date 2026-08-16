@@ -233,7 +233,23 @@
 		var satuan = data[3];
 		var stok = data[4];
 		var harga = data[5];
-		selectPart(no_part, nama_part, satuan, stok, harga);
+		var tgl_keluar = document.formKeluar.tgl_keluar.value;
+		var id_keluar = document.formKeluar.id_keluar.value;
+
+		$.ajax({
+			method: 'POST',
+			url: '<?php echo base_url('Part_keluar/prosesDetailInput'); ?>',
+			data: "tgl_keluar=" + tgl_keluar +
+				"&id_keluar=" + id_keluar +
+				"&no_part=" + no_part +
+				"&nama_part=" + nama_part +
+				"&satuan=" + satuan +
+				"&stok=" + stok +
+				"&harga=" + harga
+		})
+
+		tampilDetail(id_keluar);
+		$('#modal_form').modal('hide');
 	});
 
 

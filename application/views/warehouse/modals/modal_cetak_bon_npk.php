@@ -76,7 +76,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
 }
     </style>
 <div id="printThis">
-<div class="alert bg-white"><?php foreach ($dataPk as $k){}?>
+<div class="alert bg-white"><?php if(!empty($dataPk)){ foreach ($dataPk as $k){}}?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0" bordercolor="#000000" style="border-collapse: collapse; position: relative; background-color:#000 border: 2px solid #000; border:double list-style-position: outside;	background-attachment: scroll;	background-repeat: repeat-x; font-family: arial; font-size: 13px;" >
   <thead>
                     <tr>
@@ -136,7 +136,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th><?php echo $x->no_part ?></th>
         <th><?php echo $x->nama_part ?></th>
         <th><?php echo $x->jumlah ?></th>
-        <th><?php echo $x->keterangan ?></th>
+        <th><?php echo $x->ket_part ?></th>
       </tr><?php  endforeach ?>
       </tr>
      
