@@ -1,3 +1,36 @@
+<style>
+<!-- HTML !-->
+<button class="button-88" role="button">Button 88</button>
+
+/* CSS */
+.button-88 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-88:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.button-88:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+    </style>
 <div class="col-12 ">
   
     <div class="table-responsive">
@@ -18,6 +51,7 @@
                     <th>Date Close</th>
                     <th>Status</th>
                     <th>Pembuat</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +74,12 @@
                         <td><?php echo tglIndoSedang($s->date_close_wo); ?></td>
                         <td><?php echo ($s->status == 'Y') ? 'Free' : 'Non Free'; ?></td>
                         <td><?php echo $s->pembuat; ?></td>
+                        <td>
+                        <button class="btn btn-xs bg-gradient-primary cetak-jobtime" id="cetakjobtime" title="Cetak Jobtime"
+                            data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-print"></i> Job Time</button>
+                        <button class="btn btn-xs bg-gradient-dark cetak-workshop" title="Cetak Workshop"
+                            data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-print"></i> Workshop
+                        </button></td>
 
                     </tr>
                 <?php
