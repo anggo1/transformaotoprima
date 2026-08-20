@@ -10,7 +10,7 @@ class ReportWhKeluar extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(array('warehouse/Mod_reportwhpo', 'Mod_menu'));
+        $this->load->model(array('warehouse/Mod_reportwh', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
     }
@@ -22,13 +22,13 @@ class ReportWhKeluar extends MY_Controller
         $this->load->helper('url');
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
-        $get_id = $this->Mod_reportwhpo->get_by_nama($link);
+        $get_id = $this->Mod_reportwh->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
             $row1[] = $idnye->id_submenu;
             $id_sub=$idnye->id_submenu;
         }
-        $data['viewLevel']  = $this->Mod_reportwhpo->select_by_level($idlevel, $id_sub);
+        $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $data['menu'] = $this->Mod_menu->getAll()->result();
         $this->template->load('layoutbackend', 'warehouse/report_wh/part_keluar', $data);
@@ -38,13 +38,13 @@ class ReportWhKeluar extends MY_Controller
         $this->load->helper('url');
         $link=$this->uri->segment(1);
         $idlevel = $this->session->userdata['id_level'];
-        $get_id = $this->Mod_reportwhpo->get_by_nama($link);
+        $get_id = $this->Mod_reportwh->get_by_nama($link);
         foreach ($get_id as $idnye){
             $row1 = array();
             $row1[] = $idnye->id_submenu;
             $id_sub=$idnye->id_submenu;
         }
-        $data['viewLevel']  = $this->Mod_reportwhpo->select_by_level($idlevel, $id_sub);
+        $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $status_po 				= $_GET['status_po'];
         $date1 				= $_GET['date1'];
@@ -55,7 +55,7 @@ class ReportWhKeluar extends MY_Controller
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
 
-		$data['dataKeluar'] = $this->Mod_reportwhpo->cari_keluar($status_po,$ttmp1,$ttmp2);
+		$data['dataKeluar'] = $this->Mod_reportwh->cari_keluar($status_po,$ttmp1,$ttmp2);
         if($status_po=="D"){
             $this->load->view('warehouse/report_wh/data_part_keluar_divisi', $data);
         }
@@ -76,7 +76,7 @@ class ReportWhKeluar extends MY_Controller
 
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['detailKeluar'] = $this->Mod_reportwhpo->cari_keluar_detail($status_po,$ttmp1,$ttmp2);
+		$data['detailKeluar'] = $this->Mod_reportwh->cari_keluar_detail($status_po,$ttmp1,$ttmp2);
         if($status_po=="D"){
             $this->load->view('warehouse/report_wh/data_part_keluar_divisi_detail', $data);
         }
@@ -97,7 +97,7 @@ class ReportWhKeluar extends MY_Controller
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
 
-		$data['dataKeluar'] = $this->Mod_reportwhpo->cari_keluar($status_po,$ttmp1,$ttmp2);
+		$data['dataKeluar'] = $this->Mod_reportwh->cari_keluar($status_po,$ttmp1,$ttmp2);
         if($status_po=="D"){
             echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_divisi', 'cetak-keluar-pk', $data, ' modal-xl');
         }
@@ -117,7 +117,7 @@ class ReportWhKeluar extends MY_Controller
 
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['detailKeluar'] = $this->Mod_reportwhpo->cari_keluar_detail($status_po,$ttmp1,$ttmp2);
+		$data['detailKeluar'] = $this->Mod_reportwh->cari_keluar_detail($status_po,$ttmp1,$ttmp2);
         if($status_po=="D"){
             echo show_my_print('warehouse/modals/modal_cetak_data_part_keluar_divisi_detail', 'cetak-keluar-pk-detail', $data, ' modal-xl');
         }
@@ -177,7 +177,7 @@ class ReportWhKeluar extends MY_Controller
     {
         $id = $_POST['id'];
         $data_status = $_POST['status'];
-        $result = $this->Mod_reportwhpo->deleteKeluar($id,$data_status);
+        $result = $this->Mod_reportwh->deleteKeluar($id,$data_status);
 
         if ($result > 0) {
             $out['status'] = '';
@@ -192,7 +192,7 @@ class ReportWhKeluar extends MY_Controller
     {
         $id = $_POST['id'];
         $data_status = $_POST['status'];
-        $result = $this->Mod_reportwhpo->deleteKeluarnon_pk($id,$data_status);
+        $result = $this->Mod_reportwh->deleteKeluarnon_pk($id,$data_status);
 
         if ($result > 0) {
             $out['status'] = '';

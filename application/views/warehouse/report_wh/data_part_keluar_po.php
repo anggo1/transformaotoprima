@@ -32,9 +32,6 @@ foreach ($dataKeluar as $s) {
                                         data-id="<?php echo $s->id_keluar; ?>" title="Cetak Bon"><i
                                             class="fas fa-print"></i> Bon</button>
                                 <?php foreach($viewLevel as $v) { } if ($v->delete_level =='Y') {?>
-                                    <button type="button" class="btn btn-xs bg-gradient-danger delete-detail" id="delete"
-                                        data-id="<?php echo $s->id_keluar; ?>" data-status="<?php echo $s->status; ?>" title="Delete Data"  data-toggle="modal" data-target="#hapusDetail"><i
-                                            class="fas fa-trash"></i> Delete</button>
                                     <?php } ?>
                                 </td>
                             </tr>

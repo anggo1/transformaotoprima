@@ -20,7 +20,7 @@ class Part_masuk extends MY_Controller
         $data['dataPo'] = $this->Mod_part_masuk->get_po();
         $data['dataSup'] = $this->Mod_part_masuk->get_sup();
         $data['dataKota'] = $this->Mod_part_masuk->get_kota();
-		$this->template->load('layoutbackend', 'warehouse/part_masuk',$data);
+		$this->template->load('layoutbackend', 'warehouse/part_masuk_po',$data);
 	}
 
 	public function cariKode($id)

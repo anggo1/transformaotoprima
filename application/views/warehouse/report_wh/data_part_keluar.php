@@ -12,6 +12,10 @@
                                 <th width="11%">No Bon</th>
                                 <th width="18%">Tujuan</th>
                                 <th width="38%">Keterangan</th>
+                                <th width="38%">No Part</th>
+                                <th width="38%">Nama Part</th>
+                                <th width="38%">Satuan</th>
+                                <th width="38%">Jumlah</th>
                                 <th width="13%" class="noprint">Aksi</th>
                             </tr>
                         </thead>
@@ -26,6 +30,10 @@ foreach ($dataKeluar as $s) {
                                 <td><?php echo $s->id_keluar; ?></td>
                                 <td><?php echo $s->tujuan; ?></td>
                                 <td><?php echo $s->keterangan; ?></td>
+                                <td><?php echo $s->no_part; ?></td>
+                                <td><?php echo $s->nama_part; ?></td>
+                                <td><?php echo $s->satuan; ?></td>
+                                <td><?php echo $s->jumlah; ?></td>
                                 <td class="noprint">
                                     <button type="button" class="btn btn-xs bg-gradient-blue cetak-keluar" id="cetak"
                                         data-id="<?php echo $s->id_keluar; ?>" title="Cetak Surat Jalan"><i
@@ -34,9 +42,6 @@ foreach ($dataKeluar as $s) {
                                         id="cetakBon" data-id="<?php echo $s->id_keluar; ?>" title="Cetak Bon"><i
                                             class="fas fa-print"></i> Bon</button>
                                 <?php foreach($viewLevel as $v) { } if ($v->delete_level =='Y') {?>
-                                    <button type="button" class="btn btn-xs bg-gradient-danger delete-detailnon" id="delete"
-                                        data-id="<?php echo $s->id_keluar; ?>" data-status="<?php echo $s->status; ?>" title="Delete Data"  data-toggle="modal" data-target="#hapusDetail"><i
-                                            class="fas fa-trash"></i> Delete</button>
                                     <?php } ?>
                                 </td>
                             </tr>

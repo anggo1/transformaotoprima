@@ -48,6 +48,7 @@ class ReportWhMasuk extends MY_Controller
         $data['viewLevel']  = $this->Mod_reportwh->select_by_level($idlevel, $id_sub);
 
         $status_po 				= $_GET['status_po'];
+        $lokasi 				= $_GET['lokasi'];
         $date1 				= $_GET['date1'];
         $date2 				= $_GET['date2'];
 		$tgl1 = explode('-',$date1);
@@ -55,7 +56,7 @@ class ReportWhMasuk extends MY_Controller
         
 		$tgl2 = explode('-',$date2);
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
-		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk($ttmp1,$ttmp2,$status_po); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_masuk($ttmp1,$ttmp2,$status_po,$lokasi); 
         if($status_po=='Y'){
         $this->load->view('warehouse/report_wh/data_part_masuk', $data);
         }else{

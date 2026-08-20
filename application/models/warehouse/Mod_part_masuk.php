@@ -51,7 +51,7 @@ class Mod_part_masuk extends CI_Model
 
         return $data->result();
     }
-    function select_po()
+    function select_po1()
     {
         //$tgl   = explode('-', $tgl_po);
         //$tglnya = $tgl[2] . "-" . $tgl[1] . "-" . $tgl[0] . "";
@@ -63,6 +63,18 @@ class Mod_part_masuk extends CI_Model
 
 
         return $data->result();
+    }
+    function select_po()
+    {
+        $this->db->select('a.*', FALSE);
+        $this->db->select('b.*', FALSE);
+        $this->db->select('c.kode_sup as kode_sup, c.nama_sup as supplier', FALSE);
+        $this->db->from('tbl_wh_part_order as a');
+        $this->db->join('tbl_wh_detail_part_order as b','b.id_part_order=a.id_part_order','left');
+        $this->db->join('tbl_wh_supplier as c','c.kode_sup=a.supplier','left');
+        $this->db->where('a.status_po !=','Y');
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
     }
     function select_part_nopo()
     {
