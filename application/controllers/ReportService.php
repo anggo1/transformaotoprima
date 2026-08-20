@@ -80,13 +80,21 @@ class ReportService extends MY_Controller
 
         echo json_encode($out);
     }
-    public function cetak()
+    public function cetakJobtime()
     {
         $id                 = $_POST['id'];
-        $data['dataPo'] = $this->Mod_reportwhpartorder->select_by_id($id);
-        $data['detailPo'] = $this->Mod_reportwhpartorder->select_detail($id);
+        $data['dataJob'] = $this->Mod_report_service->cari_jobtime($id);
+        //$data['detailJob'] = $this->Mod_report_service->select_detail($id);
 
-        echo show_my_print('warehouse/modals/modal_cetak_part_order', 'cetak-po', $data, ' modal-xl');
+        echo show_my_print('service/modals/modal_data_job_time', 'cetak-jobtime', $data, ' modal-xl');
+    }
+    public function cetakWorkshop()
+    {
+        $id                 = $_POST['id'];
+        $data['dataJob'] = $this->Mod_report_service->cari_wo_jobtime($id);
+        //$data['detailJob'] = $this->Mod_report_service->select_detail($id);
+
+        echo show_my_print('service/modals/modal_data_wo_report', 'cetak-workshop', $data, ' modal-xl');
     }
     public function deletePo()
     {

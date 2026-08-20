@@ -1,152 +1,184 @@
 <style>
-	.table.DataTable {
-		font-family: Verdana, Geneva, Tahoma, sans-serif;
-		font-size: 12px;
-	}
+.table.DataTable {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+}
 
-	table.dataTable td {
-		padding: 5px;
-	}
+table.dataTable td {
+    padding: 5px;
+}
 </style>
 <div class="row">
-	<div class="col-12 ">
-		<div class="content">
-			<div class="card">
-				<div class="modal-content">
-					<div class="card-header card-blue card-outline">
-						<h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Report After Sales</h3>
-					</div>
+    <div class="col-12 ">
+        <div class="content">
+            <div class="card">
+                <div class="modal-content">
+                    <div class="card-header card-blue card-outline">
+                        <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Report After Sales
+                        </h3>
+                    </div>
 
 
-					<div class="card-body">
+                    <div class="card-body">
 
-						<div class="form-group row">
-							<label class="col-sm-1 col-form-label">Tanggal Awal</label>
-							<div class="col-sm-3">
-								<div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">Tanggal Awal</label>
+                            <div class="col-sm-3">
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
 
-									<input type="text" name="tgl_awal" id="tgl_awal" class="form-control tgl_awal datetimepicker" data-toggle="datetimepicker" data-target=".tgl_awal" data-format="yyy-mm-dd" required>
+                                    <input type="text" name="tgl_awal" id="tgl_awal"
+                                        class="form-control tgl_awal datetimepicker" data-toggle="datetimepicker"
+                                        data-target=".tgl_awal" data-format="yyy-mm-dd" required>
 
-									<div class="input-group-append" data-toggle="datetimepicker">
-										<div class="input-group-text"><i class="fa fa-calendar"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<label class="col-sm-1 col-form-label">Tanggal Akhir</label>
-							<div class="col-sm-3">
-								<div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <div class="input-group-append" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-sm-1 col-form-label">Tanggal Akhir</label>
+                            <div class="col-sm-3">
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
 
-									<input type="text" name="tgl_akhir" id="tgl_akhir" class="form-control tgl_akhir datetimepicker" data-toggle="datetimepicker" data-target=".tgl_akhir" data-format="yyy-mm-dd" required>
+                                    <input type="text" name="tgl_akhir" id="tgl_akhir"
+                                        class="form-control tgl_akhir datetimepicker" data-toggle="datetimepicker"
+                                        data-target=".tgl_akhir" data-format="yyy-mm-dd" required>
 
-									<div class="input-group-append" data-toggle="datetimepicker">
-										<div class="input-group-text"><i class="fa fa-calendar"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-1">
-								<button class="btn bg-gradient-primary col-sm-12" onclick="listService()" type="submit"><span class="fa fa-search"></span> Cari</button>
-							
-							</div>
-						</div>
-						<div id="data-po">
-						</div>
-						<div id="modal-po"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                    <div class="input-group-append" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <button class="btn bg-gradient-primary col-sm-12" onclick="listService()"
+                                    type="submit"><span class="fa fa-search"></span> Cari</button>
 
-		<?php show_my_confirm('hapusPo', 'hapus-po', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
-		<script type="text/javascript">
-			$('#tgl_awal,#tgl_akhir').datetimepicker({
-				format: 'DD-MM-YYYY',
-				date: moment()
-			});
+                            </div>
+                        </div>
+                        <div id="data-po">
+                        </div>
+                        <div id="modal-cetak"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			function refresh() {
-				MyTable = $('#list-po').dataTable();
-			}
-			var MyTable = $('#list-po').dataTable({
-				"responsive": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": true,
-				"ordering": true,
-				"info": true,
-				"pageLength": 5
-			});
+        <?php show_my_confirm('hapusPo', 'hapus-po', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data'); ?>
+        <script type="text/javascript">
+        $('#tgl_awal,#tgl_akhir').datetimepicker({
+            format: 'DD-MM-YYYY',
+            date: moment()
+        });
 
-			$(document).on("click", ".cetak-po", function() {
-				var id = $(this).attr("data-id");
-				//var id = document.getElementById('next_proses').value=datakode;
-				$.ajax({
-						method: "POST",
-						url: "<?php echo base_url('ReportWhPartorder/cetak'); ?>",
-						data: "id=" + id
-					})
-					.done(function(data) {
-						$('#modal-po').html(data);
-						$('#cetak-po').modal('show');
-					})
-			})
-			//end setoran
-			// Laporan Po
-			function listService() {
-				var date1 = document.getElementById("tgl_awal").value;
-				var date2 = document.getElementById("tgl_akhir").value;
-				$.ajax({
-					type: 'GET',
-					url: '<?php echo base_url('ReportService/listService'); ?>?date1' + date1 + '&date2=' + date2,
-					data: 'date1=' + date1 + '&date2=' + date2,
-					success: function(hasil) {
-						MyTable.fnDestroy();
-						$('#data-po').html(hasil);
-						refresh();
-					}
-				});
-			}
+        function refresh() {
+            MyTable = $('#list-po').dataTable();
+        }
+        var MyTable = $('#list-po').dataTable({
+            "responsive": false,
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "pageLength": 5
+        });
 
-			function showDetail() {
-				var id_keluar = document.getElementById('id_keluar').value;
-				//var id_keluar = document.formKeluar.id_keluar.value;
-				$.ajax({
-					type: 'GET',
-					url: '<?php echo base_url('PartPk/showDetail'); ?>?id_keluar=' + id_keluar,
-					data: 'id_keluar=' + id_keluar,
-					success: function(hasil) {
-						MyTable.fnDestroy();
-						$('#detail-partpk').html(hasil);
-						refresh();
-					}
-				});
+        $(document).on("click", ".cetak-po", function() {
+            var id = $(this).attr("data-id");
+            //var id = document.getElementById('next_proses').value=datakode;
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('ReportWhPartorder/cetak'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-po').html(data);
+                    $('#cetak-po').modal('show');
+                })
+        })
+        //end setoran
+        // Laporan Po
+        function listService() {
+            var date1 = document.getElementById("tgl_awal").value;
+            var date2 = document.getElementById("tgl_akhir").value;
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url('ReportService/listService'); ?>?date1' + date1 + '&date2=' + date2,
+                data: 'date1=' + date1 + '&date2=' + date2,
+                success: function(hasil) {
+                    MyTable.fnDestroy();
+                    $('#data-po').html(hasil);
+                    refresh();
+                }
+            });
+        }
 
-			}
-			$(document).on("click", ".delete-po", function() {
-				data_id = $(this).attr("data-id");
-			})
-			$(document).on("click", ".hapus-po", function() {
-				var id = data_id;
+        function showDetail() {
+            var id_keluar = document.getElementById('id_keluar').value;
+            //var id_keluar = document.formKeluar.id_keluar.value;
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url('PartPk/showDetail'); ?>?id_keluar=' + id_keluar,
+                data: 'id_keluar=' + id_keluar,
+                success: function(hasil) {
+                    MyTable.fnDestroy();
+                    $('#detail-partpk').html(hasil);
+                    refresh();
+                }
+            });
 
-				$.ajax({
-						method: "POST",
-						url: "<?php echo base_url('ReportWhPo/deletePo'); ?>",
-						data: "id=" + id
-					})
-					.done(function(data) {
-						var out = jQuery.parseJSON(data);
-						if (out.status != 'form') {
-							Swal.fire({
-								position: 'top-end',
-								icon: 'success',
-								title: out.msg,
-								showConfirmButton: false,
-								timer: 1000
-							})
-							$('#hapusPo').modal('hide');
-							listPo();
-						}
-					})
-			})
-		</script>
+        }
+        $(document).on("click", ".delete-po", function() {
+            data_id = $(this).attr("data-id");
+        })
+        $(document).on("click", ".hapus-po", function() {
+            var id = data_id;
+
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('ReportWhPo/deletePo'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    var out = jQuery.parseJSON(data);
+                    if (out.status != 'form') {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: out.msg,
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        $('#hapusPo').modal('hide');
+                        listPo();
+                    }
+                })
+        })
+
+
+        $(document).on("click", ".cetak-jobtime", function() {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('ReportService/cetakJobtime'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-cetak').html(data);
+                    $('#cetak-jobtime').modal('show');
+                })
+        })
+		$(document).on("click", ".cetak-workshop", function() {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('ReportService/cetakWorkshop'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-cetak').html(data);
+                    $('#cetak-workshop').modal('show');
+                })
+        })
+        </script>

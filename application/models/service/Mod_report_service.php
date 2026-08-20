@@ -150,6 +150,32 @@ class Mod_report_service extends CI_Model
 
 		return $this->db->affected_rows();
 	}
+    function cari_jobtime($id)
+    {
+        $this->db->select('a.wo_no,a.status_service', FALSE);
+        $this->db->select('b.*', FALSE);
+        $this->db->select('c.nik,c.nama', FALSE);
+        $this->db->from('tbl_after_sales AS a');
+        $this->db->join('tbl_after_sales_detail_wo AS b', 'b.wo_no=a.wo_no', 'left');
+        $this->db->join('tbl_after_sales_labor AS c', 'c.wo_no=a.wo_no', 'left');
+        $this->db->where('a.wo_no=', $id);
+
+
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
+    }
+    function cari_wo_jobtime($id)
+    {
+        $this->db->select('a.*', FALSE);
+        $this->db->select('b.*', FALSE);
+        $this->db->from('tbl_after_sales AS a');
+        $this->db->join('tbl_after_sales_detail_wo AS b', 'b.wo_no=a.wo_no', 'left');
+        $this->db->where('a.wo_no=', $id);
+
+
+        $query_result = $this->db->get();
+        return $data = $query_result->result();
+    }
       /** End Perbarang */
     function cari_partpk($ttmp1 =null,$ttmp2=null)
         {
