@@ -167,7 +167,7 @@ class Mod_report_service extends CI_Model
     function cari_wo_jobtime($id)
     {
         $this->db->select('a.*', FALSE);
-        $this->db->select('b.*', FALSE);
+        $this->db->select('b.wo_no', FALSE);
         $this->db->from('tbl_after_sales AS a');
         $this->db->join('tbl_after_sales_detail_wo AS b', 'b.wo_no=a.wo_no', 'left');
         $this->db->where('a.wo_no=', $id);

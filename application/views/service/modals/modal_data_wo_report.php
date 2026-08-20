@@ -223,13 +223,13 @@ td {
     <td width="221" class="label-text">WIP    Number:</td>
     <td><?= $row1->wo_no ;?></td>
     <td width="234" class="label-text">Reg.    Number:</td>
-    <td width="212">&nbsp;</td>
+    <td width="212"><?= $row1->no_pol ;?></td>
     <td width="158" class="label-text">Reg    Date:</td>
     <td width="264"><?= tglIndoSedang($row1->date_open_wo) ;?></td>
   </tr>
   <tr>
     <td width="221" class="label-text">Chassis    Number:</td>
-    <td></td>
+    <td><?= $row1->vin ;?></td>
     <td width="234" class="label-text">Type</td>
     <td width="212"><?= $row1->type ;?></td>
     <td width="158" class="label-text">Mileage:</td>
