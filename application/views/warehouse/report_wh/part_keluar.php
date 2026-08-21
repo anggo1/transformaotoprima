@@ -63,7 +63,7 @@ table.dataTable td {
                                 </div>
                             </div>
                             <div class="col-sm-1">
-                                <button class="btn bg-gradient-primary col-sm-12" onclick="listKeluarDetail()"
+                                <button class="btn bg-gradient-primary col-sm-12" onclick="listKeluar()"
                                     type="submit"><span class="fa fa-search"></span> Cari</button>
                             </div>
                         </div>

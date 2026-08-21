@@ -153,6 +153,14 @@ td {
 .tabel-spesifikasi td.value-text {
 }
 
+ul.a {list-style-type: circle;}
+ul.b {list-style-type: disc;}
+ul.c {list-style-type: square;}
+
+ol.d {list-style-type: upper-roman;}
+ol.e {list-style-type: lower-roman;}
+ol.f {list-style-type: lower-alpha;}
+ol.g {list-style-type: decimal;}
 </style>
 
 </head>
@@ -249,9 +257,12 @@ td {
     <td width="658" colspan="10"><strong>Costumer Complaint</strong><strong> </strong></td>
   </tr>
   <tr>
-    <td width="658" height="57" colspan="10" valign="top"><p>
-      <?= $row1->customer_complain ;?>
-    </p></td>
+    <td width="658" height="57" colspan="10" valign="top">
+      <?php foreach ($detailJob as $row):?>
+        <ul class="b">
+        <li><?= $row->operation ;?></li> </ul>
+        <?php endforeach ?>
+    </td>
   </tr>
   
 </table>

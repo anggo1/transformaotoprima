@@ -53,22 +53,101 @@ $(document).ready( function () {
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
     "buttons": [
-       // {
-       //     extend: 'excelHtml5',
-       //     text: '<i class="fas fa-file-excel"></i> Excel',
-       //     titleAttr: 'Excel',
-	//	footer: true,
-      //      title: function() {
-      //          return "Report Barang Keluar Dengan PK";
-      //          },
-      //     className: 'btn btn-sm btn-outline-primary',
-      //      init: function(api, node, config) {
-      //          $(node).removeClass('btn-secondary')
-      //      },
-      //      exportOptions: {
-      //          columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-      //      }
-      //  },
+        {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> Excel',
+            titleAttr: 'Excel',
+		footer: true,
+            title: function() {
+                return "Report Barang Keluar Dengan PK";
+                },
+           className: 'btn btn-sm btn-outline-primary',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            /*
+            customize: function (xlsx) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            
+            // Ambil seluruh elemen baris <row> di dalam Excel
+            var rows = $('row', sheet);
+            var mergeCellsXml = '';
+            var mergeCount = 0;
+
+            // Mapping nama properti kolom sesuai definisi "columns" Anda
+            var columnKeys = {
+                'A': 'row_urut',
+                'B': 'row_no',
+                'C': 'id_keluar',
+                'D': 'tujuan'
+            };
+
+            // Fungsi cerdas untuk melacak kesamaan data teks objek
+            function generateMergeXml(colLetter) {
+                var startRow = null;
+                var prevValue = null;
+
+                rows.each(function (index) {
+                    if (index === 0) return; // Lewati baris header Excel (Baris 1)
+
+                    var excelRowNum = index + 1; // Konversi ke nomor baris Excel asli (2, 3, dst)
+                    
+                    // Cara aman mengambil teks murni dari dalam elemen <c> milik Excel
+                    var cellSelector = 'c[r="' + colLetter + excelRowNum + '"]';
+                    var cellValue = $(this).find(cellSelector).text().trim();
+
+                    // Logika pengecekan baris berurutan yang nilainya identik
+                    if (prevValue !== null && cellValue === prevValue && cellValue !== "") {
+                        if (startRow === null) {
+                            startRow = excelRowNum - 1; // Tandai baris awal kelompok
+                        }
+                    } else {
+                        if (startRow !== null) {
+                            var endRow = excelRowNum - 1;
+                            mergeCellsXml += '<mergeCell ref="' + colLetter + startRow + ':' + colLetter + endRow + '"/>';
+                            mergeCount++;
+                            startRow = null; // Reset untuk grup baru
+                        }
+                    }
+                    prevValue = cellValue;
+                });
+
+                // Cek kelompok data terakhir di bagian paling bawah tabel
+                if (startRow !== null) {
+                    var endRow = rows.length;
+                    mergeCellsXml += '<mergeCell ref="' + colLetter + startRow + ':' + colLetter + endRow + '"/>';
+                    mergeCount++;
+                }
+            }
+
+            // Jalankan fungsi penggabungan otomatis untuk Kolom A, B, C, dan D (0, 1, 2, 3)
+            generateMergeXml('A'); // Menggabungkan row_urut yang sama
+            generateMergeXml('B'); // Menggabungkan row_no yang sama
+            generateMergeXml('C'); // Menggabungkan id_keluar yang sama
+            generateMergeXml('D'); // Menggabungkan tujuan yang sama
+
+            // Menyisipkan tag <mergeCells> ke posisi yang tepat agar file Excel TIDAK RUSAK/KOSONG
+            if (mergeCount > 0) {
+                var finalMergeXml = '<mergeCells count="' + mergeCount + '">' + mergeCellsXml + '</mergeCells>';
+                
+                // Cari elemen pageMargins bawaan DataTables untuk menyisipkan kode merge tepat di atasnya
+                if ($('pageMargins', sheet).length > 0) {
+                    $('pageMargins', sheet).before(finalMergeXml);
+                } else {
+                    $('worksheet', sheet).append(finalMergeXml);
+                }
+            }
+
+            // Mengatur style teks kolom A, B, C, D agar posisinya otomatis di Tengah (Center Vertikal & Horizontal)
+            // Tanpa ini, teks yang digabung di Excel akan turun/tenggelam ke pojok kiri bawah sel
+            $('row c[r^="A"], row c[r^="B"], row c[r^="C"], row c[r^="D"]', sheet).each(function () {
+                $(this).attr('s', '51'); // s="51" adalah style center bawaan template DataTables Buttons
+            });
+        }*/
+        },
       {
             text: '<i class="fa fa-reply-all"></i> Kembali',
             className: 'btn btn-sm btn-outline-primary list-barang',
@@ -114,3 +193,9 @@ $(document).ready( function () {
 }
 );
 </script>
+<?php 
+// Contoh: Hanya load file jika request berasal dari AJAX
+if ($this->input->is_ajax_request()) {
+    include FCPATH . 'assets/js/ajx_rowsgroup.php'; 
+}
+?>

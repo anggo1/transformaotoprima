@@ -92,7 +92,7 @@ class ReportService extends MY_Controller
     {
         $id                 = $_POST['id'];
         $data['dataJob'] = $this->Mod_report_service->cari_wo_jobtime($id);
-        //$data['detailJob'] = $this->Mod_report_service->select_detail($id);
+        $data['detailJob'] = $this->Mod_report_service->detail_jobtime($id);
 
         echo show_my_print('service/modals/modal_data_wo_report', 'cetak-workshop', $data, ' modal-xl');
     }

@@ -53,7 +53,7 @@
 											?>
                             </select>
                         </div>
-                        <label class="col-sm-2 col-form-label">Complain</label>
+                        <label class="col-sm-2 col-form-label">Issued On</label>
                         <div class="col-sm-4">
                             <input type="text" name="customer_complain" id="customer_complain" value=""
                                 class="form-control" placeholder="Customer Complain">

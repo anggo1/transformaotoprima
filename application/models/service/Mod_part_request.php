@@ -61,7 +61,16 @@ class Mod_part_request extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    function select_labor_mechanic($idX)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_after_sales_labor');
+        $this->db->where('spk', $idX);
 
+        $data = $this->db->get();
+
+        return $data->result();
+    }
     function count_filtered()
     {
         $term = $_REQUEST['search']['value'];

@@ -151,7 +151,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 col-form-label">NIK</label>
                             <dWiv class="col-sm-4">
-                                <input type="text" name="nik" id="nik" value="" class="form-control" placeholder="Nomor Induk Karyawan" required>
+                                <input type="text" name="nik" id="nik" value="" class="form-control" placeholder="Nomor Induk Karyawan" data-toggle="modal" data-target="#modal-mekanik" required>
                             </dWiv>
                         </div>
                     </div>
@@ -211,7 +211,64 @@
         </div>
     </div>
 </div>
-<script language="javascript">
+<div class="modal fade" id="modal-mekanik">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-gray-light">
+            <div class="modal-header">
+                <h4 class="modal-title">Data Mekanik</h4>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <!-- <table class="table table-head-fixed text-nowrap" id="table-kons">-->
+                    <table class="table table-bordered table-hover dt-responsive nowrap" id="tabel-mekanik">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIP</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+            $no = 1;
+            $dataMekanik = $this->db->select('nip, nama_depan, nama_belakang')
+                        ->get('tbl_hrd_pegawai')
+                        ->result();
 
-            //$('#tabel-part-request').DataTable().fnDestroy();
+foreach ($dataMekanik as $s) {
+    $nip  = $s->nip;
+    $nama = $s->nama_depan . ' ' . $s->nama_belakang;
+            ?>
+                            <tr>
+                                <td><?php echo $no; ?></td>
+                                <td
+                                    onClick="selectM('<?php echo $s->nip; ?>','<?php echo $s->nama_depan. '&nbsp;' .$s->nama_belakang; ?>')">
+                                    <?php echo $s->nip; ?></td>
+                                <td
+                                    onClick="selectM('<?php echo $s->nip; ?>','<?php echo $s->nama_depan. '&nbsp;' .$s->nama_belakang; ?>')">
+                                    <?php echo $s->nama_depan. '&nbsp;' .$s->nama_belakang; ?></td>
+                            </tr>
+                            <?php
+              $no++;
+            }
+            ?>
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+</div>
+<script language="javascript">
+function selectM(nip, nama) {
+
+    $('[name = "nik"]').val(nip);
+    $('[name = "nama"]').val(nama);
+
+
+    $('#modal-mekanik').modal('hide');
+}           //$('#tabel-part-request').DataTable().fnDestroy();
 </script>

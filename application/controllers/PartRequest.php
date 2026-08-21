@@ -114,6 +114,16 @@ class PartRequest extends MY_Controller
         echo json_encode($output);
     }
     //end cari Part
+    public function tampilMechanic() {
+		$idX = $_POST['spk'];
+
+        $data['apl'] = $this->db->get("aplikasi")->row();
+		$data['dataM'] = $this->Mod_work_order->select_labor_mechanic($idX);
+        
+		$this->load->view('service/detail_mechanic', $data);
+
+		//echo show_my_modal('service/modals/modal_tambah_work_order', 'process-work-order', $data, ' modal-xl');
+	}
     public function inputPartRequest()
     {
         $this->form_validation->set_rules('wo_no', 'No WO', 'trim|required');

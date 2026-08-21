@@ -390,7 +390,7 @@ class Mod_reportwh extends CI_Model
             $this->db->select('@dense_rank:=CASE WHEN @id_keluar = a.id_keluar
             THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, @id_keluar:=a.id_keluar AS id_keluar,id,
             ROW_NUMBER() OVER(PARTITION BY b.id_keluar ORDER BY b.id_keluar) as row_no,
-                    a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.status,a.keterangan,a.no_pk,a.ket_pk,a.tujuan,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
+                    a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.keterangan,a.no_pk,a.ket_pk,a.tujuan,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
             $this->db->from('tbl_wh_part_keluar AS a');
             $this->db->join('tbl_wh_detail_part_keluar AS b', 'b.id_keluar=a.id_keluar', 'left');
             $this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
@@ -407,7 +407,7 @@ class Mod_reportwh extends CI_Model
             $this->db->select('@dense_rank:=CASE WHEN @id_keluar = a.id_keluar
             THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, @id_keluar:=a.id_keluar AS id_keluar,id,
             ROW_NUMBER() OVER(PARTITION BY b.id_keluar ORDER BY b.id_keluar) as row_no,
-                    a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.status,a.keterangan,a.no_pk,a.ket_pk,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
+                    a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.keterangan,a.no_pk,a.ket_pk,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
             $this->db->from('tbl_wh_part_keluar AS a');
             $this->db->join('tbl_wh_detail_part_keluar AS b', 'b.id_keluar=a.id_keluar', 'left');
             $this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
@@ -424,7 +424,7 @@ class Mod_reportwh extends CI_Model
             $this->db->select('@dense_rank:=CASE WHEN @id_keluar = a.id_keluar
                 THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, @id_keluar:=a.id_keluar AS id_keluar,id,
                 ROW_NUMBER() OVER(PARTITION BY b.id_keluar ORDER BY b.id_keluar) as row_no,
-                        a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.status,a.keterangan,a.no_pk,a.ket_pk,a.nama_divisi,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
+                        a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.keterangan,a.no_pk,a.ket_pk,a.nama_divisi,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
             $this->db->from('tbl_wh_part_keluar AS a');
             $this->db->join('tbl_wh_detail_part_keluar AS b', 'b.id_keluar=a.id_keluar', 'left');
             $this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');

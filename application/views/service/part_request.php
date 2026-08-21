@@ -69,6 +69,7 @@ $(document).ready(function() {
     //});
 
     //datatables
+    
     table = $("#tabel-appointment").DataTable({
 
         "responsive": true,
@@ -119,7 +120,6 @@ $(document).on("click", ".process-part", function() {
             showPartRequestDetail();
         })
 })
-
 function dataPart() {
     table = $("#tabel-part-request").DataTable({
 
@@ -170,6 +170,12 @@ function dataPart() {
 
 };
 
+$('#modal-part').on('hidden.bs.modal', function() {
+        if ($.fn.DataTable.isDataTable('#tabel-part-request')) {
+            $('#tabel-part-request').DataTable().destroy();
+            $('#tabel-part-request tbody').empty();
+        }
+    });
 function insertRequest() {
     var wo_no = document.getElementById('wo_no').value;
     var no_part = document.getElementById('no_part').value;
