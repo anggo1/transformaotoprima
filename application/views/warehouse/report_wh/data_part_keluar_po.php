@@ -9,9 +9,9 @@
                                 <th width='5%'>No</th>
                                 <th width="15%">Tgl Keluar</th>
                                 <th width="11%">No Bon</th>
-                                <th width="18%">Tujuan</th>
-                                <th width="18%">No Body</th>
-                                <th width="38%">Keterangan</th>
+                                <th width="18%">No WO</th>
+                                <th width="18%">Customer</th>
+                                <th width="38%">VIN</th>
                                 <th width="13%" class="noprint">Aksi</th>
                             </tr>
                         </thead>
@@ -23,13 +23,13 @@ foreach ($dataKeluar as $s) {
 
                                 <td><?php echo $no; ?></td>
                                 <td><?php echo tglIndoSedang($s->tgl_keluar); ?></td>
-                                <td><?php echo $s->id_keluar; ?></td>
-                                <td><?php echo $s->no_pk; ?></td>
-                                <td><?php echo $s->no_body; ?></td>
-                                <td><?php echo $s->keterangan; ?></td>
+                                <td><?php echo $s->kode_keluar; ?></td>
+                                <td><?php echo $s->wo_no; ?></td>
+                                <td><?php echo $s->customer_name; ?></td>
+                                <td><?php echo $s->vin; ?></td>
                                 <td class="noprint">
                                 <button type="button" class="btn btn-xs bg-gradient-success cetak-bon" id="cetakBon"
-                                        data-id="<?php echo $s->id_keluar; ?>" title="Cetak Bon"><i
+                                        data-id="<?php echo $s->id; ?>" title="Cetak Bon"><i
                                             class="fas fa-print"></i> Bon</button>
                                 <?php foreach($viewLevel as $v) { } if ($v->delete_level =='Y') {?>
                                     <?php } ?>

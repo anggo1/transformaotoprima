@@ -367,10 +367,10 @@ class Mod_reportwh extends CI_Model
             return $data->result();
         }
         if ($status_po == 'Y') {
-            $sql = "SELECT a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.status,c.ket_pk,a.keterangan,a.no_pk
-            FROM tbl_wh_part_keluar AS a
-            LEFT JOIN tbl_br_pk_aktif AS c ON c.id_pk = a.no_pk
-            WHERE tujuan ='SPK' AND tgl_keluar BETWEEN '" . $ttmp1 . "' AND '" . $ttmp2 . "' ORDER BY a.id_keluar ASC";
+            $sql = "SELECT a.kode_keluar,a.tgl_keluar,a.id,a.wo_no,a.petugas,a.no_sj,a.petugas,c.customer_name,c.vin 
+            FROM tbl_wh_part_keluar_service AS a
+            LEFT JOIN tbl_after_sales AS c ON c.wo_no = a.wo_no
+            WHERE a.tgl_keluar BETWEEN '" . $ttmp1 . "' AND '" . $ttmp2 . "' ORDER BY a.id ASC";
             $data = $this->db->query($sql);
             return $data->result();
         }
@@ -400,19 +400,34 @@ class Mod_reportwh extends CI_Model
             return $data = $query_result->result();
         }
         if ($status_po == 'Y') {
-            $query = 'SET @dense_rank = 0;';
-            $this->db->query($query);
-            $query = 'SET @id_keluar = NULL;';
-            $this->db->query($query);
-            $this->db->select('@dense_rank:=CASE WHEN @id_keluar = a.id_keluar
-            THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, @id_keluar:=a.id_keluar AS id_keluar,id,
-            ROW_NUMBER() OVER(PARTITION BY b.id_keluar ORDER BY b.id_keluar) as row_no,
-                    a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.keterangan,a.no_pk,a.ket_pk,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
-            $this->db->from('tbl_wh_part_keluar AS a');
-            $this->db->join('tbl_wh_detail_part_keluar AS b', 'b.id_keluar=a.id_keluar', 'left');
-            $this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
-            $this->db->where('a.tujuan', 'SPK');
-            $this->db->order_by('b.id');
+            $this->db->select('
+    /* Membuat nomor group berdasarkan kode_keluar secara berurutan */
+    DENSE_RANK() OVER(ORDER BY a.tgl_keluar ASC, a.kode_keluar ASC) AS row_urut, 
+    
+    /* Membuat nomor detail (1, 2, 3) di dalam group kode_keluar yang sama */
+    ROW_NUMBER() OVER(PARTITION BY b.kode_keluar ORDER BY b.id_detail_keluar_service ASC) as row_no,
+    
+    b.id_detail_keluar_service AS id,
+    a.kode_keluar,
+    a.tgl_keluar,
+    a.wo_no,
+    a.petugas,
+    b.harga,
+    b.no_part,
+    b.nama_part,
+    b.jumlah,
+    c.customer_name,
+    c.vin,
+    d.no_pre_order,
+    d.vehicle_type
+', FALSE); 
+
+$this->db->from('tbl_wh_part_keluar_service AS a');
+$this->db->join('tbl_wh_detail_part_keluar_service AS b', 'b.kode_keluar=a.kode_keluar', 'left');
+$this->db->join('tbl_after_sales AS c', 'c.wo_no=a.wo_no', 'left');
+$this->db->join('tbl_after_sales_pre_order AS d', 'd.wo_no=a.wo_no', 'left');
+$this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '" AND "' . date($ttmp2) . '"');
+
             $query_result = $this->db->get();
             return $data = $query_result->result();
         }
@@ -424,7 +439,7 @@ class Mod_reportwh extends CI_Model
             $this->db->select('@dense_rank:=CASE WHEN @id_keluar = a.id_keluar
                 THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, @id_keluar:=a.id_keluar AS id_keluar,id,
                 ROW_NUMBER() OVER(PARTITION BY b.id_keluar ORDER BY b.id_keluar) as row_no,
-                        a.kode_keluar,a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.keterangan,a.no_pk,a.ket_pk,a.nama_divisi,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
+                        a.kode_keluar,a.tgl_keluar,a.id_keluar,a.vin,a.no_body,a.keterangan,a.no_pk,a.ket_pk,a.nama_divisi,b.hrg_part,b.no_part,b.nama_part,b.jumlah,b.satuan', FALSE);
             $this->db->from('tbl_wh_part_keluar AS a');
             $this->db->join('tbl_wh_detail_part_keluar AS b', 'b.id_keluar=a.id_keluar', 'left');
             $this->db->where('a.tgl_keluar BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');

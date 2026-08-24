@@ -9,15 +9,15 @@
                             <tr>
                                 <th>No</th>
                                 <th>No Ref</th>
-                                <th>No PK</th>
-                                <th>No Body</th>
-                                <th>Proses</th>
+                                <th>WIP</th>
+                                <th>Customer</th>
+                                <th>No SPK</th>
+                                <th>Type</th>
                                 <th>Tgl Keluar</th>
                                 <th>No</th>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>QTY</th>
-                                <th>Satuan</th>
                                 <th>Harga</th>
                                 <th>Total</th>
                             </tr>
@@ -26,22 +26,22 @@
                             <?php
                             $total=0;
                             foreach ($detailKeluar as $s) {
-                                $total += $s->jumlah * $s->hrg_part;
-                                $sub_total = $s->jumlah * $s->hrg_part;
+                                $total += $s->jumlah * $s->harga;
+                                $sub_total = $s->jumlah * $s->harga;
                             ?>
                             <tr>
                                 <td width="2%" align="center"><?php echo $s->row_urut; ?></td>
-                                <td><?php echo $s->id_keluar; ?></td>
-                                <td><?php echo $s->no_pk; ?></td>
-                                <td><?php echo $s->no_body; ?></td>
-                                <td><?php echo $s->ket_pk; ?></td>
+                                <td><?php echo $s->kode_keluar; ?></td>
+                                <td><?php echo $s->wo_no; ?></td>
+                                <td><?php echo $s->customer_name; ?></td>
+                                <td><?php echo $s->no_pre_order; ?></td>
+                                <td><?php echo $s->vehicle_type; ?></td>
                                 <td><?php echo tglIndoSedang($s->tgl_keluar); ?></td>
                                 <td width="2%"><?php echo $s->row_no; ?></td>
                                 <td><?php echo $s->no_part; ?></td>
                                 <td><?php echo $s->nama_part; ?></td>
                                 <td align="center"><?php echo $s->jumlah; ?></td>
-                                <td><?php echo $s->satuan; ?></td>
-                                <td align="right"><?php echo number_format($s->hrg_part); ?></td>
+                                <td align="right"><?php echo number_format($s->harga); ?></td>
                                 <td align="right"><?php echo number_format($sub_total); ?></td>
                             </tr>
                             <?php } ?>
@@ -147,11 +147,13 @@
             var officeNodes2 = tbl.column(2, selector_modifier).nodes();
             var officeNodes3 = tbl.column(3, selector_modifier).nodes();
             var officeNodes4 = tbl.column(4, selector_modifier).nodes();
+            var officeNodes4 = tbl.column(5, selector_modifier).nodes();
             var officeData = tbl.column(0, selector_modifier).data();
             var officeData1 = tbl.column(1, selector_modifier).data();
             var officeData2 = tbl.column(2, selector_modifier).data();
             var officeData3 = tbl.column(3, selector_modifier).data();
             var officeData4 = tbl.column(4, selector_modifier).data();
+            var officeData4 = tbl.column(5, selector_modifier).data();
             for (var i = 0; i < officeData.length; i++) {
                 var current = officeData[i];
                 if (current === previous) {
