@@ -1,24 +1,16 @@
 <?php
 if(!empty($dataMasuk)){
 foreach ($dataMasuk as $st) {}}
-$btColor="";
-$btColor1="";
-$btColor2="";
-if($status=="PPU"){
 $btColor='bg-gradient-navy';
 $btColor1='bg-gradient-blue';
-} if($status=="MPU") {
 $btColor='bg-gradient-blue';
 $btColor1='bg-gradient-navy';
 $btColor2='bg-gradient-navy';
-}
 ?>
 <div class="col-12 ">
     
-<button type="button" class="btn <?php echo $btColor ?> shadow mb-3 rounded list-barang-ppu"><i class="fa fa-id-card-alt"></i>  &nbsp;P P U</button>
-    <button type="button" class="btn <?php echo $btColor1 ?> shadow mb-3 rounded list-barang-mpu"><i class="fa fa-id-card-alt"></i>  &nbsp;M P U</button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded list-detail-barang" data-status="<?php echo $status ?>" data-po="<?php echo $status_po ?>"><i class="fa fa-indent"></i>  &nbsp;Detail <?php echo $st->status ?></button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded cetak-masuk-detail" data-status="<?php echo $status ?>" data-po="<?php echo $status_po ?>"><i class="fa fa-print"></i>  &nbsp;CETAK DETAIL</button>
+    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded list-detail-barang" data-status="" data-po="<?php echo $status_po ?>"><i class="fa fa-indent"></i>  &nbsp;Detail <?php echo $st->status ?></button>
+    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded cetak-masuk-detail" data-status="" data-po="<?php echo $status_po ?>"><i class="fa fa-print"></i>  &nbsp;CETAK DETAIL</button>
     <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-dataDetail">
             <thead>
@@ -55,7 +47,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->jumlah; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo $s->hrg_awal; ?></td>
+                    <td><?php echo $s->hrg_part; ?></td>
                     <td align="right"><?php echo number_format($s->total); ?></td>
                 </tr>
                 <?php
@@ -84,6 +76,41 @@ $(document).ready(function() {
         "language": {
             "processing": '<i class="fa fa-spinner fa-spin fa-3x"></i>'
         },
+        "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+        "buttons": [
+        {
+           extend: 'excelHtml5',
+           text: '<i class="fas fa-file-excel"></i> Excel',
+           titleAttr: 'Excel',
+			footer: true,
+            title: function() {
+                return "<div style='font-size: 20px;'>Report Barang Keluar Dengan PK</div>";
+               },
+            className: 'btn btn-sm btn-outline-primary',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+           },
+            exportOptions: {
+               columns: [0, 1, 2, 3, 4, 5,6,7,8,9,10,11]
+           }
+        },
+        {
+            text: '<i class="fa fa-list-ol"></i> Detail',
+            className: 'btn btn-sm btn-outline-primary list-detail-barang',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        },
+        {
+            text: '<i class="fa fa-print"></i> Cetak',
+            className: 'btn btn-sm btn-outline-primary cetak-keluar-data',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        }
+    ],
         "footerCallback": function (row, data, start, end, display) {
         var api = this.api();
         var intVal = function (i) {
@@ -138,8 +165,14 @@ $(document).ready(function() {
         var previous = '';
         var officeNodes = tbl.column(0, selector_modifier).nodes();
         var officeNodes1 = tbl.column(1, selector_modifier).nodes();
+        var officeNodes2 = tbl.column(2, selector_modifier).nodes();
+        var officeNodes3 = tbl.column(3, selector_modifier).nodes();
+        var officeNodes4 = tbl.column(4, selector_modifier).nodes();
         var officeData = tbl.column(0, selector_modifier).data();
         var officeData1 = tbl.column(1, selector_modifier).data();
+        var officeData2 = tbl.column(2, selector_modifier).data();
+        var officeData3 = tbl.column(3, selector_modifier).data();
+        var officeData4 = tbl.column(4, selector_modifier).data();
         for (var i = 0; i < officeData.length; i++) {
             var current = officeData[i];
             if (current === previous) {
@@ -157,6 +190,36 @@ $(document).ready(function() {
                 officeNodes1[i].setAttribute("style", "border-top:none;");
             } else {
                 officeNodes1[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData2.length; i++) {
+            var current = officeData2[i];
+            if (current === previous) {
+                officeNodes2[i].textContent = '';
+                officeNodes2[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes2[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData3.length; i++) {
+            var current = officeData3[i];
+            if (current === previous) {
+                officeNodes3[i].textContent = '';
+                officeNodes3[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes3[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData4.length; i++) {
+            var current = officeData4[i];
+            if (current === previous) {
+                officeNodes4[i].textContent = '';
+                officeNodes4[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes4[i].textContent = current;
             }
             previous = current;
         }

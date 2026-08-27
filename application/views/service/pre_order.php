@@ -267,4 +267,16 @@ $(document).on("click", ".cetak-pre-order", function() {
             $('#cetak-pre-order').modal('show');
         })
 })
+$(document).on("click", ".cetak-workshop", function() {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('ReportService/cetakWorkshop'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#tempat-modal').html(data);
+                    $('#cetak-workshop').modal('show');
+                })
+        })
 </script>

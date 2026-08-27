@@ -169,7 +169,7 @@ table.dataTable td {
                     $('#cetak-jobtime').modal('show');
                 })
         })
-		$(document).on("click", ".cetak-workshop", function() {
+        $(document).on("click", ".cetak-workshop", function() {
             var id = $(this).attr("data-id");
             $.ajax({
                     method: "POST",
@@ -179,6 +179,45 @@ table.dataTable td {
                 .done(function(data) {
                     $('#modal-cetak').html(data);
                     $('#cetak-workshop').modal('show');
+                })
+        })
+        $(document).on("click", ".cetak-work-order", function() {
+            var id = $(this).attr("data-id");
+            //var id = document.getElementById('next_proses').value=datakode;
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('WorkOrder/cetak_work_order'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-cetak').html(data);
+                    $('#cetak-work-order').modal('show');
+                })
+        })
+        $(document).on("click", ".cetak-estimasi", function() {
+            var id = $(this).attr("data-id");
+            //var id = document.getElementById('next_proses').value=datakode;
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('EstimasiPenawaranService/cetak'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-cetak').html(data);
+                    $('#cetak-po').modal('show');
+                })
+        })
+        $(document).on("click", ".cetak-pre-order", function() {
+            var id = $(this).attr("data-id");
+            //var id = document.getElementById('next_proses').value=datakode;
+            $.ajax({
+                    method: "POST",
+                    url: "<?php echo base_url('PreOrder/cetak_pre_order'); ?>",
+                    data: "id=" + id
+                })
+                .done(function(data) {
+                    $('#modal-cetak').html(data);
+                    $('#cetak-pre-order').modal('show');
                 })
         })
         </script>

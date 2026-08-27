@@ -235,7 +235,7 @@ $(document).on("click", ".list-detail-barang", function() {
     var status_po = document.getElementById("status_po").value;
     var date1 = document.getElementById("tgl_awal").value;
     var date2 = document.getElementById("tgl_akhir").value;
-	var status = $(this).attr("data-status");
+    var lokasi = document.getElementById("lokasi").value;
     
 if (status_po == ""){
 Swal.fire({
@@ -248,8 +248,8 @@ Swal.fire({
 } else{
     $.ajax({
         type: 'GET',
-		url: '<?php echo base_url('ReportWhMasuk/listDetailMasuk'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
-		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
+		url: '<?php echo base_url('ReportWhMasuk/listDetailMasuk'); ?>',
+		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&lokasi=' +lokasi,
         success: function(hasil) {
 			$('#data-masuk').html(hasil);
         }

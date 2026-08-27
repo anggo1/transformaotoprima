@@ -6,7 +6,7 @@ class PreOrder extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array('service/Mod_pre_order', 'Mod_menu'));
+		$this->load->model(array('service/Mod_pre_order','service/Mod_report_service', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
 		$this->load->helper('tgl_indo_helper');
 		$this->load->model('Mod_aplikasi');
@@ -60,11 +60,14 @@ class PreOrder extends MY_Controller
                 $row[] = empty($p->pre_order) ? 'Not Processed' : 'On Process';
                 $row[] = $p->pembuat;
                     $edit='                    
-                    <button class="btn btn-sm btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
+                    <button class="btn btn-xs btn-outline-success process-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Process
                   </button>';
                   $print='                    
-                    <button class="btn btn-sm btn-outline-info cetak-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
-                  </button>';
+                    <button class="btn btn-xs bg-gradient-info cetak-pre-order" title="Edit" data-id="'.$p->wo_no.'|'.$p->customer.'">Print
+                  </button>
+                  <button class="btn btn-xs bg-gradient-dark cetak-workshop" title="Cetak Workshop"
+                            data-id="'.$p->wo_no.'"> Workshop
+                        </button>';
                 $akses_system= empty ($p->pre_order) ? $edit : $print;
                 $row[] = $akses_system;
                 $data[] = $row;
@@ -179,4 +182,12 @@ class PreOrder extends MY_Controller
 
 		echo show_my_print('service/modals/modal_cetak_pre_order', 'cetak-pre-order', $data, ' modal-xl');
 	}
+    public function cetakWorkshop()
+    {
+        $id                 = $_POST['id'];
+        $data['dataJob'] = $this->Mod_report_service->cari_wo_jobtime($id);
+        $data['detailJob'] = $this->Mod_report_service->detail_jobtime($id);
+
+        echo show_my_print('service/modals/modal_data_wo_report', 'cetak-workshop', $data, ' modal-xl');
+    }
 }

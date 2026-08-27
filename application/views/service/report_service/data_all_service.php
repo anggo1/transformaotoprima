@@ -1,38 +1,34 @@
 <style>
-<!-- HTML !-->
-<button class="button-88" role="button">Button 88</button>
-
-/* CSS */
 .button-88 {
-  display: flex;
-  align-items: center;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 0.7em 1.4em 0.7em 1.1em;
-  color: white;
-  background: #ad5389;
-  background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
-  border: none;
-  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
-  letter-spacing: 0.05em;
-  border-radius: 20em;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0.7em 1.4em 0.7em 1.1em;
+    color: white;
+    background: #ad5389;
+    background: linear-gradient(0deg, rgba(20, 167, 62, 1) 0%, rgba(102, 247, 113, 1) 100%);
+    border: none;
+    box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+    letter-spacing: 0.05em;
+    border-radius: 20em;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .button-88:hover {
-  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+    box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
 }
 
 .button-88:active {
-  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+    box-shadow: 0 0.3em 1em -0.5em #14a73e98;
 }
-    </style>
+</style>
 <div class="col-12 ">
-  
+
     <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-pk">
             <thead>
@@ -57,31 +53,42 @@
             <tbody>
                 <?php
                 $no = 1;
-                foreach ($dataPo as $s) {
+                foreach (($dataPo ?? []) as $s) {
                 ?> <tr>
 
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $s->wo_no; ?></td>
-                        <td><?php echo $s->sa_name; ?></td>
-                        <td><?php echo tglIndoSedang($s->date_open_wo); ?></td>
-                        <td><?php echo $s->vin; ?></td>
-                        <td><?php echo $s->customer_name; ?></td>
-                        <td><?php echo $s->customer_complain; ?></td>
-                        <td><?php echo $s->engine_no; ?></td>
-                        <td><?php echo $s->type; ?></td>
-                        <td><?php echo tglIndoSedang($s->last_service_date); ?></td>
-                        <td><?php echo tglIndoSedang($s->dead_line); ?></td>
-                        <td><?php echo tglIndoSedang($s->date_close_wo); ?></td>
-                        <td><?php echo ($s->status == 'Y') ? 'Free' : 'Non Free'; ?></td>
-                        <td><?php echo $s->pembuat; ?></td>
-                        <td>
-                        <button class="btn btn-xs bg-gradient-primary cetak-jobtime" id="cetakjobtime" title="Cetak Jobtime"
-                            data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-print"></i> Job Time</button>
+                    <td><?php echo $no; ?></td>
+                    <td><?php echo $s->wo_no; ?></td>
+                    <td><?php echo $s->sa_name; ?></td>
+                    <td><?php echo tglIndoSedang($s->date_open_wo); ?></td>
+                    <td><?php echo $s->vin; ?></td>
+                    <td><?php echo $s->customer_name; ?></td>
+                    <td><?php echo $s->customer_complain; ?></td>
+                    <td><?php echo $s->engine_no; ?></td>
+                    <td><?php echo $s->type; ?></td>
+                    <td><?php echo tglIndoSedang($s->last_service_date); ?></td>
+                    <td><?php echo tglIndoSedang($s->dead_line); ?></td>
+                    <td><?php echo tglIndoSedang($s->date_close_wo); ?></td>
+                    <td><?php echo ($s->status == 'Y') ? 'Free' : 'Non Free'; ?></td>
+                    <td><?php echo $s->pembuat; ?></td>
+                    <td>
+                        <button class="btn btn-xs bg-gradient-warning cetak-work-order" title="Work Order"
+                            data-id="<?php echo $s->wo_no . '|' . $s->customer; ?>">
+                            <i class="fa fa-print"></i> W O</button>
+                        <button class="btn btn-xs bg-gradient-success cetak-estimasi" title="Estimasi"
+                            data-id="<?php echo $s->wo_no . '|' . $s->customer; ?>">
+                            <i class="fa fa-print"></i> Est </button>
+                        <button class="btn btn-xs bg-gradient-info cetak-pre-order" title="Pre Order"
+                            data-id="<?php echo $s->wo_no . '|' . $s->customer; ?>">
+                            <i class="fa fa-print"></i> P O</button>
+                        <button class="btn btn-xs bg-gradient-primary cetak-jobtime" id="cetakjobtime"
+                            title="Cetak Jobtime" data-id="<?php echo $s->wo_no; ?>">
+                            <i class="fa fa-print"></i> J T</button>
                         <button class="btn btn-xs bg-gradient-dark cetak-workshop" title="Cetak Workshop"
-                            data-id="<?php echo $s->wo_no; ?>"><i class="fa fa-print"></i> Workshop
-                        </button></td>
+                            data-id="<?php echo $s->wo_no; ?>">
+                            <i class="fa fa-print"></i> WOR</button>
+                    </td>
 
-                    </tr>
+                </tr>
                 <?php
                     $no++;
                 }
@@ -93,7 +100,8 @@
     </div>
 </div>
 <script>
-    var MyTable = $('#list-pk').DataTable({
+$(document).ready(function() {
+    table = $("#list-pk").DataTable({
         "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
@@ -107,7 +115,7 @@
                     $(node).removeClass('btn-secondary')
                 },
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                 }
             },
             {
@@ -120,7 +128,7 @@
                     $(node).removeClass('btn-secondary')
                 },
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                 }
             },
             {
@@ -133,7 +141,7 @@
                     $(node).removeClass('btn-secondary')
                 },
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                 }
             },
             {
@@ -146,7 +154,7 @@
                     $(node).removeClass('btn-secondary')
                 },
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4,5,6,7,8,9,10,11]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                 }
             },
             {
@@ -160,46 +168,66 @@
             }
 
         ],
-
         "responsive": false,
+        "autoWidth": true,
         "paging": true,
         "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
-        "pageLength": 10
+
+        "language": {
+            "sEmptyTable": "Data Chasis Belum Ada"
+        },
+        "processing": true, //Feature control the processing indicator.
+
+        "order": [],
+
+        "columnDefs": [{
+            "targets": [0, 11],
+            "orderable": false,
+            "visible": false,
+            "targets": [11, 12, 13]
+        }, ],
+
     });
-    $(document).on("click", ".cetak-keluar", function() {
-        var id = $(this).attr("data-id");
-        //var id = document.getElementById('next_proses').value=datakode;
-        $.ajax({
-                method: "POST",
-                url: "<?php echo base_url('Part_keluar/cetak'); ?>",
-                data: "id=" + id
-            })
-            .done(function(data) {
-                $('#modal-keluar').html(data);
-                $('#cetak-keluar').modal('show');
-            })
-    })
+
+});
+
+$(document).on("click", ".cetak-keluar", function() {
+    var id = $(this).attr("data-id");
+    //var id = document.getElementById('next_proses').value=datakode;
+    $.ajax({
+            method: "POST",
+            url: "<?php echo base_url('Part_keluar/cetak'); ?>",
+            data: "id=" + id
+        })
+        .done(function(data) {
+            $('#modal-keluar').html(data);
+            $('#cetak-keluar').modal('show');
+        })
+})
 
 
-    function exportExcel() {
-		var date1 = document.getElementById("tgl_awal").value;
-		var date2 = document.getElementById("tgl_akhir").value;
-		$.ajax({
-		type: 'POST',
-		url: '<?php echo base_url('ReportService/export_excel'); ?>?',
-		data: 'date1=' +date1+'&date2=' +date2
-		});
-	}
-    function exportTableToExcel() {
+function exportExcel() {
+    var date1 = document.getElementById("tgl_awal").value;
+    var date2 = document.getElementById("tgl_akhir").value;
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('ReportService/export_excel'); ?>?',
+        data: 'date1=' + date1 + '&date2=' + date2
+    });
+}
+
+function exportTableToExcel() {
     // Select the HTML table
     var el = document.getElementById('myTable');
-    
+
     // Convert table to worksheet
-    var wb = XLSX.utils.table_to_book(el, {sheet: "SheetJS"});
-    
+    var wb = XLSX.utils.table_to_book(el, {
+        sheet: "SheetJS"
+    });
+
     // Save/Download the file
     XLSX.writeFile(wb, 'exported_data.xlsx');
 }

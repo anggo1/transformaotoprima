@@ -272,24 +272,108 @@ class Mod_reportwh extends CI_Model
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }
-    function cari_detail_masuk($ttmp1 = null, $ttmp2 = null, $status_po = null, $status = null)
+    function cari_detail_masuk($ttmp1 = null, $ttmp2 = null, $status_po = null, $lokasi = null)
     {
-        $query = 'SET @dense_rank = 0;';
+        
+        if($lokasi == 'Cibitung'){
+            $query = 'SET @dense_rank = 0;';
         $this->db->query($query);
         $query = 'SET @id_masuk = NULL;';
         $this->db->query($query);
         $this->db->select('@dense_rank:=CASE WHEN @id_masuk = a.kode_masuk THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, 
             @id_masuk:=b.id_masuk AS id_masuk, id, ROW_NUMBER() OVER(PARTITION BY b.id_masuk ORDER BY b.id_masuk) as row_no,
-            a.id_masuk, a.tgl_masuk, a.id_masuk, a.status, a.keterangan,a.no_po,a.no_sj_sup,a.kode_sup,d.nama_sup,a.no_inv_sup,
-            b.no_part,b.nama_part, b.jumlah, b.satuan, c.hrg_awal,b.jumlah*c.hrg_awal AS total', FALSE);
+            a.id_masuk, 
+            a.tgl_masuk, 
+            a.id_masuk, 
+            a.status, 
+            a.keterangan,
+            a.no_po,
+            a.no_sj_sup,
+            a.kode_sup,
+            d.nama_sup,
+            a.no_inv_sup,
+            b.no_part,
+            b.nama_part, 
+            b.jumlah, 
+            b.satuan, 
+            b.hrg_part,
+            c.hrg_net_cbt,
+            b.jumlah*b.hrg_part AS total', FALSE);
         $this->db->from('tbl_wh_part_masuk AS a');
         $this->db->join('tbl_wh_detail_part_masuk AS b', 'b.id_masuk=a.kode_masuk', 'left');
         $this->db->join('tbl_wh_barang AS c', 'c.no_part=b.no_part', 'left');
         $this->db->join('tbl_wh_supplier AS d', 'd.kode_sup=a.kode_sup', 'left');
         $this->db->where('a.tgl_masuk BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
         $this->db->where('a.status_po', $status_po);
-        $this->db->where('a.status', $status);
         $this->db->order_by('b.id');
+
+        }
+        if($lokasi == 'Jakarta'){
+            $query = 'SET @dense_rank = 0;';
+        $this->db->query($query);
+        $query = 'SET @id_masuk = NULL;';
+        $this->db->query($query);
+        $this->db->select('@dense_rank:=CASE WHEN @id_masuk = a.kode_masuk THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, 
+            @id_masuk:=b.id_masuk AS id_masuk, id, ROW_NUMBER() OVER(PARTITION BY b.id_masuk ORDER BY b.id_masuk) as row_no,
+            a.id_masuk, 
+            a.tgl_masuk, 
+            a.id_masuk, 
+            a.status, 
+            a.keterangan,
+            a.no_po,
+            a.no_sj_sup,
+            a.kode_sup,
+            d.nama_sup,
+            a.no_inv_sup,
+            b.no_part,
+            b.nama_part, 
+            b.jumlah,
+            b.hrg_part, 
+            b.satuan, 
+            c.hrg_net_jkt,
+            b.jumlah*b.hrg_part AS total', FALSE);
+        $this->db->from('tbl_wh_part_masuk AS a');
+        $this->db->join('tbl_wh_detail_part_masuk AS b', 'b.id_masuk=a.kode_masuk', 'left');
+        $this->db->join('tbl_wh_barang AS c', 'c.no_part=b.no_part', 'left');
+        $this->db->join('tbl_wh_supplier AS d', 'd.kode_sup=a.kode_sup', 'left');
+        $this->db->where('a.tgl_masuk BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
+        $this->db->where('a.status_po', $status_po);
+        $this->db->order_by('b.id');
+
+        }
+        if($lokasi == 'Surabaya'){
+            $query = 'SET @dense_rank = 0;';
+        $this->db->query($query);
+        $query = 'SET @id_masuk = NULL;';
+        $this->db->query($query);
+        $this->db->select('@dense_rank:=CASE WHEN @id_masuk = a.kode_masuk THEN @dense_rank ELSE @dense_rank + 1 END AS row_urut, 
+            @id_masuk:=b.id_masuk AS id_masuk, id, ROW_NUMBER() OVER(PARTITION BY b.id_masuk ORDER BY b.id_masuk) as row_no,
+            a.id_masuk, 
+            a.tgl_masuk, 
+            a.id_masuk, 
+            a.status, 
+            a.keterangan,
+            a.no_po,
+            a.no_sj_sup,
+            a.kode_sup,
+            d.nama_sup,
+            a.no_inv_sup,
+            b.no_part,
+            b.nama_part, 
+            b.jumlah,
+            b.hrg_part,
+            b.satuan, 
+            c.hrg_net_sby,
+            b.jumlah*b.hrg_part AS total', FALSE);
+        $this->db->from('tbl_wh_part_masuk AS a');
+        $this->db->join('tbl_wh_detail_part_masuk AS b', 'b.id_masuk=a.kode_masuk', 'left');
+        $this->db->join('tbl_wh_barang AS c', 'c.no_part=b.no_part', 'left');
+        $this->db->join('tbl_wh_supplier AS d', 'd.kode_sup=a.kode_sup', 'left');
+        $this->db->where('a.tgl_masuk BETWEEN "' . date($ttmp1) . '"AND"' . date($ttmp2) . '"');
+        $this->db->where('a.status_po', $status_po);
+        $this->db->order_by('b.id');
+
+        }
         $query_result = $this->db->get();
         return $data = $query_result->result();
     }

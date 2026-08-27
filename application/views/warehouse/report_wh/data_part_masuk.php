@@ -67,27 +67,47 @@ foreach ($dataMasuk as $s) {
 </div>
 <script>
 var MyTable = $('#list-data').DataTable({
-    "footerCallback": function(row, data, start, end, display) {
-        var api = this.api();
-        var intVal = function(i) {
-            return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
-        };
-        hasil = api
-            .column(7)
-            .data()
-            .reduce(function(a, b) {
-                return intVal(a) + intVal(b);
-            }, 0);
-        total = $.fn.dataTable.render.number(',', '.', 0).display(hasil);
-        $(api.column(7).footer()).html(total);
-    },
-
-    "responsive": false,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "pageLength": 10
-});
+        "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+        "buttons": [
+        //{
+        //    extend: 'excelHtml5',
+        //    text: '<i class="fas fa-file-excel"></i> Excel',
+        //    titleAttr: 'Excel',
+		//	footer: true,
+        //    title: function() {
+        //        return "<div style='font-size: 20px;'>Report Barang Keluar Dengan PK</div>";
+        //        },
+        //    className: 'btn btn-sm btn-outline-primary',
+        //    init: function(api, node, config) {
+        //        $(node).removeClass('btn-secondary')
+        //    },
+        //    exportOptions: {
+        //        columns: [0, 1, 2, 3, 4, 5]
+        //    }
+        //},
+        {
+            text: '<i class="fa fa-list-ol"></i> Detail',
+            className: 'btn btn-sm btn-outline-primary detail-barang',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        },
+        {
+            text: '<i class="fa fa-print"></i> Cetak',
+            className: 'btn btn-sm btn-outline-primary cetak-keluar-data',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        }
+    ],
+        "responsive": false,
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "pageLength": 10
+    });
 </script>
