@@ -67,9 +67,6 @@
 									<div class="col-sm-1">
 							<button class="btn bg-gradient-primary col-sm-12" onclick="listMasuk()" type="submit"><span class="fa fa-search"></span> Cari</button>
 								</div>
-									<div class="col-sm-1">
-    <button type="button" class="btn bg-gradient-green shadow mb-3 rounded cetak-masuk-global" id="cetakGlobal" hidden="hidden" ><i class="fa fa-print"></i>  &nbsp;Cetak</button>
-								</div>
                                 
 						</div>
             </div>
@@ -262,7 +259,7 @@ $(document).on("click", ".cetak-masuk-detail", function() {
     var status_po = document.getElementById("status_po").value;
     var date1 = document.getElementById("tgl_awal").value;
     var date2 = document.getElementById("tgl_akhir").value;
-	var status = $(this).attr("data-status");
+    var lokasi = document.getElementById("lokasi").value;
     
 if (status_po == ""){
 Swal.fire({
@@ -275,8 +272,8 @@ Swal.fire({
 } else{
     $.ajax({
         type: 'GET',
-		url: '<?php echo base_url('ReportWhMasuk/CetakDetailMasuk'); ?>?date1'+date1+'&date2=' +date2+'&status_po=' +status_po+'&status=' +status,
-		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po,
+		url: '<?php echo base_url('ReportWhMasuk/CetakDetailMasuk'); ?>',
+		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&lokasi=' +lokasi,
         success: function(hasil) {
                 $('#modal-cetak-detail').html(hasil);
                 $('#cetak-masuk-detail').modal('show');
@@ -327,5 +324,32 @@ var id_keluar = document.getElementById('id_keluar').value;
         });
 
     }
-
+    $(document).on("click", ".back-list", function() {
+    
+    var status_po = document.getElementById("status_po").value;
+		var date1 = document.getElementById("tgl_awal").value;
+		var date2 = document.getElementById("tgl_akhir").value;
+    var lokasi = document.getElementById("lokasi").value;
+        if (status_po == ""){
+        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Status Belum ditentukan',
+                            showConfirmButton: false,
+                            timer: 900
+                        })
+        } else{
+		$.ajax({
+		type: 'GET',
+		url: '<?php echo base_url('ReportWhMasuk/listMasuk'); ?>',
+		data: 'date1=' +date1+'&date2=' +date2+'&status_po=' +status_po+'&lokasi=' +lokasi,
+			success:
+            function(hasil) {
+                document.getElementById("cetakGlobal").hidden = false;
+			//MyTable.fnDestroy();
+			$('#data-masuk').html(hasil);
+			//refresh();
+			}
+		});
+	}})
 </script>

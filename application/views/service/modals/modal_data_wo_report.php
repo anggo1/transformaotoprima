@@ -60,10 +60,6 @@ function printElement(elem) {
     }
 }
 
-body {
-    font-family: Arial;
-    font-size: 12px;
-}
 
 .table-isi {
     border-collapse: collapse;
@@ -71,6 +67,8 @@ body {
     border: 1px solid black; 
     padding: 1px 1px 5px 5px;
      margin-bottom: 30px;
+    height: 40px;
+    font-size: 14pt;
 }
 
 th,
@@ -98,7 +96,7 @@ td {
 .tableCetak th{
     padding: 1px 1px 5px 5px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 16pt;
     font: bold;
     border: none;
 }
@@ -106,7 +104,7 @@ td {
     
     padding: 1px 1px 5px 5px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 14pt;
     font: bold;
     border: 2px;
 }
@@ -132,7 +130,7 @@ td {
     border-bottom: 1px solid #000000;
     
     padding: 8px 10px;
-    font-size: 11pt;
+    font-size: 14pt;
     text-align: left;
     vertical-align: middle;
 }
@@ -140,12 +138,16 @@ td {
 /* Khusus untuk baris judul "Supporting Document" agar teksnya tebal */
 .tabel-spesifikasi .row-judul td {
     font-weight: bold;
-    font-size: 12pt;
+    font-size: 14pt;
 }
 
 /* Kolom kiri untuk label teks */
 .tabel-spesifikasi td.label-text {
-    font-size: 10.5pt;
+    font-size: 14pt;
+    border: 0px;
+}
+    .ttd th,td {
+    font-size: 14pt;
     border: 0px;
 }
 
@@ -300,39 +302,105 @@ ol.g {list-style-type: decimal;}
 
         <table border="1" cellspacing="0" cellpadding="0" class="table-isi" width="658">
   <tr>
+    <td colspan="10"><strong>Measurement Type/ Guidance test:</strong><strong> </strong></td>
+  </tr>
+  <tr>
+    <td width="206">&nbsp;</td>
+    <td width="130">Spesifikasi</td>
+    <td width="158">Aktual</td>
+    <td width="724" colspan="4" rowspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="206" height="40">Pengukuran Mekanis</td>
+    <td width="130">&nbsp;</td>
+    <td width="158">&nbsp;</td>
+    </tr>
+  <tr>
+    <td height="41">Pengukuran Elektrik</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="206">Print out DAS/Xentry</td>
+    <td width="130">&nbsp;</td>
+    <td width="158" height="41">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan="10" valign="top" height="131">&nbsp;</td>
+  </tr>     
+</table>   
+        <table border="1" cellspacing="0" cellpadding="0" class="table-isi" width="658">
+  <tr>
     <td colspan="10"><strong>Workshop Findings</strong><strong> </strong></td>
   </tr>
   <tr>
     <td width="206">&nbsp;</td>
-    <td width="130">Ada</td>
+    <td width="130" height="40">Ada</td>
     <td width="158">Tidak    Ada</td>
     <td width="724" colspan="4" rowspan="3">&nbsp;</td>
   </tr>
   <tr>
-    <td width="206">Photo    (# Lembar)</td>
+    <td width="206" height="40">Photo    (# Lembar)</td>
     <td width="130">&nbsp;</td>
     <td width="158">&nbsp;</td>
     </tr>
   <tr>
-    <td width="206">Video    (Nama File)</td>
+    <td width="206" height="40">Video    (Nama File)</td>
     <td width="130">&nbsp;</td>
     <td width="158">&nbsp;</td>
     </tr>
   <tr>
-    <td colspan="10" valign="top">Note:</td>
+    <td height="134" colspan="10" valign="top">Note:</td>
   </tr>     
-</table>           
+</table>         
 <table border="1" cellspacing="0" cellpadding="0" class="table-isi" width="100%">
   <tr>
     <td width="658" colspan="10"><strong>Rectification:</strong><strong> </strong></td>
   </tr>
   <tr>
-    <td width="658" height="90" colspan="10" valign="top"><p>&nbsp;</p></td>
+    <td width="658" height="111" colspan="10" valign="top"><p>&nbsp;</p></td>
   </tr>
   
 </table>
-  
-</table>
+<table width="100%" padding="5" border="0" cellpadding="5" cellspacing="0">
+        <tr>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+    </table>
+      <table width="100%" border="0" cellpadding="5" class="ttd" cellspacing="0">
+        <tr align="center">
+          <td width="25%">Supervisor</td>
+          <td width="25%">&nbsp;</td>
+          <td width="25%">&nbsp;</td>
+          <td width="25%">Mekanik</td>
+        </tr>
+        <tr align="center">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+                    <tr align="center">
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <th height="28">&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    <tr align="center">
+                      <td>........................................<br>
+                      Nama dan tanda tangan</td>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                      <td>........................................<br>
+Nama dan tanda tangan</td>
+                    </tr>
+      </table>
             <p><span style="padding: 15px;" class="footer-image-container"><img
                         src="<?php echo base_url(); ?>assets\foto\logo\<?php echo  $apl1->footer; ?>"
                         width="100%"></span></p>

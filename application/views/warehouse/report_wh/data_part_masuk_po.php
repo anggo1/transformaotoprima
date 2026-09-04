@@ -1,26 +1,9 @@
 <?php
 if(!empty($dataMasuk)){
 foreach ($dataMasuk as $st) {}}
-$btColor="";
-$btColor1="";
-$btColor2="";
-if($st->status=="PPU"){
-$btColor='bg-gradient-navy';
-$btColor1='bg-gradient-blue';
-$btColor2='bg-gradient-blue';
-} if($st->status=="MPU") {
-$btColor='bg-gradient-blue';
-$btColor1='bg-gradient-navy';
-$btColor2='bg-gradient-navy';
-}
 ?>
 <div class="col-12 ">
-    
-<button type="button" class="btn <?php echo $btColor ?> shadow mb-3 rounded list-barang-ppu"><i class="fa fa-id-card-alt"></i>  &nbsp;P P U</button>
-    <button type="button" class="btn <?php echo $btColor1 ?> shadow mb-3 rounded list-barang-mpu"><i class="fa fa-id-card-alt"></i>  &nbsp;M P U</button>
-    <button type="button" class="btn bg-gradient-blue shadow mb-3 rounded list-detail-barang" data-status="<?php echo $st->status ?>"><i class="fa fa-indent"></i>  &nbsp;Detail <?php echo $st->status ?></button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded <?php if($st->status=="PPU"){ echo 'cetak-masuk-ppu';} if($st->status=="MPU") { echo 'cetak-masuk-mpu';}?>"><i class="fa fa-print"></i>  &nbsp;CETAK</button>
-    <div class="table-responsive">
+ <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-data">
             <thead>
                 <tr>

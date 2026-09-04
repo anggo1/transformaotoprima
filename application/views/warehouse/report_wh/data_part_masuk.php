@@ -89,7 +89,7 @@ var MyTable = $('#list-data').DataTable({
         //},
         {
             text: '<i class="fa fa-list-ol"></i> Detail',
-            className: 'btn btn-sm btn-outline-primary detail-barang',
+            className: 'btn btn-sm btn-outline-primary list-detail-barang',
             init: function(api, node, config) {
                 $(node).removeClass('btn-secondary')
             }

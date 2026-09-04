@@ -149,18 +149,7 @@ th {
 <?php
 $judul="";
 $subB="";
-if($status=="PPU"){
 $judul="REKAPITULASI PENERIMAAN DETAIL BARANG NON PO";
-$subB="PRIMAJASA PERDANARAYA UTAMA";
-}
-if($status=="MPU") {
-$judul="REKAPITULASI PENERIMAAN DETAIL BARANG NON PO";
-$subB="MAMERA PERDANA UTAMA";
-}
-if($status=="GLOBAL") {
-$judul="LAPORAN PENERIMAAN BARANG DENGAN PO GLOBAL";
-$subB="PPU & MPU";
-}
 ?>
 <div class="modal-body">
     <div id="bagianCetak">
@@ -230,7 +219,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->jumlah; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo $s->hrg_awal; ?></td>
+                    <td><?php echo $s->hrg_part; ?></td>
                     <td align="right"><?php echo number_format($s->total); ?></td>
                             </tr>
                             <?php
@@ -255,7 +244,7 @@ $(document).ready(function() {
     var table = $('#list-cetak-detail-npo').dataTable({
         "paging": false,
         "lengthChange": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "info": true,
         "processing": true,
@@ -305,7 +294,7 @@ $(document).ready(function() {
         processColumnNodes($('#list-cetak-detail-npo').DataTable());
     });
 
-    function processColumnNodes(tbl) {
+   function processColumnNodes(tbl) {
         // see https://datatables.net/reference/type/selector-modifier
         var selector_modifier = {
             order: 'current',
@@ -316,8 +305,14 @@ $(document).ready(function() {
         var previous = '';
         var officeNodes = tbl.column(0, selector_modifier).nodes();
         var officeNodes1 = tbl.column(1, selector_modifier).nodes();
+        var officeNodes2 = tbl.column(2, selector_modifier).nodes();
+        var officeNodes3 = tbl.column(3, selector_modifier).nodes();
+        var officeNodes4 = tbl.column(4, selector_modifier).nodes();
         var officeData = tbl.column(0, selector_modifier).data();
         var officeData1 = tbl.column(1, selector_modifier).data();
+        var officeData2 = tbl.column(2, selector_modifier).data();
+        var officeData3 = tbl.column(3, selector_modifier).data();
+        var officeData4 = tbl.column(4, selector_modifier).data();
         for (var i = 0; i < officeData.length; i++) {
             var current = officeData[i];
             if (current === previous) {
@@ -335,6 +330,36 @@ $(document).ready(function() {
                 officeNodes1[i].setAttribute("style", "border-top:none;");
             } else {
                 officeNodes1[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData2.length; i++) {
+            var current = officeData2[i];
+            if (current === previous) {
+                officeNodes2[i].textContent = '';
+                officeNodes2[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes2[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData3.length; i++) {
+            var current = officeData3[i];
+            if (current === previous) {
+                officeNodes3[i].textContent = '';
+                officeNodes3[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes3[i].textContent = current;
+            }
+            previous = current;
+        }
+        for (var i = 0; i < officeData4.length; i++) {
+            var current = officeData4[i];
+            if (current === previous) {
+                officeNodes4[i].textContent = '';
+                officeNodes4[i].setAttribute("style", "border-top:none;");
+            } else {
+                officeNodes4[i].textContent = current;
             }
             previous = current;
         }

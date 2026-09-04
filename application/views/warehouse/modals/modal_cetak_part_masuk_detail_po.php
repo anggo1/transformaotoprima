@@ -148,19 +148,7 @@ th {
         </button>
 <?php
 $judul="";
-$subB="";
-if($status=="PPU"){
 $judul="REKAPITULASI PENERIMAAN DETAIL BARANG DENGAN PO";
-$subB="PRIMAJASA PERDANARAYA UTAMA";
-}
-if($status=="MPU") {
-$judul="REKAPITULASI PENERIMAAN DETAIL BARANG DENGAN PO";
-$subB="MAMERA PERDANA UTAMA";
-}
-if($status=="GLOBAL") {
-$judul="LAPORAN PENERIMAAN BARANG DENGAN PO GLOBAL";
-$subB="PPU & MPU";
-}
 ?>
 <div class="modal-body">
     <div id="bagianCetak">
@@ -174,14 +162,6 @@ $subB="PPU & MPU";
                                     <H4><?php echo $judul ?></H4>
                                 </div>
                                 <div align="left"></div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div align="left">Sub Bagian</div>
-                            </th>
-                            <th>
-                                <div align="left"> : <?php echo $subB ?></div>
                             </th>
                         </tr>
                         <tr>
@@ -232,7 +212,7 @@ foreach ($dataMasuk as $s) {
                                 <td><?php echo $s->nama_part; ?></td>
                                 <td><?php echo $s->jumlah; ?></td>
                                 <td><?php echo $s->satuan; ?></td>
-                                <td><?php echo $s->hrg_awal; ?></td>
+                                <td><?php echo $s->hrg_part; ?></td>
                                 <td align="right"><?php echo number_format($s->total); ?></td>
                             </tr>
                             <?php

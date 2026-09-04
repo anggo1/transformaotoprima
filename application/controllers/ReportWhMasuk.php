@@ -177,7 +177,7 @@ class ReportWhMasuk extends MY_Controller
 	}
     public function CetakDetailMasuk() {
         $status_po 				= $_GET['status_po'];
-        $status 				= $_GET['status'];
+        $lokasi 				= $_GET['lokasi'];
         $date1 				= $_GET['date1'];
         $date2 				= $_GET['date2'];
 		$tgl1 = explode('-',$date1);
@@ -186,9 +186,9 @@ class ReportWhMasuk extends MY_Controller
 		$ttmp2 = $tgl2[2]."-".$tgl2[1]."-".$tgl2[0]."";
         $data['tgl_awal'] = $date1;
         $data['tgl_akhir'] = $date2;
-        $data['status'] = $status;
+        $data['lokasi'] = $lokasi;
         $data['status_po'] = $status_po;
-		$data['dataMasuk'] = $this->Mod_reportwh->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$status); 
+		$data['dataMasuk'] = $this->Mod_reportwh->cari_detail_masuk($ttmp1,$ttmp2,$status_po,$lokasi); 
         if($status_po=='Y'){
             echo show_my_print('warehouse/modals/modal_cetak_part_masuk_detail_po', 'cetak-masuk-detail', $data, ' modal-xl');
         }else{

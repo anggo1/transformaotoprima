@@ -9,8 +9,6 @@ $btColor2='bg-gradient-navy';
 ?>
 <div class="col-12 ">
     
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded list-detail-barang" data-status="" data-po="<?php echo $status_po ?>"><i class="fa fa-indent"></i>  &nbsp;Detail <?php echo $st->status ?></button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded cetak-masuk-detail" data-status="" data-po="<?php echo $status_po ?>"><i class="fa fa-print"></i>  &nbsp;CETAK DETAIL</button>
     <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-dataDetail">
             <thead>
@@ -81,6 +79,13 @@ $(document).ready(function() {
         "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
         "buttons": [
         {
+            text: '<i class="fa fa-reply-all"></i> Kembali',
+            className: 'btn btn-sm bg-gradient-blue back-list',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        },
+        {
            extend: 'excelHtml5',
            text: '<i class="fas fa-file-excel"></i> Excel',
            titleAttr: 'Excel',
@@ -88,7 +93,7 @@ $(document).ready(function() {
             title: function() {
                 return "<div style='font-size: 20px;'>Report Barang Keluar Dengan PK</div>";
                },
-            className: 'btn btn-sm btn-outline-primary',
+            className: 'btn btn-sm bg-gradient-navy',
             init: function(api, node, config) {
                 $(node).removeClass('btn-secondary')
            },
@@ -97,15 +102,8 @@ $(document).ready(function() {
            }
         },
         {
-            text: '<i class="fa fa-list-ol"></i> Detail',
-            className: 'btn btn-sm btn-outline-primary list-detail-barang',
-            init: function(api, node, config) {
-                $(node).removeClass('btn-secondary')
-            }
-        },
-        {
             text: '<i class="fa fa-print"></i> Cetak',
-            className: 'btn btn-sm btn-outline-primary cetak-keluar-data',
+            className: 'btn btn-sm btn-outline-primary cetak-masuk-detail',
             init: function(api, node, config) {
                 $(node).removeClass('btn-secondary')
             }

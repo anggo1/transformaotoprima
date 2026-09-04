@@ -98,7 +98,7 @@ th {
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>No Ref</th>
+                                <th>No DO</th>
                                 <th>Tujuan</th>
                                 <th>Tgl Keluar</th>
                                 <th>No</th>

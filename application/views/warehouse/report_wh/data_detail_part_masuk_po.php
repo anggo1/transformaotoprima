@@ -1,24 +1,8 @@
 <?php
 if(!empty($dataMasuk)){
 foreach ($dataMasuk as $st) {}}
-$btColor="";
-$btColor1="";
-$btColor2="";
-if($status=="PPU"){
-$btColor='bg-gradient-navy';
-$btColor1='bg-gradient-blue';
-} if($status=="MPU") {
-$btColor='bg-gradient-blue';
-$btColor1='bg-gradient-navy';
-$btColor2='bg-gradient-navy';
-}
 ?>
 <div class="col-12 ">
-    
-<button type="button" class="btn <?php echo $btColor ?> shadow mb-3 rounded list-barang-ppu"><i class="fa fa-id-card-alt"></i>  &nbsp;P P U</button>
-    <button type="button" class="btn <?php echo $btColor1 ?> shadow mb-3 rounded list-barang-mpu"><i class="fa fa-id-card-alt"></i>  &nbsp;M P U</button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded list-detail-barang" data-status="<?php echo $status ?>" data-po="<?php echo $status_po ?>"><i class="fa fa-indent"></i>  &nbsp;Detail <?php echo $st->status ?></button>
-    <button type="button" class="btn bg-gradient-navy shadow mb-3 rounded cetak-masuk-detail" data-status="<?php echo $status ?>" data-po="<?php echo $status_po ?>"><i class="fa fa-print"></i>  &nbsp;CETAK DETAIL</button>
     <div class="table-responsive">
         <table class="table table-bordered table-hover nowrap" id="list-dataDetail">
             <thead>
@@ -57,7 +41,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->jumlah; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo $s->hrg_awal; ?></td>
+                    <td><?php echo $s->hrg_part; ?></td>
                     <td align="right"><?php echo number_format($s->total); ?></td>
                 </tr>
                 <?php
@@ -86,6 +70,41 @@ $(document).ready(function() {
         "language": {
             "processing": '<i class="fa fa-spinner fa-spin fa-3x"></i>'
         },
+        "dom": "<'row'<'col-sm-3 text-left'l><'col-sm-5 text-center'B><'col-sm-4 text-right'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+        "buttons": [
+        {
+            text: '<i class="fa fa-reply-all"></i> Kembali',
+            className: 'btn btn-sm bg-gradient-blue  shadow mb-3 rounded back-list',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        },
+        {
+           extend: 'excelHtml5',
+           text: '<i class="fas fa-file-excel"></i> Excel',
+           titleAttr: 'Excel',
+			footer: true,
+            title: function() {
+                return "Report Barang Keluar Dengan PK";
+               },
+            className: 'btn btn-sm bg-gradient-navy shadow mb-3 rounded',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+           },
+            exportOptions: {
+               columns: [0, 1, 2, 3, 4, 5,6,7,8,9,10,11]
+           }
+        },
+        {
+            text: '<i class="fa fa-print"></i> Cetak',
+            className: 'btn btn-sm btn-outline-primary shadow mb-3 rounded cetak-masuk-detail',
+            init: function(api, node, config) {
+                $(node).removeClass('btn-secondary')
+            }
+        }
+    ],
         "footerCallback": function (row, data, start, end, display) {
         var api = this.api();
         var intVal = function (i) {
