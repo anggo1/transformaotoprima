@@ -69,23 +69,23 @@ class PartKeluarPo extends MY_Controller
 		$query = "SELECT max(kode_keluar) AS maxKode FROM tbl_wh_part_keluar_po WHERE kode_keluar LIKE '%$date%'";
 		$hasil = $ci_kons->db->query($query)->row_array();
 		$noOrder = $hasil['maxKode'];
-		$noUrut = (int)substr($noOrder, 5, 4);
+		$noUrut = (int)substr($noOrder, 7, 4);
 		$noUrut++;
 		$tahun = substr($date, 0, 2);
 		$bulan = substr($date, 2, 2);
 
 		$kd = '';
 		if ($idlokasi == 'Cibitung') {
-			$kd = 'CBT-';
+			$kd = 'CBT';
 		}
 		if ($idlokasi == 'Jakarta') {
-			$kd = 'JKT-';
+			$kd = 'JKT';
 		}
 		if ($idlokasi == 'Surabaya') {
-			$kd = 'SBY-';
+			$kd = 'SBY';
 		}
-		$kode_awal  = $tahun . $bulan . sprintf("%04s", $noUrut);
-		$kode_keluar  = $kd . $kode_awal;
+		$kode_awal  = $bulan.'/'.$tahun.'/'. sprintf("%04s", $noUrut);
+		$kode_keluar  = 'DO/SP/TOP/' . $kd.'/'. $kode_awal;
 
 
 		$this->form_validation->set_rules('tgl_keluar', 'Tanggal PO', 'trim|required');
