@@ -17,7 +17,7 @@ $idlokasi = $this->session->userdata['lokasi'];
 		$query = "SELECT max(kode_keluar) AS maxKode FROM tbl_wh_part_keluar_po WHERE kode_keluar LIKE '%$date%'";
 		$hasil = $ci_kons->db->query($query)->row_array();
 		$noOrder = $hasil['maxKode'];
-		$noUrut = (int)substr($noOrder, 5, 4);
+		$noUrut = (int)substr($noOrder, 7, 4);
 		$noUrut++;
 		$tahun = substr($date, 0, 2);
 		$bulan = substr($date, 2, 2);
@@ -70,9 +70,8 @@ $idlokasi = $this->session->userdata['lokasi'];
 									</div>
 									<label class="col-sm-2 col-form-label">No PO</label>
 									<div class="col-sm-1">
-										<input type="text" name="id_po_masuk" id="id_po_masuk" class="form-control" placeholder="Surat Jalan Barang">
-										<input type="text" name="id_po_masuk" id="id_po_masuk" value="<?php echo $kode_keluar ?>" class="form-control" placeholder="Surat Jalan Barang">
-									</div>
+										<input type="text" name="kode_keluar" id="kode_keluar" class="form-control" value="<?php echo $kode_awal?>" readonly>
+										<input type="text" name="id_po_masuk" id="id_po_masuk" class="form-control" placeholder="Surat Jalan Barang"></div>
 									<div class="col-sm-3">
 										<input type="text" name="kode_po" onclick="showPo()" id="kode_po" data-toggle="modal" data-target="#modal_po" class="form-control" placeholder="Kode Purchase Order">
 									</div>
@@ -80,7 +79,7 @@ $idlokasi = $this->session->userdata['lokasi'];
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">No SJ</label>
 									<div class="col-sm-4">
-										<input type="text" name="no_sj" id="no_sj" class="form-control" placeholder="Surat Jalan Barang">
+										<input type="text" name="no_sj" id="no_sj" class="form-control" value="<?php echo $kode_keluar ?>" readonly placeholder="Surat Jalan Barang">
 									</div>
 									<label class="col-sm-2 col-form-label">No Order</label>
 									<div class="col-sm-4">
