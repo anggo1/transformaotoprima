@@ -27,8 +27,8 @@ foreach ($dataBody as $s) {
                     <td><?php echo $s->no_part; ?></td>
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->jumlah; ?></td>
-                    <td><?php echo number_format($s->hrg_part); ?></td>
-                    <td><?php echo number_format($s->hrg_part * $s->jumlah); ?></td>
+                    <td><?php echo nf($s->hrg_part); ?></td>
+                    <td><?php echo nf($s->hrg_part * $s->jumlah); ?></td>
                 </tr>
                 <?php
     $no++;

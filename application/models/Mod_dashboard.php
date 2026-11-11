@@ -9,10 +9,8 @@ class Mod_dashboard extends CI_Model {
         $this->load->database();
     }
     public function total_bus() {
-		//$this->db->where('status', 'AKTIF');
-		$data = $this->db->get('tbl_wh_body');
-
-		return $data->num_rows();
+		// COUNT(*) di database (sebelumnya seluruh baris diambil hanya untuk dihitung)
+		return $this->db->table_exists('tbl_wh_body') ? $this->db->count_all('tbl_wh_body') : 0;
 	}
     function total_antri()
 	{		
@@ -49,10 +47,88 @@ class Mod_dashboard extends CI_Model {
 		return $data->num_rows();
 	}
     public function total_barang() {
-		//$this->db->where('status', 'AKTIF');
-		$data = $this->db->get('tbl_wh_barang');
+		return $this->db->count_all('tbl_wh_barang');
+	}
 
-		return $data->num_rows();
+	/* ------------------------------------------------------------------
+	 * Ringkasan dashboard v2
+	 * ---------------------------------------------------------------- */
+	/** nama lokasi sesi -> akhiran kolom stok (cbt/jkt/sby) */
+	public function kode_lokasi($lokasi)
+	{
+		$l = strtolower($lokasi);
+		if (strpos($l, 'jak') !== false) return 'jkt';
+		if (strpos($l, 'sura') !== false || strpos($l, 'sby') !== false) return 'sby';
+		return 'cbt';
+	}
+
+	public function ringkasan_gudang($lok)
+	{
+		$lok = in_array($lok, array('cbt', 'jkt', 'sby'), true) ? $lok : 'cbt';
+		$stok = "stok_$lok"; $hrg = "hrg_net_$lok";
+		$r = $this->db->select("COUNT(*) AS item, SUM(CASE WHEN $stok > 0 THEN 1 ELSE 0 END) AS ada, SUM($stok * $hrg) AS nilai", false)
+			->get('tbl_wh_barang')->row();
+		$min = $this->db->select('COUNT(*) AS n', false)->from('tbl_wh_barang')
+			->where("stok_min <> ''", null, false)->where("stok_min <> '0'", null, false)
+			->where("$stok < (stok_min + 0)", null, false)->get()->row();
+		$po = $this->db->table_exists('tbl_wh_po') ? $this->db->where('status_po', 'N')->count_all_results('tbl_wh_po') : 0;
+		$bulan = date('Y-m-01');
+		$kel = $this->db->table_exists('tbl_wh_detail_part_keluar')
+			? $this->db->select('COUNT(DISTINCT id_keluar) AS dok, SUM(hrg_part * jumlah) AS nilai', false)
+				->where('tgl_keluar >=', $bulan)->get('tbl_wh_detail_part_keluar')->row()
+			: (object) array('dok' => 0, 'nilai' => 0);
+		return (object) array('item' => (int) $r->item, 'ada' => (int) $r->ada, 'nilai' => (float) $r->nilai,
+			'dibawah_min' => (int) $min->n, 'po_terbuka' => (int) $po, 'keluar_dok' => (int) $kel->dok, 'keluar_nilai' => (float) $kel->nilai);
+	}
+
+	/** nilai barang keluar per divisi: bulan lalu vs bulan ini */
+	public function keluar_per_divisi($dari, $sampai)
+	{
+		if ( ! $this->db->table_exists('tbl_wh_detail_part_keluar')) return array();
+		$awalIni = date('Y-m-01');
+		$rows = $this->db->select("COALESCE(NULLIF(nama_divisi,''),'Lainnya') AS divisi, SUM(CASE WHEN tgl_keluar >= '$awalIni' THEN hrg_part * jumlah ELSE 0 END) AS ini, SUM(CASE WHEN tgl_keluar < '$awalIni' THEN hrg_part * jumlah ELSE 0 END) AS lalu", false)
+			->where('tgl_keluar >=', $dari)->where('tgl_keluar <=', $sampai)
+			->group_by("COALESCE(NULLIF(nama_divisi,''),'Lainnya')", false)->get('tbl_wh_detail_part_keluar')->result();
+		usort($rows, function ($a, $b) { return ($b->ini + $b->lalu) <=> ($a->ini + $a->lalu); });
+		return array_slice($rows, 0, 8);
+	}
+
+	/** tren nilai barang keluar n bulan terakhir */
+	public function tren_keluar($n = 6)
+	{
+		$out = array();
+		if ( ! $this->db->table_exists('tbl_wh_detail_part_keluar')) return $out;
+		$awal = date('Y-m-01', strtotime('-' . ($n - 1) . ' month', strtotime(date('Y-m-01'))));
+		$map = array();
+		foreach ($this->db->select('SUBSTR(tgl_keluar,1,7) AS p, SUM(hrg_part * jumlah) AS v', false)
+			->where('tgl_keluar >=', $awal)->group_by('SUBSTR(tgl_keluar,1,7)', false)->get('tbl_wh_detail_part_keluar')->result() as $r) $map[$r->p] = (float) $r->v;
+		for ($i = $n - 1; $i >= 0; $i--) {
+			$p = date('Y-m', strtotime('-' . $i . ' month', strtotime(date('Y-m-01'))));
+			$out[$p] = isset($map[$p]) ? $map[$p] : 0;
+		}
+		return $out;
+	}
+
+	public function ringkasan_keuangan()
+	{
+		$this->load->library('akuntansi');
+		$this->load->model('accounting/Mod_lapkeu');
+		$this->load->model('accounting/Mod_acctrx');
+		$kas = 0;
+		foreach ($this->Mod_acctrx->saldo_kas() as $s) $kas += $s->saldo;
+		$ar = $this->db->table_exists('tbl_acc_faktur') ? $this->Mod_acctrx->ringkasan_faktur('AR') : (object) array('sisa' => 0, 'sisa_lewat' => 0, 'n' => 0);
+		$ap = $this->db->table_exists('tbl_acc_faktur') ? $this->Mod_acctrx->ringkasan_faktur('AP') : (object) array('sisa' => 0, 'sisa_lewat' => 0, 'n' => 0);
+		$tren = array();
+		for ($i = 5; $i >= 0; $i--) {
+			$a = date('Y-m-01', strtotime('-' . $i . ' month', strtotime(date('Y-m-01'))));
+			$b = date('Y-m-t', strtotime($a));
+			$lr = $this->Mod_lapkeu->laba_rugi(array(array('label' => '', 'dari' => $a, 'sampai' => $b)));
+			$pend = $lr['seksi']['PENDAPATAN']->total[0] + $lr['seksi']['PENDAPATAN_LAIN']->total[0];
+			$beban = $lr['seksi']['HPP']->total[0] + $lr['seksi']['BEBAN']->total[0] + $lr['seksi']['BEBAN_LAIN']->total[0] + $lr['seksi']['PAJAK_PENGHASILAN']->total[0];
+			$tren[substr($a, 0, 7)] = array('pendapatan' => $pend, 'beban' => $beban, 'laba' => $pend - $beban);
+		}
+		$ini = end($tren);
+		return (object) array('kas' => $kas, 'piutang' => $ar, 'hutang' => $ap, 'laba_bulan_ini' => $ini['laba'], 'tren' => $tren);
 	}
 
 
@@ -79,7 +155,7 @@ class Mod_dashboard extends CI_Model {
         $bln1 = date("m");
         $bln2 = date("m")-1;
         $thn = date("Y");
-        $sql = "SELECT  ket_pk as asalnye,COUNT(tujuan)AS jml FROM tbl_wh_part_keluar WHERE MONTH (tgl_keluar)='".$bln2."' AND YEAR (tgl_keluar)='".$thn."' GROUP BY ket_pk ";
+        $sql = "SELECT  ket_pk as asalnye,COUNT(tujuan)AS jml FROM tbl_wh_part_keluar WHERE MONTH (tgl_keluar)='".$this->db->escape_str((string) $bln2)."' AND YEAR (tgl_keluar)='".$this->db->escape_str((string) $thn)."' GROUP BY ket_pk ";
 		$data = $this->db->query($sql);
 
 		return $data->result();
@@ -88,7 +164,7 @@ class Mod_dashboard extends CI_Model {
         $bln1 = date("m");
         $bln2 = date("m");
         $thn = date("Y");
-        $sql = "SELECT  ket_pk as asalnye,COUNT(tujuan)AS jml, ket_pk as barang  FROM tbl_wh_part_keluar WHERE MONTH (tgl_keluar)='".$bln2."' AND YEAR (tgl_keluar)='".$thn."' GROUP BY ket_pk ";
+        $sql = "SELECT  ket_pk as asalnye,COUNT(tujuan)AS jml, ket_pk as barang  FROM tbl_wh_part_keluar WHERE MONTH (tgl_keluar)='".$this->db->escape_str((string) $bln2)."' AND YEAR (tgl_keluar)='".$this->db->escape_str((string) $thn)."' GROUP BY ket_pk ";
 		$data = $this->db->query($sql);
 
 		return $data->result();
@@ -99,7 +175,7 @@ class Mod_dashboard extends CI_Model {
         $thn = date("Y");
         $sql = "SELECT  COUNT(detail_pengiriman.id_satuan)AS jml, data_satuan.nama_satuan as barang FROM detail_pengiriman 
         LEFT JOIN data_satuan ON data_satuan.id_satuan=detail_pengiriman.id_satuan
-        WHERE MONTH (tgl_buat)='".$bln2."' AND YEAR (tgl_buat)='".$thn."' GROUP BY detail_pengiriman.id_satuan";
+        WHERE MONTH (tgl_buat)='".$this->db->escape_str((string) $bln2)."' AND YEAR (tgl_buat)='".$this->db->escape_str((string) $thn)."' GROUP BY detail_pengiriman.id_satuan";
 		  
 		$data = $this->db->query($sql);
 
@@ -108,7 +184,7 @@ class Mod_dashboard extends CI_Model {
 
 
 	function get_jabatan_by_id($jabatan){
-		$hsl=$this->db->query("select * from tbl_jabatan where id_jabatan='$jabatan'");
+		$hsl=$this->db->query("select * from tbl_jabatan where id_jabatan='".$this->db->escape_str((string) $jabatan)."'");
 		return $hsl;
 	}
 	
@@ -124,7 +200,7 @@ class Mod_dashboard extends CI_Model {
 		return $data->result();
 	}
     public function select_id_jabatan($id) {
-		$sql = " SELECT * FROM tbl_jabatan WHERE id_jabatan='{$id}'";
+		$sql = " SELECT * FROM tbl_jabatan WHERE id_jabatan='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -132,15 +208,15 @@ class Mod_dashboard extends CI_Model {
 	}
     public function insertJabatan($data) {
 		$sql = "INSERT INTO tbl_jabatan VALUES
-		('','".$data['jabatan']."')";
+		('','".$this->db->escape_str((string) $data['jabatan'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateJabatan($data) {
-		$sql = "UPDATE tbl_jabatan SET jabatan='" .$data['jabatan'] ."'
-        WHERE id_jabatan='" .$data['id_jabatan'] ."'";
+		$sql = "UPDATE tbl_jabatan SET jabatan='" .$this->db->escape_str((string) $data['jabatan']) ."'
+        WHERE id_jabatan='" .$this->db->escape_str((string) $data['id_jabatan']) ."'";
 
 		$this->db->query($sql);
 
@@ -158,7 +234,7 @@ class Mod_dashboard extends CI_Model {
 		return $data->result();
 	}
      public function select_id_departement($id) {
-		$sql = " SELECT * FROM tbl_departement WHERE id_departement='{$id}'";
+		$sql = " SELECT * FROM tbl_departement WHERE id_departement='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -166,15 +242,15 @@ class Mod_dashboard extends CI_Model {
 	}
      public function insertDepartement($data) {
 		$sql = "INSERT INTO tbl_departement VALUES
-		('','".$data['departement']."')";
+		('','".$this->db->escape_str((string) $data['departement'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateDepartement($data) {
-		$sql = "UPDATE tbl_departement SET departement='" .$data['departement'] ."'
-        WHERE id_departement='" .$data['id_departement'] ."'";
+		$sql = "UPDATE tbl_departement SET departement='" .$this->db->escape_str((string) $data['departement']) ."'
+        WHERE id_departement='" .$this->db->escape_str((string) $data['id_departement']) ."'";
 
 		$this->db->query($sql);
 

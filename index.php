@@ -53,34 +53,30 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	// Default "production" agar notice/deprecated PHP 8.x tidak tampil di layar
+	// dan tidak merusak respon JSON (AJAX). Untuk mode pengembangan, tambahkan
+	// baris berikut di .htaccess:   SetEnv CI_ENV development
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
 
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
  *---------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
+ * Kompatibel PHP 7.4 s/d 8.4 (E_STRICT tidak lagi dipakai karena
+ * konstanta tersebut deprecated di PHP 8.4).
  */
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(-1);
+		// Tampilkan semua error kecuali deprecated (deprecated tetap tercatat di log)
+		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 		ini_set('display_errors', 1);
 	break;
 
 	case 'testing':
 	case 'production':
 		ini_set('display_errors', 0);
-		if (version_compare(PHP_VERSION, '5.3', '>='))
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		}
-		else
-		{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-		}
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
 	break;
 
 	default:

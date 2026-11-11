@@ -212,8 +212,8 @@ foreach ($dataOpname as $s) {
                                     <td><?php echo $s->satuan; ?></td>
                                     <td><?php echo $s->stok_lama; ?></td>
                                     <td><?php echo $s->stok_fisik; ?></td>
-                                    <td style="text-align: right;"><?php echo number_format($s->hrg_awal); ?></td>
-                                    <td style="text-align: right;"><?php echo number_format($total_harga);?></td>
+                                    <td style="text-align: right;"><?php echo nf($s->hrg_awal); ?></td>
+                                    <td style="text-align: right;"><?php echo nf($total_harga);?></td>
                                 </tr>
                                 <?php
     $no++;

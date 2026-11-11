@@ -133,7 +133,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
 										foreach ($dataBuku as $s){ $totalSaldo= $s->data_debit-$s->data_kredit;} }?>
                                         <tr>
                                           <th colspan="7">Saldo</th>
-                                          <th style="text-align: right;"><?php echo number_format($s->data_debit-$s->data_kredit) ?></th>
+                                          <th style="text-align: right;"><?php echo nf($s->data_debit-$s->data_kredit) ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -160,18 +160,18 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             <td><?php echo tglIndopendek($a->tgl_jurnal) ?></td>
                                             <td><?php echo $a->no_jurnal ?></td>
                                             <td><?php echo $a->keterangan ?></td>
-                                            <td align="right"><?php echo number_format($a->debit) ?></td>
-                                            <td align="right"><?php echo number_format($a->kredit) ?></td>
-                                            <td align="right"><?php echo number_format($totalnye)?></td>
+                                            <td align="right"><?php echo nf($a->debit) ?></td>
+                                            <td align="right"><?php echo nf($a->kredit) ?></td>
+                                            <td align="right"><?php echo nf($totalnye)?></td>
                                         </tr><?php }} ?>
                                     </tbody>
                                     <tfoot>
 									 <tr>
                                             
 						                    <th style="text-align: right;" colspan="5" align="right">Total </th>
-                                            <th style="text-align: right;"><?php echo number_format($debit1) ?></th>
-                                            <th style="text-align: right;"><?php echo number_format($kredit1) ?></th>
-                                            <th style="text-align: right;"><?php echo number_format($debit1-$kredit1+$totalSaldo)?></th>
+                                            <th style="text-align: right;"><?php echo nf($debit1) ?></th>
+                                            <th style="text-align: right;"><?php echo nf($kredit1) ?></th>
+                                            <th style="text-align: right;"><?php echo nf($debit1-$kredit1+$totalSaldo)?></th>
                                       </tr>
                                     </tbody>
                                     <tfoot>

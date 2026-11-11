@@ -36,7 +36,7 @@ table.dataTable td {
         if ($total==0) {
             $total = '<font color=green>BALANCE</font>';
         } else {
-            $total=number_format($t_debit-$t_kredit);
+            $total=nf($t_debit-$t_kredit);
         }
         ?>
         <tr>
@@ -44,8 +44,8 @@ table.dataTable td {
             <td><?php echo $s->no_jurnal; ?></td>
             <td><?php echo $s->kode_akun; ?></td>
             <td><?php echo $s->nama_akun; ?></td>
-            <td align="right"><?php echo number_format($s->debit); ?></td>
-            <td align="right"><?php echo number_format($s->kredit); ?></td>
+            <td align="right"><?php echo nf($s->debit); ?></td>
+            <td align="right"><?php echo nf($s->kredit); ?></td>
             <td><?php echo $s->keterangan; ?></td>
             <td class="text-center">
                     <button class="btn btn-sm bg-gradient-red" onclick="delData(event,'<?php echo $s->id_jurnal; ?>')"><i class="fas fa-trash"></i></button>
@@ -63,10 +63,10 @@ table.dataTable td {
             <th></th>
             <th></th>
             <th style="text-align: right;"><?php if(!empty($t_debit)) {
-                echo number_format($t_debit);
+                echo nf($t_debit);
             } ?></th>
             <th style="text-align: right;"><?php if(!empty($t_kredit)) {
-                echo number_format($t_kredit);
+                echo nf($t_kredit);
             } ?></th>
             <th style="text-align: right;"><?php if(!empty($total)) {
                 echo $total;

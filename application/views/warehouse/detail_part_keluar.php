@@ -45,7 +45,7 @@
                 <td><?php echo $s->nama_part; ?></td>
                 <td><?php echo $s->satuan; ?></td>
                 <td><?php echo $stok; ?></td>
-                <td><?php echo number_format($harga); ?></td>
+                <td><?php echo nf($harga); ?></td>
                 <td class="jml">
                     <input type="number" name="qty_keluar[]" id="qty_keluar[]"
                         value="<?php echo $s->jumlah ?>"
@@ -61,9 +61,9 @@
                 <td><?php
                     if (!empty($s->jumlah)) {
                         if (empty($s->hrg_part)) {
-                            echo number_format($harga * $s->jumlah);
+                            echo nf($harga * $s->jumlah);
                         } else {
-                            echo number_format($harga * $s->jumlah);
+                            echo nf($harga * $s->jumlah);
                         }
                     }
                     ?></td>

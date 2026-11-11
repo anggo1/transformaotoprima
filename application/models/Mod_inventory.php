@@ -185,17 +185,17 @@ class Mod_inventory extends CI_Model
     {
         $sql = "INSERT INTO tbl_wh_barang SET
         id_barang   ='',
-        no_part     ='".$kode_part_auto."',
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        minstok_a   ='".$data['minstok_a']."',
-        minstok_p   ='".$data['minstok_p']."',
-        kelompok    ='".$idKel."',
-        type        ='".$idTy."',
-        lokasi      ='".$data['lokasi']."',
-        supplier    ='".$data['supplier']."',
-        ket         ='".$data['ket']."',
-        std_pakai   ='".$data['std_pakai']."'";
+        no_part     ='".$this->db->escape_str((string) $kode_part_auto)."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        minstok_a   ='".$this->db->escape_str((string) $data['minstok_a'])."',
+        minstok_p   ='".$this->db->escape_str((string) $data['minstok_p'])."',
+        kelompok    ='".$this->db->escape_str((string) $idKel)."',
+        type        ='".$this->db->escape_str((string) $idTy)."',
+        lokasi      ='".$this->db->escape_str((string) $data['lokasi'])."',
+        supplier    ='".$this->db->escape_str((string) $data['supplier'])."',
+        ket         ='".$this->db->escape_str((string) $data['ket'])."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'";
 
 		$this->db->query($sql);
 
@@ -204,18 +204,18 @@ class Mod_inventory extends CI_Model
     function updateSparepart($idKel,$idTy,$data)
     {
         $sql = "UPDATE tbl_wh_barang SET
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        minstok_a   ='".$data['minstok_a']."',
-        minstok_p   ='".$data['minstok_p']."',
-        type        ='".$idTy."',
-        kelompok    ='".$idKel."',
-        lokasi      ='".$data['lokasi']."',
-        supplier    ='".$data['supplier']."',
-        ket         ='".$data['ket']."',
-        std_pakai   ='".$data['std_pakai']."'
-        WHERE id_barang='".$data['id_barang']."'";
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        minstok_a   ='".$this->db->escape_str((string) $data['minstok_a'])."',
+        minstok_p   ='".$this->db->escape_str((string) $data['minstok_p'])."',
+        type        ='".$this->db->escape_str((string) $idTy)."',
+        kelompok    ='".$this->db->escape_str((string) $idKel)."',
+        lokasi      ='".$this->db->escape_str((string) $data['lokasi'])."',
+        supplier    ='".$this->db->escape_str((string) $data['supplier'])."',
+        ket         ='".$this->db->escape_str((string) $data['ket'])."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'
+        WHERE id_barang='".$this->db->escape_str((string) $data['id_barang'])."'";
 
 		$this->db->query($sql);
 
@@ -225,10 +225,10 @@ class Mod_inventory extends CI_Model
     {
         $stok=$data['stok_a'] + $data['stok_p'];
         $sql = "UPDATE tbl_wh_barang SET
-        stok_a  ='".$data['stok_a']."',
-        stok_p  ='".$data['stok_p']."',
-        stok    ='".$stok."'
-        WHERE id_barang='".$data['id_barang']."'";
+        stok_a  ='".$this->db->escape_str((string) $data['stok_a'])."',
+        stok_p  ='".$this->db->escape_str((string) $data['stok_p'])."',
+        stok    ='".$this->db->escape_str((string) $stok)."'
+        WHERE id_barang='".$this->db->escape_str((string) $data['id_barang'])."'";
 
 		$this->db->query($sql);
 
@@ -261,7 +261,7 @@ class Mod_inventory extends CI_Model
 
     function deletePart($id)
     {
-        $sql = "DELETE FROM tbl_wh_barang WHERE id_barang='{$id}'";
+        $sql = "DELETE FROM tbl_wh_barang WHERE id_barang='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

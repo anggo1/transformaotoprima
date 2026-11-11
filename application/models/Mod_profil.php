@@ -12,11 +12,11 @@ class Mod_profil extends CI_Model
 	public function data_baru($data,$Password) {
 		//$this->db->insert("user", $UserName,$FirstName,$Password,$data_foto);
 		$sql = "INSERT INTO user VALUES('',
-		'".$data['UserName']."',
-		'".$Password."',
-		'".$data['FirstName']."',
-		'','".$data['User_Type']."',
-		'".$data['foto']."')";
+		'".$this->db->escape_str((string) $data['UserName'])."',
+		'".$this->db->escape_str((string) $Password)."',
+		'".$this->db->escape_str((string) $data['FirstName'])."',
+		'','".$this->db->escape_str((string) $data['User_Type'])."',
+		'".$this->db->escape_str((string) $data['foto'])."')";
 		
 		$this->db->query($sql);
 

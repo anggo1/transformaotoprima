@@ -54,7 +54,7 @@
             </td>
             <td><?php 
             if(!empty($s->jumlah)){
-                 if(empty($s->hrg_part)) { echo number_format($s->harga_baru * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}
+                 if(empty($s->hrg_part)) { echo nf($s->harga_baru * $s->jumlah);}else{ echo nf($s->hrg_part * $s->jumlah);}
             }
              ?></td>
             <td class="text-center">

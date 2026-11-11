@@ -116,7 +116,7 @@ class Mod_aplikasi extends CI_Model
 	}
 	public function select_id_pool($id)
 	{
-		$sql = " SELECT * FROM tbl_kota WHERE kode_kota='{$id}'";
+		$sql = " SELECT * FROM tbl_kota WHERE kode_kota='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -126,7 +126,7 @@ class Mod_aplikasi extends CI_Model
 	{
 
 		$sql = "INSERT INTO tbl_kota VALUES
-		('','" . $data['kode_kota'] . "','" . $data['nama_kota'] . "','" . $data['wilayah'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_kota']) . "','" . $this->db->escape_str((string) $data['nama_kota']) . "','" . $this->db->escape_str((string) $data['wilayah']) . "')";
 
 		$this->db->query($sql);
 
@@ -134,8 +134,8 @@ class Mod_aplikasi extends CI_Model
 	}
 	public function updatePool($data)
 	{
-		$sql = "UPDATE tbl_kota SET kode_kota='" . $data['kode_kota'] . "',nama_kota='" . $data['nama_kota'] . "',wilayah='" . $data['wilayah'] . "'
-        WHERE kode_kota='" . $data['kode_kota'] . "'";
+		$sql = "UPDATE tbl_kota SET kode_kota='" . $this->db->escape_str((string) $data['kode_kota']) . "',nama_kota='" . $this->db->escape_str((string) $data['nama_kota']) . "',wilayah='" . $this->db->escape_str((string) $data['wilayah']) . "'
+        WHERE kode_kota='" . $this->db->escape_str((string) $data['kode_kota']) . "'";
 
 		$this->db->query($sql);
 
@@ -143,7 +143,7 @@ class Mod_aplikasi extends CI_Model
 	}
 	function deletePool($id)
 	{
-		$sql = "DELETE FROM tbl_kota WHERE id_kota='{$id}'";
+		$sql = "DELETE FROM tbl_kota WHERE id_kota='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

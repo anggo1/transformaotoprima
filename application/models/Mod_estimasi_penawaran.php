@@ -115,7 +115,7 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function deleteDetail_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran WHERE id_detail='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran WHERE id_detail='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -123,7 +123,7 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function deleteKeterangan_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_detail_note='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_detail_note='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -132,17 +132,17 @@ class Mod_estimasi_penawaran extends CI_Model
     public function insertNote($id)
     {        
         $sql_detil = "INSERT INTO tbl_wh_detail_estimasi_penawaran_note (id_estimasi_penawaran,remark) 
-        VALUES ('".$id."','Masa berlaku 7 hari'), 
-        ('".$id."','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
-        ('".$id."','Harga dapat berubah sewaktu-waktu'),
-        ('".$id."','Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
-        ('".$id."','Term of Payment Cash Before Delivery'),
-        ('".$id."','Harga Sudah Termasuk Diskon'),
-        ('".$id."','Barga Belum termasuk ongkos kirim'),
-        ('".$id."','Harga Belum termasuk jasa'),
-        ('".$id."','Semua sparepart yang kami tawarkan original Merced...'),
-        ('".$id."','Jika ada sparepart yang Tidak Ready maka Indent'),
-        ('".$id."','Pembayaran harap ditransfer atau Bilyet Giro atas ...')";
+        VALUES ('".$this->db->escape_str((string) $id)."','Masa berlaku 7 hari'), 
+        ('".$this->db->escape_str((string) $id)."','Stock sewaktu-waktu dapat berubah sesuai kebijakan'),
+        ('".$this->db->escape_str((string) $id)."','Harga dapat berubah sewaktu-waktu'),
+        ('".$this->db->escape_str((string) $id)."','Standar LOCO : Panjaitan, Cibitung, Osowilangun'),
+        ('".$this->db->escape_str((string) $id)."','Term of Payment Cash Before Delivery'),
+        ('".$this->db->escape_str((string) $id)."','Harga Sudah Termasuk Diskon'),
+        ('".$this->db->escape_str((string) $id)."','Barga Belum termasuk ongkos kirim'),
+        ('".$this->db->escape_str((string) $id)."','Harga Belum termasuk jasa'),
+        ('".$this->db->escape_str((string) $id)."','Semua sparepart yang kami tawarkan original Merced...'),
+        ('".$this->db->escape_str((string) $id)."','Jika ada sparepart yang Tidak Ready maka Indent'),
+        ('".$this->db->escape_str((string) $id)."','Pembayaran harap ditransfer atau Bilyet Giro atas ...')";
         $this->db->query($sql_detil);
         return $this->db->affected_rows();
     }
@@ -154,13 +154,13 @@ class Mod_estimasi_penawaran extends CI_Model
 		$harga_baru =str_replace(",","", $harga);
         $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
             id_detail       ='',
-            id_estimasi_penawaran           ='" . $data['id_estimasi_penawaran'] . "',
-            no_part     ='" . $data['no_part'] . "',
-            nama_part   ='" . $data['nama_part'] . "',
-            satuan      ='" . $data['satuan'] . "',
-            harga       ='" . $harga_baru. "',
-            harga_net   ='" . $harga_baru. "',
-            stok_akhir  ='" . $data['stok'] . "'";
+            id_estimasi_penawaran           ='" . $this->db->escape_str((string) $data['id_estimasi_penawaran']) . "',
+            no_part     ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part   ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            satuan      ='" . $this->db->escape_str((string) $data['satuan']) . "',
+            harga       ='" . $this->db->escape_str((string) $harga_baru). "',
+            harga_net   ='" . $this->db->escape_str((string) $harga_baru). "',
+            stok_akhir  ='" . $this->db->escape_str((string) $data['stok']) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -171,7 +171,7 @@ class Mod_estimasi_penawaran extends CI_Model
 		$total=$hrg_part * $jml_diskon / 100;
         $harga_asli = $hrg_part;
         $totalnya = $harga_asli - $total;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET diskon ='$jml_diskon', harga_net = '$totalnya' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET diskon ='".$this->db->escape_str((string) $jml_diskon)."', harga_net = '".$this->db->escape_str((string) $totalnya)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -180,20 +180,20 @@ class Mod_estimasi_penawaran extends CI_Model
 		{			
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET jumlah ='".$this->db->escape_str((string) $jml_part)."', total_harga = '".$this->db->escape_str((string) $total)."', sisa ='".$this->db->escape_str((string) $jml_part)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function update_remark($id,$remark)
 		{
-			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_estimasi_penawaran SET remark ='".$this->db->escape_str((string) $remark)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function insertRemark($id,$remark)
 		{
-			$sql_update = "INSERT tbl_wh_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '$id', remark ='$remark'";
+			$sql_update = "INSERT tbl_wh_detail_estimasi_penawaran_note SET id_estimasi_penawaran = '".$this->db->escape_str((string) $id)."', remark ='".$this->db->escape_str((string) $remark)."'";
             $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -216,16 +216,16 @@ class Mod_estimasi_penawaran extends CI_Model
         $datenow = date("Y-m-d");
         $sql = "INSERT INTO tbl_wh_detail_estimasi_penawaran SET
             id_detail       ='',
-            id_estimasi_penawaran   ='" . $kodenya . "',
-            kode_po         ='" . $koderefnya . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            harga_baru           ='" . $data['harga_baru'] . "',
-            jumlah          ='" . $data['jumlah'] . "',
-            diskon          ='" . $data['diskon'] . "',
-            total_diskon    ='" . $data['total_diskon'] . "',
-            total_harga     ='$total_harga',
-            stok_akhir     ='" . $data['stok_awal'] . "'";
+            id_estimasi_penawaran   ='" . $this->db->escape_str((string) $kodenya) . "',
+            kode_po         ='" . $this->db->escape_str((string) $koderefnya) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            harga_baru           ='" . $this->db->escape_str((string) $data['harga_baru']) . "',
+            jumlah          ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+            diskon          ='" . $this->db->escape_str((string) $data['diskon']) . "',
+            total_diskon    ='" . $this->db->escape_str((string) $data['total_diskon']) . "',
+            total_harga     ='".$this->db->escape_str((string) $total_harga)."',
+            stok_akhir     ='" . $this->db->escape_str((string) $data['stok_awal']) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -234,7 +234,7 @@ class Mod_estimasi_penawaran extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_estimasi_penawaran 
         LEFT JOIN tbl_wh_customer ON tbl_wh_customer.kode_cus=tbl_wh_estimasi_penawaran.id_customer
-        WHERE id_estimasi_penawaran ='{$id}'";
+        WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -245,7 +245,7 @@ class Mod_estimasi_penawaran extends CI_Model
         $ci = get_instance();
                 $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_estimasi_penawaran as a 
                     LEFT JOIN tbl_wh_estimasi_penawaran as b ON b.id_estimasi_penawaran=a.id_estimasi_penawaran
-                    WHERE a.id_estimasi_penawaran='{$id}'";
+                    WHERE a.id_estimasi_penawaran='".$this->db->escape_str((string) $id)."'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         $ppn       = $d_data['ppn'];
@@ -255,16 +255,16 @@ class Mod_estimasi_penawaran extends CI_Model
         $total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_estimasi_penawaran SET
-        t_ppn       ='$total_ppn',
-        sub_total   ='$total',
-        grand_total ='$grand_total'
-        WHERE id_estimasi_penawaran ='{$id}'";
+        t_ppn       ='".$this->db->escape_str((string) $total_ppn)."',
+        sub_total   ='".$this->db->escape_str((string) $total)."',
+        grand_total ='".$this->db->escape_str((string) $grand_total)."'
+        WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
         FROM tbl_wh_detail_estimasi_penawaran AS a
-        WHERE a.id_estimasi_penawaran ='{$id}' ORDER BY a.id_detail ASC";
+        WHERE a.id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -272,7 +272,7 @@ class Mod_estimasi_penawaran extends CI_Model
     }
     public function select_keterangan($id)
     {
-        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='{$id}' ORDER BY id_detail_note ASC";
+        $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."' ORDER BY id_detail_note ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -280,10 +280,10 @@ class Mod_estimasi_penawaran extends CI_Model
     function updatePo($a, $b, $c, $d)
     {
         $sql = "UPDATE tbl_wh_estimasi_penawaran SET
-        t_ppn       ='$a',
-        sub_total   ='$b',
-        grand_total ='$c'
-        WHERE id_estimasi_penawaran ='" . $data['id_estimasi_penawaran'] . "'";
+        t_ppn       ='".$this->db->escape_str((string) $a)."',
+        sub_total   ='".$this->db->escape_str((string) $b)."',
+        grand_total ='".$this->db->escape_str((string) $c)."'
+        WHERE id_estimasi_penawaran ='" . $this->db->escape_str((string) $data['id_estimasi_penawaran']) . "'";
 
         $this->db->query($sql);
 

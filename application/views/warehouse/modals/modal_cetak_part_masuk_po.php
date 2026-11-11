@@ -222,8 +222,8 @@
             <th><?php echo $d->nama_part ?></th>
             <th style="text-align: right;"><?php echo $d->jumlah ?></th>
             <th style="text-align: right;"><?php echo $d->nama_satuan ?></th>
-            <th style="text-align: right;"><?php echo number_format($harga) ?></th>
-            <th style="text-align: right;"><?php echo number_format($harga * $d->jumlah) ?></th>
+            <th style="text-align: right;"><?php echo nf($harga) ?></th>
+            <th style="text-align: right;"><?php echo nf($harga * $d->jumlah) ?></th>
             <th style="text-align: center;"><?php echo $stok-$d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $d->jumlah ?></th>
             <th style="text-align: center;"><?php echo $stok ?></th>
@@ -232,7 +232,7 @@
         endforeach ?>
         <tr>
           <th colspan="7" style="text-align: right;">Grand Total</th>
-          <th style="text-align: right;"><?php echo number_format($total) ?></th>
+          <th style="text-align: right;"><?php echo nf($total) ?></th>
           <th colspan="3" align="right">&nbsp;</th>
         </tr>
       </thead>

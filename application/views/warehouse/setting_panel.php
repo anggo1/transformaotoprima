@@ -1,274 +1,188 @@
-<style>
-    .table.DataTable {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 12px;
-    }
-
-    table.dataTable td {
-        padding: 5px;
-    }
-</style>
-<div class="row">
-    <div class="col-12 ">
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Voucher</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-voucher" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-voucher">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Periode</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-voucher">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-voucher"></div>
-                            </div>
-                        </div>
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+/* Pengaturan Gudang (master data). Tata letak tab; id tabel/tbody/modal sama seperti versi lama
+   sehingga seluruh proses tambah/ubah/hapus (AJAX) tetap berjalan seperti sebelumnya. */
+$jml = function ($t) { return $this->db->table_exists($t) ? $this->db->count_all($t) : 0; };
+?>
+<div class="wh-master">
+    <div class="row">
+        <div class="col-lg-3 mb-3">
+            <div class="card mb-0 h-100">
+                <div class="card-body p-2">
+                    <div class="text-muted small font-weight-bold text-uppercase px-2 pt-1 pb-2">Master data gudang</div>
+                    <div class="nav flex-column nav-pills wh-master__nav" role="tablist">
+                        <a class="nav-link active" data-toggle="pill" href="#wh-tab-satuan" role="tab"><i class="fas fa-ruler"></i><span>Satuan</span><b><?php echo nf($jml('tbl_wh_satuan')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-kategori" role="tab"><i class="fas fa-layer-group"></i><span>Kategori / Divisi</span><b><?php echo nf($jml('tbl_wh_kategori')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-kelompok" role="tab"><i class="fas fa-boxes"></i><span>Kelompok Rak</span><b><?php echo nf($jml('tbl_wh_kelompok')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-type" role="tab"><i class="fas fa-cogs"></i><span>Type Mesin</span><b><?php echo nf($jml('tbl_wh_type_mesin')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-supplier" role="tab"><i class="fas fa-truck"></i><span>Supplier</span><b><?php echo nf($jml('tbl_wh_supplier')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-customer" role="tab"><i class="fas fa-user-tie"></i><span>Customer</span><b><?php echo nf($jml('tbl_wh_customer')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#wh-tab-kode-po" role="tab"><i class="fas fa-tags"></i><span>Jenis Pesanan (Kode PO)</span><b><?php echo nf($jml('tbl_wh_kode_po')); ?></b></a>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Satuan</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-satuan" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-satuan">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Satuan</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-satuan">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-satuan"></div>
-                            </div>
-                        </div>
+                    <div class="wh-master__note">
+                        <i class="fas fa-info-circle"></i> Data master dipakai bersama oleh seluruh transaksi gudang. Hindari menghapus data yang sudah dipakai transaksi — ubah namanya saja.
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Kategori</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kategori" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-kategori">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Divisi</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-kategori">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-kategori"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="wh-tab-satuan" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-ruler mr-2 text-primary"></i>Satuan</h3>
+                                <div class="small text-muted mt-1">Satuan barang (PCS, SET, LITER, KG, dll). Dipakai di Material &amp; Sparepart, Purchase Order, penerimaan dan pengeluaran part.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-satuan" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-satuan">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Satuan</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-satuan"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-satuan"></div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-gear-b ion-lg text-blue"></i> &nbsp; Type Mesin
-                                    </h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-type" title="Add Data"><i class="fas fa-plus"></i> Add
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-type">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Nama</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-type">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-type"></div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-kategori" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2 text-primary"></i>Kategori / Divisi</h3>
+                                <div class="small text-muted mt-1">Pengelompokan utama barang (OIL, SPAREPART, BAN, ATK, ACCU, …). Menjadi dasar laporan <b>Report Per Divisi</b> dan analisis pemakaian.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-kategori" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-kategori">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Divisi</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-kategori"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-kategori"></div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog ion-lg text-blue"></i> &nbsp; Kode PO</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kode-po" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-po">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Keterangan</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-kode-po">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-kode-po"></div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-kelompok" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-boxes mr-2 text-primary"></i>Kelompok Rak</h3>
+                                <div class="small text-muted mt-1">Kelompok fisik/rak penyimpanan (Body, Elektrik, Interior, Jok, Cat, …). <b>Stock Opname</b> dilakukan per kelompok ini.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-kelompok" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-kelompok">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Kelompok</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-kelompok"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-kelompok"></div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-gear-a ion-lg text-blue"></i> &nbsp; Kelompok</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kelompok" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-kelompok">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Kelompok</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-kelompok">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-kelompok"></div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-type" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-cogs mr-2 text-primary"></i>Type Mesin</h3>
+                                <div class="small text-muted mt-1">Tipe kendaraan / mesin yang cocok dengan part. Membantu pencarian part dan penawaran.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-type" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-type">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Nama</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-type"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-type"></div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Supplier</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-supplier" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-supplier">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama Sup</th>
-                                                    <th>Nama Panjang</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-supplier">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-supplier"></div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-supplier" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-truck mr-2 text-primary"></i>Supplier</h3>
+                                <div class="small text-muted mt-1">Pemasok untuk Purchase Order / Part Order dan penerimaan barang. Isi juga <b>akun hutang</b> dan lawan akunnya agar terhubung ke modul Akuntansi.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-supplier" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-supplier">
+                                    <thead><tr><th style="width:50px">No</th><th>Nama Sup</th><th>Nama Panjang</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-supplier"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-supplier"></div>
                     </div>
-                    
-                    <div class="col-lg-3">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-header card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Customer</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-customer" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover nowrap" id="list-customer">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Kode</th>
-                                                    <th>Nama</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="data-customer">
-                                            </tbody>
-                                            <tfoot></tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div id="modal-customer"></div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-customer" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-user-tie mr-2 text-primary"></i>Customer</h3>
+                                <div class="small text-muted mt-1">Pelanggan untuk PO Masuk, Estimasi Penawaran, Part Keluar PO dan Surat Jalan.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-customer" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-customer">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Nama</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-customer"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
+                        <div id="modal-customer"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="wh-tab-kode-po" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-tags mr-2 text-primary"></i>Jenis Pesanan (Kode PO)</h3>
+                                <div class="small text-muted mt-1">Jenis pesanan pada Part Order &amp; Surat Jalan (VOR, WARRANTY, REGULAR-STOCK, COURIER, SPECIAL TOOLS).</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-kode-po" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover nowrap w-100" id="list-po">
+                                    <thead><tr><th style="width:50px">No</th><th>Kode</th><th>Keterangan</th><th class="text-center" style="width:90px">Aksi</th></tr></thead>
+                                    <tbody id="data-kode-po"></tbody>
+                                    <tfoot></tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="modal-kode-po"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+/* perbaiki lebar kolom DataTables saat tab dibuka */
+$(document).on('shown.bs.tab', '.wh-master__nav a', function () {
+    if ($.fn.dataTable) $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+});
+</script>
 
 <?php
 show_my_confirm('hapusSatuan', 'hapus-satuan', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');

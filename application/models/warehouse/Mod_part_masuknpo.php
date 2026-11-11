@@ -151,17 +151,17 @@ class Mod_part_masuknpo extends CI_Model
 		$harga_part =str_replace(",","", $harga);
 
         $sql = "INSERT INTO tbl_wh_detail_part_masuk SET
-        id_masuk    ='".$data['kode_masuk']."',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['no_part']."',
+        id_masuk    ='".$this->db->escape_str((string) $data['kode_masuk'])."',
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['no_part'])."',
         status_po   ='N',
-        tgl_masuk   ='$tgl_masuk',
+        tgl_masuk   ='".$this->db->escape_str((string) $tgl_masuk)."',
         jumlah      ='0',
-        satuan      ='".$data['satuan']."',
-        hrg_part    ='".$harga_part."',
-        stok_akhir  ='".$data['stok']."',
-        user        ='".$user."',
-        lokasi      ='".$idlokasi."'";
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        hrg_part    ='".$this->db->escape_str((string) $harga_part)."',
+        stok_akhir  ='".$this->db->escape_str((string) $data['stok'])."',
+        user        ='".$this->db->escape_str((string) $user)."',
+        lokasi      ='".$this->db->escape_str((string) $idlokasi)."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -170,13 +170,13 @@ class Mod_part_masuknpo extends CI_Model
 		{
 		$harga =str_replace(" ","", $hrg_part);
 
-	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET hrg_part ='$harga' WHERE id ='{$id}'"; $this->db->query($sql_update);
+	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET hrg_part ='".$this->db->escape_str((string) $harga)."' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
     function update_jml($id,$hrg_part)
 		{
 		$jumlah =str_replace(" ","", $hrg_part);
-	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
+	    $sql_update = "UPDATE tbl_wh_detail_part_masuk SET jumlah ='".$this->db->escape_str((string) $jumlah)."' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
     public function insert_global($kode_masuk, $data,$no_part,$nama_part,$qty_masuk,$stok,$stok_jkt,$stok_cbt,$stok_sby)
@@ -223,12 +223,12 @@ class Mod_part_masuknpo extends CI_Model
     }}
         $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
 
-        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$idlokasi."', tgl_masuk='".$tgl_masuk."', part_return='".$ret."', lokasi='".$idlokasi."' WHERE id_masuk ='".$data['kode_masuk']."'"; $this->db->query($sql_update);
+        $sql_update = "UPDATE tbl_wh_detail_part_masuk SET status_part ='".$this->db->escape_str((string) $idlokasi)."', tgl_masuk='".$this->db->escape_str((string) $tgl_masuk)."', part_return='".$this->db->escape_str((string) $ret)."', lokasi='".$this->db->escape_str((string) $idlokasi)."' WHERE id_masuk ='".$this->db->escape_str((string) $data['kode_masuk'])."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
     }
     public function deletepartDetail($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 

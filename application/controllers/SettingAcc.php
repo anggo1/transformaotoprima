@@ -19,6 +19,7 @@ class SettingAcc extends MY_Controller
 		$data['page'] 		= "Panel Setting Accounting";
 		$data['judul'] 		= "Panel Setting";
         $this->load->helper('url');
+        $this->load->library('akuntansi');
         $data['menu'] = $this->Mod_menu->getAll()->result();
         echo show_my_modal('accounting/modals/modal_tambah_kel', 'tambah-kelompok', $data);
         echo show_my_modal('accounting/modals/modal_tambah_type', 'tambah-type', $data);

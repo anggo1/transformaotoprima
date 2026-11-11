@@ -334,14 +334,14 @@
         <td><?php echo $x->no_part ?></td>
         <td><?php echo $x->nama_part ?></td>
         <td><?php echo $x->satuan ?></td>
-        <td align="right"><?php echo number_format($x->harga) ?></td>
+        <td align="right"><?php echo nf($x->harga) ?></td>
         <td align="center"><?php echo $x->jumlah ?></td>
-        <td align="right"><?php echo number_format($x->harga * $x->jumlah) ?></td>
+        <td align="right"><?php echo nf($x->harga * $x->jumlah) ?></td>
       </tr>
       <?php  endforeach ?>
       <tr>
         <td colspan="6" align="right">Grand Total</td>
-        <td align="right"><?php echo number_format($grandtotal) ?></td>
+        <td align="right"><?php echo nf($grandtotal) ?></td>
       </tr>
      
    </thead>

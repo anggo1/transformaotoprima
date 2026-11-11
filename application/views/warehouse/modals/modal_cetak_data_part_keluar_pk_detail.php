@@ -128,8 +128,8 @@ th {
                                 <td><?php echo $s->nama_part; ?></td>
                                 <td align="center"><?php echo $s->jumlah; ?></td>
                                 <td><?php echo $s->satuan; ?></td>
-                                <td align="right"><?php echo number_format($s->hrg_part); ?></td>
-                                <td align="right"><?php echo number_format($sub_total); ?></td>
+                                <td align="right"><?php echo nf($s->hrg_part); ?></td>
+                                <td align="right"><?php echo nf($sub_total); ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>

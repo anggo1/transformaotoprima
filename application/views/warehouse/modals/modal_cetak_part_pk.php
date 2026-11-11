@@ -152,7 +152,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <th><?php echo $x->no_part ?></th>
         <th><?php echo $x->nama_part ?></th>
         <th><?php echo $x->jumlah ?></th>
-        <th><?php echo number_format($x->hrg_part) ?></th>
+        <th><?php echo nf($x->hrg_part) ?></th>
         <th><?php echo $x->ket_part ?></th>
       </tr><?php  }}?>
       </tr>

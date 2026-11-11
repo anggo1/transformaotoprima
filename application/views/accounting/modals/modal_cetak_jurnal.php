@@ -130,8 +130,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             <td><?php echo $s->nama_akun; ?></td>
                                             <td><?php echo tglIndoPendek($s->tgl_jurnal); ?></td>
                                             <td><?php echo $s->keterangan; ?></td>
-                                            <td align="right" style="color: green;"><?php echo number_format($s->debit); ?></td>
-                                            <td align="right" style="color: red;"><?php echo number_format($s->kredit); ?></td>
+                                            <td align="right" style="color: green;"><?php echo nf($s->debit); ?></td>
+                                            <td align="right" style="color: red;"><?php echo nf($s->kredit); ?></td>
                                                 </tr>
                                             <?php
                                                 $no++;
@@ -141,8 +141,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             <tfoot>
 						 <tr>
 						   <td colspan="6" align="right">Total </td>
-						   <td align="right" style="color: green;"><?php echo number_format($tdebit); ?></td>
-						   <td align="right" style="color: red;"><?php echo number_format($tkredit); ?></td>
+						   <td align="right" style="color: green;"><?php echo nf($tdebit); ?></td>
+						   <td align="right" style="color: red;"><?php echo nf($tkredit); ?></td>
                     </tfoot>
       </table>
                                       </div>

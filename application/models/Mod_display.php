@@ -79,7 +79,7 @@ class Mod_display extends CI_Model {
     function cetak_estimasi($id)
     {
 		$sql = "SELECT a.*,b.keterangan as ket_pk FROM tbl_br_detail_estimasi as a
-		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '{$id}'";
+		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -92,9 +92,9 @@ class Mod_display extends CI_Model {
 		//$data = $this->db->query($sql);
 
 		//return $data->result();
-        $result=$this->db->query("SELECT * FROM tbl_br_laporan_bus WHERE id_lapor ='{$id}'")->result();
+        $result=$this->db->query("SELECT * FROM tbl_br_laporan_bus WHERE id_lapor ='".$this->db->escape_str((string) $id)."'")->result();
         $a = array();
-        $result2=$this->db->query("SELECT * FROM tbl_br_pk_aktif WHERE id_lapor = '{$id}'")->result();        
+        $result2=$this->db->query("SELECT * FROM tbl_br_pk_aktif WHERE id_lapor = '".$this->db->escape_str((string) $id)."'")->result();        
         $b = array();
         foreach($result as $a) {
             $statusnye="";

@@ -57,24 +57,24 @@ class Mod_report_upah_borong extends CI_Model
     {
         if(!empty($no_body)&&(empty($no_pk))){ 
 		$sql = "SELECT a.tgl_bayar,a.jns_pk,a.jumlah,a.keterangan,b.id_pk,b.no_body,b.biaya_borong,b.tgl_mulai,b.ket_pk,
-        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '{$no_body}' ) AS beaBorong
+        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '".$this->db->escape_str((string) $no_body)."' ) AS beaBorong
         FROM tbl_br_upah_borongan AS a 
         JOIN tbl_br_pk_aktif AS b ON b.id_pk=a.id_pk 
-        WHERE b.tgl_mulai BETWEEN '$ttmp1' AND '$ttmp2' AND b.no_body = '{$no_body}' ";
+        WHERE b.tgl_mulai BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."' AND b.no_body = '".$this->db->escape_str((string) $no_body)."' ";
         }
         if(empty($no_body)&&(!empty($no_pk))){ 
         $sql = "SELECT a.tgl_bayar,a.jns_pk,a.jumlah,a.keterangan,b.id_pk,b.no_body,b.biaya_borong,b.tgl_mulai,b.ket_pk,
-        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '{$no_body}' ) AS beaBorong
+        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '".$this->db->escape_str((string) $no_body)."' ) AS beaBorong
         FROM tbl_br_upah_borongan AS a 
         JOIN tbl_br_pk_aktif AS b ON b.id_pk=a.id_pk 
-        WHERE b.tgl_mulai BETWEEN '$ttmp1' AND '$ttmp2' AND b.id_lapor = '{$no_pk}' ";
+        WHERE b.tgl_mulai BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."' AND b.id_lapor = '".$this->db->escape_str((string) $no_pk)."' ";
         }
         if(!empty($no_body)&&(!empty($no_pk))){
         $sql = "SELECT a.tgl_bayar,a.jns_pk,a.jumlah,a.keterangan,b.id_pk,b.no_body,b.biaya_borong,b.tgl_mulai,b.ket_pk,
-        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '{$no_body}' ) AS beaBorong
+        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.no_body = '".$this->db->escape_str((string) $no_body)."' ) AS beaBorong
         FROM tbl_br_upah_borongan AS a 
         JOIN tbl_br_pk_aktif AS b ON b.id_pk=a.id_pk 
-        WHERE b.tgl_mulai BETWEEN '$ttmp1' AND '$ttmp2' AND b.no_body = '{$no_body}' AND b.id_lapor = '{$no_pk}' ";
+        WHERE b.tgl_mulai BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."' AND b.no_body = '".$this->db->escape_str((string) $no_body)."' AND b.id_lapor = '".$this->db->escape_str((string) $no_pk)."' ";
         }
 
 		$data = $this->db->query($sql);
@@ -86,7 +86,7 @@ class Mod_report_upah_borong extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -94,9 +94,9 @@ class Mod_report_upah_borong extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po WHERE id_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -129,7 +129,7 @@ class Mod_report_upah_borong extends CI_Model
 		LEFT JOIN tbl_br_kategori AS d ON d.id_kategori=g.kategori
 		LEFT JOIN tbl_wh_body AS e ON e.no_body=a.no_body
 		LEFT JOIN tbl_br_pool  AS f ON f.kode_pool=e.pool
-        WHERE a.id_lapor = '{$no_spk}' GROUP BY a.id_pk";
+        WHERE a.id_lapor = '".$this->db->escape_str((string) $no_spk)."' GROUP BY a.id_pk";
 
 		$data = $this->db->query($sql);
 
@@ -143,7 +143,7 @@ class Mod_report_upah_borong extends CI_Model
         LEFT JOIN tbl_wh_detail_part_keluar AS c ON b.id_keluar=c.id_keluar 
         LEFT JOIN tbl_wh_barang AS d ON d.no_part=c.no_part 
         LEFT JOIN tbl_wh_satuan AS e ON e.id_satuan=d.satuan 
-        WHERE a.id_lapor = '{$no_spk}'";
+        WHERE a.id_lapor = '".$this->db->escape_str((string) $no_spk)."'";
 
 		$data = $this->db->query($sql);
 
@@ -152,10 +152,10 @@ class Mod_report_upah_borong extends CI_Model
     function cari_spk_detail_upah($no_spk)
     {
         $sql = "SELECT a.tgl_bayar,a.jns_pk,a.jumlah,a.keterangan,b.id_lapor,b.id_pk,b.no_body,b.biaya_borong,b.tgl_mulai,b.ket_pk,
-        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.id_lapor = '{$no_spk}') AS beaBorong
+        (SELECT SUM(c.biaya_borong) FROM tbl_br_pk_aktif AS c WHERE c.id_lapor = '".$this->db->escape_str((string) $no_spk)."') AS beaBorong
         FROM tbl_br_upah_borongan AS a 
         JOIN tbl_br_pk_aktif AS b ON b.id_pk=a.id_pk 
-        WHERE b.id_lapor = '{$no_spk}' ";
+        WHERE b.id_lapor = '".$this->db->escape_str((string) $no_spk)."' ";
        
 		$data = $this->db->query($sql);
 
@@ -256,9 +256,9 @@ class Mod_report_upah_borong extends CI_Model
     }
 	function deletePartnon($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

@@ -45,15 +45,15 @@ public function showPart()
                 if (($idlevel !='12') && $idlokasi =='Cibitung'){
                     $row[] = $p->stok_cbt;
                     //$row[] = $p->lok_cbt;
-                    $row[] = number_format($p->hrg_net_cbt);
+                    $row[] = nf($p->hrg_net_cbt);
                 }elseif (($idlevel !='12') && $idlokasi=='Jakarta'){
                         $row[] = $p->stok_jkt;
                         //$row[] = $p->lok_jkt;
-                    $row[] = number_format($p->hrg_net_jkt);
+                    $row[] = nf($p->hrg_net_jkt);
                 }elseif (($idlevel !='1' or $idlevel !='12') && $idlokasi=='Surabaya'){
                             $row[] = $p->stok_sby;
                             //$row[] = $p->lok_sby;
-                    		$row[] = number_format($p->hrg_net_sby);
+                    		$row[] = nf($p->hrg_net_sby);
 							}
 			$data[] = $row;
 		}

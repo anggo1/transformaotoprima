@@ -161,25 +161,25 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><?php echo $d->no_part ?></td>
             <td><?php echo $d->nama_part ?></td>
             <td align="center"><?php echo $d->satuan?></td>
-            <td align="center"><?php echo number_format($d->jumlah) ?></td>
-            <td align="right"><?php echo number_format($d->harga) ?></td>
-            <td align="right"><?php echo number_format($d->total_harga,2,",",".") ?></td>
+            <td align="center"><?php echo nf($d->jumlah) ?></td>
+            <td align="right"><?php echo nf($d->harga) ?></td>
+            <td align="right"><?php echo nf($d->total_harga,2,",",".") ?></td>
           </tr>
         <?php $no + 1;
         endforeach ?>
         <tr>
           <td colspan="5" rowspan="3">&nbsp;</td>
           <td  align="right">Sub Total</td>
-          <td id="sub_total" align="right"><?php echo number_format($grand_total,2,",",".") ?></td>
+          <td id="sub_total" align="right"><?php echo nf($grand_total,2,",",".") ?></td>
         </tr>
         <tr>
           <td align="right">PPN <?php echo $k->ppn ?> %</td>
-          <td id="t_ppn" align="right"><?php echo number_format($ppn) ?></td>
+          <td id="t_ppn" align="right"><?php echo nf($ppn) ?></td>
         </tr>
         <tr>
           <td align="right">Grand Total</td>
           <td id="grand_total" align="right">
-            <font size="+1"><?php echo number_format($grand_total + $ppn,2,",",".") ?></font>
+            <font size="+1"><?php echo nf($grand_total + $ppn,2,",",".") ?></font>
           </td>
         </tr>
       </thead>

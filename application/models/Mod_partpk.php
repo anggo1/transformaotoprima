@@ -119,7 +119,7 @@ class Mod_partpk extends CI_Model
 	}
 	function update_ket($id,$keterangan)
 		{
-			$sql_update = "UPDATE tbl_wh_detail_part_keluar SET ket_part = '$keterangan' WHERE id ='{$id}'";
+			$sql_update = "UPDATE tbl_wh_detail_part_keluar SET ket_part = '".$this->db->escape_str((string) $keterangan)."' WHERE id ='".$this->db->escape_str((string) $id)."'";
 			$this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -128,7 +128,7 @@ class Mod_partpk extends CI_Model
 		{
             $ci = get_instance();
             //$kodePart   = $data['no_part'];
-            $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$no_part}'";
+            $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $no_part)."'";
             $d_data = $ci->db->query($query)->row_array();
             $stok       = $d_data['stok'];
             $stok_a       = $d_data['stok_a'];
@@ -137,18 +137,18 @@ class Mod_partpk extends CI_Model
             $jstok = '';
             if ($status_part =='PPU'){
                 $jstok = $stok_a - $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_a ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_a ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
     
             }
             if ($status_part =='MPU'){
                 $jstok = $stok_p - $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_p ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_p ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
     
             }
 
-			$sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah = '$jumlah' WHERE id ='{$id}'";
+			$sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah = '".$this->db->escape_str((string) $jumlah)."' WHERE id ='".$this->db->escape_str((string) $id)."'";
 			$this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -157,7 +157,7 @@ class Mod_partpk extends CI_Model
         {
             $ci = get_instance();
             $kodePart   = $data['no_part'];
-            $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$no_part}'";
+            $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $no_part)."'";
             $d_data = $ci->db->query($query)->row_array();
             $stok       = $d_data['stok'];
             $stok_a       = $d_data['stok_a'];
@@ -167,18 +167,18 @@ class Mod_partpk extends CI_Model
             
             if ($status_part =='PPU'){
                 $jstok = $stok_a + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_kembali', stok_a ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_kembali)."', stok_a ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
     
             }
             if ($status_part =='MPU'){
                 $jstok = $stok_p + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_kembali', stok_p ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_kembali)."', stok_p ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
     
             }
 
-            $sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id='" . $id . "'";
+            $sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id='" . $this->db->escape_str((string) $id) . "'";
     
             $this->db->query($sql);
     
@@ -190,16 +190,16 @@ class Mod_partpk extends CI_Model
             $date= date("Y-m-d");
             $sql = "INSERT INTO tbl_wh_detail_part_keluar SET
                 id       ='',
-                id_keluar           ='" . $data['kode_keluar'] . "',
-                no_part         ='" . $data['no_part'] . "',
-                nama_part       ='" . $data['nama_part'] . "',
-                status_part     ='" . $data['status_part'] . "',
-                tgl_keluar      ='$date',
-                hrg_part        ='" . $data['hrg_awal'] . "',
+                id_keluar           ='" . $this->db->escape_str((string) $data['kode_keluar']) . "',
+                no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+                nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+                status_part     ='" . $this->db->escape_str((string) $data['status_part']) . "',
+                tgl_keluar      ='".$this->db->escape_str((string) $date)."',
+                hrg_part        ='" . $this->db->escape_str((string) $data['hrg_awal']) . "',
                 jumlah          ='0',
-                satuan     ='" . $data['satuan'] . "',
-                total_harga     ='" . $data['hrg_awal'] . "',
-                ket_part        ='".$data['keterangan']."'";
+                satuan     ='" . $this->db->escape_str((string) $data['satuan']) . "',
+                total_harga     ='" . $this->db->escape_str((string) $data['hrg_awal']) . "',
+                ket_part        ='".$this->db->escape_str((string) $data['keterangan'])."'";
             $this->db->query($sql);
     
             return $this->db->affected_rows();
@@ -218,7 +218,7 @@ class Mod_partpk extends CI_Model
 
         $ci = get_instance();
         $kodePart   = $data['no_part'];
-        $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$kodePart}'";
+        $query = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $kodePart)."'";
         $d_data = $ci->db->query($query)->row_array();
         $stok       = $d_data['stok'];
         $stok_a       = $d_data['stok_a'];
@@ -227,26 +227,26 @@ class Mod_partpk extends CI_Model
         $statusnye = "";
         if($data['status_part']=='PPU'){
             $statusnye = $stok_a-$data['jumlah'];
-            $sql_update = "UPDATE tbl_wh_barang SET stok ='$stok_update', stok_a ='$statusnye ' WHERE no_part ='{$kodePart}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_wh_barang SET stok ='".$this->db->escape_str((string) $stok_update)."', stok_a ='$statusnye ' WHERE no_part ='".$this->db->escape_str((string) $kodePart)."'"; $this->db->query($sql_update);
         }
         if($data['status_part']=='MPU'){
             $statusnye = $stok_p-$data['jumlah'];
-            $sql_update = "UPDATE tbl_wh_barang SET stok ='$stok_update', stok_p ='$statusnye ' WHERE no_part ='{$kodePart}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_wh_barang SET stok ='".$this->db->escape_str((string) $stok_update)."', stok_p ='$statusnye ' WHERE no_part ='".$this->db->escape_str((string) $kodePart)."'"; $this->db->query($sql_update);
         }
         
 
 
         $sql = "INSERT INTO tbl_wh_detail_part_keluar SET
             id       ='',
-            id_keluar           ='" . $kodenya . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            status_part     ='" . $data['status_part'] . "',
-            tgl_keluar      ='$date',
-            hrg_part        ='" . $data['hrg_awal'] . "',
-            jumlah          ='" . $data['jumlah'] . "',
-            total_harga     ='$total_harga',
-            ket_part        ='".$data['keterangan']."'";
+            id_keluar           ='" . $this->db->escape_str((string) $kodenya) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            status_part     ='" . $this->db->escape_str((string) $data['status_part']) . "',
+            tgl_keluar      ='".$this->db->escape_str((string) $date)."',
+            hrg_part        ='" . $this->db->escape_str((string) $data['hrg_awal']) . "',
+            jumlah          ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+            total_harga     ='".$this->db->escape_str((string) $total_harga)."',
+            ket_part        ='".$this->db->escape_str((string) $data['keterangan'])."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -266,7 +266,7 @@ class Mod_partpk extends CI_Model
     }
     function cari_part($no_part)
     {
-		$sql = "SELECT * FROM tbl_wh_barang WHERE no_part ='{$no_part}'";
+		$sql = "SELECT * FROM tbl_wh_barang WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
 
 		$data = $this->db->query($sql);
 
@@ -276,8 +276,8 @@ class Mod_partpk extends CI_Model
 	{
         $date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $data['ket_pause'] . "',jam_pause='" .$jam. "',tgl_pause='" .$date. "'
-        WHERE id_pk='" . $data['id_pk'] . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $this->db->escape_str((string) $data['ket_pause']) . "',jam_pause='" .$this->db->escape_str((string) $jam). "',tgl_pause='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $data['id_pk']) . "'";
 
 		$this->db->query($sql);
 
@@ -286,7 +286,7 @@ class Mod_partpk extends CI_Model
 	function select_detail($id)
 	{
 		$sql = "SELECT a.*,b.std_pakai FROM tbl_wh_detail_part_keluar AS a
-                LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part WHERE id_keluar = '{$id}' ORDER BY a.id DESC";
+                LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part WHERE id_keluar = '".$this->db->escape_str((string) $id)."' ORDER BY a.id DESC";
 
 		$data = $this->db->query($sql);
 
@@ -307,7 +307,7 @@ class Mod_partpk extends CI_Model
 	function cetak_estimasi($id)
     {
 		$sql = "SELECT a.*,b.keterangan as ket_pk FROM tbl_br_detail_estimasi as a
-		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '{$id}'";
+		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -315,7 +315,7 @@ class Mod_partpk extends CI_Model
     }
 	function cetak_part_pk($id)
     {
-		$sql = "SELECT * FROM tbl_br_pk_aktif WHERE id_pk ='{$id}'";
+		$sql = "SELECT * FROM tbl_br_pk_aktif WHERE id_pk ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -326,7 +326,7 @@ class Mod_partpk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.no_pk ='{$id}' ";
+        WHERE a.no_pk ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -337,7 +337,7 @@ class Mod_partpk extends CI_Model
 		$sql = "SELECT SUM(b.total_harga) totalnya FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.no_pk ='{$id}' GROUP BY a.id_keluar; ";
+        WHERE a.no_pk ='".$this->db->escape_str((string) $id)."' GROUP BY a.id_keluar; ";
 
 		$data = $this->db->query($sql);
 
@@ -348,7 +348,7 @@ class Mod_partpk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_br_pk_aktif AS b
         ON b.id_pk=a.no_pk
-        WHERE a.id_keluar ='{$id}'  ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."'  ";
 
 		$data = $this->db->query($sql);
 
@@ -359,7 +359,7 @@ class Mod_partpk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 

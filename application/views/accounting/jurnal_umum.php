@@ -280,6 +280,12 @@ function generateJurnal() {
         url: '<?php echo base_url('jurnal/Generate'); ?>?kode_awal' + kode_awal+ '&no_ref' + no_ref,
         data: 'kode_awal=' + kode_awal+'&no_ref=' + no_ref,
         success: function(hasil) {
+            var out = {};
+            try { out = typeof hasil === 'string' ? JSON.parse(hasil) : hasil; } catch (e) {}
+            if (out.status === 'gagal') {
+                Swal.fire({ position: 'center', icon: 'error', title: out.msg, showConfirmButton: true });
+                return;
+            }
             //table.ajax.reload();
                 listJurnal();
             Swal.fire({
@@ -355,7 +361,9 @@ $(document).on("click", ".delete-jurnal", function() {
                 listJurnal();
                 $('.msg').html(out.msg);
                 $('#hapusJurnal').modal('hide');
-                if (out.status != 'form') {
+                if (out.status === 'gagal') {
+                    Swal.fire({ position: 'center', icon: 'warning', title: out.msg, showConfirmButton: true });
+                } else if (out.status != 'form') {
                     Swal.fire({
                         position: 'center',
                         icon: 'error',

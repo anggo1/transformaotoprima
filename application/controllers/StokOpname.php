@@ -41,7 +41,7 @@ class StokOpname extends MY_Controller
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
 			$row[] = $pel->stok;
-			$row[] = number_format($pel->hrg_awal);
+			$row[] = nf($pel->hrg_awal);
 			$row[] = $pel->kode_satuan;
 			$row[] = $pel->id_barang;
 			$row[] = $pel->stok_a;

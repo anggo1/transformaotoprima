@@ -1,5 +1,5 @@
        <div class="table-responsive">
-           <table class="table table-bordered table-hover nowrap" id="list-ref">
+           <table class="table table-hover nowrap w-100" id="list-ref">
                <thead>
                    <tr>
                        <th>No</th>
@@ -20,9 +20,9 @@
                        <td><?php echo $s->keterangan; ?></td>
 
                        <td class="text-center">
-                           <button class="btn btn-sm btn-outline-success update-dataRef ion-edit"
+                           <button class="btn btn-xs btn-outline-success update-dataRef ion-edit"
                                data-id="<?php echo $s->id_ref; ?>"></button>
-                           <button class="btn btn-sm btn-outline-danger delete-ref ion-android-delete"
+                           <button class="btn btn-xs btn-outline-danger delete-ref ion-android-delete"
                                data-toggle="modal" data-target="#hapusRef" data-id="<?php echo $s->id_ref; ?>"></button>
                        </td>
                    </tr>
@@ -42,6 +42,6 @@ $('#list-ref').DataTable({
     "searching": true,
     "ordering": true,
     "info": true,
-    "pageLength": 5
+    "pageLength": 10
 });
        </script>

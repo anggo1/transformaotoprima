@@ -1,63 +1,45 @@
-<!-- header -->
-<?php 
-$this->load->view('templates/header') 
-
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+$apl = $this->db->get('aplikasi', 1)->row();
+$this->load->view('templates/header');
+$this->load->view('templates/menu', array('apl' => $apl));
 ?>
-<!-- end header -->
-
-<!-- menu -->
-<?php 
-$this->load->view('templates/menu'); 
-?>
-<!-- end menu -->
-
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header " style="opacity: 0.8; ">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h4><?php echo $page; ?></h4>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?php echo $this->uri->segment(1); ?>">Home</a></li>
-              <li class="breadcrumb-item active"><?php echo $judul; ?></li>
-            </ol>
-          </div>
+    <!-- Content Header -->
+    <section class="content-header top-content-header">
+        <div class="container-fluid">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <div>
+                    <h1 class="top-h1"><?php echo isset($page) ? $page : ''; ?></h1>
+                </div>
+                <ol class="breadcrumb top-breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?php echo site_url('dashboard'); ?>"><i class="fas fa-home"></i></a></li>
+                    <?php if ($this->uri->segment(1) && strtolower($this->uri->segment(1)) !== 'dashboard') { ?>
+                    <li class="breadcrumb-item"><a href="<?php echo site_url($this->uri->segment(1)); ?>"><?php echo html_escape(trim(preg_replace('/(?<!^)([A-Z])/', ' $1', str_replace('_', ' ', ucfirst($this->uri->segment(1)))))); ?></a></li>
+                    <?php } ?>
+                    <li class="breadcrumb-item active"><?php echo isset($judul) ? $judul : ''; ?></li>
+                </ol>
+            </div>
         </div>
-      </div>
     </section>
-<!-- page-wrapper -->
+
+    <?php echo isset($pre_content) ? $pre_content : ''; ?>
 
     <!-- Main content -->
-    <!-- <section class="content"> -->
-      <div class="container-fluid">
-      	<?php echo $contents; ?>
+    <div class="container-fluid top-content">
+        <?php $this->load->view('templates/panduan_box'); ?>
+        <?php echo $contents; ?>
     </div>
-    <!-- </section> -->
-<!-- /# end page-wrapper -->
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
-<!-- /#wrapper -->
-        <!-- footer -->
-<?php 
+<!-- /.content-wrapper -->
 
-$apl = $this->db->get("aplikasi")->row();
-?>
-<footer class="main-footer navbar-default">
-<strong>Copyright &copy; <?php echo $apl->tahun; ?> <a href="#"><?php  echo $apl->nama_owner; ?></a>.</strong>
-All rights reserved.
-<div class="float-right d-none d-sm-inline-block">
-  <b>Version</b> <?php echo $apl->versi; ?>
-</div>
+<footer class="main-footer top-footer">
+    <div class="d-flex flex-wrap justify-content-between">
+        <span>&copy; <?php echo $apl ? html_escape($apl->tahun) : date('Y'); ?> <strong><?php echo $apl ? html_escape($apl->nama_owner) : ''; ?></strong>. All rights reserved.</span>
+        <span class="text-muted d-none d-sm-inline">Versi <?php echo $apl ? html_escape($apl->versi) : ''; ?> &middot; PHP <?php echo PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION; ?></span>
+    </div>
 </footer>
-<!-- end footer -->
-
+</div>
+<!-- /.wrapper -->
 </body>
 
 </html>

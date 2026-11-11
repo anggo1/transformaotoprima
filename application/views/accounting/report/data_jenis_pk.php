@@ -33,8 +33,8 @@ foreach ($dataBody as $s) {
                     <td><?php echo $s->nama_part; ?></td>
                     <td style="text-align: center;"><?php echo $s->jumlah; ?></td>
                     <td style="text-align: center;"><?php echo $s->kode_satuan; ?></td>
-                    <td style="text-align: right;"><?php echo number_format($s->hrg_part); ?></td>
-                    <td style="text-align: right;"><?php echo number_format($s->jumlah * $s->hrg_part); ?></td>
+                    <td style="text-align: right;"><?php echo nf($s->hrg_part); ?></td>
+                    <td style="text-align: right;"><?php echo nf($s->jumlah * $s->hrg_part); ?></td>
                 </tr>
                 <?php
     $no++;
@@ -53,7 +53,7 @@ foreach ($dataBody as $s) {
                   <td align="right">&nbsp;</td>
                   <td align="right">&nbsp;</td>
                   <td align="right">Grand Total</td>
-                  <td align="right"><?php echo number_format($akumulasi); ?></td>
+                  <td align="right"><?php echo nf($akumulasi); ?></td>
                   </tr>
             </tfoot>
         </table>

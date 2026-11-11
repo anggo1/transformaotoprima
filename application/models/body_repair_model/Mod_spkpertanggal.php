@@ -56,7 +56,7 @@ class Mod_spkpertanggal extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -64,9 +64,9 @@ class Mod_spkpertanggal extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po WHERE id_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -223,12 +223,12 @@ class Mod_spkpertanggal extends CI_Model
     function cetak_estimasierror($id)
     {
       
-		$sql = "SELECT * FROM tbl_br_laporan_bus AS a LEFT JOIN tbl_br_pk_aktif AS b ON a.id_lapor=b.id_lapor WHERE a.id_lapor ='{$id}'";
+		$sql = "SELECT * FROM tbl_br_laporan_bus AS a LEFT JOIN tbl_br_pk_aktif AS b ON a.id_lapor=b.id_lapor WHERE a.id_lapor ='".$this->db->escape_str((string) $id)."'";
 		$sql = "SELECT a.id_pk,a.pt_pemborong,a.pj_borong,b.jns_pk,b.ket_pk,b.ket_detail
     FROM tbl_br_pk_aktif as a
 		JOIN tbl_br_detail_pk as b ON b.id_lapor=a.id_lapor 
 		JOIN tbl_br_laporan_bus as c ON b.id_lapor=a.id_lapor 
-    WHERE a.id_lapor = '{$id}'";
+    WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -236,9 +236,9 @@ class Mod_spkpertanggal extends CI_Model
     }
 	function deletePartnon($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

@@ -34,7 +34,7 @@ class Mod_tambahpk extends CI_Model
 	public function insertLapor($data)
 	{
 		$sql = "INSERT INTO tbl_br_ket_lapor VALUES
-		('','" . $data['kode'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -44,8 +44,8 @@ class Mod_tambahpk extends CI_Model
 	{
         $date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $data['ket_pause'] . "',jam_pause='" .$jam. "',tgl_pause='" .$date. "'
-        WHERE id_pk='" . $data['id_pk'] . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $this->db->escape_str((string) $data['ket_pause']) . "',jam_pause='" .$this->db->escape_str((string) $jam). "',tgl_pause='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $data['id_pk']) . "'";
 
 		$this->db->query($sql);
 
@@ -55,8 +55,8 @@ class Mod_tambahpk extends CI_Model
 	{
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$jam. "',tgl_start='" .$date. "'
-        WHERE id_pk='" . $id . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$this->db->escape_str((string) $jam). "',tgl_start='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $id) . "'";
 
 		$this->db->query($sql);
 
@@ -66,8 +66,8 @@ class Mod_tambahpk extends CI_Model
 	{
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$jam. "',tgl_selesai='" .$date. "'
-        WHERE id_pk='" . $id . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$this->db->escape_str((string) $jam). "',tgl_selesai='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $id) . "'";
 
 		$this->db->query($sql);
 
@@ -75,7 +75,7 @@ class Mod_tambahpk extends CI_Model
 	}
 	function select_estimasi($id)
 	{
-		$sql = "SELECT * FROM tbl_br_detail_estimasi WHERE id_lapor ='{$id}'";
+		$sql = "SELECT * FROM tbl_br_detail_estimasi WHERE id_lapor ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -103,60 +103,60 @@ class Mod_tambahpk extends CI_Model
 		$esBea =str_replace(".","", $beaEstimasi);
 		$jam=date("H-m");
 
-		$ketpk = "SELECT keterangan as ket_pk FROM tbl_br_kat_pk WHERE kode = '".$data['jns_pk']."'";
+		$ketpk = "SELECT keterangan as ket_pk FROM tbl_br_kat_pk WHERE kode = '".$this->db->escape_str((string) $data['jns_pk'])."'";
         $datap = $ci->db->query($ketpk)->row_array();
         $pknye = $datap['ket_pk'];
 
 		$cicari = get_instance();
-        $qcari = "SELECT COUNT(jns_pk) as ketemu FROM tbl_br_pk_aktif WHERE id_lapor = '".$data['id_lapor']."' AND jns_pk = '".$data['jns_pk']."'";
+        $qcari = "SELECT COUNT(jns_pk) as ketemu FROM tbl_br_pk_aktif WHERE id_lapor = '".$this->db->escape_str((string) $data['id_lapor'])."' AND jns_pk = '".$this->db->escape_str((string) $data['jns_pk'])."'";
         $hasil_cari = $cicari->db->query($qcari)->row_array();
         $adaPk = $hasil_cari['ketemu'];
 		if($adaPk > 0){
 			$sql = "INSERT INTO tbl_br_detail_estimasi SET
             id_detail	='',
-            id_lapor	='".$data['id_lapor']."',
-            tgl_estimasi='".$tgl_estimasi."',
-            no_body		='".$data['body_pk']."',
-            biaya		='".$esBea."',
-            jns_pk		='".$data['jns_pk']."',
-            no_part     ='".$data['no_part']."',
-            nama_part   ='".$data['nama_part']."',
-            ket_part    ='".$data['ket_part']."',
-            jml_part  	='".$data['jml_part']."',
-            hrg_part  	='".$data['hrg_awal']."',
-            user        ='".$data['user']."',
+            id_lapor	='".$this->db->escape_str((string) $data['id_lapor'])."',
+            tgl_estimasi='".$this->db->escape_str((string) $tgl_estimasi)."',
+            no_body		='".$this->db->escape_str((string) $data['body_pk'])."',
+            biaya		='".$this->db->escape_str((string) $esBea)."',
+            jns_pk		='".$this->db->escape_str((string) $data['jns_pk'])."',
+            no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+            nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+            ket_part    ='".$this->db->escape_str((string) $data['ket_part'])."',
+            jml_part  	='".$this->db->escape_str((string) $data['jml_part'])."',
+            hrg_part  	='".$this->db->escape_str((string) $data['hrg_awal'])."',
+            user        ='".$this->db->escape_str((string) $data['user'])."',
 			status        ='Y'";
             $this->db->query($sql);
             return $this->db->affected_rows();
 
 		} else {
 			$sqlpk = "INSERT INTO tbl_br_pk_aktif SET
-            id_pk	='".$kodeBaru."',
-            id_lapor	='".$data['id_lapor']."',
-            tgl_mulai   ='".$tgl_estimasi."',
-            jam_mulai	='".$jam."',
-            no_body		='".$data['body_pk']."',
-            jns_pk      ='".$data['jns_pk']."',
-            ket_pk      ='".$pknye."',
+            id_pk	='".$this->db->escape_str((string) $kodeBaru)."',
+            id_lapor	='".$this->db->escape_str((string) $data['id_lapor'])."',
+            tgl_mulai   ='".$this->db->escape_str((string) $tgl_estimasi)."',
+            jam_mulai	='".$this->db->escape_str((string) $jam)."',
+            no_body		='".$this->db->escape_str((string) $data['body_pk'])."',
+            jns_pk      ='".$this->db->escape_str((string) $data['jns_pk'])."',
+            ket_pk      ='".$this->db->escape_str((string) $pknye)."',
             status     ='Y',
-            pt_pemborong   ='".$data['pt_pemborong']."',
-            pj_borong    ='".$data['pj_borong']."',
-            biaya_borong    ='$esBea'";
+            pt_pemborong   ='".$this->db->escape_str((string) $data['pt_pemborong'])."',
+            pj_borong    ='".$this->db->escape_str((string) $data['pj_borong'])."',
+            biaya_borong    ='".$this->db->escape_str((string) $esBea)."'";
             $this->db->query($sqlpk);
 
         $sql = "INSERT INTO tbl_br_detail_estimasi SET
             id_detail	='',
-            id_lapor	='".$data['id_lapor']."',
-            tgl_estimasi='".$tgl_estimasi."',
-            no_body		='".$data['body_pk']."',
-            biaya		='".$esBea."',
-            jns_pk		='".$data['jns_pk']."',
-            no_part     ='".$data['no_part']."',
-            nama_part   ='".$data['nama_part']."',
-            ket_part    ='".$data['ket_part']."',
-            jml_part  	='".$data['jml_part']."',
-            hrg_part  	='".$data['hrg_awal']."',
-            user        ='".$data['user']."',
+            id_lapor	='".$this->db->escape_str((string) $data['id_lapor'])."',
+            tgl_estimasi='".$this->db->escape_str((string) $tgl_estimasi)."',
+            no_body		='".$this->db->escape_str((string) $data['body_pk'])."',
+            biaya		='".$this->db->escape_str((string) $esBea)."',
+            jns_pk		='".$this->db->escape_str((string) $data['jns_pk'])."',
+            no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+            nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+            ket_part    ='".$this->db->escape_str((string) $data['ket_part'])."',
+            jml_part  	='".$this->db->escape_str((string) $data['jml_part'])."',
+            hrg_part  	='".$this->db->escape_str((string) $data['hrg_awal'])."',
+            user        ='".$this->db->escape_str((string) $data['user'])."',
 			status        ='Y'";
             $this->db->query($sql);
             return $this->db->affected_rows();
@@ -177,7 +177,7 @@ class Mod_tambahpk extends CI_Model
 	function cetak_estimasi($id)
     {
 		$sql = "SELECT a.*,b.keterangan as ket_pk FROM tbl_br_detail_estimasi as a
-		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '{$id}'";
+		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -187,7 +187,7 @@ class Mod_tambahpk extends CI_Model
     {
 		$sql = "SELECT * FROM tbl_br_laporan_bus AS a 
 		LEFT JOIN tbl_br_pk_aktif AS b ON a.id_lapor=b.id_lapor 
-		WHERE a.id_lapor ='{$id}'";
+		WHERE a.id_lapor ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 

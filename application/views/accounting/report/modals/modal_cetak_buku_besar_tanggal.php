@@ -115,8 +115,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             <td><?php echo $a->keterangan ?></td>
                                             <td width="5%"><?php echo $a->kode_akun ?></td>
                                             <td><?php echo $a->nama_akun ?></td>
-                                            <td align="right"><?php echo number_format($a->debit) ?></td>
-                                            <td style=color:red; font-weight: bolder; align="Right"><?php echo number_format($a->kredit) ?></td>
+                                            <td align="right"><?php echo nf($a->debit) ?></td>
+                                            <td style=color:red; font-weight: bolder; align="Right"><?php echo nf($a->kredit) ?></td>
                                         </tr><?php }} ?>
                                     </tbody>
                                     <tfoot>

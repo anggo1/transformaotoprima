@@ -44,9 +44,9 @@
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
             <td><?php echo $stok; ?></td>
-            <td><?php echo number_format($harga); ?></td>
+            <td><?php echo nf($harga); ?></td>
             <td><?php echo $s->jumlah ?></td>
-            <td><?php if(empty($s->hrg_part)) { echo number_format($harga * $s->jumlah);}else{ echo number_format($s->hrg_part * $s->jumlah);}  ?></td>
+            <td><?php if(empty($s->hrg_part)) { echo nf($harga * $s->jumlah);}else{ echo nf($s->hrg_part * $s->jumlah);}  ?></td>
         </tr>
         <?php
             $no++;

@@ -52,19 +52,19 @@ table.dataTable td {
                             <td><?php echo $s->no_part; ?></td>
                             <td><?php echo $s->nama_part; ?></td>
                             <td><?php echo $s->stok_akhir; ?></td>
-                            <td><?php echo number_format($s->harga); ?></td>
+                            <td><?php echo nf($s->harga); ?></td>
                             <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan"
                                 onclick="this.contentEditable=true; this.className='inEdit';"
                                 onblur="this.contentEditable=false; this.className='inEdit';"
                                 onkeypress="saveDiskon(event,'<?php echo $s->id_estimasi_penawaran; ?>','<?php echo $s->id_detail; ?>','<?php echo $s->harga; ?>',$(this).html() )">
                                 <?php echo $s->diskon; ?></td>
-                            <td><?php echo number_format($s->harga_net); ?></td>
+                            <td><?php echo nf($s->harga_net); ?></td>
                             <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan"
                                 onclick="this.contentEditable=true; this.className='inEdit';"
                                 onblur="this.contentEditable=false; this.className='inEdit';"
                                 onkeypress="saveData(event,'<?php echo $s->id_estimasi_penawaran; ?>','<?php echo $s->id_detail; ?>','<?php echo $s->harga_net; ?>',$(this).html() )">
                                 <?php echo $s->jumlah; ?></td>
-                            <td><?php echo number_format($s->harga_net*$s->jumlah); ?></td>
+                            <td><?php echo nf($s->harga_net*$s->jumlah); ?></td>
                             <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan"
                                 onclick="this.contentEditable=true; this.className='inEdit';"
                                 onblur="this.contentEditable=false; this.className='inEdit';"

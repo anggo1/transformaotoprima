@@ -4,9 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mod_service_appointment extends CI_Model
 {
     var $table = 'tbl_after_sales';
-    var $column_search = array('wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','free_service','pembuat');
-    var $column_order = array('null','wo_no','sa_name','customer','customer_complain','vin','no_pol','type','storing','date_open_wo','clockin','date_close_wo','clockout','status','pembuat');
-    var $order = array('id' => 'asc'); // default order 
+    var $column_search = array('wo_no','sa_name','customer','customer_name','customer_complain','vin','engine_no','no_pol','type','pembuat');
+    var $column_order = array(null, 'wo_no', 'date_open_wo', 'customer_name', 'no_pol', 'customer_complain', 'sa_name', 'free_service', 'dead_line', 'pre_order', null);
+    var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -16,9 +16,16 @@ class Mod_service_appointment extends CI_Model
     private function _get_datatables_query($term = '')
     {
 
-        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,free_service,pembuat');
+        $this->db->select('id,wo_no,sa_name,customer,customer_name,customer_complain,vin,engine_no,no_pol,type,storing,date_open_wo,clockin,date_close_wo,clockout,status,free_service,status_service,dead_line,dead_time,mileage,remarks,pre_order,pembuat');
         $this->db->from('tbl_after_sales');
         $this->db->where('status','N');
+        $dari = tgl_sql((string) $this->input->post('dari')); $sampai = tgl_sql((string) $this->input->post('sampai'));
+        if ($dari) $this->db->where('date_open_wo >=', $dari);
+        if ($sampai) $this->db->where('date_open_wo <=', $sampai);
+        $f = (string) $this->input->post('filter');
+        if ($f === 'menunggu') $this->db->where("(pre_order IS NULL OR pre_order = '')", null, false);
+        elseif ($f === 'storing') $this->db->where('storing', 'Y');
+        elseif ($f === 'lewat') $this->db->where('dead_line <', date('Y-m-d'))->where("dead_line <> '0000-00-00' AND dead_line IS NOT NULL", null, false);
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column 
@@ -40,9 +47,9 @@ class Mod_service_appointment extends CI_Model
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
+        if (isset($_POST['order']) && ! empty($this->column_order[$_POST['order']['0']['column']])) // here order processing
         {
-            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir'] === 'asc' ? 'asc' : 'desc');
         } else if (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
@@ -70,7 +77,7 @@ class Mod_service_appointment extends CI_Model
     public function count_all()
     {
 
-        $this->db->from('tbl_after_sales');
+        $this->db->from('tbl_after_sales')->where('status', 'N');
         //$this->db->join('tbl_menu as b','a.id_menu=b.id_menu');
         return $this->db->count_all_results();
     }
@@ -175,100 +182,90 @@ class Mod_service_appointment extends CI_Model
 
         return $data->result();
     }
+    /** tanggal dari form: dd-mm-yyyy atau yyyy-mm-dd */
+    private static function tgl($v) { $t = tgl_sql((string) $v); return $t ?: null; }
+
+    function get($id)
+    {
+        return $this->db->get_where('tbl_after_sales', array('id' => (int) $id))->row();
+    }
+
+    /** ringkasan untuk kartu di atas daftar */
+    function ringkasan()
+    {
+        $hari = date('Y-m-d'); $bln = date('Y-m-01');
+        $q = function () { return $this->db->where('status', 'N'); };
+        $o = (object) array();
+        $o->hari_ini = $q()->where('date_open_wo', $hari)->count_all_results('tbl_after_sales');
+        $o->bulan_ini = $q()->where('date_open_wo >=', $bln)->count_all_results('tbl_after_sales');
+        $o->menunggu = $q()->where("(pre_order IS NULL OR pre_order = '')", null, false)->count_all_results('tbl_after_sales');
+        $o->storing = $q()->where('storing', 'Y')->count_all_results('tbl_after_sales');
+        $o->lewat = $q()->where('dead_line <', $hari)->where("dead_line <> '0000-00-00' AND dead_line IS NOT NULL", null, false)->count_all_results('tbl_after_sales');
+        return $o;
+    }
+
+    /** kendaraan yang pernah diservis untuk customer (untuk isi otomatis) */
+    function kendaraan($kodeCus)
+    {
+        return $this->db->select('vin, engine_no, no_pol, type, MAX(mileage) AS mileage, MAX(date_open_wo) AS terakhir', false)
+            ->where('customer', $kodeCus)->where("vin <> ''", null, false)->group_by(array('vin', 'engine_no', 'no_pol', 'type'))
+            ->order_by('terakhir', 'DESC')->limit(20)->get('tbl_after_sales')->result();
+    }
+
     function insertAppointment($data)
     {
-        
-        
-		$date_wo = $data['date_open_wo'];
-		$tgl1 = explode('-', $date_wo);
-		$date_open_wo= $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
-		$date_last = $data['last_service_date'];
-		$tgl2 = explode('-', $date_last);
-		$date_last_service= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-		$date_dead = $data['dead_line'];
-		$tgl3 = explode('-', $date_dead);
-		$date_dead_line= $tgl3[2] . "-" . $tgl3[1] . "-" . $tgl3[0] . "";
-		$nama_customer = trim($_POST['customer']);
+        $date_open_wo = self::tgl($data['date_open_wo']) ?: date('Y-m-d');
+        $nama_customer = trim((string) $data['customer']);
         $kat = explode('|', $nama_customer);
-        $nama_cus = $kat[1];
         $kode_cus = $kat[0];
-        $date = date("my");
-		$ci_kons = get_instance();
-		$query = "SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%$date%'";
-		$hasil = $ci_kons->db->query($query)->row_array();
-		$noOrder = $hasil['maxKode'];
-		$noUrut = substr($noOrder, 0, 5);
-		$noUrut++;
-		$tahun = substr($date, 2, 2);
-		$bulan = substr($date, 0, 2);
-		$kode_po  = sprintf("%05s", $noUrut).$bulan.$tahun; 
-        
-        $data_sa='';
-        if(empty($data['sa_name'])){
-            $data_sa = $data['pembuat'];
-        }else{
-            $data_sa = $data['sa_name'];
-        }   
+        $nama_cus = isset($kat[1]) ? $kat[1] : '';
+        // nomor WO: 5 digit urut + bulan + tahun (format lama tetap dipakai)
+        $date = date('my');
+        $hasil = $this->db->query("SELECT max(wo_no) AS maxKode FROM tbl_after_sales WHERE wo_no LIKE '%" . $this->db->escape_like_str($date) . "'")->row_array();
+        $noUrut = (int) substr((string) $hasil['maxKode'], 0, 5) + 1;
+        $kode_po = sprintf('%05s', $noUrut) . substr($date, 0, 2) . substr($date, 2, 2);
 
-        $sql = "INSERT INTO tbl_after_sales SET
-        id   ='',
-        wo_no     ='".$kode_po."',
-        sa_name   ='".$data_sa."',
-        customer  ='".$kode_cus."',
-        customer_name  ='".$nama_cus."',
-        customer_complain  ='".$data['customer_complain']."',
-        vin       ='".$data['vin']."',
-        engine_no ='".$data['engine_no']."',
-        last_service_date ='".$date_last_service."',
-        dead_line ='".$date_dead_line."',
-        dead_time   ='".$data['dead_time']."',
-        mileage   ='".$data['mileage']."',
-        no_pol    ='".$data['licence_plate']."',
-        type      ='".$data['vehicle_type']."',
-        storing   ='".$data['storing']."',
-        date_open_wo  ='".$date_open_wo."',
-        clockin   ='".$data['clockin']."',
-        status    ='N',
-        free_service    ='".$data['free_service']."',
-        status_service    ='".$data['status_service']."',
-        pembuat   ='".$data['pembuat']."'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
+        $row = array(
+            'wo_no' => $kode_po,
+            'sa_name' => trim((string) ($data['sa_name'] ?? '')) !== '' ? $data['sa_name'] : $data['pembuat'],
+            'customer' => $kode_cus, 'customer_name' => $nama_cus,
+            'customer_complain' => (string) ($data['customer_complain'] ?? ''),
+            'vin' => (string) ($data['vin'] ?? ''), 'engine_no' => (string) ($data['engine_no'] ?? ''),
+            'last_service_date' => self::tgl($data['last_service_date'] ?? ''),
+            'dead_line' => self::tgl($data['dead_line'] ?? ''), 'dead_time' => (string) ($data['dead_time'] ?? ''),
+            'mileage' => (string) ($data['mileage'] ?? ''), 'no_pol' => strtoupper((string) ($data['licence_plate'] ?? '')),
+            'type' => (string) ($data['vehicle_type'] ?? ''), 'storing' => ($data['storing'] ?? 'N') === 'Y' ? 'Y' : 'N',
+            'date_open_wo' => $date_open_wo, 'clockin' => (string) ($data['clockin'] ?? ''), 'status' => 'N',
+            'remarks' => (string) ($data['remark'] ?? ''),
+            'free_service' => ($data['free_service'] ?? 'N') === 'Y' ? 'Y' : 'N',
+            'status_service' => in_array($data['status_service'] ?? '', array('C', 'I', 'W', 'GW'), true) ? $data['status_service'] : 'C',
+            'pembuat' => (string) $data['pembuat'],
+        );
+        $this->db->insert('tbl_after_sales', $row);
+        return $this->db->affected_rows();
     }
+
     function updateAppointment($data)
     {
-        $tgl1 = explode('-', $date_wo);
-		$date_open_wo= $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
-		$date_last = $data['last_service_date'];
-		$tgl2 = explode('-', $date_last);
-		$date_last_service= $tgl2[2] . "-" . $tgl2[1] . "-" . $tgl2[0] . "";
-		$date_dead = $data['dead_line'];
-		$tgl3 = explode('-', $date_dead);
-		$date_dead_line= $tgl3[2] . "-" . $tgl3[1] . "-" . $tgl3[0] . "";
-		$dead_time = $data['dead_time'];
-        $sql = "UPDATE tbl_after_sales SET
-        wo_no     ='".$data['wo_no']."',
-        sa_name   ='".$data['sa_name']."',
-        customer  ='".$data['customer']."',
-        customer_complain  ='".$data['customer_complain']."',
-        vin       ='".$data['vin']."',
-        engine_no ='".$data['engine_no']."',
-        last_service_date ='".$date_last_service."',
-        dead_line ='".$date_dead_line."',
-        dead_time   ='".$dead_time."',
-        mileage   ='".$data['mileage']."'
-        no_pol    ='".$data['licence_plate']."',
-        type      ='".$data['vehicle_type']."',
-        storing   ='".$data['storing']."',
-        date_open_wo  ='".$data['date_open_wo']."',
-        clockin   ='".$data['clockin']."',
-        status_service    ='".$data['status_service']."' WHERE id='".$data['id']."'";
-
-		$this->db->query($sql);
-
-		return $this->db->affected_rows();
+        $id = (int) $data['id'];
+        $lama = $this->get($id);
+        if ( ! $lama || $lama->status !== 'N') return 0;
+        $row = array(
+            'sa_name' => (string) ($data['sa_name'] ?? $lama->sa_name),
+            'customer_complain' => (string) ($data['customer_complain'] ?? ''),
+            'vin' => (string) ($data['vin'] ?? ''), 'engine_no' => (string) ($data['engine_no'] ?? ''),
+            'last_service_date' => self::tgl($data['last_service_date'] ?? ''),
+            'dead_line' => self::tgl($data['dead_line'] ?? ''), 'dead_time' => (string) ($data['dead_time'] ?? ''),
+            'mileage' => (string) ($data['mileage'] ?? ''), 'no_pol' => strtoupper((string) ($data['licence_plate'] ?? '')),
+            'type' => (string) ($data['vehicle_type'] ?? ''), 'storing' => ($data['storing'] ?? 'N') === 'Y' ? 'Y' : 'N',
+            'date_open_wo' => self::tgl($data['date_open_wo'] ?? '') ?: $lama->date_open_wo, 'clockin' => (string) ($data['clockin'] ?? ''),
+            'remarks' => (string) ($data['remark'] ?? ''),
+            'free_service' => ($data['free_service'] ?? 'N') === 'Y' ? 'Y' : 'N',
+            'status_service' => in_array($data['status_service'] ?? '', array('C', 'I', 'W', 'GW'), true) ? $data['status_service'] : $lama->status_service,
+        );
+        if ( ! empty($data['customer'])) { $k = explode('|', (string) $data['customer']); $row['customer'] = $k[0]; if (isset($k[1])) $row['customer_name'] = $k[1]; }
+        $this->db->where('id', $id)->update('tbl_after_sales', $row);
+        return $this->db->affected_rows() >= 0 ? 1 : 0;
     }
 
     function edit_submenu($id)
@@ -291,7 +288,7 @@ class Mod_service_appointment extends CI_Model
 
     function deleteAppointment($id)
     {
-        $sql = "DELETE FROM tbl_after_sales WHERE id='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

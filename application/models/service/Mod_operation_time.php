@@ -101,7 +101,7 @@ class Mod_operation_time extends CI_Model
 	}
 	public function select_id_operation_time($id)
 	{
-		$sql = " SELECT * FROM tbl_after_sales_operation_time WHERE id_x='{$id}'";
+		$sql = " SELECT * FROM tbl_after_sales_operation_time WHERE id_x='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -109,23 +109,23 @@ class Mod_operation_time extends CI_Model
 	}
 	public function insertOperationTime($data)
 	{
-	$sql = "INSERT INTO tbl_after_sales_operation_time SET code='" . $data['code'] . "',
-	duration='" . $data['duration'] . "',
-	im='" . $data['im'] . "',
-	description='" . $data['description'] . "',
-    price='" . $data['price'] . "'";
+	$sql = "INSERT INTO tbl_after_sales_operation_time SET code='" . $this->db->escape_str((string) $data['code']) . "',
+	duration='" . $this->db->escape_str((string) $data['duration']) . "',
+	im='" . $this->db->escape_str((string) $data['im']) . "',
+	description='" . $this->db->escape_str((string) $data['description']) . "',
+    price='" . $this->db->escape_str((string) $data['price']) . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 	public function updateOperationTime($data)
 	{
-		$sql = "UPDATE tbl_after_sales_operation_time SET code='" . $data['code'] . "',
-	duration='" . $data['duration'] . "',
-	im='" . $data['im'] . "',
-	description='" . $data['description'] . "',
-    price='" . $data['price'] . "'
-        WHERE id_x='" . $data['id_x'] . "'";
+		$sql = "UPDATE tbl_after_sales_operation_time SET code='" . $this->db->escape_str((string) $data['code']) . "',
+	duration='" . $this->db->escape_str((string) $data['duration']) . "',
+	im='" . $this->db->escape_str((string) $data['im']) . "',
+	description='" . $this->db->escape_str((string) $data['description']) . "',
+    price='" . $this->db->escape_str((string) $data['price']) . "'
+        WHERE id_x='" . $this->db->escape_str((string) $data['id_x']) . "'";
 
 		$this->db->query($sql);
 
@@ -133,7 +133,7 @@ class Mod_operation_time extends CI_Model
 	}
 	function deleteOpTime($id)
 	{
-		$sql = "DELETE FROM tbl_after_sales_operation_time WHERE id_x='{$id}'";
+		$sql = "DELETE FROM tbl_after_sales_operation_time WHERE id_x='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

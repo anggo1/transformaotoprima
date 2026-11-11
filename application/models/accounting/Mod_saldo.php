@@ -103,15 +103,15 @@ class Mod_saldo extends CI_Model
         $kode_saldo  = $kode.sprintf("%05s", $noOrder);
 
         $sql = "INSERT INTO tbl_acc_saldo_awal SET
-        id_saldo    ='".$kode_saldo."',
-        periode     ='".$data['thn_saldo_input']."',
-        kode_akun   ='".$data['kode_akun']."',
-        nama_akun   ='".$data['nama_akun']."',
-        debit       ='".$esDebit."',
-        kredit      ='".$esKredit."',
-        keterangan  ='".$data['keterangan']."',
-        tgl_insert  ='".$sekarang."',
-        user        ='".$data['user']."'";
+        id_saldo    ='".$this->db->escape_str((string) $kode_saldo)."',
+        periode     ='".$this->db->escape_str((string) $data['thn_saldo_input'])."',
+        kode_akun   ='".$this->db->escape_str((string) $data['kode_akun'])."',
+        nama_akun   ='".$this->db->escape_str((string) $data['nama_akun'])."',
+        debit       ='".$this->db->escape_str((string) $esDebit)."',
+        kredit      ='".$this->db->escape_str((string) $esKredit)."',
+        keterangan  ='".$this->db->escape_str((string) $data['keterangan'])."',
+        tgl_insert  ='".$this->db->escape_str((string) $sekarang)."',
+        user        ='".$this->db->escape_str((string) $data['user'])."'";
 
 		$this->db->query($sql);
 
@@ -126,15 +126,15 @@ class Mod_saldo extends CI_Model
 		$beakredit=$data['kredit'];
 		$esKredit =str_replace(",","", $beakredit);
         $sql = "UPDATE tbl_acc_jurnal_umum SET
-        no_bukti        ='".$data['no_bukti']."',
-        kode_akun       ='".$data['kode_akun']."',
-        nama_akun       ='".$data['nama_akun']."',
-        keterangan      ='".$data['keterangan']."',
-        debit           ='".$esDebit."',
-        kredit          ='".$esKredit."',
-        user            ='".$data['user']."',
-        tgl_insert      ='".$sekarang."'
-        WHERE no_jurnal='".$data['no_jurnal']."'";
+        no_bukti        ='".$this->db->escape_str((string) $data['no_bukti'])."',
+        kode_akun       ='".$this->db->escape_str((string) $data['kode_akun'])."',
+        nama_akun       ='".$this->db->escape_str((string) $data['nama_akun'])."',
+        keterangan      ='".$this->db->escape_str((string) $data['keterangan'])."',
+        debit           ='".$this->db->escape_str((string) $esDebit)."',
+        kredit          ='".$this->db->escape_str((string) $esKredit)."',
+        user            ='".$this->db->escape_str((string) $data['user'])."',
+        tgl_insert      ='".$this->db->escape_str((string) $sekarang)."'
+        WHERE no_jurnal='".$this->db->escape_str((string) $data['no_jurnal'])."'";
 
 		$this->db->query($sql);
 
@@ -143,7 +143,7 @@ class Mod_saldo extends CI_Model
 
     function deleteSaldo($id)
     {
-        $sql = "DELETE FROM tbl_acc_saldo_awal WHERE id_saldo='{$id}'";
+        $sql = "DELETE FROM tbl_acc_saldo_awal WHERE id_saldo='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

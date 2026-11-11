@@ -38,14 +38,14 @@
                                 <td><?php echo $s->nama_part; ?></td>
                                 <td align="center"><?php echo $s->jumlah; ?></td>
                                 <td><?php echo $s->satuan; ?></td>
-                                <td align="right"><?php echo number_format($s->hrg_part); ?></td>
-                                <td align="right"><?php echo number_format($sub_total); ?></td>
+                                <td align="right"><?php echo nf($s->hrg_part); ?></td>
+                                <td align="right"><?php echo nf($sub_total); ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>
             <tfoot>
                 <th  colspan="11" style="text-align: right;">GRAND TOTAL</th>
-                <th style="text-align: right;"><?php echo number_format($grand_total) ?></th>
+                <th style="text-align: right;"><?php echo nf($grand_total) ?></th>
             </tfoot>
                     </table>
                 </div>

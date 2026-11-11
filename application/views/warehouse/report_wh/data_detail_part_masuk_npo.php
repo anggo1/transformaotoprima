@@ -46,7 +46,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->jumlah; ?></td>
                     <td><?php echo $s->satuan; ?></td>
                     <td><?php echo $s->hrg_part; ?></td>
-                    <td align="right"><?php echo number_format($s->total); ?></td>
+                    <td align="right"><?php echo nf($s->total); ?></td>
                 </tr>
                 <?php
     $no++;

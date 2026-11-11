@@ -90,7 +90,7 @@ class Mod_reportwhpartorder extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_part_order 
         LEFT JOIN tbl_wh_supplier ON tbl_wh_supplier.kode_sup=tbl_wh_part_order.supplier
-        WHERE id_part_order ='{$id}'";
+        WHERE id_part_order ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -101,22 +101,22 @@ class Mod_reportwhpartorder extends CI_Model
         $ci = get_instance();
                 $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_part_order as a 
                     LEFT JOIN tbl_wh_part_order as b ON b.id_part_order=a.id_part_order
-                    WHERE a.id_part_order='{$id}'";
+                    WHERE a.id_part_order='".$this->db->escape_str((string) $id)."'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         //$ppn       = $d_data['ppn'];
         //$total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_part_order SET
-        sub_total   ='$total',
-        grand_total ='$grand_total'
-        WHERE id_part_order ='{$id}'";
+        sub_total   ='".$this->db->escape_str((string) $total)."',
+        grand_total ='".$this->db->escape_str((string) $grand_total)."'
+        WHERE id_part_order ='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
         FROM tbl_wh_detail_part_order AS a
-        WHERE a.id_part_order ='{$id}' ORDER BY a.id_detail ASC";
+        WHERE a.id_part_order ='".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -125,7 +125,7 @@ class Mod_reportwhpartorder extends CI_Model
     public function select_ket($id)
     {
         $sql = "SELECT * FROM tbl_wh_detail_part_order_note 
-        WHERE id_part_order ='{$id}'";
+        WHERE id_part_order ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -136,7 +136,7 @@ class Mod_reportwhpartorder extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -144,9 +144,9 @@ class Mod_reportwhpartorder extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po WHERE id_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -181,7 +181,7 @@ class Mod_reportwhpartorder extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -189,9 +189,9 @@ class Mod_reportwhpartorder extends CI_Model
     }
 	function deletePartnon($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

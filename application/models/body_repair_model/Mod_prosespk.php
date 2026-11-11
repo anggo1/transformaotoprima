@@ -26,7 +26,7 @@ class Mod_prosespk extends CI_Model
 	public function insertLapor($data)
 	{
 		$sql = "INSERT INTO tbl_br_ket_lapor VALUES
-		('','" . $data['kode'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -36,8 +36,8 @@ class Mod_prosespk extends CI_Model
 	{
         $date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $data['ket_pause'] . "',jam_pause='" .$jam. "',tgl_pause='" .$date. "'
-        WHERE id_pk='" . $data['id_pk'] . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='P',ket_pause='" . $this->db->escape_str((string) $data['ket_pause']) . "',jam_pause='" .$this->db->escape_str((string) $jam). "',tgl_pause='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $data['id_pk']) . "'";
 
 		$this->db->query($sql);
 
@@ -47,8 +47,8 @@ class Mod_prosespk extends CI_Model
 	{
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$jam. "',tgl_start='" .$date. "'
-        WHERE id_pk='" . $id . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$this->db->escape_str((string) $jam). "',tgl_start='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $id) . "'";
 
 		$this->db->query($sql);
 
@@ -58,8 +58,8 @@ class Mod_prosespk extends CI_Model
 	{
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$jam. "',tgl_selesai='" .$date. "'
-        WHERE id_pk='" . $id . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$this->db->escape_str((string) $jam). "',tgl_selesai='" .$this->db->escape_str((string) $date). "'
+        WHERE id_pk='" . $this->db->escape_str((string) $id) . "'";
 
 		$this->db->query($sql);
 
@@ -69,8 +69,8 @@ class Mod_prosespk extends CI_Model
 	{
         $date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sql = "INSERT tbl_br_detail_pk SET id_lapor='".$data['id_lapor']."',id_pk='".$data['id_pk']."',
-		jns_pk='".$data['jns_pk']."',ket_pk='".$data['ket_pk']."',ket_detail='".$data['ket_detail']."'";
+		$sql = "INSERT tbl_br_detail_pk SET id_lapor='".$this->db->escape_str((string) $data['id_lapor'])."',id_pk='".$this->db->escape_str((string) $data['id_pk'])."',
+		jns_pk='".$this->db->escape_str((string) $data['jns_pk'])."',ket_pk='".$this->db->escape_str((string) $data['ket_pk'])."',ket_detail='".$this->db->escape_str((string) $data['ket_detail'])."'";
 
 		$this->db->query($sql);
 
@@ -78,7 +78,7 @@ class Mod_prosespk extends CI_Model
 	}
 	function select_detail($id)
 	{
-		$sql = "SELECT * FROM tbl_br_detail_pk WHERE id_pk = '{$id}'";
+		$sql = "SELECT * FROM tbl_br_detail_pk WHERE id_pk = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -99,7 +99,7 @@ class Mod_prosespk extends CI_Model
 	function cetak_estimasi($id)
     {
 		$sql = "SELECT a.*,b.keterangan as ket_pk FROM tbl_br_detail_estimasi as a
-		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '{$id}'";
+		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -121,7 +121,7 @@ class Mod_prosespk extends CI_Model
     }
 	function cetak_detail($id)
     {
-		$sql = "SELECT * FROM tbl_br_detail_pk  WHERE id_pk ='{$id}'";
+		$sql = "SELECT * FROM tbl_br_detail_pk  WHERE id_pk ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -130,7 +130,7 @@ class Mod_prosespk extends CI_Model
 	//** end Keterangan PK **//
 	public function deleteDetail_pk($id)
     {
-        $sql = "DELETE FROM tbl_br_detail_pk WHERE id_detail='" . $id . "'";
+        $sql = "DELETE FROM tbl_br_detail_pk WHERE id_detail='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 

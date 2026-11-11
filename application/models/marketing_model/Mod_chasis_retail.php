@@ -123,39 +123,39 @@ class Mod_chasis_retail extends CI_Model
 		$tgl1 = explode('-', $tgl_masuk);
 		$tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
 		$sql = "INSERT INTO tbl_mk_chasis_retail SET
-        tgl_masuk		='" . $tgl_masuknya . "',
-        chasis_id 		='" . $data['chasis_id'] . "',
-        retail 			='" . $data['retail'] . "',
-        kode_cus 		='" . $data['kode_cus'] . "',
-        nama_pemesan 		='" . $data['nama_pemesan'] . "',
-        alamat_pemesan 		='" . $data['alamat_pemesan'] . "',
-        no_npwp 			='" . $data['no_npwp'] . "',
-        alamat_npwp 		='" . $data['alamat_npwp'] . "',
-        telp_pemesan 		='" . $data['telp_pemesan'] . "',
-        contact_person 		='" . $data['contact_person'] . "',
-        telp_contact_person ='" . $data['telp_contact_person'] . "',
-        nama_bpkb 			='" . $data['nama_bpkb'] . "',
-        alamat_faktur 			='" . $data['alamat_faktur'] . "',
-        no_ktp 			='" . $data['no_ktp'] . "',
-        nama_npwp 		='" . $data['nama_npwp'] . "',
-        type_body 			='" . $data['type_body'] . "',
-        no_rangka 		='" . $data['no_rangka'] . "',
-        no_mesin  		='" . $data['no_mesin'] . "',
-        sales			='" . $data['sales'] . "',
-        gesekan    		='" . $data['gesekan'] . "',
-        thn_produksi	='" . $data['thn_produksi'] . "',
-        warna			='" . $data['warna'] . "',
-        pengiriman      ='" . $data['pengiriman'] . "',
+        tgl_masuk		='" . $this->db->escape_str((string) $tgl_masuknya) . "',
+        chasis_id 		='" . $this->db->escape_str((string) $data['chasis_id']) . "',
+        retail 			='" . $this->db->escape_str((string) $data['retail']) . "',
+        kode_cus 		='" . $this->db->escape_str((string) $data['kode_cus']) . "',
+        nama_pemesan 		='" . $this->db->escape_str((string) $data['nama_pemesan']) . "',
+        alamat_pemesan 		='" . $this->db->escape_str((string) $data['alamat_pemesan']) . "',
+        no_npwp 			='" . $this->db->escape_str((string) $data['no_npwp']) . "',
+        alamat_npwp 		='" . $this->db->escape_str((string) $data['alamat_npwp']) . "',
+        telp_pemesan 		='" . $this->db->escape_str((string) $data['telp_pemesan']) . "',
+        contact_person 		='" . $this->db->escape_str((string) $data['contact_person']) . "',
+        telp_contact_person ='" . $this->db->escape_str((string) $data['telp_contact_person']) . "',
+        nama_bpkb 			='" . $this->db->escape_str((string) $data['nama_bpkb']) . "',
+        alamat_faktur 			='" . $this->db->escape_str((string) $data['alamat_faktur']) . "',
+        no_ktp 			='" . $this->db->escape_str((string) $data['no_ktp']) . "',
+        nama_npwp 		='" . $this->db->escape_str((string) $data['nama_npwp']) . "',
+        type_body 			='" . $this->db->escape_str((string) $data['type_body']) . "',
+        no_rangka 		='" . $this->db->escape_str((string) $data['no_rangka']) . "',
+        no_mesin  		='" . $this->db->escape_str((string) $data['no_mesin']) . "',
+        sales			='" . $this->db->escape_str((string) $data['sales']) . "',
+        gesekan    		='" . $this->db->escape_str((string) $data['gesekan']) . "',
+        thn_produksi	='" . $this->db->escape_str((string) $data['thn_produksi']) . "',
+        warna			='" . $this->db->escape_str((string) $data['warna']) . "',
+        pengiriman      ='" . $this->db->escape_str((string) $data['pengiriman']) . "',
         status_chasis  	='S',
-        harga_retail      ='" . $harga . "',
-        jumlah      ='" . $data['jumlah'] . "',
-        tgl_input  		='" . $tgl_input . "',
-        user  			='" . $data['user'] . "',
-        keterangan      ='" . $data['keterangan'] . "'
+        harga_retail      ='" . $this->db->escape_str((string) $harga) . "',
+        jumlah      ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+        tgl_input  		='" . $this->db->escape_str((string) $tgl_input) . "',
+        user  			='" . $this->db->escape_str((string) $data['user']) . "',
+        keterangan      ='" . $this->db->escape_str((string) $data['keterangan']) . "'
 		";
 
 		$this->db->query($sql);
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $data['jumlah'] . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $data['jumlah'] . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 
 		return $this->db->affected_rows();
@@ -163,18 +163,18 @@ class Mod_chasis_retail extends CI_Model
 
 	function updateChasis($data)
 	{
-		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $this->db->escape_str((string) $data['id_chasis']) . "'";
 		$h = $this->db->query($cari)->row();
 		$dataJumlah = $h->jumlah;
 		$hsl = $data['jumlah'];
 		if ($hsl > $dataJumlah) {
 			$hasil = $dataJumlah - $hsl;
-			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 			$this->db->query($sql2);
 		}
 		if ($hsl < $dataJumlah) {
 			$hasil = $hsl - $dataJumlah;
-			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+			$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 			$this->db->query($sql2);
 		}
 
@@ -185,31 +185,31 @@ class Mod_chasis_retail extends CI_Model
 		$tgl1 = explode('-', $tgl_masuk);
 		$tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
 		$sql = "UPDATE tbl_mk_chasis_retail SET
-        retail 			='" . $data['retail'] . "',
-        kode_cus 		='" . $data['kode_cus'] . "',
-        nama_pemesan 		='" . $data['nama_pemesan'] . "',
-        alamat_pemesan 		='" . $data['alamat_pemesan'] . "',
-        no_npwp 			='" . $data['no_npwp'] . "',
-        alamat_npwp 		='" . $data['alamat_npwp'] . "',
-        telp_pemesan 		='" . $data['telp_pemesan'] . "',
-        contact_person 		='" . $data['contact_person'] . "',
-        telp_contact_person ='" . $data['telp_contact_person'] . "',
-        nama_bpkb 			='" . $data['nama_bpkb'] . "',
-        alamat_faktur 			='" . $data['alamat_faktur'] . "',
-        no_ktp 			='" . $data['no_ktp'] . "',
-        nama_npwp 		='" . $data['nama_npwp'] . "',
-        type_body 			='" . $data['type_body'] . "',
-        no_rangka 		='" . $data['no_rangka'] . "',
-        no_mesin  		='" . $data['no_mesin'] . "',
-        sales			='" . $data['sales'] . "',
-        gesekan    		='" . $data['gesekan'] . "',
-        thn_produksi	='" . $data['thn_produksi'] . "',
-        warna			='" . $data['warna'] . "',
-        pengiriman      ='" . $data['pengiriman'] . "',
-        harga_retail      ='" . $harga . "',
-        jumlah      	='" . $data['jumlah'] . "',
-        keterangan      ='" . $data['keterangan'] . "'
-        WHERE id_chasis='" . $data['id_chasis'] . "'";
+        retail 			='" . $this->db->escape_str((string) $data['retail']) . "',
+        kode_cus 		='" . $this->db->escape_str((string) $data['kode_cus']) . "',
+        nama_pemesan 		='" . $this->db->escape_str((string) $data['nama_pemesan']) . "',
+        alamat_pemesan 		='" . $this->db->escape_str((string) $data['alamat_pemesan']) . "',
+        no_npwp 			='" . $this->db->escape_str((string) $data['no_npwp']) . "',
+        alamat_npwp 		='" . $this->db->escape_str((string) $data['alamat_npwp']) . "',
+        telp_pemesan 		='" . $this->db->escape_str((string) $data['telp_pemesan']) . "',
+        contact_person 		='" . $this->db->escape_str((string) $data['contact_person']) . "',
+        telp_contact_person ='" . $this->db->escape_str((string) $data['telp_contact_person']) . "',
+        nama_bpkb 			='" . $this->db->escape_str((string) $data['nama_bpkb']) . "',
+        alamat_faktur 			='" . $this->db->escape_str((string) $data['alamat_faktur']) . "',
+        no_ktp 			='" . $this->db->escape_str((string) $data['no_ktp']) . "',
+        nama_npwp 		='" . $this->db->escape_str((string) $data['nama_npwp']) . "',
+        type_body 			='" . $this->db->escape_str((string) $data['type_body']) . "',
+        no_rangka 		='" . $this->db->escape_str((string) $data['no_rangka']) . "',
+        no_mesin  		='" . $this->db->escape_str((string) $data['no_mesin']) . "',
+        sales			='" . $this->db->escape_str((string) $data['sales']) . "',
+        gesekan    		='" . $this->db->escape_str((string) $data['gesekan']) . "',
+        thn_produksi	='" . $this->db->escape_str((string) $data['thn_produksi']) . "',
+        warna			='" . $this->db->escape_str((string) $data['warna']) . "',
+        pengiriman      ='" . $this->db->escape_str((string) $data['pengiriman']) . "',
+        harga_retail      ='" . $this->db->escape_str((string) $harga) . "',
+        jumlah      	='" . $this->db->escape_str((string) $data['jumlah']) . "',
+        keterangan      ='" . $this->db->escape_str((string) $data['keterangan']) . "'
+        WHERE id_chasis='" . $this->db->escape_str((string) $data['id_chasis']) . "'";
 
 		$this->db->query($sql);
 
@@ -217,18 +217,18 @@ class Mod_chasis_retail extends CI_Model
 	}
 	function Proses_inputSpk($data)
 	{
-		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $this->db->escape_str((string) $data['id_chasis']) . "'";
 		$h = $this->db->query($cari)->row();
 		$dataJumlah = $h->jumlah;
 		$hsl = $data['jml_unit'];
 		if ($hsl > $dataJumlah) {
 			$hasil = $dataJumlah - $hsl ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 		if ($hsl < $dataJumlah) {
 			$hasil = $hsl - $dataJumlah ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 
@@ -268,43 +268,43 @@ class Mod_chasis_retail extends CI_Model
                 $no_spk = $no_spk1 . '-' . $ciri;
             }
 		$sql = "INSERT INTO tbl_mk_spk SET
-            no_urut       		='" . $data['no_urut'] . "',
-            no_spk   			='" . $no_spk . "',
+            no_urut       		='" . $this->db->escape_str((string) $data['no_urut']) . "',
+            no_spk   			='" . $this->db->escape_str((string) $no_spk) . "',
             tgl_spk         	='" . date("Y-m-d") . "',
-            nama_pemesan        ='" . $data['nama_pemesan'] . "',
-            id_chasis       	='" . $data['id_chasis'] . "',
-            alamat_pemesan      ='" . $data['alamat_pemesan'] . "',
-            telp_pemesan        ='" . $data['telp_pemesan'] . "',
-            faktur_pajak        ='" . $data['faktur_pajak'] . "',
-            npwp_pemesan    	='" . $data['npwp_pemesan'] . "',
-			nama_npwp_pemesan   ='" . $data['nama_npwp_pemesan'] . "',
-			alamat_npwp    		='" . $data['alamat_npwp'] . "',
-			contact_person    	='" . $data['contact_person'] . "',
-			telp_contact_person ='" . $data['telp_contact_person'] . "',
-			nama_bpkb    		='" . $data['nama_bpkb'] . "',
-			no_ktp    			='" . $data['no_ktp'] . "',
-			alamat_faktur    	='" . $data['alamat_faktur'] . "',
-			plat_kendaraan    	='" . $data['plat_kendaraan'] . "',
-			type_body    		='" . $data['type_body'] . "',
-			jumlah    			='" . $data['jml_unit'] . "',
-			kategori    		='" . $data['kategori'] . "',
-			type_kendaraan    	='" . $data['type_kendaraan'] . "',
-			thn_produksi   		='" . $data['thn_produksi'] . "',
-			warna	    		='" . $data['warna'] . "',
-			harga_retail    	='" . $ofr . "',
-			biaya_bbn    		='" . $h_bbn . "',
-			hrg_on_the_road    	='" . $otr . "',
-			tambahan_1    		='" . $data['tambahan_1'] . "',
-			hrg_tambahan_1    	='" . $tambah1 . "',
-			tambahan_2    		='" . $data['tambahan_2'] . "',
-			hrg_tambahan_2    	='" . $tambah2 . "',
-			tambahan_3    		='" . $data['tambahan_3'] . "',
-			hrg_tambahan_3    	='" . $tambah3 . "',
-			tambahan_4    		='" . $data['tambahan_4'] . "',
-			hrg_tambahan_4    	='" . $tambah4 . "',
-			hrg_jual_perunit    ='" . $perunit . "',
-			total_hrg_jual    	='" . $total_harga . "',
-			user    			='" . $data['user'] . "',
+            nama_pemesan        ='" . $this->db->escape_str((string) $data['nama_pemesan']) . "',
+            id_chasis       	='" . $this->db->escape_str((string) $data['id_chasis']) . "',
+            alamat_pemesan      ='" . $this->db->escape_str((string) $data['alamat_pemesan']) . "',
+            telp_pemesan        ='" . $this->db->escape_str((string) $data['telp_pemesan']) . "',
+            faktur_pajak        ='" . $this->db->escape_str((string) $data['faktur_pajak']) . "',
+            npwp_pemesan    	='" . $this->db->escape_str((string) $data['npwp_pemesan']) . "',
+			nama_npwp_pemesan   ='" . $this->db->escape_str((string) $data['nama_npwp_pemesan']) . "',
+			alamat_npwp    		='" . $this->db->escape_str((string) $data['alamat_npwp']) . "',
+			contact_person    	='" . $this->db->escape_str((string) $data['contact_person']) . "',
+			telp_contact_person ='" . $this->db->escape_str((string) $data['telp_contact_person']) . "',
+			nama_bpkb    		='" . $this->db->escape_str((string) $data['nama_bpkb']) . "',
+			no_ktp    			='" . $this->db->escape_str((string) $data['no_ktp']) . "',
+			alamat_faktur    	='" . $this->db->escape_str((string) $data['alamat_faktur']) . "',
+			plat_kendaraan    	='" . $this->db->escape_str((string) $data['plat_kendaraan']) . "',
+			type_body    		='" . $this->db->escape_str((string) $data['type_body']) . "',
+			jumlah    			='" . $this->db->escape_str((string) $data['jml_unit']) . "',
+			kategori    		='" . $this->db->escape_str((string) $data['kategori']) . "',
+			type_kendaraan    	='" . $this->db->escape_str((string) $data['type_kendaraan']) . "',
+			thn_produksi   		='" . $this->db->escape_str((string) $data['thn_produksi']) . "',
+			warna	    		='" . $this->db->escape_str((string) $data['warna']) . "',
+			harga_retail    	='" . $this->db->escape_str((string) $ofr) . "',
+			biaya_bbn    		='" . $this->db->escape_str((string) $h_bbn) . "',
+			hrg_on_the_road    	='" . $this->db->escape_str((string) $otr) . "',
+			tambahan_1    		='" . $this->db->escape_str((string) $data['tambahan_1']) . "',
+			hrg_tambahan_1    	='" . $this->db->escape_str((string) $tambah1) . "',
+			tambahan_2    		='" . $this->db->escape_str((string) $data['tambahan_2']) . "',
+			hrg_tambahan_2    	='" . $this->db->escape_str((string) $tambah2) . "',
+			tambahan_3    		='" . $this->db->escape_str((string) $data['tambahan_3']) . "',
+			hrg_tambahan_3    	='" . $this->db->escape_str((string) $tambah3) . "',
+			tambahan_4    		='" . $this->db->escape_str((string) $data['tambahan_4']) . "',
+			hrg_tambahan_4    	='" . $this->db->escape_str((string) $tambah4) . "',
+			hrg_jual_perunit    ='" . $this->db->escape_str((string) $perunit) . "',
+			total_hrg_jual    	='" . $this->db->escape_str((string) $total_harga) . "',
+			user    			='" . $this->db->escape_str((string) $data['user']) . "',
 			status    ='P'";
 		$this->db->query($sql);
 		
@@ -316,18 +316,18 @@ class Mod_chasis_retail extends CI_Model
 	}
 	function updateSpk($data)
 	{
-		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+		$cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $this->db->escape_str((string) $data['id_chasis']) . "'";
 		$h = $this->db->query($cari)->row();
 		$dataJumlah = $h->jumlah;
 		$hsl = $data['jml_unit'];
 		if ($hsl > $dataJumlah) {
 			$hasil = $dataJumlah - $hsl ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 		if ($hsl < $dataJumlah) {
 			$hasil = $hsl - $dataJumlah ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 		
@@ -357,40 +357,40 @@ class Mod_chasis_retail extends CI_Model
             $total_harga = str_replace(",", "", $thp);
 
 		$sql = "UPDATE tbl_mk_spk SET
-            nama_pemesan        ='" . $data['nama_pemesan'] . "',
-            id_chasis       	='" . $data['id_chasis'] . "',
-            alamat_pemesan      ='" . $data['alamat_pemesan'] . "',
-            telp_pemesan        ='" . $data['telp_pemesan'] . "',
-            faktur_pajak        ='" . $data['faktur_pajak'] . "',
-            npwp_pemesan    	='" . $data['npwp_pemesan'] . "',
-			nama_npwp_pemesan   ='" . $data['nama_npwp_pemesan'] . "',
-			alamat_npwp    		='" . $data['alamat_npwp'] . "',
-			contact_person    	='" . $data['contact_person'] . "',
-			telp_contact_person ='" . $data['telp_contact_person'] . "',
-			nama_bpkb    		='" . $data['nama_bpkb'] . "',
-			no_ktp    			='" . $data['no_ktp'] . "',
-			alamat_faktur    	='" . $data['alamat_faktur'] . "',
-			plat_kendaraan    	='" . $data['plat_kendaraan'] . "',
-			type_body    		='" . $data['type_body'] . "',
-			jumlah    			='" . $data['jml_unit'] . "',
-			kategori    		='" . $data['kategori'] . "',
-			type_kendaraan    	='" . $data['type_kendaraan'] . "',
-			thn_produksi   		='" . $data['thn_produksi'] . "',
-			warna	    		='" . $data['warna'] . "',
-			harga_retail    	='" . $ofr . "',
-			biaya_bbn    		='" . $h_bbn . "',
-			hrg_on_the_road    	='" . $otr . "',
-			tambahan_1    		='" . $data['tambahan_1'] . "',
-			hrg_tambahan_1    	='" . $tambah1 . "',
-			tambahan_2    		='" . $data['tambahan_2'] . "',
-			hrg_tambahan_2    	='" . $tambah2 . "',
-			tambahan_3    		='" . $data['tambahan_3'] . "',
-			hrg_tambahan_3    	='" . $tambah3 . "',
-			tambahan_4    		='" . $data['tambahan_4'] . "',
-			hrg_tambahan_4    	='" . $tambah4 . "',
-			hrg_jual_perunit    ='" . $perunit . "',
-			total_hrg_jual    	='" . $total_harga . "'
-        WHERE id_spk='" . $data['id_spk'] . "'";
+            nama_pemesan        ='" . $this->db->escape_str((string) $data['nama_pemesan']) . "',
+            id_chasis       	='" . $this->db->escape_str((string) $data['id_chasis']) . "',
+            alamat_pemesan      ='" . $this->db->escape_str((string) $data['alamat_pemesan']) . "',
+            telp_pemesan        ='" . $this->db->escape_str((string) $data['telp_pemesan']) . "',
+            faktur_pajak        ='" . $this->db->escape_str((string) $data['faktur_pajak']) . "',
+            npwp_pemesan    	='" . $this->db->escape_str((string) $data['npwp_pemesan']) . "',
+			nama_npwp_pemesan   ='" . $this->db->escape_str((string) $data['nama_npwp_pemesan']) . "',
+			alamat_npwp    		='" . $this->db->escape_str((string) $data['alamat_npwp']) . "',
+			contact_person    	='" . $this->db->escape_str((string) $data['contact_person']) . "',
+			telp_contact_person ='" . $this->db->escape_str((string) $data['telp_contact_person']) . "',
+			nama_bpkb    		='" . $this->db->escape_str((string) $data['nama_bpkb']) . "',
+			no_ktp    			='" . $this->db->escape_str((string) $data['no_ktp']) . "',
+			alamat_faktur    	='" . $this->db->escape_str((string) $data['alamat_faktur']) . "',
+			plat_kendaraan    	='" . $this->db->escape_str((string) $data['plat_kendaraan']) . "',
+			type_body    		='" . $this->db->escape_str((string) $data['type_body']) . "',
+			jumlah    			='" . $this->db->escape_str((string) $data['jml_unit']) . "',
+			kategori    		='" . $this->db->escape_str((string) $data['kategori']) . "',
+			type_kendaraan    	='" . $this->db->escape_str((string) $data['type_kendaraan']) . "',
+			thn_produksi   		='" . $this->db->escape_str((string) $data['thn_produksi']) . "',
+			warna	    		='" . $this->db->escape_str((string) $data['warna']) . "',
+			harga_retail    	='" . $this->db->escape_str((string) $ofr) . "',
+			biaya_bbn    		='" . $this->db->escape_str((string) $h_bbn) . "',
+			hrg_on_the_road    	='" . $this->db->escape_str((string) $otr) . "',
+			tambahan_1    		='" . $this->db->escape_str((string) $data['tambahan_1']) . "',
+			hrg_tambahan_1    	='" . $this->db->escape_str((string) $tambah1) . "',
+			tambahan_2    		='" . $this->db->escape_str((string) $data['tambahan_2']) . "',
+			hrg_tambahan_2    	='" . $this->db->escape_str((string) $tambah2) . "',
+			tambahan_3    		='" . $this->db->escape_str((string) $data['tambahan_3']) . "',
+			hrg_tambahan_3    	='" . $this->db->escape_str((string) $tambah3) . "',
+			tambahan_4    		='" . $this->db->escape_str((string) $data['tambahan_4']) . "',
+			hrg_tambahan_4    	='" . $this->db->escape_str((string) $tambah4) . "',
+			hrg_jual_perunit    ='" . $this->db->escape_str((string) $perunit) . "',
+			total_hrg_jual    	='" . $this->db->escape_str((string) $total_harga) . "'
+        WHERE id_spk='" . $this->db->escape_str((string) $data['id_spk']) . "'";
 
 		$this->db->query($sql);
 
@@ -405,11 +405,11 @@ class Mod_chasis_retail extends CI_Model
 
 	function deleteChasis($id, $chasis_id, $jumlah)
 	{
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $jumlah . " WHERE chasis_id='{$chasis_id}'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $jumlah . " WHERE chasis_id='".$this->db->escape_str((string) $chasis_id)."'";
 		$this->db->query($sql2);
-		$sql1 = "DELETE FROM tbl_mk_spk WHERE id_chasis='{$id}'";
+		$sql1 = "DELETE FROM tbl_mk_spk WHERE id_chasis='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_mk_chasis_retail WHERE id_chasis='{$id}'";
+		$sql = "DELETE FROM tbl_mk_chasis_retail WHERE id_chasis='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -428,7 +428,7 @@ class Mod_chasis_retail extends CI_Model
 	}
 	public function deleteDetail_spk($id)
 	{
-		$sql = "DELETE FROM tbl_mk_keterangan_spk WHERE id_ket_spk='" . $id . "'";
+		$sql = "DELETE FROM tbl_mk_keterangan_spk WHERE id_ket_spk='" . $this->db->escape_str((string) $id) . "'";
 
 		$this->db->query($sql);
 
@@ -436,14 +436,14 @@ class Mod_chasis_retail extends CI_Model
 	}
 	function update_remark($id, $remark)
 	{
-		$sql_update = "UPDATE tbl_mk_keterangan_spk SET remark ='$remark' WHERE id_detail ='{$id}'";
+		$sql_update = "UPDATE tbl_mk_keterangan_spk SET remark ='".$this->db->escape_str((string) $remark)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql_update);
 		return $this->db->affected_rows();
 		//return $data->row();
 	}
 	function insertKeterangan($id, $no_spk, $keterangan, $id_chasis)
 	{
-		$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '$id', no_spk='$no_spk', keterangan ='$keterangan', id_chasis='$id_chasis'";
+		$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '".$this->db->escape_str((string) $id)."', no_spk='".$this->db->escape_str((string) $no_spk)."', keterangan ='".$this->db->escape_str((string) $keterangan)."', id_chasis='".$this->db->escape_str((string) $id_chasis)."'";
 		$this->db->query($sql_update);
 		return $this->db->affected_rows();
 		//return $data->row();
@@ -466,16 +466,16 @@ class Mod_chasis_retail extends CI_Model
 		$datenow = date("Y-m-d");
 		$sql = "INSERT INTO tbl_mk_keterangan_spk SET
             id_detail       ='',
-            id_estimasi_penawaran   ='" . $kodenya . "',
-            kode_po         ='" . $koderefnya . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            harga_baru           ='" . $data['harga_baru'] . "',
-            jumlah          ='" . $data['jumlah'] . "',
-            diskon          ='" . $data['diskon'] . "',
-            total_diskon    ='" . $data['total_diskon'] . "',
-            total_harga     ='$total_harga',
-            stok_akhir     ='" . $data['stok_awal'] . "'";
+            id_estimasi_penawaran   ='" . $this->db->escape_str((string) $kodenya) . "',
+            kode_po         ='" . $this->db->escape_str((string) $koderefnya) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            harga_baru           ='" . $this->db->escape_str((string) $data['harga_baru']) . "',
+            jumlah          ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+            diskon          ='" . $this->db->escape_str((string) $data['diskon']) . "',
+            total_diskon    ='" . $this->db->escape_str((string) $data['total_diskon']) . "',
+            total_harga     ='".$this->db->escape_str((string) $total_harga)."',
+            stok_akhir     ='" . $this->db->escape_str((string) $data['stok_awal']) . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -483,7 +483,7 @@ class Mod_chasis_retail extends CI_Model
 	public function select_by_id($id)
 	{
 		$sql = "SELECT * FROM tbl_mk_spk 
-        WHERE no_urut ='{$id}'";
+        WHERE no_urut ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -492,7 +492,7 @@ class Mod_chasis_retail extends CI_Model
 	public function select_ulang_id($id)
 	{
 		$sql = "SELECT * FROM tbl_mk_spk 
-        WHERE id_chasis ='{$id}'";
+        WHERE id_chasis ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -500,7 +500,7 @@ class Mod_chasis_retail extends CI_Model
 	}
 	public function select_keterangan($id)
 	{
-		$sql = "SELECT * FROM tbl_mk_keterangan_spk WHERE no_urut ='{$id}' ORDER BY id_ket_spk ASC";
+		$sql = "SELECT * FROM tbl_mk_keterangan_spk WHERE no_urut ='".$this->db->escape_str((string) $id)."' ORDER BY id_ket_spk ASC";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -518,10 +518,10 @@ class Mod_chasis_retail extends CI_Model
 	function updatePo($a, $b, $c, $d)
 	{
 		$sql = "UPDATE tbl_wh_estimasi_penawaran SET
-        t_ppn       ='$a',
-        sub_total   ='$b',
-        grand_total ='$c'
-        WHERE id_estimasi_penawaran ='" . $data['id_estimasi_penawaran'] . "'";
+        t_ppn       ='".$this->db->escape_str((string) $a)."',
+        sub_total   ='".$this->db->escape_str((string) $b)."',
+        grand_total ='".$this->db->escape_str((string) $c)."'
+        WHERE id_estimasi_penawaran ='" . $this->db->escape_str((string) $data['id_estimasi_penawaran']) . "'";
 
 		$this->db->query($sql);
 

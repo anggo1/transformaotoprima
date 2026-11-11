@@ -60,13 +60,16 @@ class Profile extends MY_Controller {
 
 	public function update_pass() {
 
-		$id_user = $this->input->post('id_user');
-        $pass = $this->session->userdata['password'];
+		// gunakan id user dari sesi (bukan dari form) & ambil hash dari database
+		$id_user = (int) $this->session->userdata('id_user');
+		$rowUser = $this->db->select('password')->get_where('tbl_user', array('id_user' => $id_user))->row();
+		$pass    = $rowUser ? $rowUser->password : '';
 		$pass1 = $this->input->post('passBaru');
 		$pass2 = $this->input->post('passKonf');
 
 		
-			if(hash_verified(anti_injection($this->input->post('passLama')), $pass)) {
+			$passLama = (string) $this->input->post('passLama');
+			if(hash_verified($passLama, $pass) || hash_verified(anti_injection($passLama), $pass)) {
 				if ($pass1 != $pass2) {
 					$out['status'] = 'gagal1';
 					$out['msg'] = show_del_msg('Password Baru tidak sama', '10px');

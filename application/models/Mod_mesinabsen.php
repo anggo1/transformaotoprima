@@ -18,7 +18,7 @@ class Mod_mesinabsen extends CI_Model {
 		return $data->result();
 	}
     public function select_id_mesin($id) {
-		$sql = " SELECT * FROM tbl_hrd_mesin WHERE id='{$id}'";
+		$sql = " SELECT * FROM tbl_hrd_mesin WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -26,15 +26,15 @@ class Mod_mesinabsen extends CI_Model {
 	}
     public function insertMesin($data) {
 		$sql = "INSERT INTO tbl_hrd_mesin VALUES
-		('','".$data['ip']."','".$data['pass']."','".$data['nama_mesin']."')";
+		('','".$this->db->escape_str((string) $data['ip'])."','".$this->db->escape_str((string) $data['pass'])."','".$this->db->escape_str((string) $data['nama_mesin'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateMesin($data) {
-		$sql = "UPDATE tbl_hrd_mesin SET ip='" .$data['ip'] ."',pass='" .$data['pass'] ."',nama_mesin='" .$data['nama_mesin'] ."'
-        WHERE id='" .$data['id'] ."'";
+		$sql = "UPDATE tbl_hrd_mesin SET ip='" .$this->db->escape_str((string) $data['ip']) ."',pass='" .$this->db->escape_str((string) $data['pass']) ."',nama_mesin='" .$this->db->escape_str((string) $data['nama_mesin']) ."'
+        WHERE id='" .$this->db->escape_str((string) $data['id']) ."'";
 
 		$this->db->query($sql);
 
@@ -42,7 +42,7 @@ class Mod_mesinabsen extends CI_Model {
 	}
     function deleteDev($id)
     {
-        $sql = "DELETE FROM tbl_hrd_mesin WHERE id='{$id}'";
+        $sql = "DELETE FROM tbl_hrd_mesin WHERE id='".$this->db->escape_str((string) $id)."'";
         
 		$this->db->query($sql);
 

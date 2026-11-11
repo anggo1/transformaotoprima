@@ -26,8 +26,8 @@ foreach ($dataPk as $s) {
                   <td><?php echo $s->id_pk; ?></td>
                   <td><?php echo $s->jns_pk; ?></td>
                   <td><?php echo $s->no_body; ?></td>
-                  <td><?php echo number_format($s->biaya_awal); ?></td>
-                  <td><?php echo number_format($s->jumlah); ?></td>
+                  <td><?php echo nf($s->biaya_awal); ?></td>
+                  <td><?php echo nf($s->jumlah); ?></td>
                   <td><?php echo $s->keterangan; ?></td>
                 </tr>
                 <?php
@@ -43,7 +43,7 @@ foreach ($dataPk as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">&nbsp;</td>
                     <td align="right">Total </td>
-                    <td align="right"><?php echo number_format($total); ?></td>
+                    <td align="right"><?php echo nf($total); ?></td>
                     <td align="right">&nbsp;</td>
         </tr>
 			</tfoot>

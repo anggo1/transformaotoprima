@@ -204,7 +204,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><div align="center">&nbsp;</div></td>
             <td><div align="center">&nbsp;</div></td>
             <td><div align="center"><?php echo $d->nama_part ?></div></td>
-            <td><div align="center"><?php echo number_format($d->jumlah) ?></div></td>
+            <td><div align="center"><?php echo nf($d->jumlah) ?></div></td>
             <td><div align="center"><?php echo $d->bo ?></div></td>
             <td><div align="center"><?php echo $d->remark ?></div></td>
           </tr>

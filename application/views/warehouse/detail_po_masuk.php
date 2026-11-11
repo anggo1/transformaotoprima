@@ -50,12 +50,12 @@
                     <td><?php echo $s->nama_part; ?></td>
                     <td><?php echo $s->stok_akhir; ?></td>
                     <td><?php echo $s->satuan; ?></td>
-                    <td><?php echo number_format($s->harga); ?></td>
+                    <td><?php echo nf($s->harga); ?></td>
                     <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan" 
                     onclick="this.contentEditable=true; this.className='inEdit';"
                     onblur="this.contentEditable=false; this.className='inEdit';" 
                     onkeypress="saveData(event,'<?php echo $s->id_po_masuk; ?>','<?php echo $s->id_detail; ?>','<?php echo $s->harga; ?>',$(this).html() )"><?php echo $s->jumlah; ?></td>
-                    <td><?php echo number_format($s->harga*$s->jumlah); ?></td>
+                    <td><?php echo nf($s->harga*$s->jumlah); ?></td>
                     <td title="Double click Untuk Edit Dan Tekan Enter untuk Simpan" 
                     onclick="this.contentEditable=true; this.className='inEdit';"
                     onblur="this.contentEditable=false; this.className='inEdit';" 

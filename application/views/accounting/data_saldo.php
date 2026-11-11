@@ -39,8 +39,8 @@ table.dataTable td {
                                             <td><?php echo $a->id_saldo ?></td>
                                             <td><?php echo $a->kode_akun ?></td>
                                             <td><?php echo $a->nama_akun ?></td>
-                                            <td><?php echo number_format($a->debit) ?></td>
-                                            <td><?php echo number_format($a->kredit) ?></td>
+                                            <td><?php echo nf($a->debit) ?></td>
+                                            <td><?php echo nf($a->kredit) ?></td>
                                             <td><?php echo $a->keterangan ?></td>
                                             <td><?php echo tglIndopendek($a->tgl_insert) ?></td>
                                             <td>
@@ -89,9 +89,9 @@ table.dataTable td {
                                             <td><?php echo $no ?></td>
                                             <td><?php echo $s->periode ?></td>
                                             <td><?php echo $s->kode_akun ?></td>
-                                            <td><?php echo number_format($s->data_debit) ?></td>
-                                            <td><?php echo number_format($s->data_kredit) ?></td>
-                                            <td><?php echo number_format($s->data_debit-$s->data_kredit) ?></td>
+                                            <td><?php echo nf($s->data_debit) ?></td>
+                                            <td><?php echo nf($s->data_kredit) ?></td>
+                                            <td><?php echo nf($s->data_debit-$s->data_kredit) ?></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -102,7 +102,7 @@ table.dataTable td {
                                             <td></td>
                                             <td></td>
                                             <td>Total Saldo Global</td>
-                                            <td><?php echo number_format($total) ?></td>
+                                            <td><?php echo nf($total) ?></td>
                                         </tr>
                                     </tfoot>
                                 </table>

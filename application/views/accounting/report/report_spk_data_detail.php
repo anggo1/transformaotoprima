@@ -39,8 +39,8 @@ foreach ($dataPart as $s) {
                   <td><?php echo $s->nama_part; ?></td>
                   <td><?php echo $s->jumlah; ?></td>
                   <td><?php echo $s->satuan; ?></td>
-                  <td align="right"><?php echo number_format($s->hrg_part); ?></td>
-                  <td align="right"><?php echo number_format($s->total_hrg_part); ?></td>
+                  <td align="right"><?php echo nf($s->hrg_part); ?></td>
+                  <td align="right"><?php echo nf($s->total_hrg_part); ?></td>
                 </tr>
                 <?php
     $no++;
@@ -59,7 +59,7 @@ foreach ($dataPart as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">&nbsp;</td>
                     <td align="right">Grand Total</td>
-                    <td align="right"><?php echo number_format($total_part); ?></td>
+                    <td align="right"><?php echo nf($total_part); ?></td>
         </tr>
 			</tfoot>
     </table>

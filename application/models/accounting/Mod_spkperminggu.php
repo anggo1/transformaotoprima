@@ -119,9 +119,9 @@ class Mod_spkperminggu extends CI_Model
     }
 	function deletePartnon($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

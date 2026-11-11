@@ -44,7 +44,7 @@
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
-            <td align="right"><?php echo number_format($s->harga_net) ?></td>
+            <td align="right"><?php echo nf($s->harga_net) ?></td>
             <td><?php echo $s->jumlah; ?></td>
             <td class="qty"><input type="number" name="qty_keluar[]" id="qty_keluar[]"
                     value="<?php echo $s->jumlah; ?>"
@@ -56,7 +56,7 @@
                 <input type="hidden" name="satuan[]" id="satuan[]" value="<?php echo $s->satuan; ?>">
                 <input type="hidden" name="stok[]" id="stok[]" value="<?php echo $stok ?>">
             </td>
-            <td><?php echo number_format($s->jumlah * $s->harga); ?></td>
+            <td><?php echo nf($s->jumlah * $s->harga); ?></td>
             <td class="text-center">
 			<div class="input-group mb-3 danger">
                   <div class="input-group-prepend">

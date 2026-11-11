@@ -101,7 +101,7 @@ class Mod_customer extends CI_Model
 	}
 	public function select_id_customer($id)
 	{
-		$sql = " SELECT * FROM tbl_customer WHERE id_cus='{$id}'";
+		$sql = " SELECT * FROM tbl_customer WHERE id_cus='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -117,31 +117,31 @@ class Mod_customer extends CI_Model
 		$noUrut++;
 		$huruf = "CS-";
 		$kode_cus  = $huruf . sprintf("%04s", $noUrut);
-	$sql = "INSERT INTO tbl_customer SET kode_cus='" . $kode_cus . "',
-	kode_nama='" . $data['kode_nama'] . "',
-	nama_cus='" . $data['nama_customer'] . "',
-	detail='" . $data['detail'] . "',
-	alamat='" . $data['alamat'] . "',
-	kota='" . $data['kota'] . "',
-	no_tlp='" . $data['no_tlp'] . "',
-	no_fax='" . $data['no_fax'] . "',
-	tlp_person='" . $data['tlp_person'] . "'";
+	$sql = "INSERT INTO tbl_customer SET kode_cus='" . $this->db->escape_str((string) $kode_cus) . "',
+	kode_nama='" . $this->db->escape_str((string) $data['kode_nama']) . "',
+	nama_cus='" . $this->db->escape_str((string) $data['nama_customer']) . "',
+	detail='" . $this->db->escape_str((string) $data['detail']) . "',
+	alamat='" . $this->db->escape_str((string) $data['alamat']) . "',
+	kota='" . $this->db->escape_str((string) $data['kota']) . "',
+	no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',
+	no_fax='" . $this->db->escape_str((string) $data['no_fax']) . "',
+	tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 	public function updateCustomer($data)
 	{
-		$sql = "UPDATE tbl_customer SET kode_cus='" . $data['kode_cus'] . "',
-	kode_nama='" . $data['kode_nama'] . "',
-	nama_cus='" . $data['nama_customer'] . "',
-	detail='" . $data['detail'] . "',
-	alamat='" . $data['alamat'] . "',
-	kota='" . $data['kota'] . "',
-	no_tlp='" . $data['no_tlp'] . "',
-	no_fax='" . $data['no_fax'] . "',
-		tlp_person='" . $data['tlp_person'] . "'
-        WHERE id_cus='" . $data['id_cus'] . "'";
+		$sql = "UPDATE tbl_customer SET kode_cus='" . $this->db->escape_str((string) $data['kode_cus']) . "',
+	kode_nama='" . $this->db->escape_str((string) $data['kode_nama']) . "',
+	nama_cus='" . $this->db->escape_str((string) $data['nama_customer']) . "',
+	detail='" . $this->db->escape_str((string) $data['detail']) . "',
+	alamat='" . $this->db->escape_str((string) $data['alamat']) . "',
+	kota='" . $this->db->escape_str((string) $data['kota']) . "',
+	no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',
+	no_fax='" . $this->db->escape_str((string) $data['no_fax']) . "',
+		tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "'
+        WHERE id_cus='" . $this->db->escape_str((string) $data['id_cus']) . "'";
 
 		$this->db->query($sql);
 
@@ -149,7 +149,7 @@ class Mod_customer extends CI_Model
 	}
 	function deleteCus($id)
 	{
-		$sql = "DELETE FROM tbl_customer WHERE id_cus='{$id}'";
+		$sql = "DELETE FROM tbl_customer WHERE id_cus='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

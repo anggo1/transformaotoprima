@@ -88,7 +88,7 @@ class Mod_listspk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -96,9 +96,9 @@ class Mod_listspk extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po WHERE id_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -311,14 +311,14 @@ class Mod_listspk extends CI_Model
     }
     function deleteMasuk($id,$data_status)
 	{
-        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_masuk WHERE id_masuk ='{$id}'")->result();
+        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_masuk WHERE id_masuk ='".$this->db->escape_str((string) $id)."'")->result();
         $a = array();
         foreach($result as $a) {
             $no_part=$a->no_part;
             $jumlah=$a->jumlah;
 
         $ci = get_instance();
-        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$no_part}'";
+        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $no_part)."'";
             $d_data = $ci->db->query($query_barang)->row_array();
             $stok       = $d_data['stok'];
             $stok_a       = $d_data['stok_a'];
@@ -327,20 +327,20 @@ class Mod_listspk extends CI_Model
             $jstok = '';
             if ($data_status =='PPU'){
                 $jstok = $stok_a - $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_a ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_a ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
 
             }
             if ($data_status =='MPU'){
                 $jstok = $stok_p - $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_p ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_p ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
             }
         }
 
-		$sql1 = "DELETE FROM tbl_wh_part_masuk WHERE kode_masuk='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_masuk WHERE kode_masuk='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id_masuk='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id_masuk='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -351,7 +351,7 @@ class Mod_listspk extends CI_Model
       function cari_keluar($status_po,$ttmp1,$ttmp2)
       {
         if($status_po=='N'){
-        $sql = "SELECT * FROM tbl_wh_part_keluar WHERE no_spk='NON' AND tgl_keluar BETWEEN '".$ttmp1."' AND '".$ttmp2."'";
+        $sql = "SELECT * FROM tbl_wh_part_keluar WHERE no_spk='NON' AND tgl_keluar BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."'";
 		$data = $this->db->query($sql);
 		return $data->result();
         }
@@ -359,12 +359,12 @@ class Mod_listspk extends CI_Model
             $sql = "SELECT a.tgl_keluar,a.id_keluar,a.no_pk,a.no_body,a.status,c.ket_pk,a.keterangan,a.no_pk
             FROM tbl_wh_part_keluar AS a
             LEFT JOIN tbl_br_pk_aktif AS c ON c.id_pk = a.no_pk
-            WHERE tujuan ='SPK' AND tgl_keluar BETWEEN '".$ttmp1."' AND '".$ttmp2."' ORDER BY a.id_keluar ASC";
+            WHERE tujuan ='SPK' AND tgl_keluar BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."' ORDER BY a.id_keluar ASC";
             $data = $this->db->query($sql);
 		return $data->result();
             }
             if($status_po=='D'){
-                $sql = "SELECT * FROM tbl_wh_part_keluar WHERE tgl_keluar BETWEEN '".$ttmp1."' AND '".$ttmp2."' AND divisi <>''";
+                $sql = "SELECT * FROM tbl_wh_part_keluar WHERE tgl_keluar BETWEEN '".$this->db->escape_str((string) $ttmp1)."' AND '".$this->db->escape_str((string) $ttmp2)."' AND divisi <>''";
                 $data = $this->db->query($sql);
             return $data->result();
                 }
@@ -425,14 +425,14 @@ class Mod_listspk extends CI_Model
     }
     function deleteKeluar($id,$data_status)
 	{
-        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_keluar WHERE id_keluar ='{$id}'")->result();
+        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_keluar WHERE id_keluar ='".$this->db->escape_str((string) $id)."'")->result();
         $a = array();
         foreach($result as $a) {
             $no_part=$a->no_part;
             $jumlah=$a->jumlah;
 
         $ci = get_instance();
-        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$no_part}'";
+        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $no_part)."'";
             $d_data = $ci->db->query($query_barang)->row_array();
             $stok       = $d_data['stok'];
             $stok_a       = $d_data['stok_a'];
@@ -441,34 +441,34 @@ class Mod_listspk extends CI_Model
             $jstok = '';
             if ($data_status =='PPU'){
                 $jstok = $stok_a + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_a ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_a ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
 
             }
             if ($data_status =='MPU'){
                 $jstok = $stok_p + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_p ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_p ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
             }
         }
 
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     function deleteKeluarnon_pk($id,$data_status)
 	{
-        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_keluar WHERE id_keluar ='{$id}'")->result();
+        $result=$this->db->query("SELECT * FROM tbl_wh_detail_part_keluar WHERE id_keluar ='".$this->db->escape_str((string) $id)."'")->result();
         $a = array();
         foreach($result as $a) {
             $no_part=$a->no_part;
             $jumlah=$a->jumlah;
 
         $ci = get_instance();
-        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='{$no_part}'";
+        $query_barang = "SELECT stok,stok_a,stok_p FROM tbl_wh_barang WHERE no_part='".$this->db->escape_str((string) $no_part)."'";
             $d_data = $ci->db->query($query_barang)->row_array();
             $stok       = $d_data['stok'];
             $stok_a       = $d_data['stok_a'];
@@ -477,20 +477,20 @@ class Mod_listspk extends CI_Model
             $jstok = '';
             if ($data_status =='PPU'){
                 $jstok = $stok_a + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_a ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_a ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
 
             }
             if ($data_status =='MPU'){
                 $jstok = $stok_p + $jumlah;
-                $sql_stok = "UPDATE tbl_wh_barang SET stok = '$stok_ambil', stok_p ='$jstok' WHERE no_part ='{$no_part}'";
+                $sql_stok = "UPDATE tbl_wh_barang SET stok = '".$this->db->escape_str((string) $stok_ambil)."', stok_p ='".$this->db->escape_str((string) $jstok)."' WHERE no_part ='".$this->db->escape_str((string) $no_part)."'";
                 $this->db->query($sql_stok);
             }
         }
 
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -525,7 +525,7 @@ class Mod_listspk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -533,9 +533,9 @@ class Mod_listspk extends CI_Model
     }
 	function deletePartnon($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id_keluar='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

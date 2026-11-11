@@ -32,7 +32,7 @@
             <td><?php echo $s->no_part; ?></td>
             <td><?php echo $s->nama_part; ?></td>
             <td><?php echo $s->satuan; ?></td>
-            <td align="right"><?php echo number_format($s->harga) ?></td>
+            <td align="right"><?php echo nf($s->harga) ?></td>
             <td><?php echo $s->sisa; ?></td>
             <td class="qty"><input type="number" name="qty_masuk[]" id="qty_masuk[]"
                     value="<?php echo $s->jml_masuk; ?>"
@@ -47,7 +47,7 @@
                 <input type="hidden" name="qty_request[]" id="qty_request[]" value="<?php echo $s->jumlah ?>">
                 <input type="hidden" name="id_part_order[]" id="id_part_order[]" value="<?php echo $s->id_part_order ?>">
             </td>
-            <td><?php echo number_format($s->jml_masuk * $s->harga); ?></td>
+            <td><?php echo nf($s->jml_masuk * $s->harga); ?></td>
             <td class="text-center">
 			<div class="input-group mb-3 danger">
                   <div class="input-group-prepend">

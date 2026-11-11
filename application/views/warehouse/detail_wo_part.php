@@ -56,7 +56,7 @@
                 <td><?php echo $s->no_part; ?></td>
                 <td><?php echo $s->nama_part; ?></td>
                 <td><?php echo $s->satuan; ?></td>
-                <td align="right"><?php echo number_format($s->harga_net) ?></td>
+                <td align="right"><?php echo nf($s->harga_net) ?></td>
                 <td align="center"><?php echo $s->jumlah; ?></td>
                 <!-- kalau ada permintaan saja
                 <td class="inEdit"><input type="number" name="jml_keluar[]" id="jml_keluar[]"
@@ -77,7 +77,7 @@
                     <input type="hidden" name="wo_no" id="wo_no" value="<?php echo $s->wo_no; ?>">
                     <input type="hidden" name="petugas" id="petugas" value="<?php echo $s->petugas; ?>">
                     <input type="hidden" name="kode_pr" id="kode_pr" value="<?php echo $s->kode_pr; ?>">
-                <td align="right"><?php echo number_format($s->jml_masuk * $s->harga_net); ?></td>
+                <td align="right"><?php echo nf($s->jml_masuk * $s->harga_net); ?></td>
             </tr>
         <?php
             $no++;

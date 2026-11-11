@@ -89,7 +89,7 @@ class ChasisRetail extends MY_Controller
                 $row[] = $cs->gesekan;
                 $row[] = $cs->thn_produksi;
                 $row[] = $cs->pengiriman;
-                $row[] = number_format($cs->harga_retail);
+                $row[] = nf($cs->harga_retail);
                 if ($b->edit_level == "Y" && $b->delete_level == "Y") {
                     if ($cs->status == 'N') {
                         $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'
@@ -286,18 +286,18 @@ class ChasisRetail extends MY_Controller
     }
     public function Proses_updateSpk2()
     {
-        $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $data['id_chasis'] . "'";
+        $cari = "SELECT jumlah FROM tbl_mk_chasis_retail WHERE id_chasis = '" . $this->db->escape_str((string) $data['id_chasis']) . "'";
 		$h = $this->db->query($cari)->row();
 		$dataJumlah = $h->jumlah;
 		$hsl = $data['jml_unit'];
 		if ($hsl > $dataJumlah) {
 			$hasil = $dataJumlah - $hsl ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah + " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 		if ($hsl < $dataJumlah) {
 			$hasil = $hsl - $dataJumlah ;
-		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $data['chasis_id'] . "'";
+		$sql2 = "UPDATE tbl_mk_chasis SET jumlah = jumlah - " . $hasil . " WHERE chasis_id ='" . $this->db->escape_str((string) $data['chasis_id']) . "'";
 		$this->db->query($sql2);
 		}
 
@@ -485,7 +485,7 @@ class ChasisRetail extends MY_Controller
     {
         $idS                 = $_POST['id'];
         $ci_kons = get_instance();
-        $query = "SELECT no_urut FROM tbl_mk_spk WHERE id_chasis ='" . $idS . "'";
+        $query = "SELECT no_urut FROM tbl_mk_spk WHERE id_chasis ='" . $this->db->escape_str((string) $idS) . "'";
         $hasil = $ci_kons->db->query($query)->row_array();
         $id = $hasil['no_urut'];
 

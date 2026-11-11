@@ -37,14 +37,14 @@ class Mod_akseslevel extends CI_Model {
 	}	
     function bukaAkses($id)
 		{			
-			$sql_update = "UPDATE tbl_akses_menu SET view_level ='Y' WHERE id ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_akses_menu SET view_level ='Y' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function tutupAkses($id)
 		{			
-			$sql_update = "UPDATE tbl_akses_menu SET view_level ='N' WHERE id ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_akses_menu SET view_level ='N' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();

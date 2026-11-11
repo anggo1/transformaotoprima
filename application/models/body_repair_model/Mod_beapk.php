@@ -26,7 +26,7 @@ class Mod_beapk extends CI_Model
 		$sql = "SELECT COUNT(b.id_lapor) AS jml_pk,a.*
 		FROM tbl_br_laporan_bus AS a
 		LEFT JOIN tbl_br_pk_aktif AS b ON b.id_lapor=a.id_lapor
-		WHERE a.id_lapor ='{$id}'
+		WHERE a.id_lapor ='".$this->db->escape_str((string) $id)."'
 		GROUP BY a.id_lapor";
 
 		$data = $this->db->query($sql);
@@ -36,7 +36,7 @@ class Mod_beapk extends CI_Model
 	public function insertLapor($data)
 	{
 		$sql = "INSERT INTO tbl_br_ket_lapor VALUES
-		('','" . $data['kode'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -46,12 +46,12 @@ class Mod_beapk extends CI_Model
 	{
 		$biaya=$data['biaya'];
 		$esBea =str_replace(",","", $biaya);
-		$sql1 = "UPDATE tbl_br_upah_borongan SET biaya_borong='" . $esBea . "'
-        WHERE id_pk='" . $data['id_pk'] . "'";
+		$sql1 = "UPDATE tbl_br_upah_borongan SET biaya_borong='" . $this->db->escape_str((string) $esBea) . "'
+        WHERE id_pk='" . $this->db->escape_str((string) $data['id_pk']) . "'";
 
 		$this->db->query($sql1);
-		$sql = "UPDATE tbl_br_pk_aktif SET biaya_borong='" . $esBea . "'
-        WHERE id_pk='" . $data['id_pk'] . "'";
+		$sql = "UPDATE tbl_br_pk_aktif SET biaya_borong='" . $this->db->escape_str((string) $esBea) . "'
+        WHERE id_pk='" . $this->db->escape_str((string) $data['id_pk']) . "'";
 
 		$this->db->query($sql);
 
@@ -62,11 +62,11 @@ class Mod_beapk extends CI_Model
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
 		
-		$sqldetail = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$jam. "',tgl_start='" .$date. "'
-        WHERE id_lapor='" . $id. "'";
+		$sqldetail = "UPDATE tbl_br_pk_aktif SET status='Y',jam_start='" .$this->db->escape_str((string) $jam). "',tgl_start='" .$this->db->escape_str((string) $date). "'
+        WHERE id_lapor='" . $this->db->escape_str((string) $id). "'";
 		$this->db->query($sqldetail);
 
-		$sql = "UPDATE tbl_br_laporan_bus SET status='Y' WHERE id_lapor='" . $id. "'";
+		$sql = "UPDATE tbl_br_laporan_bus SET status='Y' WHERE id_lapor='" . $this->db->escape_str((string) $id). "'";
 
 		$this->db->query($sql);
 
@@ -76,14 +76,14 @@ class Mod_beapk extends CI_Model
 	{
 		$date = date("Y-m-d");
         $jam = date("H:i:s");
-		$sqlbay = "UPDATE tbl_br_bay SET keterangan='' WHERE keterangan='" . $no_body . "'";
+		$sqlbay = "UPDATE tbl_br_bay SET keterangan='' WHERE keterangan='" . $this->db->escape_str((string) $no_body) . "'";
 		$this->db->query($sqlbay);
 
-		$sqltutup = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$jam. "',tgl_selesai='" .$date. "'
-        WHERE id_lapor='" . $id . "'";
+		$sqltutup = "UPDATE tbl_br_pk_aktif SET status='S',jam_selesai='" .$this->db->escape_str((string) $jam). "',tgl_selesai='" .$this->db->escape_str((string) $date). "'
+        WHERE id_lapor='" . $this->db->escape_str((string) $id) . "'";
 		$this->db->query($sqltutup);
 
-		$sql = "UPDATE tbl_br_laporan_bus SET status='S',tgl_selesai='" .$date. "' WHERE id_lapor='" . $id. "'";
+		$sql = "UPDATE tbl_br_laporan_bus SET status='S',tgl_selesai='" .$this->db->escape_str((string) $date). "' WHERE id_lapor='" . $this->db->escape_str((string) $id). "'";
 
 		$this->db->query($sql);
 
@@ -105,7 +105,7 @@ class Mod_beapk extends CI_Model
 	function cetak_estimasi($id)
     {
 		$sql = "SELECT a.*,b.keterangan as ket_pk FROM tbl_br_detail_estimasi as a
-		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '{$id}'";
+		LEFT JOIN tbl_br_kat_pk as b ON b.kode=a.jns_pk WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -113,7 +113,7 @@ class Mod_beapk extends CI_Model
     }
 	function cetak_pk($id)
     {
-		$sql = "SELECT * FROM tbl_br_laporan_bus AS a LEFT JOIN tbl_br_pk_aktif AS b ON a.id_lapor=b.id_lapor WHERE a.id_lapor ='{$id}'";
+		$sql = "SELECT * FROM tbl_br_laporan_bus AS a LEFT JOIN tbl_br_pk_aktif AS b ON a.id_lapor=b.id_lapor WHERE a.id_lapor ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -156,21 +156,21 @@ class Mod_beapk extends CI_Model
 		$esBea =str_replace(".","", $beaEstimasi);
 		$jam=date("H-m");
 
-		$ketpk = "SELECT keterangan as ket_pk FROM tbl_br_kat_pk WHERE kode = '".$data['jns_pk']."'";
+		$ketpk = "SELECT keterangan as ket_pk FROM tbl_br_kat_pk WHERE kode = '".$this->db->escape_str((string) $data['jns_pk'])."'";
         $datap = $ci->db->query($ketpk)->row_array();
         $pknye = $datap['ket_pk'];
 			$sqlpk = "INSERT INTO tbl_br_pk_aktif SET
-            id_pk	='".$kodeBaru."',
-            id_lapor	='".$data['id_lapor']."',
-            tgl_mulai   ='".$tgl_estimasi."',
-            jam_mulai	='".$jam."',
-            no_body		='".$data['body_pk']."',
-            jns_pk      ='".$data['jns_pk']."',
-            ket_pk      ='".$pknye."',
+            id_pk	='".$this->db->escape_str((string) $kodeBaru)."',
+            id_lapor	='".$this->db->escape_str((string) $data['id_lapor'])."',
+            tgl_mulai   ='".$this->db->escape_str((string) $tgl_estimasi)."',
+            jam_mulai	='".$this->db->escape_str((string) $jam)."',
+            no_body		='".$this->db->escape_str((string) $data['body_pk'])."',
+            jns_pk      ='".$this->db->escape_str((string) $data['jns_pk'])."',
+            ket_pk      ='".$this->db->escape_str((string) $pknye)."',
             status     ='Y',
-            pt_pemborong   ='".$data['pt_pemborong']."',
-            pj_borong    ='".$data['pj_borong']."',
-            biaya_borong    ='$esBea'";
+            pt_pemborong   ='".$this->db->escape_str((string) $data['pt_pemborong'])."',
+            pj_borong    ='".$this->db->escape_str((string) $data['pj_borong'])."',
+            biaya_borong    ='".$this->db->escape_str((string) $esBea)."'";
             $this->db->query($sqlpk);
             return $this->db->affected_rows();
     }

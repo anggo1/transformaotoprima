@@ -44,13 +44,13 @@
                 <td><?php echo $d->nama_part; ?></td>
                 <td><?php echo $d->satuan; ?></td>
                 <td><?php echo $stok; ?></td>
-                <td><?php echo number_format($harga); ?></td>
-                <td><?php echo number_format($d->hrg_part); ?></td>
+                <td><?php echo nf($harga); ?></td>
+                <td><?php echo nf($d->hrg_part); ?></td>
                 <td><?php echo $d->jumlah; ?></td>
                 <td><?php if (empty($d->hrg_part)) {
-                        echo number_format($harga * $d->jumlah);
+                        echo nf($harga * $d->jumlah);
                     } else {
-                        echo number_format($d->hrg_part * $d->jumlah);
+                        echo nf($d->hrg_part * $d->jumlah);
                     }  ?>
                 </td>
             </tr>

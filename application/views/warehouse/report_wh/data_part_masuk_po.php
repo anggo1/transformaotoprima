@@ -33,7 +33,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->no_po; ?></td>
                     <td><?php echo $s->no_inv_sup; ?></td>
                     <td><?php echo $s->no_sj_sup; ?></td>
-                    <td align="right"><?php echo number_format($s->total); ?></td>
+                    <td align="right"><?php echo nf($s->total); ?></td>
                     <td class="text-center">
                         <?php if($s->status_po=='Y'){?>
                         <button class="btn btn-xs btn-outline-primary cetak-masuk"

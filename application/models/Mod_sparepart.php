@@ -179,45 +179,45 @@ class Mod_sparepart extends CI_Model
         if($idlokasi=='Cibitung'){
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_sby     ='".$data['lokasi']."',
-        hrg_net_sby ='".$hrg_net."',
-        price_list_sby ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'"; 
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_sby     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_sby ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_sby ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'"; 
         }if($idlokasi=='Jakarta'){
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_jkt     ='".$data['lokasi']."',
-        hrg_net_jkt ='".$hrg_net."',
-        price_list_jkt ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'"; 
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_jkt     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_jkt ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_jkt ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'"; 
         }if($idlokasi=='Surabaya'){
         $sql = "INSERT INTO tbl_wh_barang SET
         id_part   ='',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_sby     ='".$data['lokasi']."',
-        hrg_net_sby ='".$hrg_net."',
-        price_list_sby ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'"; 
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_sby     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_sby ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_sby ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'"; 
         }
 		$this->db->query($sql);
 
@@ -235,43 +235,43 @@ class Mod_sparepart extends CI_Model
 
         if($idlokasi=='Cibitung'){
         $sql = "UPDATE tbl_wh_barang SET
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_cbt     ='".$data['lokasi']."',
-        hrg_net_cbt ='".$hrg_net."',
-        price_list_cbt ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'
-        WHERE id_part='".$data['id_part']."'";
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_cbt     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_cbt ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_cbt ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_jkt     ='".$data['lokasi']."',
-        hrg_net_jkt ='".$hrg_net."',
-        price_list_jkt ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'
-        WHERE id_part='".$data['id_part']."'";
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_jkt     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_jkt ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_jkt ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Surabaya'){
         $sql = "UPDATE tbl_wh_barang SET
-        nama_part   ='".$data['nama_part']."',
-        satuan      ='".$data['satuan']."',
-        kelompok    ='".$data['kelompok']."',
-        type        ='".$data['type']."',
-        kategori    ='".$data['kategori']."',
-        kode_sup    ='".$data['supplier']."',
-        lok_sby     ='".$data['lokasi']."',
-        hrg_net_sby ='".$hrg_net."',
-        price_list_sby ='".$hrg_pricelist."',
-        std_pakai   ='".$data['std_pakai']."'
-        WHERE id_part='".$data['id_part']."'";
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
+        kelompok    ='".$this->db->escape_str((string) $data['kelompok'])."',
+        type        ='".$this->db->escape_str((string) $data['type'])."',
+        kategori    ='".$this->db->escape_str((string) $data['kategori'])."',
+        kode_sup    ='".$this->db->escape_str((string) $data['supplier'])."',
+        lok_sby     ='".$this->db->escape_str((string) $data['lokasi'])."',
+        hrg_net_sby ='".$this->db->escape_str((string) $hrg_net)."',
+        price_list_sby ='".$this->db->escape_str((string) $hrg_pricelist)."',
+        std_pakai   ='".$this->db->escape_str((string) $data['std_pakai'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }
 		$this->db->query($sql);
 
@@ -284,19 +284,19 @@ class Mod_sparepart extends CI_Model
         $id = $data['id_part'];
         if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
-        stok_jkt  ='".$data['stok']."',
-        lok_jkt  ='".$data['lokasi']."'
-        WHERE id_part='".$data['id_part']."'";
+        stok_jkt  ='".$this->db->escape_str((string) $data['stok'])."',
+        lok_jkt  ='".$this->db->escape_str((string) $data['lokasi'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Cibitung'){
         $sql = "UPDATE tbl_wh_barang SET
-        stok_cbt  ='".$data['stok']."',
-        lok_cbt  ='".$data['lokasi']."'
-        WHERE id_part='".$data['id_part']."'";
+        stok_cbt  ='".$this->db->escape_str((string) $data['stok'])."',
+        lok_cbt  ='".$this->db->escape_str((string) $data['lokasi'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Surabaya'){
         $sql = "UPDATE tbl_wh_barang SET
-        stok_sby  ='".$data['stok']."',
-        lok_sby  ='".$data['lokasi']."'
-        WHERE id_part='".$data['id_part']."'";
+        stok_sby  ='".$this->db->escape_str((string) $data['stok'])."',
+        lok_sby  ='".$this->db->escape_str((string) $data['lokasi'])."'
+        WHERE id_part='".$this->db->escape_str((string) $data['id_part'])."'";
         }
 		$this->db->query($sql);
 
@@ -329,7 +329,7 @@ class Mod_sparepart extends CI_Model
 
     function deletePart($id)
     {
-        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='{$id}'";
+        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

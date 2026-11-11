@@ -1,200 +1,79 @@
-<section class="content">
-    <div class="row">
-        <div class="modal-content">
-            <div class="modal-header text-blue">
-
-                <h5 style="display:block; text-align:center;"><span
-                        class="ion-soup-can-outline ion-lg text-blue"></span>&nbsp; Service Appoinment</h5>
-                <button type="button" class="btn btn-success" id="tambah" hidden="hidden"
-                    onclick="window.location.reload();" title="Add Data"><i class="fas fa-plus"></i> PO
-                    BARU</button>
-            </div>
-            <div class="modal-body">
-                <form id="form-tambah-appointment" name="form-tambah-appointment" method="POST">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Tanggal</label>
-                        <div class="col-sm-4">
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-
-                                <input type="text" name="date_open_wo" id="date_open_wo" value=""
-                                    class="form-control date_open_wo datetimepicker" data-toggle="datetimepicker"
-                                    data-target=".date_open_wo" data-format="yyy-mm-dd" required>
-
-                                <div class="input-group-append" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label">Clock In</label>
-                        <div class="col-sm-4">
-                            <div class="input-group date" id="timepicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" name="clockin" id="clockin"
-                                    value="" data-toggle="datetimepicker" data-target="#timepicker"
-                                    data-format="HH:mm" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row form-group row">
-                        <label class="col-sm-2 col-form-label">Customer</label>
-                        <div class="col-sm-4">
-                            <select name="customer" id="customer" class="form-control select2">
-                                <option value="">Customer...
-                                </option>
-                                <?php
-											if (!empty($dataCus)) {
-												foreach ($dataCus as $sp) {   ?>
-                                <option value="<?php echo $sp->kode_cus . '|' . $sp->nama_cus; ?>">
-                                    <?php echo $sp->nama_cus; ?>
-                                </option>
-                                <?php
-												}
-											}
-											?>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 col-form-label">Issued On</label>
-                        <div class="col-sm-4">
-                            <input type="text" name="customer_complain" id="customer_complain" value=""
-                                class="form-control" placeholder="Customer Complain">
-                        </div>
-                    </div>
-                    <div class="row form-group row">
-                        <label class="col-sm-2 col-form-label">VIN</label>
-                        <div class="col-sm-4">
-                            <input type="text" name="vin" id="vin" value="" class="form-control" placeholder="VIN">
-                        </div>
-                        <label class="col-sm-2 col-form-label">Engine No</label>
-                        <div class="col-sm-4">
-                            <input type="text" name="engine_no" id="engine_no" value="" class="form-control"
-                                placeholder="Engine No">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Last Service Date</label>
-                        <div class="col-sm-4">
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-
-                                <input type="text" name="last_service_date" id="last_service_date" value=""
-                                    class="form-control last_service_date datetimepicker" data-toggle="datetimepicker"
-                                    data-target=".last_service_date" data-format="yyy-mm-dd" required>
-
-                                <div class="input-group-append" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="col-sm-2 col-form-label">Dead Line</label>
-                        <div class="col-sm-4">
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-
-                                <input type="text" name="dead_line" id="dead_line" value=""
-                                    class="form-control dead_line datetimepicker" data-toggle="datetimepicker"
-                                    data-target=".dead_line" data-format="yyy-mm-dd" required>
-
-                                <div class="input-group-append" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                    </div>
-                                </div>
-                                
-                        <div class="col-sm-4">
-                            <div class="input-group date" id="timepicker2" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" name="dead_time" id="dead_time"
-                                    value="" data-toggle="datetimepicker" data-target="#timepicker2"
-                                    data-format="HH:mm" />
-                            </div>
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-
-            <div class="row form-group row">
-                <label class="col-sm-2 col-form-label">Mileage</label>
-                <div class="col-sm-4">
-                    <input type="text" name="mileage" id="mileage" value="" class="form-control" placeholder="Mileage">
-                </div>
-                <label class="col-sm-2 col-form-label">Licence Plate</label>
-                <div class="col-sm-4">
-                    <input type="text" name="licence_plate" id="licence_plate" value="" class="form-control"
-                        placeholder="Licence Plate">
-                </div>
-            </div>
-            <div class="row form-group row">
-                <label class="col-sm-2 col-form-label">Vehicle Type</label>
-                <div class="col-sm-4">
-                    <input type="text" name="vehicle_type" id="vehicle_type" value="" class="form-control"
-                        placeholder="Vehicle Type">
-                </div>
-                <label class="col-sm-2 col-form-label">Storing</label>
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio1" value="Y" name="storing">
-                    <label for="customRadio1" class="custom-control-label">Ya</label>
-                </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="customRadio2" value="N" name="storing" required>
-                    <label for="customRadio2" class="custom-control-label">Tidak</label>
-                </div>
-            </div>
-
-            <div class="row form-group row">
-                <label class="col-sm-2 col-form-label">Remarks</label>
-                <div class="col-sm-4">
-                    <input type="text" name="remark" id="remark" value="" class="form-control" placeholder="Komentar">
-                </div>
-                <label class="col-sm-2 col-form-label">Service Advisor</label>
-                <div class="col-sm-4">
-                    <input type="text" name="sa_name" id="sa_name" value="" class="form-control"
-                        placeholder="Service Advisor">
-                </div>
-            </div>
-            
-            <div class="row form-group row">
-                <label class="col-sm-2 col-form-label">Status Service</label>
-                
-                <div class="col-sm-4">
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="free_service1" value="N" name="free_service" required>
-                    <label for="free_service1" class="custom-control-label">Non Free</label>
-                </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="free_service2" value="Y" name="free_service">
-                    <label for="free_service2" class="custom-control-label">Free</label>
-                </div>
-                </div>
-                <label class="col-sm-2 col-form-label">CIW / GW</label>
-                
-                <div class="col-sm-4">
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="status_service1" value="C" name="status_service" required>
-                    <label for="status_service1" class="custom-control-label">Cash</label>
-                </div> &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="status_service2" value="I" name="status_service">
-                    <label for="status_service2" class="custom-control-label">Internal</label>
-                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="status_service3" value="W" name="status_service">
-                    <label for="status_service3" class="custom-control-label">Warranty</label>
-                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="status_service4" value="GW" name="status_service">
-                    <label for="status_service4" class="custom-control-label">GoodWill</label>
-                </div>
-            </div>
-            </div>
-            <input type="hidden" name="pembuat" id="pembuat"
-                value="<?php echo $this->session->userdata['full_name']; ?>" class="form-control">
-            <div class="modal-footer right-content-between">
-                <button class="btn btn-primary" id="simpan" type="submit"><span class="fa fa-save"></span>
-                    Simpan Data</button>
-            </div>
-            </form>
-        </div>
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+/* Form Service Appointment (tambah & ubah). Nama field sama seperti versi lama. */
+$r = isset($r) ? $r : null; $fid = isset($form_id) ? $form_id : 'form-tambah-appointment';
+$v = function ($k, $d = '') use ($r) { return $r && isset($r->$k) && $r->$k !== null ? $r->$k : $d; };
+$tg = function ($k, $d = '') use ($v) { $x = (string) $v($k, $d); return $x && substr($x, 0, 4) !== '0000' ? substr($x, 0, 10) : $d; };
+$jam = function ($k, $d = '') use ($v) { $x = (string) $v($k, $d); return $x !== '' ? substr($x, 0, 5) : $d; };
+$cek = function ($k, $val, $d) use ($v) { return (string) $v($k, $d) === $val ? 'checked' : ''; };
+?>
+<div class="modal-content sa-form">
+    <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-calendar-check text-primary mr-1"></i> <?php echo $r ? 'Ubah Service Appointment <small class="text-muted">WO ' . html_escape($r->wo_no) . '</small>' : 'Service Appointment Baru'; ?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup"><span aria-hidden="true">&times;</span></button>
     </div>
-
-</section><!-- /.modal-content -->
-<script type="text/javascript">
-
-</script>
+    <form id="<?php echo $fid; ?>" method="POST" autocomplete="off">
+        <div class="modal-body">
+            <?php if ($r) { ?><input type="hidden" name="id" value="<?php echo (int) $r->id; ?>"><?php } ?>
+            <input type="hidden" name="pembuat" value="<?php echo html_escape((string) $this->session->userdata('full_name')); ?>">
+            <div class="sa-sec"><i class="fas fa-clock"></i> Jadwal</div>
+            <div class="form-row">
+                <div class="form-group col-md-3"><label>Tanggal masuk <span class="text-danger">*</span></label><input type="date" name="date_open_wo" class="form-control" value="<?php echo $tg('date_open_wo', date('Y-m-d')); ?>" required></div>
+                <div class="form-group col-md-2"><label>Jam masuk</label><input type="time" name="clockin" class="form-control" value="<?php echo $jam('clockin', date('H:i')); ?>"></div>
+                <div class="form-group col-md-3"><label>Target selesai (deadline)</label><input type="date" name="dead_line" class="form-control" value="<?php echo $tg('dead_line', date('Y-m-d', strtotime('+1 day'))); ?>"></div>
+                <div class="form-group col-md-2"><label>Jam target</label><input type="time" name="dead_time" class="form-control" value="<?php echo $jam('dead_time', '16:00'); ?>"></div>
+                <div class="form-group col-md-2"><label>Service advisor</label><input name="sa_name" class="form-control" value="<?php echo html_escape($v('sa_name', (string) $this->session->userdata('full_name'))); ?>"></div>
+            </div>
+            <div class="sa-sec"><i class="fas fa-user-tie"></i> Pelanggan &amp; kendaraan</div>
+            <div class="form-row">
+                <div class="form-group col-md-6"><label>Customer <span class="text-danger">*</span></label>
+                    <select name="customer" class="form-control sa-customer" required>
+                        <option value="">— pilih customer —</option>
+                        <?php foreach ((array) $dataCus as $sp) { $val = $sp->kode_cus . '|' . $sp->nama_cus; ?>
+                        <option value="<?php echo html_escape($val); ?>" data-details="<?php echo html_escape($sp->kota); ?>" <?php echo $r && $r->customer === $sp->kode_cus ? 'selected' : ''; ?>><?php echo html_escape($sp->nama_cus); ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-6"><label>Kendaraan yang pernah diservis</label>
+                    <select class="form-control sa-riwayat"><option value="">— pilih customer dahulu —</option></select>
+                    <small class="text-muted">Pilih untuk mengisi VIN, no. mesin, no. polisi, tipe & km otomatis.</small>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3"><label>No. polisi</label><input name="licence_plate" class="form-control text-uppercase" value="<?php echo html_escape($v('no_pol')); ?>" placeholder="B 1234 XYZ"></div>
+                <div class="form-group col-md-3"><label>Tipe kendaraan</label><input name="vehicle_type" class="form-control" value="<?php echo html_escape($v('type')); ?>" placeholder="mis. Actros 2644"></div>
+                <div class="form-group col-md-3"><label>VIN / no. rangka</label><input name="vin" class="form-control text-uppercase" value="<?php echo html_escape($v('vin')); ?>"></div>
+                <div class="form-group col-md-3"><label>No. mesin</label><input name="engine_no" class="form-control text-uppercase" value="<?php echo html_escape($v('engine_no')); ?>"></div>
+                <div class="form-group col-md-3"><label>Kilometer (mileage)</label><input name="mileage" class="form-control" inputmode="numeric" value="<?php echo html_escape($v('mileage')); ?>"></div>
+                <div class="form-group col-md-3"><label>Service terakhir</label><input type="date" name="last_service_date" class="form-control" value="<?php echo $tg('last_service_date'); ?>"></div>
+            </div>
+            <div class="sa-sec"><i class="fas fa-comment-medical"></i> Keluhan &amp; jenis layanan</div>
+            <div class="form-row">
+                <div class="form-group col-md-7"><label>Keluhan pelanggan</label><textarea name="customer_complain" rows="3" class="form-control" placeholder="Uraikan keluhan / permintaan pelanggan"><?php echo html_escape($v('customer_complain')); ?></textarea></div>
+                <div class="form-group col-md-5"><label>Catatan (remarks)</label><textarea name="remark" rows="3" class="form-control" placeholder="Catatan internal"><?php echo html_escape($v('remarks')); ?></textarea></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4"><label class="d-block">Storing (kendaraan derek / mogok)</label>
+                    <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                        <label class="btn btn-outline-secondary btn-sm <?php echo $cek('storing', 'N', 'N') ? 'active' : ''; ?>"><input type="radio" name="storing" value="N" <?php echo $cek('storing', 'N', 'N'); ?>> Tidak</label>
+                        <label class="btn btn-outline-danger btn-sm <?php echo $cek('storing', 'Y', 'N') ? 'active' : ''; ?>"><input type="radio" name="storing" value="Y" <?php echo $cek('storing', 'Y', 'N'); ?>> Ya, storing</label>
+                    </div></div>
+                <div class="form-group col-md-4"><label class="d-block">Status service</label>
+                    <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                        <label class="btn btn-outline-secondary btn-sm <?php echo $cek('free_service', 'N', 'N') ? 'active' : ''; ?>"><input type="radio" name="free_service" value="N" <?php echo $cek('free_service', 'N', 'N'); ?>> Non free</label>
+                        <label class="btn btn-outline-success btn-sm <?php echo $cek('free_service', 'Y', 'N') ? 'active' : ''; ?>"><input type="radio" name="free_service" value="Y" <?php echo $cek('free_service', 'Y', 'N'); ?>> Free service</label>
+                    </div></div>
+                <div class="form-group col-md-4"><label class="d-block">Pembayaran (CIW / GW)</label>
+                    <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                        <?php foreach (array('C' => 'Cash', 'I' => 'Internal', 'W' => 'Warranty', 'GW' => 'Goodwill') as $k => $l) { ?>
+                        <label class="btn btn-outline-primary btn-sm <?php echo $cek('status_service', $k, 'C') ? 'active' : ''; ?>"><input type="radio" name="status_service" value="<?php echo $k; ?>" <?php echo $cek('status_service', $k, 'C'); ?>> <?php echo $l; ?></label>
+                        <?php } ?>
+                    </div></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <span class="small text-muted mr-auto"><?php echo $r ? 'Nomor WO tidak berubah.' : 'Nomor WO dibuat otomatis saat disimpan.'; ?></span>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <button class="btn btn-primary" type="submit"><i class="fas fa-save mr-1"></i> Simpan</button>
+        </div>
+    </form>
+</div>

@@ -1,15 +1,15 @@
        <div class="table-responsive">
-           <table class="table table-bordered table-hover nowrap" id="list-supplier">
+           <table class="table table-hover w-100" id="list-supplier">
                <thead>
                    <tr>
                        <th>No</th>
                        <th>Kode</th>
                        <th>Nama</th>
-                       <th>NoACC</th>
-                       <th>Nama Acc</th>
+                       <th>Akun hutang</th>
+                       <th>Nama akun</th>
                        <th>Status</th>
-                       <th>No Acc</th>
-                       <th>Nama Acc</th>
+                       <th>Lawan akun</th>
+                       <th>Nama lawan akun</th>
                        <th>Aksi</th>
                    </tr>
                </thead>
@@ -23,16 +23,16 @@
                        <td><?php echo $no; ?></td>
                        <td><?php echo $s->kode_sup; ?></td>
                        <td><?php echo $s->nama_sup; ?></td>
-                       <td><?php echo $s->kode_akun; ?></td>
+                       <td><?php echo trim((string) $s->kode_akun) !== '' ? html_escape($s->kode_akun) : '<span class="badge badge-warning">belum diisi</span>'; ?></td>
                        <td><?php echo $s->nama_akun; ?></td>
                        <td><?php echo $s->status_akun; ?></td>
                        <td><?php echo $s->lawan_kode_akun; ?></td>
                        <td><?php echo $s->lawan_nama_akun; ?></td>
 
                        <td class="text-center">
-                           <button class="btn btn-sm btn-outline-success update-dataSupplier ion-edit"
+                           <button class="btn btn-xs btn-outline-success update-dataSupplier ion-edit"
                                data-id="<?php echo $s->id_supplier; ?>"></button>
-
+                       </td>
                    </tr>
                    <?php
           $no++;
@@ -50,6 +50,6 @@ $('#list-supplier').DataTable({
     "searching": true,
     "ordering": true,
     "info": true,
-    "pageLength": 5
+    "pageLength": 10
 });
        </script>

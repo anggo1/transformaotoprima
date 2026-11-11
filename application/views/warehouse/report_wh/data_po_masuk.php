@@ -33,8 +33,8 @@ foreach ($dataPo as $s) {
         <td><?php echo $s->nama_part; ?></td>
         <td><?php echo $s->satuan; ?></td>
         <td><?php echo $s->jumlah; ?></td>
-        <td><?php echo number_format($s->harga, 0, ',', '.'); ?></td>
-        <td><?php echo number_format($s->harga * $s->jumlah, 0, ',', '.'); ?></td>
+        <td><?php echo nf($s->harga, 0, ',', '.'); ?></td>
+        <td><?php echo nf($s->harga * $s->jumlah, 0, ',', '.'); ?></td>
         <td><?php echo $s->remark; ?></td>
 
         <td class="text-center">

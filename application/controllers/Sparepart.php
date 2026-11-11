@@ -176,38 +176,17 @@ class Sparepart extends MY_Controller
 
         echo show_my_print('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
     }
+    /* Label QR lama (PNG via phpqrcode) diganti halaman LabelBarang: QR SVG di browser, berbagai ukuran label. */
     public function viewsparepart()
     {
-        $id                 = trim($_POST['id']);
-        $idc                 = trim($_POST['idc']);
-        $data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
-
-        $qr['data'] = $idc;
-        $qr['level'] = 'H';
-        $qr['size'] = 450;
-        $qr['savename'] = './assets/img_qr/' . $idc . '.png';
-        $qrnye = $this->ciqrcode->generate($qr);
-
-        echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
+        $id = (int) $this->input->post('id');
+        echo '<script>window.open(' . json_encode(site_url('LabelBarang/cetak') . '?id[]=' . $id) . ');</script>';
     }
     public function viewsparepart2()
     {
-        $id                 = trim($_GET['id']);
-        $ci_part = get_instance();
-        $query = "SELECT max(no_part) AS no_part FROM tbl_wh_barang WHERE id_part='$id'";
-        $hasil = $ci_part->db->query($query)->row_array();
-        $nomornye = $hasil['no_part'];
-        $data['dataPart'] = $this->Mod_sparepart->view_sparepart($id);
-
-        $qr['data'] = $nomornye;
-        $qr['level'] = 'H';
-        $qr['size'] = 450;
-        $qr['savename'] = './assets/img_qr/' . $nomornye . '.png';
-        $qrnye = $this->ciqrcode->generate($qr);
-        //$this->load('layoutbackend', 'warehouse/modals/modal_cetak_label', $data);
-
-        echo show_my_modal('warehouse/modals/modal_cetak_label', 'cetak-label', $data, ' modal-lg');
+        redirect('LabelBarang/cetak?id[]=' . (int) $this->input->get('id'));
     }
+
 
 
     public function cetakPart()

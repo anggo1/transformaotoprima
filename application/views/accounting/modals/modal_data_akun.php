@@ -65,14 +65,14 @@
                         <th><?php echo $d->keterangan ?></th>
                         <th><?php echo $d->pt_pemborong ?></th>
                         <th><?php echo $d->pj_borong ?></th>
-                        <th style="text-align: right;font-weight: bold;"><?php echo number_format($d->biaya_borong); ?>
+                        <th style="text-align: right;font-weight: bold;"><?php echo nf($d->biaya_borong); ?>
                         </th>
                     </tr>
                     <?php  } ?>
                     <tr>
                         <th colspan="6" style="text-align: right;font: bold;">GRAND TOTAL</th>
                         <th style="text-align: right;font: bold;font-weight: bold;">
-                            <?php echo number_format($grand_total); ?></th>
+                            <?php echo nf($grand_total); ?></th>
                     </tr>
                     </tbody>
                                             <tfoot></tfoot>

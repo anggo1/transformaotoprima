@@ -46,12 +46,12 @@ public function showPart()
                 $row[] = $pel->nama_part;
                 $row[] = $pel->satuan;
                 $row[] = $pel->stok;
-                $row[] = number_format($pel->harga_baru);
+                $row[] = nf($pel->harga_baru);
                 $row[] = $pel->diskon;
-                $row[] = number_format($pel->harga_net);
-                $row[] = number_format($pel->harga_rata);
+                $row[] = nf($pel->harga_net);
+                $row[] = nf($pel->harga_rata);
                 $row[] = $pel->ppn;
-                $row[] = number_format($pel->harga_valid);
+                $row[] = nf($pel->harga_valid);
                 $row[] = $pel->ket_harga;
 			$data[] = $row;
 		}

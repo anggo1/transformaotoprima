@@ -93,7 +93,7 @@ class Mod_reportwhpo_masuk extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -101,9 +101,9 @@ class Mod_reportwhpo_masuk extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po_masuk WHERE id_po_masuk='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po_masuk WHERE id_po_masuk='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po_masuk WHERE id_po_masuk='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po_masuk WHERE id_po_masuk='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -132,7 +132,7 @@ class Mod_reportwhpo_masuk extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_po_masuk 
         LEFT JOIN tbl_wh_customer ON tbl_wh_customer.kode_cus=tbl_wh_po_masuk.customer
-        WHERE id_po_masuk ='{$id}'";
+        WHERE id_po_masuk ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -143,22 +143,22 @@ class Mod_reportwhpo_masuk extends CI_Model
         $ci = get_instance();
                 $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_po_masuk as a 
                     LEFT JOIN tbl_wh_po_masuk as b ON b.id_po_masuk=a.id_po_masuk
-                    WHERE a.id_po_masuk='{$id}'";
+                    WHERE a.id_po_masuk='".$this->db->escape_str((string) $id)."'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         //$ppn       = $d_data['ppn'];
         //$total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_po_masuk SET
-        sub_total   ='$total',
-        grand_total ='$grand_total'
-        WHERE id_po_masuk ='{$id}'";
+        sub_total   ='".$this->db->escape_str((string) $total)."',
+        grand_total ='".$this->db->escape_str((string) $grand_total)."'
+        WHERE id_po_masuk ='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
         FROM tbl_wh_detail_po_masuk AS a
-        WHERE a.id_po_masuk ='{$id}' ORDER BY a.id_detail ASC";
+        WHERE a.id_po_masuk ='".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();

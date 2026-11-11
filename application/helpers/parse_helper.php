@@ -17,11 +17,11 @@ function to_currency($number)
 {
     if($number >= 0)
     {
-        return 'Rp. '.number_format($number, 0, ',', '.');
+        return 'Rp. '.nf($number, 0, ',', '.');
     }
     else
     {
-        return 'Rp. '.number_format(abs($number), 0, ',', '.');
+        return 'Rp. '.nf(abs($number), 0, ',', '.');
     }
 }
 
@@ -29,7 +29,7 @@ function bilangan($number)
 {
     if($number > 0)
     {
-        return number_format($number, 0, ',', '.');
+        return nf($number, 0, ',', '.');
     }
     else
     {
@@ -94,12 +94,14 @@ return date('d',strtotime($tanggal)).'  '.nama_bulan(date('m',strtotime($tanggal
 	  			
 }
 
+if ( ! function_exists('t')) { /* t() kini dipakai helper bahasa; versi ini tidak dipakai di aplikasi */
 function t($v)
 {
     if ((int)$v==0)
         return "-";
     return (int)$v;
 
+}
 }
 
 function tahun_akademik($str){

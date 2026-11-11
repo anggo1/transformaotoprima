@@ -1,108 +1,152 @@
-<style>
-    .table.DataTable {
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 12px;
-    }
-
-    table.dataTable td {
-        padding: 3px;
-    }
-</style>
-<div class="row">
-    <div class="col-12 ">
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-body card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Kelompok Akun</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-kelompok" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                            <div id="data-kelompok">
-                                            </div>
-                                </div>
-                                <div id="modal-kelompok"></div>
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+/* Panel Setting Accounting (master & integrasi). Tata letak tab seperti Pengaturan Gudang; id kontainer/modal sama
+   seperti versi lama sehingga proses tambah/ubah/hapus (AJAX) tetap berjalan seperti sebelumnya. */
+$jml = function ($t) { return $this->db->table_exists($t) ? $this->db->count_all($t) : 0; };
+$S = array(); if ($this->db->table_exists('tbl_acc_setting')) foreach ($this->db->get('tbl_acc_setting')->result() as $r) $S[$r->kunci] = $r->nilai;
+$A = array(); if ($this->db->table_exists('tbl_acc_akun')) foreach ($this->db->get('tbl_acc_akun')->result() as $r) $A[$r->kode_akun] = $r;
+$supTot = $jml('tbl_wh_supplier'); $supAkun = $supTot ? $this->db->where("kode_akun IS NOT NULL AND kode_akun <> ''", null, false)->count_all_results('tbl_wh_supplier') : 0;
+$W = array(); if ($this->db->table_exists('tbl_wh_setting')) foreach ($this->db->get('tbl_wh_setting')->result() as $r) $W[$r->kunci] = $r->nilai;
+$petaAkun = array(
+    'Umum' => array('akun_laba_ditahan' => 'Laba ditahan', 'akun_laba_berjalan' => 'Laba tahun berjalan', 'akun_pendapatan_default' => 'Pendapatan bawaan', 'akun_beban_default' => 'Beban bawaan'),
+    'Piutang & hutang' => array('akun_piutang' => 'Piutang usaha', 'akun_hutang' => 'Hutang usaha'),
+    'Aset tetap' => array('akun_akumulasi_default' => 'Akumulasi penyusutan', 'akun_beban_susut_default' => 'Beban penyusutan', 'akun_laba_pelepasan_aset' => 'Laba pelepasan aset', 'akun_rugi_pelepasan_aset' => 'Rugi pelepasan aset'),
+    'Pajak' => array('akun_ppn_keluaran' => 'PPN keluaran', 'akun_ppn_masukan' => 'PPN masukan', 'akun_hutang_ppn' => 'Hutang PPN', 'akun_hutang_pph21' => 'Hutang PPh 21', 'akun_hutang_pph23' => 'Hutang PPh 23', 'akun_hutang_pph42' => 'Hutang PPh 4(2)', 'akun_hutang_pph_badan' => 'Hutang PPh badan', 'akun_pph23_dimuka' => 'PPh 23 dibayar dimuka'),
+);
+$kat = array(); foreach ($A as $a) { $k = isset($a->kategori) && $a->kategori !== '' ? $a->kategori : 'Belum dikategorikan'; $kat[$k] = (isset($kat[$k]) ? $kat[$k] : 0) + 1; } ksort($kat);
+$nm = function ($kode) use ($A) { return $kode !== '' && isset($A[$kode]) ? html_escape($kode . ' — ' . $A[$kode]->nama_akun) : ($kode === '' ? '<span class="badge badge-warning">belum diisi</span>' : '<span class="badge badge-danger">' . html_escape($kode) . ' tidak ada di daftar akun</span>'); };
+?>
+<div class="wh-master">
+    <div class="row">
+        <div class="col-lg-3 mb-3">
+            <div class="card mb-0 h-100">
+                <div class="card-body p-2">
+                    <div class="text-muted small font-weight-bold text-uppercase px-2 pt-1 pb-2">Pengaturan akuntansi</div>
+                    <div class="nav flex-column nav-pills wh-master__nav" role="tablist">
+                        <a class="nav-link active" data-toggle="pill" href="#acc-tab-integrasi" role="tab"><i class="fas fa-project-diagram"></i><span>Akun bawaan &amp; integrasi</span></a>
+                        <a class="nav-link" data-toggle="pill" href="#acc-tab-supplier" role="tab"><i class="fas fa-truck"></i><span>Akun hutang supplier</span><b><?php echo nf($supAkun) . '/' . nf($supTot); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#acc-tab-kelompok" role="tab"><i class="fas fa-layer-group"></i><span>Kelompok Akun</span><b><?php echo nf($jml('tbl_acc_kelompok')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#acc-tab-type" role="tab"><i class="fas fa-tag"></i><span>Type Akun</span><b><?php echo nf($jml('tbl_acc_type')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#acc-tab-jenis" role="tab"><i class="fas fa-receipt"></i><span>Jenis Beban</span><b><?php echo nf($jml('tbl_acc_jenis')); ?></b></a>
+                        <a class="nav-link" data-toggle="pill" href="#acc-tab-ref" role="tab"><i class="fas fa-hashtag"></i><span>Jenis Akun (Ref)</span><b><?php echo nf($jml('tbl_acc_ref')); ?></b></a>
+                    </div>
+                    <div class="wh-master__note">
+                        <i class="fas fa-info-circle"></i> Daftar akun ada di menu <a href="<?php echo site_url('Account'); ?>">Daftar Akun</a>; akun bawaan, PPN & periode diatur di <a href="<?php echo site_url('PeriodeAkuntansi'); ?>">Tutup Buku &amp; Preferensi</a>. Panel ini merangkum semuanya.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="acc-tab-integrasi" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-project-diagram mr-2 text-primary"></i>Akun bawaan &amp; integrasi modul</h3>
+                                <div class="small text-muted mt-1">Akun yang dipakai otomatis oleh jurnal faktur, pelunasan, penyusutan, pajak, tutup buku dan stock opname.</div>
                             </div>
+                            <a class="btn btn-sm btn-primary" href="<?php echo site_url('PeriodeAkuntansi'); ?>"><i class="fas fa-sliders-h mr-1"></i> Ubah preferensi</a>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-body card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Type Akun</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-type" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                            <div id="data-type">
-                                            </div>
-                                </div>
-                                <div id="modal-type"></div>
+                        <div class="card-body">
+                            <div class="acc-kpi">
+                                <div class="acc-kpi__item"><div class="acc-kpi__label">Akun terdaftar</div><div class="acc-kpi__value"><?php echo nf(count($A)); ?></div><div class="acc-kpi__sub"><a href="<?php echo site_url('Account'); ?>">daftar akun ›</a></div></div>
+                                <div class="acc-kpi__item"><div class="acc-kpi__label">Tarif PPN</div><div class="acc-kpi__value"><?php echo html_escape($S['ppn_persen'] ?? '-'); ?>%</div><div class="acc-kpi__sub">PKP: <?php echo ($S['pajak_pkp'] ?? 'N') === 'Y' ? 'ya' : 'tidak'; ?> · rezim <?php echo html_escape($S['pajak_rezim'] ?? '-'); ?></div></div>
+                                <div class="acc-kpi__item"><div class="acc-kpi__label">Supplier berakun hutang</div><div class="acc-kpi__value <?php echo $supAkun < $supTot ? 'text-warning' : ''; ?>"><?php echo nf($supAkun) . ' / ' . nf($supTot); ?></div><div class="acc-kpi__sub">lihat tab Akun hutang supplier</div></div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-body card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Jenis Beban</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-jenis" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                            <di id="data-jenis">
-                                            </di>
-                                </div>
-                                <div id="modal-jenis"></div>
+                            <div class="row">
+                            <?php foreach ($petaAkun as $g => $ls) { ?>
+                                <div class="col-xl-6"><h6 class="mt-2"><?php echo $g; ?></h6>
+                                <table class="table table-sm"><tbody>
+                                <?php foreach ($ls as $k => $l) { ?><tr><td style="width:45%"><?php echo $l; ?></td><td><?php echo $nm((string) ($S[$k] ?? '')); ?></td></tr><?php } ?>
+                                </tbody></table></div>
+                            <?php } ?>
+                                <div class="col-xl-6"><h6 class="mt-2">Gudang (stock opname)</h6>
+                                <table class="table table-sm"><tbody>
+                                    <tr><td style="width:45%">Persediaan</td><td><?php echo $nm((string) ($W['akun_persediaan'] ?? '')); ?></td></tr>
+                                    <tr><td>Selisih persediaan</td><td><?php echo $nm((string) ($W['akun_selisih_persediaan'] ?? '')); ?></td></tr>
+                                    <tr><td>Jurnal opname otomatis</td><td><?php echo ($W['so_jurnal'] ?? 'N') === 'Y' ? 'Aktif' : 'Tidak aktif'; ?> · <a href="<?php echo site_url('OpnameStok'); ?>">atur ›</a></td></tr>
+                                </tbody></table></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card ">
-                            <div class="modal-content">
-                                <div class="card-body card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-ios-cog-outline ion-lg text-blue"></i> &nbsp; Jenis Akun</h3>
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#tambah-ref" title="Add Data"><i class="fas fa-plus"></i>
-                                            Add</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 ">
-                                            <div id="data-ref"></div>
-                                </div>
-                                <div id="modal-ref"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-8">
-                            <div class="modal-content">
-                                <div class="card-body card-blue card-outline">
-                                    <h3 class="card-title"><i class="ion-outlet ion-lg text-blue"></i> &nbsp; Supplier</h3>
-                                </div>
-                                <div class="col-12 ">
-                                            <div id="data-supplier"></div>
-                                <div id="modal-supplier"></div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    
-                            </div>
+                            <?php if ($kat) { ?>
+                            <h6 class="mt-2">Jumlah akun per kategori</h6>
+                            <div class="d-flex flex-wrap" style="gap:.4rem"><?php foreach ($kat as $k => $n) { ?><span class="badge badge-light border px-2 py-1"><?php echo html_escape(class_exists('Akuntansi') ? Akuntansi::label_kategori($k) : $k); ?> <b><?php echo $n; ?></b></span><?php } ?></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="acc-tab-supplier" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-truck mr-2 text-primary"></i>Akun hutang supplier</h3>
+                                <div class="small text-muted mt-1">Hubungkan setiap pemasok gudang ke akun hutang & lawan akunnya agar faktur pembelian dan pembayaran hutang terjurnal dengan benar. Klik ikon ubah untuk mengisi.</div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-body"><div id="data-supplier"></div></div>
+                        <div id="modal-supplier"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="acc-tab-kelompok" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2 text-primary"></i>Kelompok Akun</h3>
+                                <div class="small text-muted mt-1">Kelompok besar pada daftar akun (Aktiva, Kewajiban, Modal, Pendapatan, Biaya, …).</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-kelompok" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body"><div id="data-kelompok"></div></div>
+                        <div id="modal-kelompok"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="acc-tab-type" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-tag mr-2 text-primary"></i>Type Akun</h3>
+                                <div class="small text-muted mt-1">Tipe akun pada daftar akun (mis. Header / Detail, Lancar / Tidak lancar).</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-type" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body"><div id="data-type"></div></div>
+                        <div id="modal-type"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="acc-tab-jenis" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-receipt mr-2 text-primary"></i>Jenis Beban</h3>
+                                <div class="small text-muted mt-1">Klasifikasi biaya (langsung, operasional, administrasi & umum, …) untuk laporan laba rugi.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-jenis" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body"><div id="data-jenis"></div></div>
+                        <div id="modal-jenis"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="acc-tab-ref" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between flex-wrap" style="gap:.5rem">
+                            <div>
+                                <h3 class="card-title mb-0"><i class="fas fa-hashtag mr-2 text-primary"></i>Jenis Akun (Ref)</h3>
+                                <div class="small text-muted mt-1">Kode referensi jurnal beserta keterangannya.</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambah-ref" title="Tambah data"><i class="fas fa-plus mr-1"></i> Tambah</button>
+                        </div>
+                        <div class="card-body"><div id="data-ref"></div></div>
+                        <div id="modal-ref"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).on('shown.bs.tab', '.wh-master__nav a', function () {
+    if ($.fn.dataTable) $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+});
+</script>
 
 <?php
 show_my_confirm('hapusKelompok', 'hapus-kelompok', 'Hapus Data Ini?', 'Ya, Hapus Data Ini', 'Batal Hapus data');

@@ -223,25 +223,25 @@ $this->db->group_end(); // Tutup kurung utama
         $grand_total = $price * $hours;
         $sql = "INSERT INTO tbl_after_sales_detail_wo SET
         id_detail   ='',
-        wo_no       ='" . $wo_no . "',
-        spk       ='" . $kode_keluar . "',
-        operation   ='" . $operation . "',
-        hours       ='" . $hours . "',
-        type_of_work  ='" . $type_of_work . "',
-        jumlah      ='" . $hours . "',
-        harga       ='" . $harga_baru . "',
-        total_harga   ='" . $grand_total . "'";
+        wo_no       ='" . $this->db->escape_str((string) $wo_no) . "',
+        spk       ='" . $this->db->escape_str((string) $kode_keluar) . "',
+        operation   ='" . $this->db->escape_str((string) $operation) . "',
+        hours       ='" . $this->db->escape_str((string) $hours) . "',
+        type_of_work  ='" . $this->db->escape_str((string) $type_of_work) . "',
+        jumlah      ='" . $this->db->escape_str((string) $hours) . "',
+        harga       ='" . $this->db->escape_str((string) $harga_baru) . "',
+        total_harga   ='" . $this->db->escape_str((string) $grand_total) . "'";
 
         $sql2 = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
-            wo_no     ='" . $wo_no . "',
-            no_part     ='" . $operation . "',
-            nama_part   ='" . $type_of_work . "',
-            harga       ='" . $harga_baru . "',
-            harga_net   ='" . $harga_baru . "',
-            total_harga   ='" . $grand_total . "',
-            jumlah      ='" . $hours . "',
+            wo_no     ='" . $this->db->escape_str((string) $wo_no) . "',
+            no_part     ='" . $this->db->escape_str((string) $operation) . "',
+            nama_part   ='" . $this->db->escape_str((string) $type_of_work) . "',
+            harga       ='" . $this->db->escape_str((string) $harga_baru) . "',
+            harga_net   ='" . $this->db->escape_str((string) $harga_baru) . "',
+            total_harga   ='" . $this->db->escape_str((string) $grand_total) . "',
+            jumlah      ='" . $this->db->escape_str((string) $hours) . "',
             validasi_jenis = 'S',
-            spk = '" . $kode_keluar . "'";
+            spk = '" . $this->db->escape_str((string) $kode_keluar) . "'";
 
         $this->db->query($sql);
         $this->db->query($sql2);
@@ -253,10 +253,10 @@ $this->db->group_end(); // Tutup kurung utama
     {
         $sql = "INSERT INTO tbl_after_sales_labor SET
         id_labor  ='',
-        wo_no       ='" . $wo_no . "',
-        spk         ='" . $spk . "',
-        nik         ='" . $nik . "',
-        nama        ='" . $nama . "'";
+        wo_no       ='" . $this->db->escape_str((string) $wo_no) . "',
+        spk         ='" . $this->db->escape_str((string) $spk) . "',
+        nik         ='" . $this->db->escape_str((string) $nik) . "',
+        nama        ='" . $this->db->escape_str((string) $nama) . "'";
 
         $this->db->query($sql);
 
@@ -266,15 +266,15 @@ $this->db->group_end(); // Tutup kurung utama
     {
 
         $sql = "INSERT INTO tbl_after_sales_work_order SET
-        wo_no     ='" . $data['wo_no'] . "',
+        wo_no     ='" . $this->db->escape_str((string) $data['wo_no']) . "',
         wo_date   ='" . date('Y-m-d') . "',
-        pembuat   ='" . $data['pembuat'] . "'";
+        pembuat   ='" . $this->db->escape_str((string) $data['pembuat']) . "'";
 
         $this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        work_order     ='" . $data['wo_no'] . "',
-        status     ='P' WHERE wo_no='" . $data['wo_no'] . "'";
+        work_order     ='" . $this->db->escape_str((string) $data['wo_no']) . "',
+        status     ='P' WHERE wo_no='" . $this->db->escape_str((string) $data['wo_no']) . "'";
 
         $this->db->query($sql2);
 
@@ -282,10 +282,10 @@ $this->db->group_end(); // Tutup kurung utama
     }
     function deleteOperation($id, $spk)
     {
-        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}' or spk='{$spk}'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='".$this->db->escape_str((string) $id)."' or spk='".$this->db->escape_str((string) $spk)."'";
 
         $this->db->query($sql);
-        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='{$id}' OR spk='{$spk}'";
+        $sql2 = "DELETE FROM tbl_after_sales_detail_wo WHERE id_detail='".$this->db->escape_str((string) $id)."' OR spk='".$this->db->escape_str((string) $spk)."'";
 
         $this->db->query($sql2);
 
@@ -293,7 +293,7 @@ $this->db->group_end(); // Tutup kurung utama
     }
     function deleteMechanic($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_labor WHERE id_labor='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales_labor WHERE id_labor='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql);
 
@@ -305,7 +305,7 @@ $this->db->group_end(); // Tutup kurung utama
         $jam_mulai  = date("H:i:s");
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
         start_date     = NOW(),
-        status     ='R' WHERE id_detail='" . $id_detail . "'";
+        status     ='R' WHERE id_detail='" . $this->db->escape_str((string) $id_detail) . "'";
 
         $this->db->query($sql2);
 
@@ -316,14 +316,14 @@ $this->db->group_end(); // Tutup kurung utama
     {
         $waktu_input = '';
         $ci_kons = get_instance();
-        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '".$this->db->escape_str((string) $id_detail)."'";
         $hasil = $ci_kons->db->query($query)->row_array();
         $pause = $hasil['total_pause'];
         empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
 
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
-        total_pause     ='" . $waktu_input . "',
-        status     ='P' WHERE id_detail='" . $id_detail . "'";
+        total_pause     ='" . $this->db->escape_str((string) $waktu_input) . "',
+        status     ='P' WHERE id_detail='" . $this->db->escape_str((string) $id_detail) . "'";
 
         $this->db->query($sql2);
 
@@ -337,14 +337,14 @@ $this->db->group_end(); // Tutup kurung utama
         $jam_sekarang  = date("H:i:s");
         $waktu_input = '';
         $ci_kons = get_instance();
-        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '$id_detail'";
+        $query = "SELECT total_pause FROM tbl_after_sales_detail_wo WHERE id_detail = '".$this->db->escape_str((string) $id_detail)."'";
         $hasil = $ci_kons->db->query($query)->row_array();
         $pause = $hasil['total_pause'];
         empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
         $sql2 = "UPDATE tbl_after_sales_detail_wo SET
-        end_date    ='" . $tgl_jam_sekarang . "',
-        total_time    ='" . $waktu_input . "',
-        status     ='F' WHERE id_detail='" . $id_detail . "'";
+        end_date    ='" . $this->db->escape_str((string) $tgl_jam_sekarang) . "',
+        total_time    ='" . $this->db->escape_str((string) $waktu_input) . "',
+        status     ='F' WHERE id_detail='" . $this->db->escape_str((string) $id_detail) . "'";
 
         $cek_data = $this->db->get_where('tbl_after_sales_detail_wo', [
             'wo_no'  => $wo_no,
@@ -380,7 +380,7 @@ $this->db->group_end(); // Tutup kurung utama
         $tgl_jam_sekarang  = date("Y-m-d H:i:s");
         $waktu_input = '';
         $ci_kons = get_instance();
-        $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '$wo_no' AND status != 'F'";
+        $query = "SELECT id_detail, total_pause, total_time, start_date FROM tbl_after_sales_detail_wo WHERE wo_no = '".$this->db->escape_str((string) $wo_no)."' AND status != 'F'";
         $hasil = $ci_kons->db->query($query)->row_array();
         if (!empty($hasil)) {
 
@@ -403,8 +403,8 @@ $this->db->group_end(); // Tutup kurung utama
 
         empty($pause) ? $waktu_input = $total : $waktu_input = $total + $pause;
         $sql = "UPDATE tbl_after_sales_detail_wo SET
-        end_date    ='" . $tgl_jam_sekarang . "',
-        total_time    ='" . $waktu_input . "',
+        end_date    ='" . $this->db->escape_str((string) $tgl_jam_sekarang) . "',
+        total_time    ='" . $this->db->escape_str((string) $waktu_input) . "',
         status     ='F' WHERE status !='F'";
         $this->db->query($sql);
 
@@ -412,9 +412,9 @@ $this->db->group_end(); // Tutup kurung utama
             $tgl_sekarang  = date("Y-m-d");
             $jam_sekarang  = date("H:i:s");
             $sql1 = "UPDATE tbl_after_sales SET        
-        date_close_wo    ='" . $tgl_sekarang . "',
-        clockout    ='" . $jam_sekarang . "',
-        status     ='F' WHERE wo_no='" . $wo_no . "'";
+        date_close_wo    ='" . $this->db->escape_str((string) $tgl_sekarang) . "',
+        clockout    ='" . $this->db->escape_str((string) $jam_sekarang) . "',
+        status     ='F' WHERE wo_no='" . $this->db->escape_str((string) $wo_no) . "'";
 
             $this->db->query($sql1);
 

@@ -122,15 +122,15 @@ class EstimasiPenawaranService extends MY_Controller
 			if ($idlokasi == 'Cibitung') {
 				$row[] = $p->stok_cbt;
 				//$row[] = $p->lok_cbt;
-				$row[] = number_format($p->price_list_cbt);
+				$row[] = nf($p->price_list_cbt);
 			} elseif ($idlokasi == 'Jakarta') {
 				$row[] = $p->stok_jkt;
 				//$row[] = $p->lok_jkt;
-				$row[] = number_format($p->price_list_jkt);
+				$row[] = nf($p->price_list_jkt);
 			} elseif ($idlokasi == 'Surabaya') {
 				$row[] = $p->stok_sby;
 				//$row[] = $p->lok_sby;
-				$row[] = number_format($p->price_list_sby);
+				$row[] = nf($p->price_list_sby);
 			}
 			$row[] = $p->id_part;
 			$data[] = $row;

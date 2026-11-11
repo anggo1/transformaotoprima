@@ -25,7 +25,7 @@ class Mod_settingbr extends CI_Model
 	}
 	public function select_id_lapor($id)
 	{
-		$sql = " SELECT * FROM tbl_br_ket_lapor WHERE id='{$id}'";
+		$sql = " SELECT * FROM tbl_br_ket_lapor WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -34,7 +34,7 @@ class Mod_settingbr extends CI_Model
 	public function insertLapor($data)
 	{
 		$sql = "INSERT INTO tbl_br_ket_lapor VALUES
-		('','" . $data['kode'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -42,8 +42,8 @@ class Mod_settingbr extends CI_Model
 	}
 	public function updateLapor($data)
 	{
-		$sql = "UPDATE tbl_br_ket_lapor SET kode='" . $data['kode'] . "',keterangan='" . $data['keterangan'] . "'
-        WHERE id='" . $data['id'] . "'";
+		$sql = "UPDATE tbl_br_ket_lapor SET kode='" . $this->db->escape_str((string) $data['kode']) . "',keterangan='" . $this->db->escape_str((string) $data['keterangan']) . "'
+        WHERE id='" . $this->db->escape_str((string) $data['id']) . "'";
 
 		$this->db->query($sql);
 
@@ -51,7 +51,7 @@ class Mod_settingbr extends CI_Model
 	}
 	function deleteLap($id)
 	{
-		$sql = "DELETE FROM tbl_br_ket_lapor WHERE id='{$id}'";
+		$sql = "DELETE FROM tbl_br_ket_lapor WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -68,7 +68,7 @@ class Mod_settingbr extends CI_Model
 	}
 	public function select_id_kategori($id)
 	{
-		$sql = " SELECT * FROM tbl_br_kategori WHERE id_kategori='{$id}'";
+		$sql = " SELECT * FROM tbl_br_kategori WHERE id_kategori='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -77,7 +77,7 @@ class Mod_settingbr extends CI_Model
 	public function insertKategori($data)
 	{
 		$sql = "INSERT INTO tbl_br_kategori VALUES
-		('','" . $data['kode'] . "','" . $data['kategori'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['kategori']) . "')";
 
 		$this->db->query($sql);
 
@@ -85,8 +85,8 @@ class Mod_settingbr extends CI_Model
 	}
 	public function updateKategori($data)
 	{
-		$sql = "UPDATE tbl_br_kategori SET kode='" . $data['kode'] . "',kategori='" . $data['kategori'] . "'
-        WHERE id_kategori='" . $data['id_kategori'] . "'";
+		$sql = "UPDATE tbl_br_kategori SET kode='" . $this->db->escape_str((string) $data['kode']) . "',kategori='" . $this->db->escape_str((string) $data['kategori']) . "'
+        WHERE id_kategori='" . $this->db->escape_str((string) $data['id_kategori']) . "'";
 
 		$this->db->query($sql);
 
@@ -94,7 +94,7 @@ class Mod_settingbr extends CI_Model
 	}
 	function deleteKat($id)
 	{
-		$sql = "DELETE FROM tbl_br_kategori WHERE id_kategori='{$id}'";
+		$sql = "DELETE FROM tbl_br_kategori WHERE id_kategori='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -112,7 +112,7 @@ class Mod_settingbr extends CI_Model
 	}
 	public function select_id_pk($id)
 	{
-		$sql = " SELECT * FROM tbl_br_kat_pk WHERE id='{$id}'";
+		$sql = " SELECT * FROM tbl_br_kat_pk WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -121,7 +121,7 @@ class Mod_settingbr extends CI_Model
 	public function insertPk($data)
 	{
 		$sql = "INSERT INTO tbl_br_kat_pk VALUES
-		('','" . $data['kode'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -129,8 +129,8 @@ class Mod_settingbr extends CI_Model
 	}
 	public function updatePk($data)
 	{
-		$sql = "UPDATE tbl_br_kat_pk SET kode='" . $data['kode'] . "',keterangan='" . $data['keterangan'] . "'
-        WHERE id='" . $data['id'] . "'";
+		$sql = "UPDATE tbl_br_kat_pk SET kode='" . $this->db->escape_str((string) $data['kode']) . "',keterangan='" . $this->db->escape_str((string) $data['keterangan']) . "'
+        WHERE id='" . $this->db->escape_str((string) $data['id']) . "'";
 
 		$this->db->query($sql);
 
@@ -138,7 +138,7 @@ class Mod_settingbr extends CI_Model
 	}
 	function deletePk($id)
 	{
-		$sql = "DELETE FROM tbl_br_kat_pk WHERE id='{$id}'";
+		$sql = "DELETE FROM tbl_br_kat_pk WHERE id='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -155,7 +155,7 @@ class Mod_settingbr extends CI_Model
 	}
 	public function select_id_kelas($id)
 	{
-		$sql = " SELECT * FROM tbl_br_kelas WHERE id_kelas='{$id}'";
+		$sql = " SELECT * FROM tbl_br_kelas WHERE id_kelas='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -164,7 +164,7 @@ class Mod_settingbr extends CI_Model
 	public function insertKelas($data)
 	{
 		$sql = "INSERT INTO tbl_br_kelas VALUES
-		('','" . $data['kelas'] . "')";
+		('','" . $this->db->escape_str((string) $data['kelas']) . "')";
 
 		$this->db->query($sql);
 
@@ -172,8 +172,8 @@ class Mod_settingbr extends CI_Model
 	}
 	public function updateKelas($data)
 	{
-		$sql = "UPDATE tbl_br_kelas SET kelas='" . $data['kelas'] . "'
-        WHERE id_kelas='" . $data['id_kelas'] . "'";
+		$sql = "UPDATE tbl_br_kelas SET kelas='" . $this->db->escape_str((string) $data['kelas']) . "'
+        WHERE id_kelas='" . $this->db->escape_str((string) $data['id_kelas']) . "'";
 
 		$this->db->query($sql);
 
@@ -181,7 +181,7 @@ class Mod_settingbr extends CI_Model
 	}
 	function deleteKel($id)
 	{
-		$sql = "DELETE FROM tbl_br_kelas WHERE id_kelas='{$id}'";
+		$sql = "DELETE FROM tbl_br_kelas WHERE id_kelas='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -199,7 +199,7 @@ class Mod_settingbr extends CI_Model
 	}
 	public function select_id_pool($id)
 	{
-		$sql = " SELECT * FROM tbl_br_pool WHERE kode_pool='{$id}'";
+		$sql = " SELECT * FROM tbl_br_pool WHERE kode_pool='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -218,7 +218,7 @@ class Mod_settingbr extends CI_Model
 
 
 		$sql = "INSERT INTO tbl_br_pool VALUES
-		('$kode_po','" . $data['nama_pool'] . "')";
+		('".$this->db->escape_str((string) $kode_po)."','" . $this->db->escape_str((string) $data['nama_pool']) . "')";
 
 		$this->db->query($sql);
 
@@ -226,8 +226,8 @@ class Mod_settingbr extends CI_Model
 	}
 	public function updatePool($data)
 	{
-		$sql = "UPDATE tbl_br_pool SET nama_pool='" . $data['nama_pool'] . "'
-        WHERE kode_pool='" . $data['kode_pool'] . "'";
+		$sql = "UPDATE tbl_br_pool SET nama_pool='" . $this->db->escape_str((string) $data['nama_pool']) . "'
+        WHERE kode_pool='" . $this->db->escape_str((string) $data['kode_pool']) . "'";
 
 		$this->db->query($sql);
 
@@ -235,7 +235,7 @@ class Mod_settingbr extends CI_Model
 	}
 	function deletePool($id)
 	{
-		$sql = "DELETE FROM tbl_br_pool WHERE kode_pool='{$id}'";
+		$sql = "DELETE FROM tbl_br_pool WHERE kode_pool='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

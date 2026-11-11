@@ -160,9 +160,9 @@ class Mod_pre_order extends CI_Model
     {
         $sql = "INSERT INTO tbl_after_sales_detail_pre SET
         id_detail   ='',
-        wo_no       ='".$wo_no."',
-        no_pre_order     ='".$no_pre_order."',
-        operation   ='".$operation."'";
+        wo_no       ='".$this->db->escape_str((string) $wo_no)."',
+        no_pre_order     ='".$this->db->escape_str((string) $no_pre_order)."',
+        operation   ='".$this->db->escape_str((string) $operation)."'";
 
 		$this->db->query($sql);
 
@@ -181,23 +181,23 @@ class Mod_pre_order extends CI_Model
         $stnk=""; if ($data['stnk']=='Y'){ $stnk=$data['stnk']; }else { $stnk='N'; }
 
         $sql = "INSERT INTO tbl_after_sales_pre_order SET
-        wo_no     ='".$data['wo_no']."',
-        no_pre_order     ='".$data['no_pre_order']."',
-        leakage   ='$leakage',
-        abnormal_noise  ='$abnormal_noise',
-        error_code  ='$error_code',
-        brake       ='$brake',
-        vtk    ='$vtk',
-        fak      ='$fak',
-        spare_kit   ='$spare_kit',
-        stnk  ='$stnk',
-        vehicle_type  ='".$data['vehicle_type']."',
-        pembuat   ='".$data['pembuat']."'";
+        wo_no     ='".$this->db->escape_str((string) $data['wo_no'])."',
+        no_pre_order     ='".$this->db->escape_str((string) $data['no_pre_order'])."',
+        leakage   ='".$this->db->escape_str((string) $leakage)."',
+        abnormal_noise  ='".$this->db->escape_str((string) $abnormal_noise)."',
+        error_code  ='".$this->db->escape_str((string) $error_code)."',
+        brake       ='".$this->db->escape_str((string) $brake)."',
+        vtk    ='".$this->db->escape_str((string) $vtk)."',
+        fak      ='".$this->db->escape_str((string) $fak)."',
+        spare_kit   ='".$this->db->escape_str((string) $spare_kit)."',
+        stnk  ='".$this->db->escape_str((string) $stnk)."',
+        vehicle_type  ='".$this->db->escape_str((string) $data['vehicle_type'])."',
+        pembuat   ='".$this->db->escape_str((string) $data['pembuat'])."'";
 
 		$this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
-        pre_order     ='".$data['no_pre_order']."' WHERE wo_no='".$data['wo_no']."'";
+        pre_order     ='".$this->db->escape_str((string) $data['no_pre_order'])."' WHERE wo_no='".$this->db->escape_str((string) $data['wo_no'])."'";
 
 		$this->db->query($sql2);
 
@@ -205,7 +205,7 @@ class Mod_pre_order extends CI_Model
     }
     function deleteOperation($id)
     {
-        $sql = "DELETE FROM tbl_after_sales_detail_pre WHERE id_detail='{$id}'";
+        $sql = "DELETE FROM tbl_after_sales_detail_pre WHERE id_detail='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

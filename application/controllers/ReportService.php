@@ -21,13 +21,62 @@ class ReportService extends MY_Controller
         $this->load->helper('tgl_indo_helper');
     }
 
+    /* ================= Laporan service (tampilan baru) ================= */
+    private function filter()
+    {
+        $this->load->model('service/Mod_lapservice');
+        $d = tgl_sql((string) $this->input->get('dari')) ?: date('Y-m-01');
+        $s = tgl_sql((string) $this->input->get('sampai')) ?: date('Y-m-d');
+        if ($s < $d) { $t = $d; $d = $s; $s = $t; }
+        $st = (string) $this->input->get('status', true); if ($st === null || ! in_array($st, array('', 'F', 'P', 'N'), true)) $st = 'F';
+        if ($this->input->get('status') === null) $st = 'F';
+        $ciw = (string) $this->input->get('ciw'); if ( ! isset(Mod_lapservice::$CIW[$ciw])) $ciw = '';
+        return array('dari' => $d, 'sampai' => $s, 'status' => $st, 'sa' => trim((string) $this->input->get('sa')), 'ciw' => $ciw);
+    }
+
     public function index()
     {
-        $data['page']         = "Report Service";
-        $data['judul']         = "List Service";
-        $this->load->helper('url');
-        $data['menu'] = $this->Mod_menu->getAll()->result();
+        $f = $this->filter();
+        $rows = $this->Mod_lapservice->daftar($f);
+        $data = array('page' => 'Services Report', 'judul' => 'After Sales Report', 'f' => $f, 'rows' => $rows, 'R' => $this->Mod_lapservice->ringkasan($rows),
+            'sa_list' => $this->Mod_lapservice->sa_list(), 'boleh_cetak' => $this->boleh('print') || $this->boleh('view'));
         $this->template->load('layoutbackend', 'service/report_service/all_service', $data);
+    }
+
+    /** cetak daftar (A4 landscape) */
+    public function cetak_daftar()
+    {
+        $f = $this->filter();
+        $rows = $this->Mod_lapservice->daftar($f);
+        $this->load->view('service/report_service/cetak_daftar', array('f' => $f, 'rows' => $rows, 'R' => $this->Mod_lapservice->ringkasan($rows), 'apl' => $this->Mod_lapservice->kop()));
+    }
+
+    /** ekspor Excel daftar */
+    public function excel()
+    {
+        $f = $this->filter();
+        $rows = $this->Mod_lapservice->daftar($f);
+        $x = array(array('No', 'No. WO', 'Tgl masuk', 'Jam', 'Tgl selesai', 'Lama (hari)', 'Status', 'SA', 'Customer', 'No. polisi', 'Tipe', 'VIN', 'No. mesin', 'Km', 'Keluhan', 'Jenis (CIW/GW)', 'Free service', 'Mekanik', 'Jml operasi', 'Jam terjual', 'Nilai jasa', 'Nilai part (estimasi)', 'Total'));
+        $i = 0;
+        foreach ($rows as $r) $x[] = array(++$i, $r->wo_no, (string) $r->date_open_wo, substr((string) $r->clockin, 0, 5), Mod_lapservice::tgl_ok($r->date_close_wo) ? $r->date_close_wo : '', $r->hari === null ? '' : $r->hari,
+            Mod_lapservice::$STATUS[$r->status] ?? $r->status, $r->sa_name, $r->customer_name, $r->no_pol, $r->type, trim((string) $r->vin), $r->engine_no, $r->mileage, $r->customer_complain,
+            Mod_lapservice::$CIW[$r->status_service] ?? $r->status_service, $r->free_service === 'Y' ? 'Free' : 'Non free', $r->mekanik, $r->n_op, round($r->jam, 2), (float) $r->jasa, (float) $r->part, (float) ($r->jasa + $r->part));
+        $this->load->library('xlsx');
+        $bin = $this->xlsx->tulis($x, 'Services Report', array(5, 12, 11, 7, 11, 8, 11, 18, 30, 12, 16, 20, 16, 9, 40, 12, 10, 24, 9, 9, 14, 14, 14));
+        if ($bin === false) show_error($this->xlsx->error);
+        $this->output->set_content_type('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            ->set_header('Content-Disposition: attachment; filename="Services_Report_' . $f['dari'] . '_' . $f['sampai'] . '.xlsx"')->set_output($bin);
+    }
+
+    /** dokumen per WO: wo | preorder | estimasi | jobtime | workshop | ringkasan */
+    public function cetak($jenis = 'wo', $wo = '')
+    {
+        $this->load->model('service/Mod_lapservice');
+        $jenis = in_array($jenis, array('wo', 'preorder', 'estimasi', 'jobtime', 'workshop', 'ringkasan'), true) ? $jenis : 'wo';
+        $r = $this->Mod_lapservice->wo(rawurldecode((string) $wo));
+        if ( ! $r) show_error('Nomor WO tidak ditemukan.', 404, 'Tidak ditemukan');
+        $this->load->view('service/report_service/cetak_dokumen', array('jenis' => $jenis, 'r' => $r, 'apl' => $this->Mod_lapservice->kop(),
+            'oleh' => (string) $this->session->userdata('full_name')));
     }
 
     public function listService()

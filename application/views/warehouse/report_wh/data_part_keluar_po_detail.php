@@ -41,8 +41,8 @@
                                 <td><?php echo $s->no_part; ?></td>
                                 <td><?php echo $s->nama_part; ?></td>
                                 <td align="center"><?php echo $s->jumlah; ?></td>
-                                <td align="right"><?php echo number_format($s->harga); ?></td>
-                                <td align="right"><?php echo number_format($sub_total); ?></td>
+                                <td align="right"><?php echo nf($s->harga); ?></td>
+                                <td align="right"><?php echo nf($sub_total); ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>

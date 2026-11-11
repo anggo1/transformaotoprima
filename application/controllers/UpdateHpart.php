@@ -65,19 +65,19 @@ class UpdateHpart extends MY_Controller
                 $row[] = $p->nama_part;
                 $row[] = $p->satuan;
                 if($idlokasi=='Jakarta'){
-                $row[] = number_format($p->price_list_jkt);
+                $row[] = nf($p->price_list_jkt);
                 $row[] = $p->discount_jkt;
-                $row[] = number_format($p->hrg_net_jkt);
+                $row[] = nf($p->hrg_net_jkt);
                 }
                 if($idlokasi=='Cibitung'){
-                $row[] = number_format($p->price_list_cbt);
+                $row[] = nf($p->price_list_cbt);
                 $row[] = $p->discount_cbt;
-                $row[] = number_format($p->hrg_net_cbt);
+                $row[] = nf($p->hrg_net_cbt);
                 }
                 if($idlokasi=='Surabaya'){
-                $row[] = number_format($p->price_list_sby);
+                $row[] = nf($p->price_list_sby);
                 $row[] = $p->discount_sby;
-                $row[] = number_format($p->hrg_net_sby);
+                $row[] = nf($p->hrg_net_sby);
                 }
                 $row[]='
                     <button class="btn btn-sm btn-outline-primary update-harga" title="Edit" data-id="'.$p->id_part.'"><i class="fa fa-edit"> Update Harga</i>

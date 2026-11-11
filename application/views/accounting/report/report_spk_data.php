@@ -33,8 +33,8 @@ foreach ($dataPart as $s) {
                   <td><?php echo $s->jns_pk; ?></td>
                   <td><?php echo $s->ket_pk; ?></td>
                   <td><?php echo $s->no_body; ?></td>
-                  <td align="right"><?php echo number_format($s->total_hrg_part); ?></td>
-                  <td align="right"><?php echo number_format($s->biaya_borong); ?></td>
+                  <td align="right"><?php echo nf($s->total_hrg_part); ?></td>
+                  <td align="right"><?php echo nf($s->biaya_borong); ?></td>
                 </tr>
                 <?php
     $no++;
@@ -48,8 +48,8 @@ foreach ($dataPart as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">&nbsp;</td>
                     <td align="right">Sub Total</td>
-                    <td align="right"><?php echo number_format($total_part); ?></td>
-                    <td align="right"><?php echo number_format($total_upah); ?></td>
+                    <td align="right"><?php echo nf($total_part); ?></td>
+                    <td align="right"><?php echo nf($total_upah); ?></td>
         </tr>
         <tr>
                     <td align="right"><font size="0px"></font></td>
@@ -58,7 +58,7 @@ foreach ($dataPart as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">Grand Total </td>
                     <td align="right">&nbsp;</td>
-                    <td align="right"><?php echo number_format($total_part + $total_upah); ?></td>
+                    <td align="right"><?php echo nf($total_part + $total_upah); ?></td>
         </tr>
 			</tfoot>
     </table>

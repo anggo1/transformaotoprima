@@ -42,8 +42,8 @@ table.dataTable td {
                                         <td><?php echo $s->nama_akun; ?></td>
                                         <td><?php echo tglIndoPendek($s->tgl_jurnal); ?></td>
                                         <td><?php echo $s->keterangan; ?></td>
-                                        <td align="right" style="color: green;"><?php echo number_format($s->debit); ?></td>
-                                        <td align="right" style="color: red;;"><?php echo number_format($s->kredit); ?></td>
+                                        <td align="right" style="color: green;"><?php echo nf($s->debit); ?></td>
+                                        <td align="right" style="color: red;;"><?php echo nf($s->kredit); ?></td>
                                     </tr>
                                     <?php
     }

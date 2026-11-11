@@ -114,16 +114,16 @@ class Mod_chasis extends CI_Model
     $tgl1 = explode('-', $tgl_masuk);
     $tgl_masuknya = $tgl1[2] . "-" . $tgl1[1] . "-" . $tgl1[0] . "";
         $sql = "INSERT INTO tbl_mk_chasis SET
-        tgl_masuk		='".$tgl_masuknya."',
-        type_body 			='".$data['type_body']."',
-        no_rangka 		='".$data['no_rangka']."',
-        no_mesin  		='".$data['no_mesin']."',
-        thn_produksi	='".$data['thn_produksi']."',
+        tgl_masuk		='".$this->db->escape_str((string) $tgl_masuknya)."',
+        type_body 			='".$this->db->escape_str((string) $data['type_body'])."',
+        no_rangka 		='".$this->db->escape_str((string) $data['no_rangka'])."',
+        no_mesin  		='".$this->db->escape_str((string) $data['no_mesin'])."',
+        thn_produksi	='".$this->db->escape_str((string) $data['thn_produksi'])."',
         status_chasis  	='S',
-        tgl_input  		='".$tgl_input."',
-        jumlah  		='".$data['jumlah']."',
-        keterangan 		='".$data['keterangan']."',
-        user  			='".$data['user']."'
+        tgl_input  		='".$this->db->escape_str((string) $tgl_input)."',
+        jumlah  		='".$this->db->escape_str((string) $data['jumlah'])."',
+        keterangan 		='".$this->db->escape_str((string) $data['keterangan'])."',
+        user  			='".$this->db->escape_str((string) $data['user'])."'
 		";
 
 		$this->db->query($sql);
@@ -134,16 +134,16 @@ class Mod_chasis extends CI_Model
     {
         $tgl_input = date('Y-m-d H:i:s');
         $sql = "UPDATE tbl_mk_chasis SET
-        retail 			='".$data['retail']."',
-        type_body 			='".$data['type_body']."',
-        no_rangka 		='".$data['no_rangka']."',
-        no_mesin  		='".$data['no_mesin']."',
-        thn_produksi	='".$data['thn_produksi']."',
+        retail 			='".$this->db->escape_str((string) $data['retail'])."',
+        type_body 			='".$this->db->escape_str((string) $data['type_body'])."',
+        no_rangka 		='".$this->db->escape_str((string) $data['no_rangka'])."',
+        no_mesin  		='".$this->db->escape_str((string) $data['no_mesin'])."',
+        thn_produksi	='".$this->db->escape_str((string) $data['thn_produksi'])."',
         status_chasis  	='S',
-        tgl_input  		='".$tgl_input."',
-        jumlah  		='".$data['jumlah']."',
-        keterangan 		='".$data['keterangan']."'
-        WHERE chasis_id='".$data['chasis_id']."'";
+        tgl_input  		='".$this->db->escape_str((string) $tgl_input)."',
+        jumlah  		='".$this->db->escape_str((string) $data['jumlah'])."',
+        keterangan 		='".$this->db->escape_str((string) $data['keterangan'])."'
+        WHERE chasis_id='".$this->db->escape_str((string) $data['chasis_id'])."'";
 
 		$this->db->query($sql);
 
@@ -158,7 +158,7 @@ class Mod_chasis extends CI_Model
 
 	function deleteChasis($id)
     {
-        $sql = "DELETE FROM tbl_mk_chasis WHERE chasis_id='{$id}'";
+        $sql = "DELETE FROM tbl_mk_chasis WHERE chasis_id='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

@@ -252,7 +252,7 @@
 
                                 <label class="col-sm-2 col-form-label">Jumlah</label>
                                 <div class="col-sm-4"> <input type="text" name="jumlah" id="jumlah" value="<?php if (!empty($ch->jumlah)) {
-                                                                                                    echo number_format($ch->jumlah);
+                                                                                                    echo nf($ch->jumlah);
                                                                                                 } ?>"
                                         onkeyup="this.value = this.value.toUpperCase();" class="form-control" required>
                                 </div>
@@ -269,7 +269,7 @@
                                 <label class="col-sm-2 col-form-label">Harga</label>
                                 <div class="col-sm-4"> <input type="text" name="harga_retail" id="harga_retail" 
                                 onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php if (!empty($ch->harga_retail)) {
-                                                                                                    echo number_format( $ch->harga_retail);
+                                                                                                    echo nf( $ch->harga_retail);
                                                                                                 } ?>" onblur="formatNumber(this);" class="form-control">
                                 </div>
 

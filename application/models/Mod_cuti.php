@@ -99,7 +99,7 @@ class Mod_cuti extends CI_Model
     }
     public function deleteCuti($id)
     {
-        $sql = "DELETE FROM tbl_hrd_cuti_pegawai WHERE id_cuti='" . $id . "'";
+        $sql = "DELETE FROM tbl_hrd_cuti_pegawai WHERE id_cuti='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -115,10 +115,10 @@ class Mod_cuti extends CI_Model
 
         $sql = "INSERT INTO tbl_hrd_cuti_pegawai (id_cuti,nip,tgl_cuti,status_cuti,alasan) 
 		VALUES('',
-		'" . $data['nip'] . "',
-		'$tgl_cuti',
-		'" . $data['kode'] . "',
-		'" . $data['alasan'] . "'
+		'" . $this->db->escape_str((string) $data['nip']) . "',
+		'".$this->db->escape_str((string) $tgl_cuti)."',
+		'" . $this->db->escape_str((string) $data['kode']) . "',
+		'" . $this->db->escape_str((string) $data['alasan']) . "'
 		)";
 
 

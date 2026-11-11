@@ -45,7 +45,7 @@ class Mod_part_keluar_po extends CI_Model
         LEFT JOIN tbl_wh_barang AS b ON a.no_part=b.no_part
         LEFT JOIN tbl_wh_po AS c ON a.id_po=c.id_po
         LEFT JOIN tbl_wh_satuan AS d ON d.id_satuan=b.satuan
-        WHERE a.wo_no = '" . $wo_na . "'";
+        WHERE a.wo_no = '" . $this->db->escape_str((string) $wo_na) . "'";
         $data = $this->db->query($sql);
 
 
@@ -70,7 +70,7 @@ class Mod_part_keluar_po extends CI_Model
         $sql    = "SELECT a.*,b.nama_part,b.satuan,b.stok_jkt,b.stok_cbt,b.stok_sby
         FROM tbl_wh_detail_po_masuk AS a 
         LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part
-        WHERE id_po_masuk ='" . $no_po . "' AND status !='Y'";
+        WHERE id_po_masuk ='" . $this->db->escape_str((string) $no_po) . "' AND status !='Y'";
         $data = $this->db->query($sql);
 
 
@@ -91,7 +91,7 @@ class Mod_part_keluar_po extends CI_Model
         //$this->db->where('tgl_po',$tglnya);
         //return $this->db->get('tbl_wh_po')->row();
 
-        $sql    = "SELECT kode_po FROM tbl_wh_po WHERE tgl_po='" . $tglnya . "'";
+        $sql    = "SELECT kode_po FROM tbl_wh_po WHERE tgl_po='" . $this->db->escape_str((string) $tglnya) . "'";
         $data   = $this->db->query($sql);
 
 
@@ -100,7 +100,7 @@ class Mod_part_keluar_po extends CI_Model
     function get_part($id)
     {
         $sql    = "SELECT * FROM tbl_wh_barang 
-        WHERE no_part='" . $id . "'";
+        WHERE no_part='" . $this->db->escape_str((string) $id) . "'";
         $data = $this->db->query($sql);
         return $data->result();
     }
@@ -194,7 +194,7 @@ class Mod_part_keluar_po extends CI_Model
     }
     public function deleteDetail($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -202,7 +202,7 @@ class Mod_part_keluar_po extends CI_Model
     }
     public function deletepartDetail($id, $sisa)
     {
-        $sql = "UPDATE tbl_wh_detail_po SET sisa='" . $sisa . "', status='P' WHERE id_detail='" . $id . "'";
+        $sql = "UPDATE tbl_wh_detail_po SET sisa='" . $this->db->escape_str((string) $sisa) . "', status='P' WHERE id_detail='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -215,10 +215,10 @@ class Mod_part_keluar_po extends CI_Model
         $sisa = $jumlah - $jml_keluar;
         $total_harga = $hrg_part * $jml;
         if ($sisa == 0) {
-            $sql_update = "UPDATE tbl_wh_detail_po_masuk SET jumlah = '$jml', sisa = '$sisa', jml_masuk ='$jml', total_harga = '$total_harga' WHERE id_detail ='{$id}'";
+            $sql_update = "UPDATE tbl_wh_detail_po_masuk SET jumlah = '".$this->db->escape_str((string) $jml)."', sisa = '".$this->db->escape_str((string) $sisa)."', jml_masuk ='".$this->db->escape_str((string) $jml)."', total_harga = '".$this->db->escape_str((string) $total_harga)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'";
             $this->db->query($sql_update);
         } else {
-            $sql_update = "UPDATE tbl_wh_detail_po_masuk SET jumlah = '$jml', sisa = '$sisa', jml_masuk ='$jml', total_harga = '$total_harga' WHERE id_detail ='{$id}'";
+            $sql_update = "UPDATE tbl_wh_detail_po_masuk SET jumlah = '".$this->db->escape_str((string) $jml)."', sisa = '".$this->db->escape_str((string) $sisa)."', jml_masuk ='".$this->db->escape_str((string) $jml)."', total_harga = '".$this->db->escape_str((string) $total_harga)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'";
             $this->db->query($sql_update);
         }
         return $this->db->affected_rows();

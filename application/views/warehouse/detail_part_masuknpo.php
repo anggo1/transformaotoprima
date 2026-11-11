@@ -69,7 +69,7 @@
             </td>
             <td><?php 
             if(!empty($d->jumlah)){
-                 if(empty($harga)) { echo number_format($harga * $d->jumlah);}else{ echo number_format($harga * $d->jumlah);}
+                 if(empty($harga)) { echo nf($harga * $d->jumlah);}else{ echo nf($harga * $d->jumlah);}
             }
              ?></td>
             <td class="text-center">

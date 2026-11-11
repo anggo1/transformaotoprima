@@ -155,32 +155,32 @@ class Mod_update_hpart extends CI_Model
         
         $sql_log = "INSERT INTO tbl_wh_log_harga SET
         id = '',
-        id_part         = '".$data['id_part']."',
-        no_part         = '".$data['no_part']."',
-        hrg_net_lama    = '".$net_lama."',
-        hrg_price_list_lama   = '".$list_lama."',
-        hrg_net         = '".$net_baru."',
-        hrg_price_list  = '".$list_baru."',
-        lokasi          = '".$idlokasi."',
-        tgl_update      = '$datenow',
-        user            = '".$data['user']."'";
+        id_part         = '".$this->db->escape_str((string) $data['id_part'])."',
+        no_part         = '".$this->db->escape_str((string) $data['no_part'])."',
+        hrg_net_lama    = '".$this->db->escape_str((string) $net_lama)."',
+        hrg_price_list_lama   = '".$this->db->escape_str((string) $list_lama)."',
+        hrg_net         = '".$this->db->escape_str((string) $net_baru)."',
+        hrg_price_list  = '".$this->db->escape_str((string) $list_baru)."',
+        lokasi          = '".$this->db->escape_str((string) $idlokasi)."',
+        tgl_update      = '".$this->db->escape_str((string) $datenow)."',
+        user            = '".$this->db->escape_str((string) $data['user'])."'";
 
         $this ->db ->query($sql_log);
         if($idlokasi=='Jakarta'){
         $sql = "UPDATE tbl_wh_barang SET
-        hrg_net_jkt     = '".$net_baru."',
-        price_list_jkt  = '".$list_baru."'
-        WHERE id_part   = '".$data['id_part']."'";
+        hrg_net_jkt     = '".$this->db->escape_str((string) $net_baru)."',
+        price_list_jkt  = '".$this->db->escape_str((string) $list_baru)."'
+        WHERE id_part   = '".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Cibitung'){
         $sql = "UPDATE tbl_wh_barang SET
-        hrg_net_cbt     = '".$net_baru."',
-        price_list_cbt  = '".$list_baru."'
-        WHERE id_part   = '".$data['id_part']."'";
+        hrg_net_cbt     = '".$this->db->escape_str((string) $net_baru)."',
+        price_list_cbt  = '".$this->db->escape_str((string) $list_baru)."'
+        WHERE id_part   = '".$this->db->escape_str((string) $data['id_part'])."'";
         }if($idlokasi=='Surabaya'){
         $sql = "UPDATE tbl_wh_barang SET
-        hrg_net_sby     = '".$net_baru."',
-        price_list_sby  = '".$list_baru."'
-        WHERE id_part   = '".$data['id_part']."'";
+        hrg_net_sby     = '".$this->db->escape_str((string) $net_baru)."',
+        price_list_sby  = '".$this->db->escape_str((string) $list_baru)."'
+        WHERE id_part   = '".$this->db->escape_str((string) $data['id_part'])."'";
         }
 		$this->db->query($sql);
 
@@ -213,7 +213,7 @@ class Mod_update_hpart extends CI_Model
 
     function deletePart($id)
     {
-        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='{$id}'";
+        $sql = "DELETE FROM tbl_wh_barang WHERE id_part='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

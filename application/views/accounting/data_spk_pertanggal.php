@@ -32,7 +32,7 @@ foreach ($dataPk as $s) {
                     <td><?php echo $s->nama_pool; ?></td>
                     <td><?php if($s->status=="Y") {echo "Proses";}if($s->status=="P") {echo "Pending";}if($s->status=="S") {echo "Selesai";}if($s->status=="K") {echo "Keluar";} if($s->status=="N") {echo "Antrian";}?>
                     </td>
-                    <td align="right"><?php echo number_format($s->total_harga); ?></td>
+                    <td align="right"><?php echo nf($s->total_harga); ?></td>
                     <td align="center">
                         <button class="btn btn-xs btn-outline-success cetak-pk" id="cetakPk" title="Cetak PK"
                             data-id="<?php echo $s->id_lapor; ?>"><i class="fa fa-print"></i> Cetak PK</button>
@@ -45,7 +45,7 @@ foreach ($dataPk as $s) {
             </tbody>
             <tfoot>
                 <th  colspan="8" style="text-align: right; font-size:larger;">GRAND TOTAL</th>
-                <th style="text-align: right; font-size:larger;"><?php echo number_format($grand_total) ?></th>
+                <th style="text-align: right; font-size:larger;"><?php echo nf($grand_total) ?></th>
                     <th></th>
                 </tfoot>
         </table>

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-bordered table-hover nowrap" id="list-type">
+    <table class="table table-hover nowrap w-100" id="list-type">
         <thead>
             <tr>
                 <th>No</th>
@@ -18,9 +18,9 @@
                 <td><?php echo $s->type; ?></td>
 
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-success update-dataType ion-edit"
+                    <button class="btn btn-xs btn-outline-success update-dataType ion-edit"
                         data-id="<?php echo $s->id_type; ?>"></button>
-                    <button class="btn btn-sm btn-outline-danger delete-type ion-android-delete" data-toggle="modal"
+                    <button class="btn btn-xs btn-outline-danger delete-type ion-android-delete" data-toggle="modal"
                         data-target="#hapusType" data-id="<?php echo $s->id_type; ?>"></button>
                 </td>
             </tr>
@@ -40,6 +40,6 @@ $('#list-type').DataTable({
     "searching": true,
     "ordering": true,
     "info": true,
-    "pageLength": 5
+    "pageLength": 10
 });
        </script>

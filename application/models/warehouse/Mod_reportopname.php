@@ -114,9 +114,9 @@ class Mod_reportopname extends CI_Model
     }
 	function deleteOpname($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_opname WHERE id_opname='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_opname WHERE id_opname='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_detail_opname WHERE id_opname='{$id}'";
+		$sql = "DELETE FROM tbl_wh_detail_opname WHERE id_opname='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
@@ -158,12 +158,12 @@ class Mod_reportopname extends CI_Model
     }
     function generateOpname($id)
     {
-        $sql_po1 = "UPDATE tbl_wh_opname SET status='Y' WHERE id_opname='".$id."'";
+        $sql_po1 = "UPDATE tbl_wh_opname SET status='Y' WHERE id_opname='".$this->db->escape_str((string) $id)."'";
         $this->db->query($sql_po1);
         
     $query=$this->db->query("SELECT no_part,stok_fisik
             FROM tbl_wh_detail_opname 
-            WHERE id_opname = '{$id}'")->result();
+            WHERE id_opname = '".$this->db->escape_str((string) $id)."'")->result();
     
             $data = array();
             foreach($query as $key=>$value){

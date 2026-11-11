@@ -27,8 +27,8 @@ foreach ($dataPk as $s) {
                   <td><?php echo $s->id_pk; ?></td>
                   <td><?php echo $s->ket_pk; ?></td>
                   <td><?php echo $s->no_body; ?></td>
-                  <td align="right"><?php echo number_format($s->biaya_borong); ?></td>
-                  <td align="right"><?php echo number_format($s->dibayarkan); ?></td>
+                  <td align="right"><?php echo nf($s->biaya_borong); ?></td>
+                  <td align="right"><?php echo nf($s->dibayarkan); ?></td>
                 </tr>
                 
                 <?php
@@ -43,7 +43,7 @@ foreach ($dataPk as $s) {
                   <td align="right">&nbsp;</td>
                   <td align="right">&nbsp;</td>
                   <td align="right">Total Pembayaran</td>
-                  <td align="right"><?php echo number_format($total_jumlah); ?></td>
+                  <td align="right"><?php echo nf($total_jumlah); ?></td>
                   </tr>
                 <tr>
                   <td align="right">&nbsp;</td>
@@ -52,7 +52,7 @@ foreach ($dataPk as $s) {
                   <td align="right">&nbsp;</td>
                   <td align="right">&nbsp;</td>
                   <td align="right">Sudah Dibayarkan</td>
-                  <td align="right"><?php echo number_format($dibayar); ?></td>
+                  <td align="right"><?php echo nf($dibayar); ?></td>
                   </tr>
                 <tr>
                     <td align="right">&nbsp;</td>
@@ -61,7 +61,7 @@ foreach ($dataPk as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">&nbsp;</td>
                     <td align="right">Sisa Pembayaran</td>
-                    <td align="right"><?php echo number_format($total_jumlah-$dibayar); ?></td>
+                    <td align="right"><?php echo nf($total_jumlah-$dibayar); ?></td>
                   </tr>
 			</tfoot>
     </table>

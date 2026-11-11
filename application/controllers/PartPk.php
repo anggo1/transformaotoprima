@@ -37,7 +37,7 @@ class PartPk extends MY_Controller
 			$row[] = $pel->no_part;
 			$row[] = $pel->nama_part;
 			$row[] = $pel->stok;
-			$row[] = number_format($pel->hrg_awal);
+			$row[] = nf($pel->hrg_awal);
 			$row[] = $pel->kode_satuan;
 			$row[] = $pel->id_barang;
 			$row[] = $pel->stok_a;
@@ -125,7 +125,7 @@ class PartPk extends MY_Controller
         $query = "SELECT b.no_part,SUM(b.jumlah) AS total
 					FROM `tbl_wh_part_keluar` AS a
 					LEFT JOIN `tbl_wh_detail_part_keluar` AS b ON b.id_keluar=a.id_keluar 
-					WHERE a.no_spk='{$id_spk}' AND  b.no_part='{$no_part}'  GROUP BY b.no_part";
+					WHERE a.no_spk='".$this->db->escape_str((string) $id_spk)."' AND  b.no_part='".$this->db->escape_str((string) $no_part)."'  GROUP BY b.no_part";
         $d_data = $ci->db->query($query)->row_array();
 		$total_pakai ="";
 

@@ -17,7 +17,7 @@ class Fungsi {
 
 	function rupiah($nominal)
 	{
- 		$rp = number_format($nominal,0,',','.');
+ 		$rp = nf($nominal,0,',','.');
 		return $rp;
 	}
 

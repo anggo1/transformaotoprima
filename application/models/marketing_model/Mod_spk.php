@@ -97,7 +97,7 @@ class Mod_spk extends CI_Model
     }
     public function deleteDetail_spk($id)
     {
-        $sql = "DELETE FROM tbl_mk_keterangan_spk WHERE id_ket_spk='" . $id . "'";
+        $sql = "DELETE FROM tbl_mk_keterangan_spk WHERE id_ket_spk='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -105,13 +105,13 @@ class Mod_spk extends CI_Model
     }
     function update_remark($id,$remark)
 		{
-			$sql_update = "UPDATE tbl_mk_keterangan_spk SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_mk_keterangan_spk SET remark ='".$this->db->escape_str((string) $remark)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function insertKeterangan($id,$no_spk,$keterangan)
 		{
-			$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '$id', no_spk='$no_spk', keterangan ='$keterangan'";
+			$sql_update = "INSERT tbl_mk_keterangan_spk SET no_urut = '".$this->db->escape_str((string) $id)."', no_spk='".$this->db->escape_str((string) $no_spk)."', keterangan ='".$this->db->escape_str((string) $keterangan)."'";
             $this->db->query($sql_update);
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -134,16 +134,16 @@ class Mod_spk extends CI_Model
         $datenow = date("Y-m-d");
         $sql = "INSERT INTO tbl_mk_keterangan_spk SET
             id_detail       ='',
-            id_estimasi_penawaran   ='" . $kodenya . "',
-            kode_po         ='" . $koderefnya . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            harga_baru           ='" . $data['harga_baru'] . "',
-            jumlah          ='" . $data['jumlah'] . "',
-            diskon          ='" . $data['diskon'] . "',
-            total_diskon    ='" . $data['total_diskon'] . "',
-            total_harga     ='$total_harga',
-            stok_akhir     ='" . $data['stok_awal'] . "'";
+            id_estimasi_penawaran   ='" . $this->db->escape_str((string) $kodenya) . "',
+            kode_po         ='" . $this->db->escape_str((string) $koderefnya) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            harga_baru           ='" . $this->db->escape_str((string) $data['harga_baru']) . "',
+            jumlah          ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+            diskon          ='" . $this->db->escape_str((string) $data['diskon']) . "',
+            total_diskon    ='" . $this->db->escape_str((string) $data['total_diskon']) . "',
+            total_harga     ='".$this->db->escape_str((string) $total_harga)."',
+            stok_akhir     ='" . $this->db->escape_str((string) $data['stok_awal']) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -151,7 +151,7 @@ class Mod_spk extends CI_Model
     public function select_by_id($id)
     {
         $sql = "SELECT * FROM tbl_mk_spk 
-        WHERE no_urut ='{$id}'";
+        WHERE no_urut ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -159,7 +159,7 @@ class Mod_spk extends CI_Model
     }
     public function select_keterangan($id)
     {
-        $sql = "SELECT * FROM tbl_mk_keterangan_spk WHERE no_urut ='{$id}' ORDER BY id_ket_spk ASC";
+        $sql = "SELECT * FROM tbl_mk_keterangan_spk WHERE no_urut ='".$this->db->escape_str((string) $id)."' ORDER BY id_ket_spk ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -167,10 +167,10 @@ class Mod_spk extends CI_Model
     function updatePo($a, $b, $c, $d)
     {
         $sql = "UPDATE tbl_wh_estimasi_penawaran SET
-        t_ppn       ='$a',
-        sub_total   ='$b',
-        grand_total ='$c'
-        WHERE id_estimasi_penawaran ='" . $data['id_estimasi_penawaran'] . "'";
+        t_ppn       ='".$this->db->escape_str((string) $a)."',
+        sub_total   ='".$this->db->escape_str((string) $b)."',
+        grand_total ='".$this->db->escape_str((string) $c)."'
+        WHERE id_estimasi_penawaran ='" . $this->db->escape_str((string) $data['id_estimasi_penawaran']) . "'";
 
         $this->db->query($sql);
 

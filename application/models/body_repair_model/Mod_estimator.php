@@ -86,7 +86,7 @@ class Mod_estimator extends CI_Model
 	function select_lapor($id)
 	{
 		$sql = "SELECT * FROM tbl_br_laporan_bus 
-		WHERE id_lapor ='{$id}'";
+		WHERE id_lapor ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -96,7 +96,7 @@ class Mod_estimator extends CI_Model
 	{
 		$sql = "SELECT a.*,b.hrg_awal AS harga FROM tbl_br_detail_estimasi AS a
 		LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part 
-		WHERE id_lapor ='{$id}'";
+		WHERE id_lapor ='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 		return $data->result();
@@ -117,9 +117,9 @@ class Mod_estimator extends CI_Model
 		$hrg_naik=$data['hrg_naik'];
 		$biaya =str_replace(".","", $beaEstimasi);
 
-		$sql_update = "UPDATE tbl_br_laporan_bus SET estimasi ='Y' WHERE id_lapor ='{$idUpdate}'"; $this->db->query($sql_update);
+		$sql_update = "UPDATE tbl_br_laporan_bus SET estimasi ='Y' WHERE id_lapor ='".$this->db->escape_str((string) $idUpdate)."'"; $this->db->query($sql_update);
 		$query=$this->db->query("SELECT a.*, b.hrg_awal FROM tbl_br_list_estimasi AS a 
-		LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part WHERE proses = '{$pknya}'")->result();
+		LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part WHERE proses = '".$this->db->escape_str((string) $pknya)."'")->result();
 
 		$data = array();
 		foreach($query as $key=>$value){ 
@@ -144,14 +144,14 @@ class Mod_estimator extends CI_Model
 		{			
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
-			$sql_update = "UPDATE tbl_br_detail_estimasi SET jml_part ='$jml', total = '$total' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_br_detail_estimasi SET jml_part ='".$this->db->escape_str((string) $jml)."', total = '".$this->db->escape_str((string) $total)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
 	function deleteLapor($id)
     {
-        $sql = "DELETE FROM tbl_br_laporan_bus WHERE id_lapor='{$id}'";
+        $sql = "DELETE FROM tbl_br_laporan_bus WHERE id_lapor='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -159,8 +159,8 @@ class Mod_estimator extends CI_Model
     }
 	function deleteEstimasi($id)
     {
-		$sql_update = "UPDATE tbl_br_laporan_bus SET estimasi ='N' WHERE id_lapor ='{$id}'"; $this->db->query($sql_update);
-        $sql = "DELETE FROM tbl_br_detail_estimasi WHERE id_detail='{$id}'";
+		$sql_update = "UPDATE tbl_br_laporan_bus SET estimasi ='N' WHERE id_lapor ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
+        $sql = "DELETE FROM tbl_br_detail_estimasi WHERE id_detail='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -184,7 +184,7 @@ class Mod_estimator extends CI_Model
 		LEFT JOIN tbl_wh_barang AS b ON b.no_part=a.no_part 
 		LEFT JOIN tbl_wh_satuan AS c ON c.id_satuan=c.satuan 
 		
-		WHERE a.id_lapor = '{$id}' ORDER BY a.id_detail";
+		WHERE a.id_lapor = '".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail";
 
 		$data = $this->db->query($sql);
 
@@ -193,7 +193,7 @@ class Mod_estimator extends CI_Model
 	function harga_estimasi($id)
     {
 		$sql = "SELECT  id_lapor,biaya,jns_pk,hrg_naik,SUM(total)AS totalnye
-		FROM tbl_br_detail_estimasi WHERE id_lapor = '{$id}' GROUP BY jns_pk";
+		FROM tbl_br_detail_estimasi WHERE id_lapor = '".$this->db->escape_str((string) $id)."' GROUP BY jns_pk";
 		$data = $this->db->query($sql);
 
 		return $data->result();

@@ -126,8 +126,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             <td><?php echo $s->id_pk; ?></td>
                                             <td><?php echo $s->jns_pk; ?></td>
                                             <td><?php echo $s->no_body; ?></td>
-                                            <td align="right"><?php echo number_format($s->biaya_awal); ?></td>
-                                            <td align="right"><?php echo number_format($s->jumlah); ?></td>
+                                            <td align="right"><?php echo nf($s->biaya_awal); ?></td>
+                                            <td align="right"><?php echo nf($s->jumlah); ?></td>
                                             <td><?php echo $s->keterangan; ?></td>
                                                 </tr>
                                             <?php
@@ -137,7 +137,7 @@ font-family:Georgia, "Times New Roman", Times, serif;
                                             </tbody>
                                             <tfoot>
 						 <td colspan="6" align="right">Total </td>
-                    <td align="right"><strong><?php echo number_format($total); ?></strong></td>
+                    <td align="right"><strong><?php echo nf($total); ?></strong></td>
 						</tfoot>
       </table>
                                       </div>

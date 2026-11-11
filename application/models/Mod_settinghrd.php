@@ -13,7 +13,7 @@ class Mod_settinghrd extends CI_Model {
 		return $hsl;
 	}
 	function get_jabatan_by_id($jabatan){
-		$hsl=$this->db->query("select * from tbl_hrd_jabatan where id_jabatan='$jabatan'");
+		$hsl=$this->db->query("select * from tbl_hrd_jabatan where id_jabatan='".$this->db->escape_str((string) $jabatan)."'");
 		return $hsl;
 	}
 	public function select_jabatan() {
@@ -25,7 +25,7 @@ class Mod_settinghrd extends CI_Model {
 		return $data->result();
 	}
     public function select_id_jabatan($id) {
-		$sql = " SELECT * FROM tbl_hrd_jabatan WHERE id_jabatan='{$id}'";
+		$sql = " SELECT * FROM tbl_hrd_jabatan WHERE id_jabatan='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -33,15 +33,15 @@ class Mod_settinghrd extends CI_Model {
 	}
     public function insertJabatan($data) {
 		$sql = "INSERT INTO tbl_hrd_jabatan VALUES
-		('','".$data['jabatan']."')";
+		('','".$this->db->escape_str((string) $data['jabatan'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateJabatan($data) {
-		$sql = "UPDATE tbl_hrd_jabatan SET jabatan='" .$data['jabatan'] ."'
-        WHERE id_jabatan='" .$data['id_jabatan'] ."'";
+		$sql = "UPDATE tbl_hrd_jabatan SET jabatan='" .$this->db->escape_str((string) $data['jabatan']) ."'
+        WHERE id_jabatan='" .$this->db->escape_str((string) $data['id_jabatan']) ."'";
 
 		$this->db->query($sql);
 
@@ -49,7 +49,7 @@ class Mod_settinghrd extends CI_Model {
 	}
     function deleteJab($id)
     {
-        $sql = "DELETE FROM tbl_hrd_jabatan WHERE id_jabatan='{$id}'";
+        $sql = "DELETE FROM tbl_hrd_jabatan WHERE id_jabatan='".$this->db->escape_str((string) $id)."'";
         
 		$this->db->query($sql);
 
@@ -107,7 +107,7 @@ class Mod_settinghrd extends CI_Model {
         return $query->result();
     }
     public function select_id_pendidikan($id) {
-		$sql = " SELECT * FROM tbl_hrd_pendidikan WHERE id_pendidikan='{$id}'";
+		$sql = " SELECT * FROM tbl_hrd_pendidikan WHERE id_pendidikan='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -124,15 +124,15 @@ class Mod_settinghrd extends CI_Model {
 	}
     public function insertPendidikan($data) {
 		$sql = "INSERT INTO tbl_hrd_pendidikan VALUES
-		('','".$data['pendidikan']."')";
+		('','".$this->db->escape_str((string) $data['pendidikan'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updatePendidikan($data) {
-		$sql = "UPDATE tbl_hrd_pendidikan SET pendidikan='" .$data['pendidikan'] ."'
-        WHERE id_pendidikan='" .$data['id_pendidikan'] ."'";
+		$sql = "UPDATE tbl_hrd_pendidikan SET pendidikan='" .$this->db->escape_str((string) $data['pendidikan']) ."'
+        WHERE id_pendidikan='" .$this->db->escape_str((string) $data['id_pendidikan']) ."'";
 
 		$this->db->query($sql);
 
@@ -140,7 +140,7 @@ class Mod_settinghrd extends CI_Model {
 	}
     function deletePend($id)
     {
-        $sql = "DELETE FROM tbl_hrd_pendidikan WHERE id_pendidikan='{$id}'";
+        $sql = "DELETE FROM tbl_hrd_pendidikan WHERE id_pendidikan='".$this->db->escape_str((string) $id)."'";
         
 		$this->db->query($sql);
 
@@ -149,7 +149,7 @@ class Mod_settinghrd extends CI_Model {
     // end Pendidikan //
     
      public function select_id_departement($id) {
-		$sql = " SELECT * FROM tbl_hrd_departement WHERE id_departement='{$id}'";
+		$sql = " SELECT * FROM tbl_hrd_departement WHERE id_departement='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -157,15 +157,15 @@ class Mod_settinghrd extends CI_Model {
 	}
      public function insertDepartement($data) {
 		$sql = "INSERT INTO tbl_hrd_departement VALUES
-		('','".$data['departement']."')";
+		('','".$this->db->escape_str((string) $data['departement'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateDepartement($data) {
-		$sql = "UPDATE tbl_hrd_departement SET departement='" .$data['departement'] ."'
-        WHERE id_departement='" .$data['id_departement'] ."'";
+		$sql = "UPDATE tbl_hrd_departement SET departement='" .$this->db->escape_str((string) $data['departement']) ."'
+        WHERE id_departement='" .$this->db->escape_str((string) $data['id_departement']) ."'";
 
 		$this->db->query($sql);
 
@@ -180,7 +180,7 @@ class Mod_settinghrd extends CI_Model {
 	}
     function deleteDep($id)
     {
-        $sql = "DELETE FROM tbl_hrd_departement WHERE id_departement='{$id}'";
+        $sql = "DELETE FROM tbl_hrd_departement WHERE id_departement='".$this->db->escape_str((string) $id)."'";
         
 		$this->db->query($sql);
 
@@ -190,7 +190,7 @@ class Mod_settinghrd extends CI_Model {
     //* endDepartement */
 
     public function select_id_kdcuti($id) {
-		$sql = " SELECT * FROM tbl_hrd_kodecuti WHERE id_kodecuti='{$id}'";
+		$sql = " SELECT * FROM tbl_hrd_kodecuti WHERE id_kodecuti='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -198,15 +198,15 @@ class Mod_settinghrd extends CI_Model {
 	}
      public function insertKdcuti($data) {
 		$sql = "INSERT INTO tbl_hrd_kodecuti VALUES
-		('','".$data['kode']."','".$data['nama_cuti']."')";
+		('','".$this->db->escape_str((string) $data['kode'])."','".$this->db->escape_str((string) $data['nama_cuti'])."')";
 
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
     public function updateKodecuti($data) {
-		$sql = "UPDATE tbl_hrd_kodecuti SET kode='" .$data['kode'] ."',nama_cuti='" .$data['nama_cuti'] ."'
-        WHERE id_kodecuti='" .$data['id_kodecuti'] ."'";
+		$sql = "UPDATE tbl_hrd_kodecuti SET kode='" .$this->db->escape_str((string) $data['kode']) ."',nama_cuti='" .$this->db->escape_str((string) $data['nama_cuti']) ."'
+        WHERE id_kodecuti='" .$this->db->escape_str((string) $data['id_kodecuti']) ."'";
 
 		$this->db->query($sql);
 
@@ -221,7 +221,7 @@ class Mod_settinghrd extends CI_Model {
 	}
     function deleteKdcuti($id)
     {
-        $sql = "DELETE FROM tbl_hrd_kodecuti WHERE id_kodecuti='{$id}'";
+        $sql = "DELETE FROM tbl_hrd_kodecuti WHERE id_kodecuti='".$this->db->escape_str((string) $id)."'";
         
 		$this->db->query($sql);
 

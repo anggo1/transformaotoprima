@@ -388,7 +388,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                             </div>
                                             <div class="col-12">
                                                 <label class="col-form-label">Harga Off The Road</label>
-                                                <input type="text" name="harga_unit" id="harga_unit" value="<?php echo !empty($ch->harga_retail) ? number_format($ch->harga_retail) : ''; ?>"
+                                                <input type="text" name="harga_unit" id="harga_unit" value="<?php echo !empty($ch->harga_retail) ? nf($ch->harga_retail) : ''; ?>"
                                                     onkeypress="startCalculate(),formatNumber(this)" onmousemove="formatNumber(this);" onmouseover="formatNumber(this);" onblur="formatNumber(this);" onkeyup="startCalculate(),formatNumber(this)"
 
 
@@ -396,7 +396,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                             </div>
                                             <div class="col-12">
                                                 <label class="col-form-label">Biaya BBN</label>
-                                                <input type="text" name="biaya_bbn" id="biaya_bbn" value="<?php echo !empty($ch->biaya_bbn) ? number_format($ch->biaya_bbn) : ''; ?>"
+                                                <input type="text" name="biaya_bbn" id="biaya_bbn" value="<?php echo !empty($ch->biaya_bbn) ? nf($ch->biaya_bbn) : ''; ?>"
                                                     onkeypress="startCalculate(),formatNumber(this)" onkeyup="startCalculate(),formatNumber(this)"
                                                     class="form-control" placeholder="Biaya BBN"
                                                     style="text-align:right;">
@@ -424,7 +424,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="col-form-label">Harga</label>
-                                                        <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1" value="<?php echo !empty($ch->hrg_tambahan_1) ? number_format($ch->hrg_tambahan_1) : ''; ?>"
+                                                        <input type="text" name="hrg_tambahan_1" id="hrg_tambahan_1" value="<?php echo !empty($ch->hrg_tambahan_1) ? nf($ch->hrg_tambahan_1) : ''; ?>"
                                                             value="0" onkeyup="formatNumber(this)"
                                                             onchange="formatNumber(this);" class="form-control"
                                                             placeholder="Harga Tambahan" style="text-align:right;">
@@ -436,7 +436,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="col-form-label">Harga</label>
-                                                        <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2" value="<?php echo !empty($ch->hrg_tambahan_2) ? number_format($ch->hrg_tambahan_2) : ''; ?>"
+                                                        <input type="text" name="hrg_tambahan_2" id="hrg_tambahan_2" value="<?php echo !empty($ch->hrg_tambahan_2) ? nf($ch->hrg_tambahan_2) : ''; ?>"
                                                             value="0" onkeyup="formatNumber(this)"
                                                             onchange="formatNumber(this);" class="form-control"
                                                             placeholder="Harga Tambahan" style="text-align:right;">
@@ -448,7 +448,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="col-form-label">Harga</label>
-                                                        <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3" value="<?php echo !empty($ch->hrg_tambahan_3) ? number_format($ch->hrg_tambahan_3) : ''; ?>"
+                                                        <input type="text" name="hrg_tambahan_3" id="hrg_tambahan_3" value="<?php echo !empty($ch->hrg_tambahan_3) ? nf($ch->hrg_tambahan_3) : ''; ?>"
                                                             value="0" onkeyup="formatNumber(this)"
                                                             onchange="formatNumber(this);" class="form-control"
                                                             placeholder="Harga Tambahan" style="text-align:right;">
@@ -460,7 +460,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                                                     </div>
                                                     <div class="col-6">
                                                         <label class="col-form-label">Harga</label>
-                                                        <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4" value="<?php echo !empty($ch->hrg_tambahan_4) ? number_format($ch->hrg_tambahan_4) : ''; ?>"
+                                                        <input type="text" name="hrg_tambahan_4" id="hrg_tambahan_4" value="<?php echo !empty($ch->hrg_tambahan_4) ? nf($ch->hrg_tambahan_4) : ''; ?>"
                                                             value="0" onkeyup="formatNumber(this)"
                                                             onchange="formatNumber(this);" class="form-control"
                                                             placeholder="Harga Tambahan" style="text-align:right;">

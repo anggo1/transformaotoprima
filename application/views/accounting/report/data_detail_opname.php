@@ -37,8 +37,8 @@ foreach ($dataOpname as $s) {
                     <td><?php echo $s->satuan; ?></td>
                     <td><?php echo $s->stok_lama; ?></td>
                     <td><?php echo $s->stok_fisik; ?></td>
-                    <td style="text-align: right;"><?php echo number_format($s->hrg_awal); ?></td>
-                    <td style="text-align: right;"><?php if(!empty($s->stok_fisik)){ echo number_format($s->stok_fisik*$s->hrg_awal);} if(empty($s->stok_fisik < 0)){echo "0";} ?>
+                    <td style="text-align: right;"><?php echo nf($s->hrg_awal); ?></td>
+                    <td style="text-align: right;"><?php if(!empty($s->stok_fisik)){ echo nf($s->stok_fisik*$s->hrg_awal);} if(empty($s->stok_fisik < 0)){echo "0";} ?>
                     </td>
                 </tr>
                 <?php

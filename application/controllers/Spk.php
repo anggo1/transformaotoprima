@@ -110,7 +110,7 @@ public function showPart()
                 $row[] = $cs->gesekan;
                 $row[] = $cs->thn_produksi;
                 $row[] = $cs->pengiriman;
-                $row[] = number_format($cs->harga_retail);
+                $row[] = nf($cs->harga_retail);
                 if ($b->edit_level == "Y" && $b->delete_level == "Y") {
                     if ($cs->status == 'N') {
                         $row[] = '<button class="btn btn-sm btn-outline-info proses-spk" title="Edit" data-id="' . $cs->id_chasis . '"><i class="fa fa-list"> SPK</i></button> &nbsp;'

@@ -90,7 +90,7 @@ class Mod_listestimasi extends CI_Model
 		$id_proses = $pk[0];
 		$kode = $pk[1];
 		$sql = "INSERT INTO tbl_br_list_estimasi VALUES
-		('','" . $id_proses . "','" . $kode . "','" . $data['no_part'] . "','" . $data['nama_part'] . "','" . $data['qty'] . "')";
+		('','" . $this->db->escape_str((string) $id_proses) . "','" . $this->db->escape_str((string) $kode) . "','" . $this->db->escape_str((string) $data['no_part']) . "','" . $this->db->escape_str((string) $data['nama_part']) . "','" . $this->db->escape_str((string) $data['qty']) . "')";
 
 		$this->db->query($sql);
 
@@ -112,7 +112,7 @@ class Mod_listestimasi extends CI_Model
 	}
 	function deletePart($id)
     {
-        $sql = "DELETE FROM tbl_br_list_estimasi WHERE id_list='{$id}'";
+        $sql = "DELETE FROM tbl_br_list_estimasi WHERE id_list='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

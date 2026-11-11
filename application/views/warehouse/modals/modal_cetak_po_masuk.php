@@ -159,22 +159,22 @@ font-family:Georgia, "Times New Roman", Times, serif;
             <td><?php echo $d->no_part ?></td>
             <td><?php echo $d->nama_part ?></td>
             <td><?php echo $d->satuan?></td>
-            <td align="center"><?php echo number_format($d->jumlah) ?></td>
-            <td align="right"><?php echo "Rp. " .number_format($d->harga,0,",",".") ?></td>
-            <td align="right"><?php echo "Rp. " .number_format($d->total_harga,0,",",".") ?></td>
+            <td align="center"><?php echo nf($d->jumlah) ?></td>
+            <td align="right"><?php echo "Rp. " .nf($d->harga,0,",",".") ?></td>
+            <td align="right"><?php echo "Rp. " .nf($d->total_harga,0,",",".") ?></td>
           </tr>
         <?php $no + 1;
         endforeach ?>
         <tr>
           <td colspan="5" rowspan="3">&nbsp;</td>
           <td  align="right">Sub Total</td>
-          <td id="sub_total" align="right"><?php echo "Rp. " .number_format($grand_total,0,",",".") ?></td>
+          <td id="sub_total" align="right"><?php echo "Rp. " .nf($grand_total,0,",",".") ?></td>
         </tr>
         <tr>
 
           <td align="right">Grand Total</td>
           <td id="grand_total" align="right">
-            <font size="+1"><?php echo "Rp. " .number_format($grand_total,0,",",".") ?></font>
+            <font size="+1"><?php echo "Rp. " .nf($grand_total,0,",",".") ?></font>
           </td>
         </tr>
       </thead>

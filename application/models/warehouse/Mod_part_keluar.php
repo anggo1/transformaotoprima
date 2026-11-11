@@ -107,16 +107,16 @@ class Mod_part_keluar extends CI_Model
         
         
         $sql = "INSERT INTO tbl_wh_detail_part_keluar SET
-        id_keluar   ='".$data['id_keluar']."',
-        no_part     ='".$data['no_part']."',
-        nama_part   ='".$data['nama_part']."',
-        tgl_keluar  ='$tgl_keluar',
+        id_keluar   ='".$this->db->escape_str((string) $data['id_keluar'])."',
+        no_part     ='".$this->db->escape_str((string) $data['no_part'])."',
+        nama_part   ='".$this->db->escape_str((string) $data['nama_part'])."',
+        tgl_keluar  ='".$this->db->escape_str((string) $tgl_keluar)."',
         Jumlah      ='0',
-        hrg_part    ='".$data['harga_baru']."',
-        satuan      ='".$data['satuan']."',
+        hrg_part    ='".$this->db->escape_str((string) $data['harga_baru'])."',
+        satuan      ='".$this->db->escape_str((string) $data['satuan'])."',
         status_po   ='N',
-        lokasi      ='".$idlokasi."',
-        stok_akhir  ='".$data['stok']."'";
+        lokasi      ='".$this->db->escape_str((string) $idlokasi)."',
+        stok_akhir  ='".$this->db->escape_str((string) $data['stok'])."'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -124,13 +124,13 @@ class Mod_part_keluar extends CI_Model
     function update_harga($id,$hrg_part)
 		{
 		$harga =str_replace(" ","", $hrg_part);
-	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET hrg_part ='$harga' WHERE id ='{$id}'"; $this->db->query($sql_update);
+	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET hrg_part ='".$this->db->escape_str((string) $harga)."' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
     function update_jml($id,$hrg_part)
 		{
 		$jumlah =str_replace(" ","", $hrg_part);
-	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah ='$jumlah' WHERE id ='{$id}'"; $this->db->query($sql_update);
+	    $sql_update = "UPDATE tbl_wh_detail_part_keluar SET jumlah ='".$this->db->escape_str((string) $jumlah)."' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 		return $this->db->affected_rows();
 		}
     public function insertGlobal($kode_keluar, $data,$no_part,$nama_part,$qty_keluar)
@@ -176,7 +176,7 @@ class Mod_part_keluar extends CI_Model
                      }}
             $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
     
-            $sql_update = "UPDATE tbl_wh_detail_part_keluar SET lokasi ='".$nm_lok."', tgl_keluar='".$tgl_keluar."' WHERE id_keluar ='{$id_keluar}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_wh_detail_part_keluar SET lokasi ='".$this->db->escape_str((string) $nm_lok)."', tgl_keluar='".$this->db->escape_str((string) $tgl_keluar)."' WHERE id_keluar ='".$this->db->escape_str((string) $id_keluar)."'"; $this->db->query($sql_update);
             return $this->db->affected_rows();
         }
     public function insertGlobal_divisi($kode_keluar, $data,$no_part,$nama_part,$qty_keluar,$stok,$stok_a,$stok_p,$id_div,$nama_div)
@@ -212,13 +212,13 @@ class Mod_part_keluar extends CI_Model
     }}
         $this->db->update_batch('tbl_wh_barang', $data1,'no_part');
 
-        $sql_update = "UPDATE tbl_wh_detail_part_keluar SET status_part ='".$status_barang."',tgl_keluar='".$tgl_keluar."', divisi='".$id_div."',nama_divisi='".$nama_div."' WHERE id_keluar ='{$id_keluar}'"; 
+        $sql_update = "UPDATE tbl_wh_detail_part_keluar SET status_part ='".$this->db->escape_str((string) $status_barang)."',tgl_keluar='".$this->db->escape_str((string) $tgl_keluar)."', divisi='".$this->db->escape_str((string) $id_div)."',nama_divisi='".$this->db->escape_str((string) $nama_div)."' WHERE id_keluar ='".$this->db->escape_str((string) $id_keluar)."'"; 
         $this->db->query($sql_update);
 		return $this->db->affected_rows();
     }
     public function deletepartDetail($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_part_keluar WHERE id='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 

@@ -111,28 +111,28 @@ class Mod_body extends CI_Model
 	function insertBody($data)
     {
         $sql = "INSERT INTO tbl_wh_body SET
-        no_body		='".$data['no_body']."',
-        type 		='".$data['type']."',
-        no_pol 		='".$data['no_pol']."',
-        merk 		='".$data['merk']."',
-        thn_rangka  ='".$data['thn_rangka']."',
-        thn_pembuatan='".$data['thn_pembuatan']."',
-        karoseri    ='".$data['karoseri']."',
-        warna		='".$data['warna']."',
-        kelas	    ='".$data['kelas']."',
-        strip       ='".$data['strip']."',
-        keterangan  ='".$data['keterangan']."',
-        kondisi  	='".$data['kondisi']."',
-        status  	='".$data['status']."',
-        pool 	 	='".$data['pool']."',
-        no_rangka  	='".$data['no_rangka']."',
-        no_mesin  	='".$data['no_mesin']."',
-        rute_asli  	='".$data['rute_asli']."',
-        rute_aktif 	='".$data['rute_aktif']."',
-        kode_trayek	='".$data['kode_trayek']."',
-        seat_daya 	='".$data['seat_daya']."',
-        jns_pelayanan	='".$data['jns_pelayanan']."',
-        imei_gps 	='".$data['imei_gps']."'
+        no_body		='".$this->db->escape_str((string) $data['no_body'])."',
+        type 		='".$this->db->escape_str((string) $data['type'])."',
+        no_pol 		='".$this->db->escape_str((string) $data['no_pol'])."',
+        merk 		='".$this->db->escape_str((string) $data['merk'])."',
+        thn_rangka  ='".$this->db->escape_str((string) $data['thn_rangka'])."',
+        thn_pembuatan='".$this->db->escape_str((string) $data['thn_pembuatan'])."',
+        karoseri    ='".$this->db->escape_str((string) $data['karoseri'])."',
+        warna		='".$this->db->escape_str((string) $data['warna'])."',
+        kelas	    ='".$this->db->escape_str((string) $data['kelas'])."',
+        strip       ='".$this->db->escape_str((string) $data['strip'])."',
+        keterangan  ='".$this->db->escape_str((string) $data['keterangan'])."',
+        kondisi  	='".$this->db->escape_str((string) $data['kondisi'])."',
+        status  	='".$this->db->escape_str((string) $data['status'])."',
+        pool 	 	='".$this->db->escape_str((string) $data['pool'])."',
+        no_rangka  	='".$this->db->escape_str((string) $data['no_rangka'])."',
+        no_mesin  	='".$this->db->escape_str((string) $data['no_mesin'])."',
+        rute_asli  	='".$this->db->escape_str((string) $data['rute_asli'])."',
+        rute_aktif 	='".$this->db->escape_str((string) $data['rute_aktif'])."',
+        kode_trayek	='".$this->db->escape_str((string) $data['kode_trayek'])."',
+        seat_daya 	='".$this->db->escape_str((string) $data['seat_daya'])."',
+        jns_pelayanan	='".$this->db->escape_str((string) $data['jns_pelayanan'])."',
+        imei_gps 	='".$this->db->escape_str((string) $data['imei_gps'])."'
 		";
 
 		$this->db->query($sql);
@@ -142,28 +142,28 @@ class Mod_body extends CI_Model
     function updateBody( $data)
     {
         $sql = "UPDATE tbl_wh_body SET
-        type 		='".$data['type']."',
-        no_pol 		='".$data['no_pol']."',
-        merk 		='".$data['merk']."',
-        thn_rangka  ='".$data['thn_rangka']."',
-        thn_pembuatan='".$data['thn_pembuatan']."',
-        karoseri    ='".$data['karoseri']."',
-        warna		='".$data['warna']."',
-        kelas	    ='".$data['kelas']."',
-        strip       ='".$data['strip']."',
-        keterangan  ='".$data['keterangan']."',
-        kondisi  	='".$data['kondisi']."',
-        status  	='".$data['status']."',
-		pool 	 	='".$data['pool']."',
-        no_rangka  	='".$data['no_rangka']."',
-        no_mesin  	='".$data['no_mesin']."',
-        rute_asli  	='".$data['rute_asli']."',
-        rute_aktif 	='".$data['rute_aktif']."',
-        kode_trayek	='".$data['kode_trayek']."',
-        seat_daya 	='".$data['seat_daya']."',
-        jns_pelayanan	='".$data['jns_pelayanan']."',
-        imei_gps 	='".$data['imei_gps']."'
-        WHERE no_body='".$data['no_body']."'";
+        type 		='".$this->db->escape_str((string) $data['type'])."',
+        no_pol 		='".$this->db->escape_str((string) $data['no_pol'])."',
+        merk 		='".$this->db->escape_str((string) $data['merk'])."',
+        thn_rangka  ='".$this->db->escape_str((string) $data['thn_rangka'])."',
+        thn_pembuatan='".$this->db->escape_str((string) $data['thn_pembuatan'])."',
+        karoseri    ='".$this->db->escape_str((string) $data['karoseri'])."',
+        warna		='".$this->db->escape_str((string) $data['warna'])."',
+        kelas	    ='".$this->db->escape_str((string) $data['kelas'])."',
+        strip       ='".$this->db->escape_str((string) $data['strip'])."',
+        keterangan  ='".$this->db->escape_str((string) $data['keterangan'])."',
+        kondisi  	='".$this->db->escape_str((string) $data['kondisi'])."',
+        status  	='".$this->db->escape_str((string) $data['status'])."',
+		pool 	 	='".$this->db->escape_str((string) $data['pool'])."',
+        no_rangka  	='".$this->db->escape_str((string) $data['no_rangka'])."',
+        no_mesin  	='".$this->db->escape_str((string) $data['no_mesin'])."',
+        rute_asli  	='".$this->db->escape_str((string) $data['rute_asli'])."',
+        rute_aktif 	='".$this->db->escape_str((string) $data['rute_aktif'])."',
+        kode_trayek	='".$this->db->escape_str((string) $data['kode_trayek'])."',
+        seat_daya 	='".$this->db->escape_str((string) $data['seat_daya'])."',
+        jns_pelayanan	='".$this->db->escape_str((string) $data['jns_pelayanan'])."',
+        imei_gps 	='".$this->db->escape_str((string) $data['imei_gps'])."'
+        WHERE no_body='".$this->db->escape_str((string) $data['no_body'])."'";
 
 		$this->db->query($sql);
 
@@ -178,7 +178,7 @@ class Mod_body extends CI_Model
 
 	function deleteBody($id)
     {
-        $sql = "DELETE FROM tbl_wh_body WHERE no_body='{$id}'";
+        $sql = "DELETE FROM tbl_wh_body WHERE no_body='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

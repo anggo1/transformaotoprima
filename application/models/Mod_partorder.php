@@ -123,7 +123,7 @@ class Mod_partorder extends CI_Model
     }
     public function deleteDetail_po($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_part_order WHERE id_detail='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_part_order WHERE id_detail='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -136,12 +136,12 @@ class Mod_partorder extends CI_Model
 		$harga_baru =str_replace(",","", $harga);
         $sql = "INSERT INTO tbl_wh_detail_part_order SET
             id_detail       ='',
-            id_part_order           ='" . $data['id_part_order'] . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            satuan       ='" . $data['satuan'] . "',
-            harga           ='" . $harga_baru. "',
-            stok_akhir     ='" . $data['stok'] . "'";
+            id_part_order           ='" . $this->db->escape_str((string) $data['id_part_order']) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            satuan       ='" . $this->db->escape_str((string) $data['satuan']) . "',
+            harga           ='" . $this->db->escape_str((string) $harga_baru). "',
+            stok_akhir     ='" . $this->db->escape_str((string) $data['stok']) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -150,20 +150,20 @@ class Mod_partorder extends CI_Model
 		{			
 		$jml =str_replace(" ","", $jml_part);
 		$total=$hrg_part*$jml;
-			$sql_update = "UPDATE tbl_wh_detail_part_order SET jumlah ='$jml_part', total_harga = '$total', sisa ='$jml_part' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_part_order SET jumlah ='".$this->db->escape_str((string) $jml_part)."', total_harga = '".$this->db->escape_str((string) $total)."', sisa ='".$this->db->escape_str((string) $jml_part)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();
 		}
     function update_detailBo($id,$bo)
 		{			
-			$sql_update = "UPDATE tbl_wh_detail_part_order SET bo ='$bo' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_part_order SET bo ='".$this->db->escape_str((string) $bo)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 		}
     function update_remark($id,$remark)
 		{			
-			$sql_update = "UPDATE tbl_wh_detail_part_order SET remark ='$remark' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_part_order SET remark ='".$this->db->escape_str((string) $remark)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -187,17 +187,17 @@ class Mod_partorder extends CI_Model
         $datenow = date("Y-m-d");
         $sql = "INSERT INTO tbl_wh_detail_part_order SET
             id_detail       ='',
-            id_part_order   ='" . $kodenya . "',
-            kode_po         ='" . $koderefnya . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            harga_baru           ='" . $data['harga_baru'] . "',
-            jumlah          ='" . $data['jumlah'] . "',
-            diskon          ='" . $data['diskon'] . "',
-            total_diskon    ='" . $data['total_diskon'] . "',
-            total_harga     ='$total_harga',
-            stok_akhir     ='" . $data['stok_awal'] . "',
-            lokasi     ='" . $idlokasi . "'";
+            id_part_order   ='" . $this->db->escape_str((string) $kodenya) . "',
+            kode_po         ='" . $this->db->escape_str((string) $koderefnya) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            harga_baru           ='" . $this->db->escape_str((string) $data['harga_baru']) . "',
+            jumlah          ='" . $this->db->escape_str((string) $data['jumlah']) . "',
+            diskon          ='" . $this->db->escape_str((string) $data['diskon']) . "',
+            total_diskon    ='" . $this->db->escape_str((string) $data['total_diskon']) . "',
+            total_harga     ='".$this->db->escape_str((string) $total_harga)."',
+            stok_akhir     ='" . $this->db->escape_str((string) $data['stok_awal']) . "',
+            lokasi     ='" . $this->db->escape_str((string) $idlokasi) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -206,7 +206,7 @@ class Mod_partorder extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_part_order 
         LEFT JOIN tbl_wh_supplier ON tbl_wh_supplier.kode_sup=tbl_wh_part_order.supplier
-        WHERE id_part_order ='{$id}'";
+        WHERE id_part_order ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -217,22 +217,22 @@ class Mod_partorder extends CI_Model
         $ci = get_instance();
                 $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_part_order as a 
                     LEFT JOIN tbl_wh_part_order as b ON b.id_part_order=a.id_part_order
-                    WHERE a.id_part_order='{$id}'";
+                    WHERE a.id_part_order='".$this->db->escape_str((string) $id)."'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         //$ppn       = $d_data['ppn'];
         //$total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_part_order SET
-        sub_total   ='$total',
-        grand_total ='$grand_total'
-        WHERE id_part_order ='{$id}'";
+        sub_total   ='".$this->db->escape_str((string) $total)."',
+        grand_total ='".$this->db->escape_str((string) $grand_total)."'
+        WHERE id_part_order ='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
         FROM tbl_wh_detail_part_order AS a
-        WHERE a.id_part_order ='{$id}' ORDER BY a.id_detail ASC";
+        WHERE a.id_part_order ='".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -241,10 +241,10 @@ class Mod_partorder extends CI_Model
     function updatePo($a, $b, $c, $d)
     {
         $sql = "UPDATE tbl_wh_part_order SET
-        t_ppn       ='$a',
-        sub_total   ='$b',
-        grand_total ='$c'
-        WHERE id_part_order ='" . $data['id_part_order'] . "'";
+        t_ppn       ='".$this->db->escape_str((string) $a)."',
+        sub_total   ='".$this->db->escape_str((string) $b)."',
+        grand_total ='".$this->db->escape_str((string) $c)."'
+        WHERE id_part_order ='" . $this->db->escape_str((string) $data['id_part_order']) . "'";
 
         $this->db->query($sql);
 

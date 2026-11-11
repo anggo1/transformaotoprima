@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-bordered table-hover nowrap" id="list-kelompok">
+    <table class="table table-hover nowrap w-100" id="list-kelompok">
         <thead>
             <tr>
                 <th>No</th>
@@ -18,9 +18,9 @@
                 <td><?php echo $s->kelompok; ?></td>
 
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-success update-dataKelompok ion-edit"
+                    <button class="btn btn-xs btn-outline-success update-dataKelompok ion-edit"
                         data-id="<?php echo $s->id_kelompok; ?>"></button>
-                    <button class="btn btn-sm btn-outline-danger delete-kelompok ion-android-delete" data-toggle="modal"
+                    <button class="btn btn-xs btn-outline-danger delete-kelompok ion-android-delete" data-toggle="modal"
                         data-target="#hapusKelompok" data-id="<?php echo $s->id_kelompok; ?>"></button>
                 </td>
             </tr>
@@ -42,6 +42,6 @@ $('#list-kelompok').DataTable({
     "searching": true,
     "ordering": true,
     "info": true,
-    "pageLength": 5
+    "pageLength": 10
 });
        </script>

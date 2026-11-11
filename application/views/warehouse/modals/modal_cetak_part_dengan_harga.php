@@ -189,13 +189,13 @@ th {
                         <th><?php echo $d->jumlah ?></th>
                         <th><?php echo $d->nama_satuan ?></th>
                         <th><?php echo $d->hrg_awal ?></th>
-                        <th align="right"><?php echo number_format($d->jumlah * $d->hrg_awal) ?></th>
+                        <th align="right"><?php echo nf($d->jumlah * $d->hrg_awal) ?></th>
                     </tr>
                     <?php $no + 1;
         endforeach ?>
                     <tr>
                         <th colspan="6" align="right">Grand Total</th>
-                        <th align="right"><?php echo number_format($grand_total) ?></th>
+                        <th align="right"><?php echo nf($grand_total) ?></th>
                     </tr>
                 </thead>
 

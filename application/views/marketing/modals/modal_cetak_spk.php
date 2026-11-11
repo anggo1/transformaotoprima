@@ -444,7 +444,7 @@ th {
                         <tr>
                             <td>Harga Off The Road</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo number_format($k->harga_retail); ?></td>
+                            <td colspan="3" align="right"><?php echo nf($k->harga_retail); ?></td>
                             <td width="2%" align="right">&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>
@@ -454,7 +454,7 @@ th {
                         <tr>
                             <td>Biaya BBN</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right" style="border-top: 1px solid #000;"><?php echo  number_format($k->biaya_bbn); ?></td>
+                            <td colspan="3" align="right" style="border-top: 1px solid #000;"><?php echo  nf($k->biaya_bbn); ?></td>
                             <td align="right">&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>
@@ -464,7 +464,7 @@ th {
                         <tr>
                             <td>Harga Nett On The Road</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"><?php echo  number_format($k->hrg_on_the_road); ?></td>
+                            <td colspan="3" align="right"><?php echo  nf($k->hrg_on_the_road); ?></td>
                             <td align="right">&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>
@@ -484,7 +484,7 @@ th {
                         <tr>
                           <td><?php echo  $k->tambahan_1; ?></td>
                           <td>: Rp.</td>
-                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_1); ?></td>
+                          <td colspan="3" align="right"><?php echo  nf($k->hrg_tambahan_1); ?></td>
                           <td>&nbsp;</td>
                           <td>/unit</td>
                           <td>&nbsp;</td>
@@ -494,7 +494,7 @@ th {
                         <tr>
                           <td><?php echo  $k->tambahan_2; ?></td>
                           <td>: Rp.</td>
-                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_2); ?></td>
+                          <td colspan="3" align="right"><?php echo  nf($k->hrg_tambahan_2); ?></td>
                           <td>&nbsp;</td>
                           <td>/unit</td>
                           <td>&nbsp;</td>
@@ -504,7 +504,7 @@ th {
                         <tr>
                           <td><?php echo  $k->tambahan_3; ?></td>
                           <td>: Rp.</td>
-                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_3); ?></td>
+                          <td colspan="3" align="right"><?php echo  nf($k->hrg_tambahan_3); ?></td>
                           <td>&nbsp;</td>
                           <td>/unit</td>
                           <td>&nbsp;</td>
@@ -514,7 +514,7 @@ th {
                         <tr>
                           <td><?php echo  $k->tambahan_4; ?></td>
                           <td>: Rp.</td>
-                          <td colspan="3" align="right"><?php echo  number_format($k->hrg_tambahan_4); ?></td>
+                          <td colspan="3" align="right"><?php echo  nf($k->hrg_tambahan_4); ?></td>
                           <td>&nbsp;</td>
                           <td>/unit +</td>
                           <td>&nbsp;</td>
@@ -524,7 +524,7 @@ th {
                         <tr>
                             <td>Harga Jual per Unit</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"><span style="font-weight: bolder;"><?php echo  number_format($k->hrg_jual_perunit); ?></span></td>
+                            <td colspan="3" align="right"><span style="font-weight: bolder;"><?php echo  nf($k->hrg_jual_perunit); ?></span></td>
                             <td>&nbsp;</td>
                             <td>/unit</td>
                             <td>&nbsp;</td>
@@ -534,7 +534,7 @@ th {
                         <tr>
                             <td>TOTAL HARGA JUAL</td>
                             <td>: Rp.</td>
-                            <td colspan="3" align="right"  style="border-top: 1px solid #000; font-weight: bolder;"><span style="border-top: 1px solid #000; font-weight: bolder;"><?php echo  number_format($k->total_hrg_jual); ?></span></td>
+                            <td colspan="3" align="right"  style="border-top: 1px solid #000; font-weight: bolder;"><span style="border-top: 1px solid #000; font-weight: bolder;"><?php echo  nf($k->total_hrg_jual); ?></span></td>
                             <td align="right">&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>

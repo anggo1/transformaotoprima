@@ -18,7 +18,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_voucher($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_voucher WHERE id_voucher='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_voucher WHERE id_voucher='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -27,7 +27,7 @@ class Mod_settingwh extends CI_Model
 	public function insertVoucher($data,$date1,$date2)
 	{
 		$sql = "INSERT INTO tbl_wh_voucher VALUES
-		('','" . $data['kode_voucher'] . "','" . $date1. "','" . $date2. "','" . $data['keterangan'] . "','N')";
+		('','" . $this->db->escape_str((string) $data['kode_voucher']) . "','" . $this->db->escape_str((string) $date1). "','" . $this->db->escape_str((string) $date2). "','" . $this->db->escape_str((string) $data['keterangan']) . "','N')";
 
 		$this->db->query($sql);
 
@@ -35,8 +35,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateVoucher($data)
 	{
-		$sql = "UPDATE tbl_wh_kategori SET tgl_awal='" . $date1 . "',tgl_akhir='" . $date2 . "',keterangan='" . $data['keterangan'] . "'
-        WHERE id_voucher='" . $data['id_voucher'] . "'";
+		$sql = "UPDATE tbl_wh_kategori SET tgl_awal='" . $this->db->escape_str((string) $date1) . "',tgl_akhir='" . $this->db->escape_str((string) $date2) . "',keterangan='" . $this->db->escape_str((string) $data['keterangan']) . "'
+        WHERE id_voucher='" . $this->db->escape_str((string) $data['id_voucher']) . "'";
 
 		$this->db->query($sql);
 
@@ -44,7 +44,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteVoucher($id)
 	{
-		$sql = "DELETE FROM tbl_wh_voucher WHERE id_voucher='{$id}'";
+		$sql = "DELETE FROM tbl_wh_voucher WHERE id_voucher='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -63,7 +63,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_kode_po($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_kode_po WHERE id_kode_po='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_kode_po WHERE id_kode_po='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -72,7 +72,7 @@ class Mod_settingwh extends CI_Model
 	public function insertKode_po($data)
 	{
 		$sql = "INSERT INTO tbl_wh_kode_po VALUES
-		('','" . $data['kode_po'] . "','" . $data['keterangan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_po']) . "','" . $this->db->escape_str((string) $data['keterangan']) . "')";
 
 		$this->db->query($sql);
 
@@ -80,8 +80,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateKode_po($data)
 	{
-		$sql = "UPDATE tbl_wh_kode_po SET keterangan='" . $data['keterangan'] . "'
-        WHERE id_kode_po='" . $data['id_kode_po'] . "'";
+		$sql = "UPDATE tbl_wh_kode_po SET keterangan='" . $this->db->escape_str((string) $data['keterangan']) . "'
+        WHERE id_kode_po='" . $this->db->escape_str((string) $data['id_kode_po']) . "'";
 
 		$this->db->query($sql);
 
@@ -89,7 +89,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteKode_po($id)
 	{
-		$sql = "DELETE FROM tbl_wh_kode_po WHERE id_kode_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_kode_po WHERE id_kode_po='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -112,7 +112,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_satuan($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_satuan WHERE id_satuan='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_satuan WHERE id_satuan='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -121,7 +121,7 @@ class Mod_settingwh extends CI_Model
 	public function insertSatuan($data)
 	{
 		$sql = "INSERT INTO tbl_wh_satuan VALUES
-		('','" . $data['kode_satuan'] . "','" . $data['satuan'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_satuan']) . "','" . $this->db->escape_str((string) $data['satuan']) . "')";
 
 		$this->db->query($sql);
 
@@ -129,8 +129,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateSatuan($data)
 	{
-		$sql = "UPDATE tbl_wh_satuan SET kode_satuan='" . $data['kode_satuan'] . "',satuan='" . $data['satuan'] . "'
-        WHERE id_satuan='" . $data['id_satuan'] . "'";
+		$sql = "UPDATE tbl_wh_satuan SET kode_satuan='" . $this->db->escape_str((string) $data['kode_satuan']) . "',satuan='" . $this->db->escape_str((string) $data['satuan']) . "'
+        WHERE id_satuan='" . $this->db->escape_str((string) $data['id_satuan']) . "'";
 
 		$this->db->query($sql);
 
@@ -138,7 +138,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteSat($id)
 	{
-		$sql = "DELETE FROM tbl_wh_satuan WHERE id_satuan='{$id}'";
+		$sql = "DELETE FROM tbl_wh_satuan WHERE id_satuan='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -155,7 +155,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_kategori($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_kategori WHERE id_kategori='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_kategori WHERE id_kategori='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -164,7 +164,7 @@ class Mod_settingwh extends CI_Model
 	public function insertKategori($data)
 	{
 		$sql = "INSERT INTO tbl_wh_kategori VALUES
-		('','" . $data['kode_kategori'] . "','" . $data['kategori'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_kategori']) . "','" . $this->db->escape_str((string) $data['kategori']) . "')";
 
 		$this->db->query($sql);
 
@@ -172,8 +172,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateKategori($data)
 	{
-		$sql = "UPDATE tbl_wh_kategori SET kode_kategori='" . $data['kode_kategori'] . "',kategori='" . $data['kategori'] . "'
-        WHERE id_kategori='" . $data['id_kategori'] . "'";
+		$sql = "UPDATE tbl_wh_kategori SET kode_kategori='" . $this->db->escape_str((string) $data['kode_kategori']) . "',kategori='" . $this->db->escape_str((string) $data['kategori']) . "'
+        WHERE id_kategori='" . $this->db->escape_str((string) $data['id_kategori']) . "'";
 
 		$this->db->query($sql);
 
@@ -181,7 +181,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteKat($id)
 	{
-		$sql = "DELETE FROM tbl_wh_kategori WHERE id_kategori='{$id}'";
+		$sql = "DELETE FROM tbl_wh_kategori WHERE id_kategori='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -199,7 +199,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_type($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_type_mesin WHERE id_type='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_type_mesin WHERE id_type='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -208,7 +208,7 @@ class Mod_settingwh extends CI_Model
 	public function insertType($data)
 	{
 		$sql = "INSERT INTO tbl_wh_type_mesin VALUES
-		('','" . $data['kode_type'] . "','" . $data['type'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_type']) . "','" . $this->db->escape_str((string) $data['type']) . "')";
 
 		$this->db->query($sql);
 
@@ -216,7 +216,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateType($data)
 	{
-		$sql = "UPDATE tbl_wh_type_mesin SET kode_type='" . $data['kode_type'] . "', type_mesin='" . $data['type'] . "' WHERE id_type='" . $data['id_type'] . "'";
+		$sql = "UPDATE tbl_wh_type_mesin SET kode_type='" . $this->db->escape_str((string) $data['kode_type']) . "', type_mesin='" . $this->db->escape_str((string) $data['type']) . "' WHERE id_type='" . $this->db->escape_str((string) $data['id_type']) . "'";
 
 		$this->db->query($sql);
 
@@ -224,7 +224,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteTy($id)
 	{
-		$sql = "DELETE FROM tbl_wh_type_mesin WHERE id_type='{$id}'";
+		$sql = "DELETE FROM tbl_wh_type_mesin WHERE id_type='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -241,7 +241,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_supplier($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_supplier WHERE id_supplier='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_supplier WHERE id_supplier='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -249,16 +249,16 @@ class Mod_settingwh extends CI_Model
 	}
 	public function insertSupplier($data)
 	{
-	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $data['kode_supplier'] . "',kode_nama='" . $data['kode_nama'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
-	no_tlp='" . $data['no_tlp'] . "',no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "'";
+	$sql = "INSERT INTO tbl_wh_supplier SET kode_sup='" . $this->db->escape_str((string) $data['kode_supplier']) . "',kode_nama='" . $this->db->escape_str((string) $data['kode_nama']) . "',nama_sup='" . $this->db->escape_str((string) $data['nama_supplier']) . "',detail='" . $this->db->escape_str((string) $data['detail']) . "',alamat='" . $this->db->escape_str((string) $data['alamat']) . "',
+	no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',no_fax='" . $this->db->escape_str((string) $data['no_fax']) . "',tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 	public function updateSupplier($data)
 	{
-		$sql = "UPDATE tbl_wh_supplier SET kode_nama='" . $data['kode_nama'] . "',nama_sup='" . $data['nama_supplier'] . "',detail='" . $data['detail'] . "',alamat='" . $data['alamat'] . "',
-		no_tlp='" . $data['no_tlp'] . "',no_fax='" . $data['no_fax'] . "',tlp_person='" . $data['tlp_person'] . "' WHERE kode_sup='" . $data['kode_sup'] . "'";
+		$sql = "UPDATE tbl_wh_supplier SET kode_nama='" . $this->db->escape_str((string) $data['kode_nama']) . "',nama_sup='" . $this->db->escape_str((string) $data['nama_supplier']) . "',detail='" . $this->db->escape_str((string) $data['detail']) . "',alamat='" . $this->db->escape_str((string) $data['alamat']) . "',
+		no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',no_fax='" . $this->db->escape_str((string) $data['no_fax']) . "',tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "' WHERE kode_sup='" . $this->db->escape_str((string) $data['kode_sup']) . "'";
 
 		$this->db->query($sql);
 
@@ -266,7 +266,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteSup($id)
 	{
-		$sql = "DELETE FROM tbl_wh_supplier WHERE id_supplier='{$id}'";
+		$sql = "DELETE FROM tbl_wh_supplier WHERE id_supplier='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -284,7 +284,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_customer($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_customer WHERE id_customer='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_customer WHERE id_customer='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -292,17 +292,17 @@ class Mod_settingwh extends CI_Model
 	}
 	public function insertCustomer($data)
 	{
-	$sql = "INSERT INTO tbl_wh_customer SET kode_cus='" . $data['kode_customer'] . "',nama_cus='" . $data['nama_customer'] . "',alamat='" . $data['alamat'] . "',kota='" . $data['kota'] . "',
-	no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'";
+	$sql = "INSERT INTO tbl_wh_customer SET kode_cus='" . $this->db->escape_str((string) $data['kode_customer']) . "',nama_cus='" . $this->db->escape_str((string) $data['nama_customer']) . "',alamat='" . $this->db->escape_str((string) $data['alamat']) . "',kota='" . $this->db->escape_str((string) $data['kota']) . "',
+	no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();
 	}
 	public function updateCustomer($data)
 	{
-		$sql = "UPDATE tbl_wh_customer SET kode_cus='" . $data['kode_customer'] . "',nama_cus='" . $data['nama_customer'] . "',alamat='" . $data['alamat'] . "',kota='" . $data['kota'] . "',
-		no_tlp='" . $data['no_tlp'] . "',tlp_person='" . $data['tlp_person'] . "'
-        WHERE kode_cus='" . $data['kode_customer'] . "'";
+		$sql = "UPDATE tbl_wh_customer SET kode_cus='" . $this->db->escape_str((string) $data['kode_customer']) . "',nama_cus='" . $this->db->escape_str((string) $data['nama_customer']) . "',alamat='" . $this->db->escape_str((string) $data['alamat']) . "',kota='" . $this->db->escape_str((string) $data['kota']) . "',
+		no_tlp='" . $this->db->escape_str((string) $data['no_tlp']) . "',tlp_person='" . $this->db->escape_str((string) $data['tlp_person']) . "'
+        WHERE kode_cus='" . $this->db->escape_str((string) $data['kode_customer']) . "'";
 
 		$this->db->query($sql);
 
@@ -310,7 +310,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteCus($id)
 	{
-		$sql = "DELETE FROM tbl_wh_customer WHERE id_customer='{$id}'";
+		$sql = "DELETE FROM tbl_wh_customer WHERE id_customer='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
@@ -328,7 +328,7 @@ class Mod_settingwh extends CI_Model
 	}
 	public function select_id_kelompok($id)
 	{
-		$sql = " SELECT * FROM tbl_wh_kelompok WHERE id_kelompok='{$id}'";
+		$sql = " SELECT * FROM tbl_wh_kelompok WHERE id_kelompok='".$this->db->escape_str((string) $id)."'";
 
 		$data = $this->db->query($sql);
 
@@ -337,7 +337,7 @@ class Mod_settingwh extends CI_Model
 	public function insertKelompok($data)
 	{
 		$sql = "INSERT INTO tbl_wh_kelompok VALUES
-		('','" . $data['kode_kelompok'] . "','" . $data['kelompok'] . "')";
+		('','" . $this->db->escape_str((string) $data['kode_kelompok']) . "','" . $this->db->escape_str((string) $data['kelompok']) . "')";
 
 		$this->db->query($sql);
 
@@ -345,8 +345,8 @@ class Mod_settingwh extends CI_Model
 	}
 	public function updateKelompok($data)
 	{
-		$sql = "UPDATE tbl_wh_kelompok SET kode_kelompok='" . $data['kode_kelompok'] . "', kelompok='" . $data['kelompok'] . "'
-        WHERE id_kelompok='" . $data['id_kelompok'] . "'";
+		$sql = "UPDATE tbl_wh_kelompok SET kode_kelompok='" . $this->db->escape_str((string) $data['kode_kelompok']) . "', kelompok='" . $this->db->escape_str((string) $data['kelompok']) . "'
+        WHERE id_kelompok='" . $this->db->escape_str((string) $data['id_kelompok']) . "'";
 
 		$this->db->query($sql);
 
@@ -354,7 +354,7 @@ class Mod_settingwh extends CI_Model
 	}
 	function deleteKel($id)
 	{
-		$sql = "DELETE FROM tbl_wh_kelompok WHERE id_kelompok='{$id}'";
+		$sql = "DELETE FROM tbl_wh_kelompok WHERE id_kelompok='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 

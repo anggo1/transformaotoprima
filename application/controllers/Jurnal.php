@@ -13,6 +13,7 @@ class Jurnal extends MY_Controller
         $this->load->model(array('accounting/Mod_jurnal', 'Mod_menu'));
         $this->load->model(array('Mod_userlevel'));
         $this->load->library('ciqrcode');
+        $this->load->library('akuntansi');
 		$this->load->helper('tgl_indo_helper');
     }
 
@@ -68,8 +69,8 @@ class Jurnal extends MY_Controller
                 $row[] = $p->nama_akun;
                 $row[] = tglIndoSedang($p->tgl_jurnal);
                 $row[] = $p->keterangan;
-                $row[] = number_format($p->debit);
-                $row[] = number_format($p->kredit);
+                $row[] = nf($p->debit);
+                $row[] = nf($p->kredit);
                 $row[] = $pel1->delete_level;
                 $data[] = $row;
             }
@@ -85,18 +86,18 @@ class Jurnal extends MY_Controller
     }
     public function showJurnal()
     {
-		$tgl_awal 				= trim($_POST['tgl_awal']);
-		$tgl_akhir 				= trim($_POST['tgl_akhir']);
-		$no_ref 				= trim($_POST['no_ref_cari']);
+		$tgl_awal 				= trim((string) $this->input->post('tgl_awal'));
+		$tgl_akhir 				= trim((string) $this->input->post('tgl_akhir'));
+		$no_ref 				= trim((string) $this->input->post('no_ref_cari'));
         $data['dataJurnal'] = $this->Mod_jurnal->select_jurnal($tgl_awal,$tgl_akhir,$no_ref);
         $this->load->view('accounting/data_jurnal_umum', $data);
     }
     public function cetakJurnalUmum()
     {
         
-		$tgl_awal 				= trim($_POST['tgl_awal']);
-		$tgl_akhir 				= trim($_POST['tgl_akhir']);
-		$no_ref 				= trim($_POST['no_ref_cari']);
+		$tgl_awal 				= trim((string) $this->input->post('tgl_awal'));
+		$tgl_akhir 				= trim((string) $this->input->post('tgl_akhir'));
+		$no_ref 				= trim((string) $this->input->post('no_ref_cari'));
         $data['dataJurnal'] = $this->Mod_jurnal->select_jurnal($tgl_awal,$tgl_akhir,$no_ref);
             echo show_my_print('accounting/modals/modal_cetak_jurnal_umum', 'cetak-jurnal', $data, ' modal-xl');
         
@@ -109,7 +110,7 @@ class Jurnal extends MY_Controller
 	}
     public function cetakJurnal()
 	{
-        $no_ref 				= $_POST['no_ref'];
+        $no_ref 				= (string) $this->input->post('no_ref');
 		$data['dataJurnal'] = $this->Mod_jurnal->cetak_jurnal($no_ref);
 		echo show_my_print('accounting/modals/modal_cetak_jurnal', 'cetak-jurnal-detail', $data, ' modal-xl');
 	}
@@ -120,6 +121,14 @@ class Jurnal extends MY_Controller
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 
         $data     = $this->input->post();
+        if ($this->akuntansi->periode_tertutup(tgl_sql(isset($data['tgl_jurnal']) ? $data['tgl_jurnal'] : ''))) {
+            echo json_encode(array('status' => 'form', 'msg' => 'Periode sudah ditutup (tutup buku). Buka periode di menu Tutup Buku & Preferensi.'));
+            return;
+        }
+        if (to_number(isset($data['debit']) ? $data['debit'] : 0) == 0 && to_number(isset($data['kredit']) ? $data['kredit'] : 0) == 0) {
+            echo json_encode(array('status' => 'form', 'msg' => 'Isi nilai Debit atau Kredit.'));
+            return;
+        }
         if ($this->form_validation->run() == TRUE) {
             $result = $this->Mod_jurnal->insertJurnal($data);
 
@@ -144,20 +153,38 @@ class Jurnal extends MY_Controller
     }
     public function showDetailEdit()
     {
-        $no_ref 				= $_GET['no_ref'];
+        $no_ref 				= (string) $this->input->get('no_ref');
         $data['dataDetail'] = $this->Mod_jurnal->select_detail_edit($no_ref);
         $this->load->view('accounting/detail_jurnal', $data);
     }
     public function cariRef() {	
-        $kode	= $_GET['a'];
+        $kode	= (string) $this->input->get('a');
             $cari	= $this->Mod_jurnal->select_kodeRef($kode)->result();
             echo json_encode($cari);
            
         }
     public function Generate()
     {
-        $kode_awal 				= $_GET['kode_awal'];
-        $no_ref 				= $_GET['no_ref'];
+        $kode_awal 				= (string) $this->input->get('kode_awal');
+        $no_ref 				= trim((string) $this->input->get('no_ref'));
+        // validasi: jurnal harus seimbang & periode belum ditutup
+        $t = $this->Mod_jurnal->total_draft();
+        if ( ! $t || (int) $t->n < 2) {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'Jurnal minimal terdiri dari 2 baris (debit & kredit).'));
+            return;
+        }
+        if (abs(round((float) $t->d - (float) $t->k, 2)) > 0.004) {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'Jurnal belum seimbang. Debit ' . nf($t->d, 2) . ' / Kredit ' . nf($t->k, 2) . '.'));
+            return;
+        }
+        if ($no_ref === '') {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'No. Referensi wajib diisi.'));
+            return;
+        }
+        if ($this->akuntansi->periode_tertutup($t->t1) || $this->akuntansi->periode_tertutup($t->t2)) {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'Periode jurnal sudah ditutup (tutup buku).'));
+            return;
+        }
             $result = $this->Mod_jurnal->generate_jurnal($kode_awal,$no_ref);
 
             if ($result > 0) {
@@ -172,7 +199,7 @@ class Jurnal extends MY_Controller
         echo json_encode($out);
     }
     public function updateJurnal() {
-		$id 				= trim($_POST['id']);
+		$id 				= trim((string) $this->input->post('id'));
         $data['apl'] = $this->db->get("aplikasi")->row();
         $data['dataAkun'] = $this->Mod_jurnal->select_akun();
 		$data['dataJurnal'] = $this->Mod_jurnal->select_by_id_jurnal($id);
@@ -185,6 +212,10 @@ class Jurnal extends MY_Controller
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 
 		$data 	= $this->input->post();
+		if ($this->akuntansi->periode_tertutup($this->Mod_jurnal->tgl_by_field('no_jurnal', isset($data['no_jurnal']) ? $data['no_jurnal'] : ''))) {
+			echo json_encode(array('status' => 'form', 'msg' => 'Periode jurnal ini sudah ditutup (tutup buku).'));
+			return;
+		}
 		if ($this->form_validation->run() == TRUE) {
 			$result = $this->Mod_jurnal->updateJurnal($data);
 
@@ -205,7 +236,11 @@ class Jurnal extends MY_Controller
 
     public function deleteJurnal()
     {
-        $no_ref = $_POST['no_ref'];
+        $no_ref = (string) $this->input->post('no_ref');
+        if ($this->akuntansi->periode_tertutup($this->Mod_jurnal->tgl_by_ref($no_ref))) {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'Periode jurnal ini sudah ditutup (tutup buku).'));
+            return;
+        }
         $result = $this->Mod_jurnal->deleteJurnal($no_ref);
 
         if ($result > 0) {
@@ -219,7 +254,11 @@ class Jurnal extends MY_Controller
     }
     public function deleteJurnal_detail()
     {
-        $id = $_POST['id'];
+        $id = (int) $this->input->post('id');
+        if ($this->akuntansi->periode_tertutup($this->Mod_jurnal->tgl_by_field('id_jurnal', $id))) {
+            echo json_encode(array('status' => 'gagal', 'msg' => 'Periode jurnal ini sudah ditutup (tutup buku).'));
+            return;
+        }
         $result = $this->Mod_jurnal->deleteJurnal_detail($id);
 
         if ($result > 0) {

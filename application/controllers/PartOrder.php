@@ -50,13 +50,13 @@ class PartOrder extends MY_Controller
 			$row[] = $p->satuan;
 			if ($idlokasi == 'Cibitung') {
 				$row[] = $p->stok_cbt;
-				$row[] = number_format($p->hrg_net_cbt);
+				$row[] = nf($p->hrg_net_cbt);
 			} elseif ($idlokasi == 'Jakarta') {
 				$row[] = $p->stok_jkt;
-				$row[] = number_format($p->hrg_net_jkt);
+				$row[] = nf($p->hrg_net_jkt);
 			} elseif ($idlokasi == 'Surabaya') {
 				$row[] = $p->stok_sby;
-				$row[] = number_format($p->hrg_net_sby);
+				$row[] = nf($p->hrg_net_sby);
 			}
 			$data[] = $row;
 		}

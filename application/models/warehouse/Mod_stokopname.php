@@ -127,7 +127,7 @@ class Mod_stokopname extends CI_Model
     }
     public function deleteDetail_so($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_so WHERE id='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_so WHERE id='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -138,10 +138,10 @@ class Mod_stokopname extends CI_Model
         $datenow = date("Y-m-d");
         $sql = "INSERT INTO tbl_wh_detail_so SET
             id       ='',
-            no_transaksi           ='" . $data['id_po'] . "',
-            no_part         ='" . $data['no_part'] . "',
-            nama_part       ='" . $data['nama_part'] . "',
-            jumlah     ='" . $data['stok'] . "'";
+            no_transaksi           ='" . $this->db->escape_str((string) $data['id_po']) . "',
+            no_part         ='" . $this->db->escape_str((string) $data['no_part']) . "',
+            nama_part       ='" . $this->db->escape_str((string) $data['nama_part']) . "',
+            jumlah     ='" . $this->db->escape_str((string) $data['stok']) . "'";
         $this->db->query($sql);
 
         return $this->db->affected_rows();
@@ -149,7 +149,7 @@ class Mod_stokopname extends CI_Model
     function update_detailSO($id,$jml_part)
 		{			
 		$jml =str_replace(" ","", $jml_part);
-			$sql_update = "UPDATE tbl_wh_detail_opname SET stok_fisik ='$jml' WHERE id ='{$id}'"; $this->db->query($sql_update);
+			$sql_update = "UPDATE tbl_wh_detail_opname SET stok_fisik ='".$this->db->escape_str((string) $jml)."' WHERE id ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
 			
 		return $this->db->affected_rows();
 			//return $data->row();
@@ -169,20 +169,20 @@ class Mod_stokopname extends CI_Model
             $kode='SO';
     
             $sql_update = "INSERT INTO tbl_wh_opname SET
-            id_opname   ='$idUpdate',
-            tgl_opname  ='$tgl_opname',
-            id_kelompok ='$id_kelompok',
-            kelompok    ='$nama_kelompok',
-            keterangan  ='$keterangan',
+            id_opname   ='".$this->db->escape_str((string) $idUpdate)."',
+            tgl_opname  ='".$this->db->escape_str((string) $tgl_opname)."',
+            id_kelompok ='".$this->db->escape_str((string) $id_kelompok)."',
+            kelompok    ='".$this->db->escape_str((string) $nama_kelompok)."',
+            keterangan  ='".$this->db->escape_str((string) $keterangan)."',
             status      ='N',
-            pembuat ='$pembuat' "; $this->db->query($sql_update);
+            pembuat ='".$this->db->escape_str((string) $pembuat)."' "; $this->db->query($sql_update);
 
             $query=$this->db->query("SELECT a.no_part,a.nama_part,a.lokasi,a.stok,b.satuan,c.type,d.kelompok
             FROM tbl_wh_barang AS a 
             LEFT JOIN  tbl_wh_satuan AS b ON b.id_satuan=a.satuan
             LEFT JOIN  tbl_wh_type_mesin AS c ON c.id_type=a.type
             LEFT JOIN  tbl_wh_kelompok AS d ON d.id_kelompok=a.kelompok
-            WHERE a.kelompok = '{$id_kelompok}'")->result();
+            WHERE a.kelompok = '".$this->db->escape_str((string) $id_kelompok)."'")->result();
     
             $data = array();
             foreach($query as $key=>$value){ 
@@ -205,7 +205,7 @@ class Mod_stokopname extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_po 
         LEFT JOIN tbl_wh_supplier ON tbl_wh_supplier.kode_sup=tbl_wh_po.supplier
-        WHERE id_po ='{$id}'";
+        WHERE id_po ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -301,7 +301,7 @@ class Mod_stokopname extends CI_Model
         FROM tbl_wh_detail_so AS a
         LEFT JOIN tbl_wh_barang AS b ON b.no_part = a.no_part
         LEFT JOIN tbl_wh_satuan AS c ON c.id_satuan = b.satuan
-        WHERE a.no_transaksi ='{$id}' ORDER BY a.id DESC";
+        WHERE a.no_transaksi ='".$this->db->escape_str((string) $id)."' ORDER BY a.id DESC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -310,10 +310,10 @@ class Mod_stokopname extends CI_Model
     function updatePo($a, $b, $c, $d)
     {
         $sql = "UPDATE tbl_wh_po SET
-        t_ppn       ='$a',
-        sub_total   ='$b',
-        grand_total ='$c'
-        WHERE id_po ='" . $data['id_po'] . "'";
+        t_ppn       ='".$this->db->escape_str((string) $a)."',
+        sub_total   ='".$this->db->escape_str((string) $b)."',
+        grand_total ='".$this->db->escape_str((string) $c)."'
+        WHERE id_po ='" . $this->db->escape_str((string) $data['id_po']) . "'";
 
         $this->db->query($sql);
 

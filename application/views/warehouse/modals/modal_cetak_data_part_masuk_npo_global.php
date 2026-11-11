@@ -211,7 +211,7 @@ foreach ($dataMasuk as $s) {
                     <td><?php echo $s->nama_supplier; ?></td>
                     <td><?php echo $s->no_inv_sup; ?></td>
                     <td><?php echo $s->no_sj_sup; ?></td>
-                    <td align="right"><?php echo number_format($s->total); ?></td>
+                    <td align="right"><?php echo nf($s->total); ?></td>
                 </tr>
                 <?php
     $no++;

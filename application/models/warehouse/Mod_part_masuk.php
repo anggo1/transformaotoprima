@@ -45,7 +45,7 @@ class Mod_part_masuk extends CI_Model
         LEFT JOIN tbl_wh_barang AS b ON a.no_part=b.no_part
         LEFT JOIN tbl_wh_po AS c ON a.id_po=c.id_po
         LEFT JOIN tbl_wh_satuan AS d ON d.id_satuan=b.satuan
-        WHERE a.id_po = '".$po."' AND a.status='N' ORDER BY a.id_detail ASC" ;
+        WHERE a.id_po = '".$this->db->escape_str((string) $po)."' AND a.status='N' ORDER BY a.id_detail ASC" ;
         $data = $this->db->query($sql);
 
 
@@ -91,7 +91,7 @@ class Mod_part_masuk extends CI_Model
         //$this->db->where('tgl_po',$tglnya);
         //return $this->db->get('tbl_wh_po')->row();
 
-        $sql    = "SELECT kode_po FROM tbl_wh_po WHERE tgl_po='".$tglnya."'" ;
+        $sql    = "SELECT kode_po FROM tbl_wh_po WHERE tgl_po='".$this->db->escape_str((string) $tglnya)."'" ;
         $data   = $this->db->query($sql);
 
 
@@ -100,7 +100,7 @@ class Mod_part_masuk extends CI_Model
     function get_part($id)
     {
         $sql    = "SELECT * FROM tbl_wh_barang 
-        WHERE no_part='".$id."'" ;
+        WHERE no_part='".$this->db->escape_str((string) $id)."'" ;
         $data = $this->db->query($sql);
         return $data->result();
     }
@@ -121,19 +121,19 @@ class Mod_part_masuk extends CI_Model
         //$id = md5(DATE('ymdhms') . rand());
         $tgl_masuk =  date("y-m-d");
         $ci_data = get_instance();
-        $query = "SELECT * FROM tbl_wh_detail_po WHERE id_po='".$id_po."' AND status='P' OR status='N' ";
+        $query = "SELECT * FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id_po)."' AND status='P' OR status='N' ";
         $d_data = $ci_data->db->query($query)->row_array();
         if ($d_data >1){
-        $sql_po1 = "UPDATE tbl_wh_po SET status_po='P' WHERE id_po='".$id_po."'";
+        $sql_po1 = "UPDATE tbl_wh_po SET status_po='P' WHERE id_po='".$this->db->escape_str((string) $id_po)."'";
         $this->db->query($sql_po1);
-        $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$id_po."' AND sisa=0";
+        $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$this->db->escape_str((string) $id_po)."' AND sisa=0";
         $this->db->query($sql_po2);
-        $sql_po3 = "UPDATE tbl_wh_detail_po SET status='N' WHERE id_po='".$id_po."' AND status='P'";
+        $sql_po3 = "UPDATE tbl_wh_detail_po SET status='N' WHERE id_po='".$this->db->escape_str((string) $id_po)."' AND status='P'";
         $this->db->query($sql_po3);
         }else{
-            $sql_po1 = "UPDATE tbl_wh_po SET status_po='Y' WHERE id_po='".$id_po."'";
+            $sql_po1 = "UPDATE tbl_wh_po SET status_po='Y' WHERE id_po='".$this->db->escape_str((string) $id_po)."'";
             $this->db->query($sql_po1);
-            $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$id_po."'";
+            $sql_po2 = "UPDATE tbl_wh_detail_po SET status='Y' WHERE id_po='".$this->db->escape_str((string) $id_po)."'";
             $this->db->query($sql_po2);
         }
         //$stok_awal       = $d_data['stok'];
@@ -222,7 +222,7 @@ class Mod_part_masuk extends CI_Model
     }
     public function deleteDetail($id)
     {
-        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $id . "'";
+        $sql = "DELETE FROM tbl_wh_detail_part_masuk WHERE id='" . $this->db->escape_str((string) $id) . "'";
 
         $this->db->query($sql);
 
@@ -230,7 +230,7 @@ class Mod_part_masuk extends CI_Model
     }
     public function deletepartDetail($id,$sisa)
     {
-        $sql = "UPDATE tbl_wh_detail_po SET sisa='".$sisa."', status='P' WHERE id_detail='".$id."'";
+        $sql = "UPDATE tbl_wh_detail_po SET sisa='".$this->db->escape_str((string) $sisa)."', status='P' WHERE id_detail='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql);
 
@@ -242,9 +242,9 @@ class Mod_part_masuk extends CI_Model
 		$jml =str_replace(" ","", $qty_masuk);
 		$sisa =$qty_awal - $qty_masuk;
         if($sisa == 0){
-            $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '$sisa', status='N', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+            $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '".$this->db->escape_str((string) $sisa)."', status='N', jml_masuk ='".$this->db->escape_str((string) $jml)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
         }else{
-		    $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '$sisa', jml_masuk ='$jml' WHERE id_detail ='{$id}'"; $this->db->query($sql_update);
+		    $sql_update = "UPDATE tbl_wh_detail_po SET sisa = '".$this->db->escape_str((string) $sisa)."', jml_masuk ='".$this->db->escape_str((string) $jml)."' WHERE id_detail ='".$this->db->escape_str((string) $id)."'"; $this->db->query($sql_update);
         }
 		return $this->db->affected_rows();
 			//return $data->row();

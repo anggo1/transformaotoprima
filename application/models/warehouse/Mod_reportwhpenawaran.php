@@ -90,7 +90,7 @@ class Mod_reportwhpenawaran extends CI_Model
     {
         $sql = "SELECT * FROM tbl_wh_estimasi_penawaran 
         LEFT JOIN tbl_wh_customer ON tbl_wh_customer.kode_cus=tbl_wh_estimasi_penawaran.id_customer
-        WHERE id_estimasi_penawaran ='{$id}'";
+        WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -101,22 +101,22 @@ class Mod_reportwhpenawaran extends CI_Model
         $ci = get_instance();
                 $query = "SELECT sum(total_harga) as total,b.ppn FROM tbl_wh_detail_estimasi_penawaran as a 
                     LEFT JOIN tbl_wh_estimasi_penawaran as b ON b.id_estimasi_penawaran=a.id_estimasi_penawaran
-                    WHERE a.id_estimasi_penawaran='{$id}'";
+                    WHERE a.id_estimasi_penawaran='".$this->db->escape_str((string) $id)."'";
         $d_data = $ci->db->query($query)->row_array();
         $total       = $d_data['total'];
         //$ppn       = $d_data['ppn'];
         //$total_ppn = $total * $ppn / 100;
         $grand_total = $total;
         $sql_update = "UPDATE tbl_wh_estimasi_penawaran SET
-        sub_total   ='$total',
-        grand_total ='$grand_total'
-        WHERE id_estimasi_penawaran ='{$id}'";
+        sub_total   ='".$this->db->escape_str((string) $total)."',
+        grand_total ='".$this->db->escape_str((string) $grand_total)."'
+        WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."'";
 
         $this->db->query($sql_update);
 
         $sql = "SELECT a.* 
         FROM tbl_wh_detail_estimasi_penawaran AS a
-        WHERE a.id_estimasi_penawaran ='{$id}' ORDER BY a.id_detail ASC";
+        WHERE a.id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."' ORDER BY a.id_detail ASC";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -125,7 +125,7 @@ class Mod_reportwhpenawaran extends CI_Model
     public function select_ket($id)
     {
         $sql = "SELECT * FROM tbl_wh_detail_estimasi_penawaran_note 
-        WHERE id_estimasi_penawaran ='{$id}'";
+        WHERE id_estimasi_penawaran ='".$this->db->escape_str((string) $id)."'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -136,7 +136,7 @@ class Mod_reportwhpenawaran extends CI_Model
 		$sql = "SELECT * FROM tbl_wh_part_keluar AS a
         LEFT JOIN tbl_wh_detail_part_keluar AS b
         ON b.id_keluar=a.id_keluar
-        WHERE a.id_keluar ='{$id}' ";
+        WHERE a.id_keluar ='".$this->db->escape_str((string) $id)."' ";
 
 		$data = $this->db->query($sql);
 
@@ -144,9 +144,9 @@ class Mod_reportwhpenawaran extends CI_Model
     }
 	function deletePo($id)
 	{
-		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='{$id}'";
+		$sql1 = "DELETE FROM tbl_wh_detail_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql1);
-		$sql = "DELETE FROM tbl_wh_po WHERE id_po='{$id}'";
+		$sql = "DELETE FROM tbl_wh_po WHERE id_po='".$this->db->escape_str((string) $id)."'";
 		$this->db->query($sql);
 
 		return $this->db->affected_rows();

@@ -34,8 +34,8 @@ foreach ($dataPart as $s) {
                   <td><?php echo $s->id_pk; ?></td>
                   <td><?php echo $s->ket_pk; ?></td>
                   <td><?php echo $s->no_body; ?></td>
-                  <td align="right"><?php echo number_format($s->biaya_borong); ?></td>
-                  <td align="right"><?php echo number_format($s->jumlah); ?></td>
+                  <td align="right"><?php echo nf($s->biaya_borong); ?></td>
+                  <td align="right"><?php echo nf($s->jumlah); ?></td>
                   <td align="right"><?php echo $s->keterangan; ?></td>
                 </tr>
                 
@@ -50,7 +50,7 @@ foreach ($dataPart as $s) {
                   <td align="right"></td>                  
                   <td align="right"></td>                  
                   <td align="right">Total Pembayaran</td>                                    
-                  <td align="right" style="text-align: right"><?php if(!empty($s->beaBorong)) {echo number_format($s->beaBorong);} ?></td>
+                  <td align="right" style="text-align: right"><?php if(!empty($s->beaBorong)) {echo nf($s->beaBorong);} ?></td>
                   <td align="right">&nbsp;</td>
               </tr>
                 <tr>
@@ -60,7 +60,7 @@ foreach ($dataPart as $s) {
                   <td align="right">&nbsp;</td>
                   <td align="right">&nbsp;</td>
                   <td align="right">Jumlah Pembayaran</td>
-                  <td align="right" style="text-align: right"><?php echo number_format($dibayar); ?></td>
+                  <td align="right" style="text-align: right"><?php echo nf($dibayar); ?></td>
                   <td align="right">&nbsp;</td>
                   </tr>
                 <tr>
@@ -70,7 +70,7 @@ foreach ($dataPart as $s) {
                     <td align="right">&nbsp;</td>
                     <td align="right">&nbsp;</td>
                     <td align="right">Sisa Pembayaran</td>
-                    <td align="right" style="text-align: right"><?php if(!empty($s->beaBorong)) { echo number_format($s->beaBorong-$dibayar);} ?></td>
+                    <td align="right" style="text-align: right"><?php if(!empty($s->beaBorong)) { echo nf($s->beaBorong-$dibayar);} ?></td>
                     <td align="right">&nbsp;</td>
                   </tr>
 				<tfoot>

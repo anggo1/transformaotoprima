@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		Andrey Andreev
  * @link		https://codeigniter.com/userguide3/libraries/sessions.html
  */
+#[\AllowDynamicProperties]
 class CI_Session {
 
 	/**
@@ -362,10 +363,15 @@ class CI_Session {
 		$this->_config = $params;
 
 		// Security is king
-		ini_set('session.use_trans_sid', 0);
+		// PHP 8.4+ : mengubah use_trans_sid / use_only_cookies sudah deprecated
+		// (nilainya sudah aman secara default), jadi hanya di-set untuk PHP < 8.4
+		if (PHP_VERSION_ID < 80400)
+		{
+			ini_set('session.use_trans_sid', 0);
+			ini_set('session.use_only_cookies', 1);
+		}
 		ini_set('session.use_strict_mode', 1);
 		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
 
 		$this->_configure_sid_length();
 	}
@@ -419,7 +425,7 @@ class CI_Session {
 		{
 			$bits_per_character = (int) ini_get('session.sid_bits_per_character');
 			$sid_length         = (int) ini_get('session.sid_length');
-			if (($bits = $sid_length * $bits_per_character) < 160)
+			if (PHP_VERSION_ID < 80400 && ($bits = $sid_length * $bits_per_character) < 160)
 			{
 				// Add as many more characters as necessary to reach at least 160 bits
 				$sid_length += (int) ceil((160 % $bits) / $bits_per_character);

@@ -34,7 +34,7 @@ table.dataTable td {
 										foreach ($dataBuku as $s){ $totalSaldo= $s->data_debit-$s->data_kredit;} }?>
                                         <tr>
                                           <th colspan="9">Saldo <?php //echo $s->periode ?></th>
-                                          <th style="text-align: right;"><?php echo number_format($s->data_debit-$s->data_kredit) ?></th>
+                                          <th style="text-align: right;"><?php echo nf($s->data_debit-$s->data_kredit) ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,9 +63,9 @@ table.dataTable td {
                                             <td><?php echo $a->keterangan ?></td>
                                             <td><?php echo $a->kode_akun ?></td>
                                             <td><?php echo $a->nama_akun ?></td>
-                                            <td align="right"><?php echo number_format($a->debit) ?></td>
-                                            <td align="right"><?php echo number_format($a->kredit) ?></td>
-                                            <td align="right"><?php echo number_format($totalnye)?></td>
+                                            <td align="right"><?php echo nf($a->debit) ?></td>
+                                            <td align="right"><?php echo nf($a->kredit) ?></td>
+                                            <td align="right"><?php echo nf($totalnye)?></td>
                                         </tr><?php }} ?>
                                     </tbody>
                                     <tfoot>
@@ -77,9 +77,9 @@ table.dataTable td {
                                             <th>&nbsp;</th>
                                             <th>&nbsp;</th>
                                             <th>&nbsp;</th>
-                                            <th style="text-align: right;"><?php echo number_format($debit1) ?></th>
-                                            <th style="text-align: right;"><?php echo number_format($kredit1) ?></th>
-                                            <th style="text-align: right;"><?php echo number_format($debit1-$kredit1+$totalSaldo)?></th>
+                                            <th style="text-align: right;"><?php echo nf($debit1) ?></th>
+                                            <th style="text-align: right;"><?php echo nf($kredit1) ?></th>
+                                            <th style="text-align: right;"><?php echo nf($debit1-$kredit1+$totalSaldo)?></th>
                                       </tr>
 									</tfoot>
                                 </table>

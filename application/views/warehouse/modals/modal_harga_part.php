@@ -73,13 +73,13 @@
                                                     onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
                                                             $lokasi=$this->session->userdata['lokasi'];
                                                             if($lokasi=='Jakarta'){
-                                            if (!empty($part->hrg_net_jkt)) { echo number_format($part->hrg_net_jkt);
+                                            if (!empty($part->hrg_net_jkt)) { echo nf($part->hrg_net_jkt);
                                             }
                                             }if($lokasi=='Cibitung'){
-                                            if (!empty($part->hrg_net_cbt)) { echo number_format($part->hrg_net_cbt);
+                                            if (!empty($part->hrg_net_cbt)) { echo nf($part->hrg_net_cbt);
                                                             }
                                                             }if($lokasi=='Surabaya'){
-                                            if (!empty($part->hrg_net_sby)) { echo number_format($part->hrg_net_sby);
+                                            if (!empty($part->hrg_net_sby)) { echo nf($part->hrg_net_sby);
                                                                 }}?>" class="form-control">
                                             </div>
                                             <label class="col-sm-2 col-form-label">Harga Pricelist awal</label>
@@ -88,13 +88,13 @@
                                                     onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
                                                             $lokasi=$this->session->userdata['lokasi'];
                                                             if($lokasi=='Jakarta'){
-                                            if (!empty($part->price_list_jkt)) { echo number_format($part->price_list_jkt);
+                                            if (!empty($part->price_list_jkt)) { echo nf($part->price_list_jkt);
                                             }
                                             }if($lokasi=='Cibitung'){
-                                            if (!empty($part->price_list_cbt)) { echo number_format($part->price_list_cbt);
+                                            if (!empty($part->price_list_cbt)) { echo nf($part->price_list_cbt);
                                                             }
                                                             }if($lokasi=='Surabaya'){
-                                            if (!empty($part->price_list_sby)) { echo number_format($part->price_list_sby);
+                                            if (!empty($part->price_list_sby)) { echo nf($part->price_list_sby);
                                                                 }}?>" class="form-control">
                                             </div>
                                         </div>
@@ -105,13 +105,13 @@
                                                     onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
                                                             $lokasi=$this->session->userdata['lokasi'];
                                                             if($lokasi=='Jakarta'){
-                                            if (!empty($part->hrg_net_jkt)) { echo number_format($part->hrg_net_jkt);
+                                            if (!empty($part->hrg_net_jkt)) { echo nf($part->hrg_net_jkt);
                                             }
                                             }if($lokasi=='Cibitung'){
-                                            if (!empty($part->hrg_net_cbt)) { echo number_format($part->hrg_net_cbt);
+                                            if (!empty($part->hrg_net_cbt)) { echo nf($part->hrg_net_cbt);
                                                             }
                                                             }if($lokasi=='Surabaya'){
-                                            if (!empty($part->hrg_net_sby)) { echo number_format($part->hrg_net_sby);
+                                            if (!empty($part->hrg_net_sby)) { echo nf($part->hrg_net_sby);
                                                                 }}?>" class="form-control">
                                             </div>
                                             <label class="col-sm-2 col-form-label">Harga Pricelist</label>
@@ -120,13 +120,13 @@
                                                     onkeyup="formatNumber(this)" onchange="formatNumber(this);" value="<?php 
                                                             $lokasi=$this->session->userdata['lokasi'];
                                                             if($lokasi=='Jakarta'){
-                                            if (!empty($part->price_list_jkt)) { echo number_format($part->price_list_jkt);
+                                            if (!empty($part->price_list_jkt)) { echo nf($part->price_list_jkt);
                                             }
                                             }if($lokasi=='Cibitung'){
-                                            if (!empty($part->price_list_cbt)) { echo number_format($part->price_list_cbt);
+                                            if (!empty($part->price_list_cbt)) { echo nf($part->price_list_cbt);
                                                             }
                                                             }if($lokasi=='Surabaya'){
-                                            if (!empty($part->price_list_sby)) { echo number_format($part->price_list_sby);
+                                            if (!empty($part->price_list_sby)) { echo nf($part->price_list_sby);
                                                                 }}?>" class="form-control">
                                             </div>
                                         </div>

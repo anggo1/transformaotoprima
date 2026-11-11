@@ -174,14 +174,14 @@ class Mod_part_request extends CI_Model
     {
         $sql = "INSERT INTO tbl_af_detail_estimasi_penawaran SET
         id_detail   ='',
-        wo_no       ='".$wo_no."',
-        no_part     ='".$no_part."',
-        nama_part   ='".$nama_part."',
-        harga       ='".$harga."',
-        harga_net   ='".$harga."',
-        jumlah      ='".$jumlah."',
-        total_harga       ='".$total."',
-        remark  ='".$keterangan."'";
+        wo_no       ='".$this->db->escape_str((string) $wo_no)."',
+        no_part     ='".$this->db->escape_str((string) $no_part)."',
+        nama_part   ='".$this->db->escape_str((string) $nama_part)."',
+        harga       ='".$this->db->escape_str((string) $harga)."',
+        harga_net   ='".$this->db->escape_str((string) $harga)."',
+        jumlah      ='".$this->db->escape_str((string) $jumlah)."',
+        total_harga       ='".$this->db->escape_str((string) $total)."',
+        remark  ='".$this->db->escape_str((string) $keterangan)."'";
 
 		$this->db->query($sql);
 
@@ -205,17 +205,17 @@ class Mod_part_request extends CI_Model
 			$kode_keluar  = $kd.$tahun.$bulan.sprintf("%04s", $noUrut);
 
         $sql = "INSERT INTO tbl_after_sales_part_request SET
-        wo_no       ='".$data['wo_no']."',
-        kode_pr     ='".$kode_keluar."',
-        nik   ='".$data['nik']."',
-        nama       ='".$data['nama']."',
-        pembuat  ='".$data['pembuat']."'";
+        wo_no       ='".$this->db->escape_str((string) $data['wo_no'])."',
+        kode_pr     ='".$this->db->escape_str((string) $kode_keluar)."',
+        nik   ='".$this->db->escape_str((string) $data['nik'])."',
+        nama       ='".$this->db->escape_str((string) $data['nama'])."',
+        pembuat  ='".$this->db->escape_str((string) $data['pembuat'])."'";
 
 		$this->db->query($sql);
 
         $sql2 = "UPDATE tbl_after_sales SET
         part_request     ='Y'
-        WHERE wo_no='".$data['wo_no']."'";
+        WHERE wo_no='".$this->db->escape_str((string) $data['wo_no'])."'";
 
 		$this->db->query($sql2);
 
@@ -223,7 +223,7 @@ class Mod_part_request extends CI_Model
     }
     function deleteRequest($id)
     {
-        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='{$id}'";
+        $sql = "DELETE FROM tbl_af_detail_estimasi_penawaran WHERE id_detail='".$this->db->escape_str((string) $id)."'";
 
 		$this->db->query($sql);
 
