@@ -144,3 +144,26 @@ Sama seperti sebelumnya: salin folder `application` dan `assets`, jalankan `data
 
 ## Panduan Sistem
 - Peta integrasi antar modul, dashboard & laporan rekomendasi per departemen, kesiapan data lintas modul, kalender kerja bulanan, dan rekomendasi pengembangan berikutnya (payroll, jurnal otomatis gudang, faktur service, transfer antar gudang, kontrak kerja).
+
+---
+
+# Tambahan v6 — Pemasangan di Server (MySQL 8.0)
+
+Database server (dump 12-11-2026, MySQL 8.0.46) sudah diperiksa dan diuji di MySQL 8.0.46 yang sama persis.
+
+## Kondisi server sebelum upgrade
+- 75 tabel, struktur lama (belum ada modul akuntansi v2–v5). Setelah migrasi menjadi 97 tabel.
+- Data server sedikit lebih baru dari data lokal — **jangan** import `db_transforma_oto_prima_v2_final.sql` ke server (itu data lokal 11 Nov).
+
+## Langkah di server
+1. Upload folder `application` (termasuk `application/core/MY_Controller.php` yang baru) dan `assets`.
+2. phpMyAdmin server → Export database `db_transforma_oto_prima` (backup).
+3. Pilih SALAH SATU:
+   - **Disarankan:** jalankan `database/migrasi_v2_akuntansi.sql` di database server. Data tetap utuh, aman diulang.
+   - **Alternatif:** import `database/db_transforma_oto_prima_server_siap.zip` (data server 12-11-2026 09:14 + semua perubahan). File ini menimpa tabel; transaksi yang diinput setelah jam tersebut hilang.
+4. Logout & login lagi.
+
+## Yang disesuaikan untuk server
+- **MySQL 8 `ONLY_FULL_GROUP_BY`**: query lama di Buku Besar, Saldo Awal, Akses Level/User Level, Laporan Gudang Masuk, dan Part Keluar PO error 1055 di MySQL 8. `MY_Controller` sekarang mematikan mode itu per koneksi aplikasi (tidak mengubah setelan server).
+- **Tabel `tbl_wh_detail_so`** dibuat (bagian v6 migrasi): menu lama *Stok Opname* membutuhkannya, tapi tabel ini belum pernah ada.
+- Konfigurasi `application/config/database.php` di server: sesuaikan `username`/`password` MySQL server (jangan pakai `root` tanpa password).

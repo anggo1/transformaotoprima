@@ -14728,6 +14728,33 @@ SELECT s.`id_submenu`, s.`id_menu`, s.`nama_submenu`, s.`link` FROM `tbl_submenu
 WHERE s.`link` IN ('OpnameStok', 'ImportBarang', 'LabelBarang', 'LabelBarang/scan', 'LaporanGudang/harga_rata', 'LaporanGudang/kenaikan_harga', 'LaporanHR', 'Cuti', 'Mesin_absen', 'PengaturanDashboard', 'PanduanSistem');
 -- selesai v5
 
+
+-- ---------------------------------------------------------------------------
+-- BAGIAN v6 : PENYESUAIAN SERVER (MySQL 8.0)  (ditambahkan 12-11-2026)
+-- ---------------------------------------------------------------------------
+--  Diuji pada dump server 12-11-2026 di MySQL 8.0.46 (versi yang sama dengan server).
+--  21. Tabel detail Stok Opname (menu lama "Stok Opname") yang belum pernah ada
+--      di database: tanpa tabel ini, tambah/hapus/cetak detail opname lama error.
+CREATE TABLE IF NOT EXISTS `tbl_wh_detail_so` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `no_transaksi` varchar(35) NOT NULL DEFAULT '',
+  `no_part` varchar(50) NOT NULL DEFAULT '',
+  `nama_part` varchar(100) NOT NULL DEFAULT '',
+  `jumlah` decimal(15,2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_so_transaksi` (`no_transaksi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--  22. Sesi login disimpan di database (tabel ci_sessions). CodeIgniter mewajibkan
+--      PRIMARY KEY (id); isi tabel hanya sesi login, dikosongkan sekali saat kunci
+--      ditambahkan (semua pengguna cukup login ulang).
+SET @q = IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'ci_sessions' AND INDEX_NAME = 'PRIMARY') = 0,
+  'TRUNCATE TABLE `ci_sessions`', 'DO 0');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+SET @q = IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'ci_sessions' AND INDEX_NAME = 'PRIMARY') = 0,
+  'ALTER TABLE `ci_sessions` ADD PRIMARY KEY (`id`)', 'DO 0');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+-- selesai v6
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

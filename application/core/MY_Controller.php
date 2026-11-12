@@ -18,6 +18,13 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
 
+        // MySQL 8 (server Ubuntu) memakai sql_mode ketat secara default. Kode lama memakai
+        // GROUP BY gaya MySQL 5 (error 1055) dan tanggal '0000-00-00' (error 1525), jadi
+        // koneksi aplikasi memakai mode yang kompatibel. Setelan server tidak diubah.
+        if (isset($this->db) && $this->db->conn_id) {
+            $this->db->query("SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
+        }
+
         // Tampung output yang di-echo controller sebelum layout (mis. show_my_modal)
         // agar dicetak di dalam <body>, bukan sebelum <!DOCTYPE> (mencegah quirks mode)
         ob_start();

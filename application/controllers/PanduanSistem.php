@@ -18,7 +18,7 @@ class PanduanSistem extends MY_Controller
         $cek[] = array('User dipetakan ke departemen', $nUser && $nMap >= $nUser * 0.8 ? true : ($nMap ? null : false), nf($nMap) . ' dari ' . nf($nUser) . ' user', 'PengaturanDashboard#departemen');
         $nLay = $t('tbl_dashboard_layout') ? $db->where_in('jenis', array('LEVEL', 'DEPT'))->count_all_results('tbl_dashboard_layout') : 0;
         $cek[] = array('Dashboard per level/departemen sudah diatur', $nLay > 0 ? true : null, $nLay ? nf($nLay) . ' pengaturan' : 'memakai preset bawaan', 'PengaturanDashboard');
-        if ($t('tbl_hrd_pegawai')) { $n = $db->count_all('tbl_hrd_pegawai'); $tl = $db->where("tgl_lahir <> '0000-00-00' AND tgl_lahir <> '' AND tgl_lahir IS NOT NULL", null, false)->count_all_results('tbl_hrd_pegawai');
+        if ($t('tbl_hrd_pegawai')) { $n = $db->count_all('tbl_hrd_pegawai'); $tl = $db->where("tgl_lahir <> '0000-00-00' AND tgl_lahir IS NOT NULL", null, false)->count_all_results('tbl_hrd_pegawai');
             $cek[] = array('Data pegawai: tanggal lahir terisi', $n && $tl === $n, nf($tl) . ' dari ' . nf($n), 'LaporanHR/kelengkapan'); }
         $this->template->load('layoutbackend', 'panduan_sistem', array('page' => 'Panduan Sistem & Integrasi Modul', 'judul' => 'Panduan', 'cek' => $cek));
     }

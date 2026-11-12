@@ -245,7 +245,7 @@ class Dashwidget
     {
         if ( ! $this->t('tbl_after_sales')) return null;
         $db = $this->CI->db; $a = date('Y-m-01');
-        $buka = $db->where("(date_close_wo IS NULL OR date_close_wo = '' OR date_close_wo = '0000-00-00')", null, false)->count_all_results('tbl_after_sales');
+        $buka = $db->where("(date_close_wo IS NULL OR date_close_wo = '0000-00-00')", null, false)->count_all_results('tbl_after_sales');
         $baru = $db->where('date_open_wo >=', $a)->count_all_results('tbl_after_sales');
         $tutup = $db->where('date_close_wo >=', $a)->count_all_results('tbl_after_sales');
         $r = $db->select('SUM(amount_labor) AS j, SUM(part_turn_over) AS p', false)->where('date_open_wo >=', $a)->get('tbl_after_sales')->row();
@@ -277,7 +277,7 @@ class Dashwidget
     private function w_as_wo_open()
     {
         if ( ! $this->t('tbl_after_sales')) return null; $b = array();
-        foreach ($this->CI->db->where("(date_close_wo IS NULL OR date_close_wo = '' OR date_close_wo = '0000-00-00')", null, false)->order_by('date_open_wo')->limit(10)->get('tbl_after_sales')->result() as $r) {
+        foreach ($this->CI->db->where("(date_close_wo IS NULL OR date_close_wo = '0000-00-00')", null, false)->order_by('date_open_wo')->limit(10)->get('tbl_after_sales')->result() as $r) {
             $h = $r->date_open_wo ? (int) floor((time() - strtotime($r->date_open_wo)) / 86400) : 0;
             $b[] = array(self::e($r->wo_no), tgl_singkat($r->date_open_wo), self::e($r->customer_name), self::e($r->no_pol), self::e($r->sa_name), '<span class="' . ($h > 7 ? 'text-danger font-weight-bold' : '') . '">' . nf($h) . ' hr</span>');
         }
