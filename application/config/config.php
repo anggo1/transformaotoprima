@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-date_default_timezone_set('Asia/Jakarta');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +24,9 @@ date_default_timezone_set('Asia/Jakarta');
 |
 */
 $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
-$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+$config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
+$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -103,7 +103,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE; // keamanan: application/hooks/Security_hook.php
 
 /*
 |--------------------------------------------------------------------------
@@ -139,8 +139,8 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-//$config['composer_autoload'] = "vendor/autoload.php";
 $config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -162,7 +162,10 @@ $config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+//$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+// Tambahkan karakter + dan - agar URL nomor telepon internasional aman dilewati
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-+=';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -227,7 +230,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 1; // 1 = hanya error (lihat application/logs)
+$config['log_threshold'] = 0;
 
 /*
 |--------------------------------------------------------------------------
@@ -328,10 +331,8 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
-
-
-
+//$config['encryption_key'] = '';
+$config['encryption_key'] = 'gausahkepoah';
 
 /*
 |--------------------------------------------------------------------------
@@ -384,30 +385,17 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-//$config['sess_driver'] = 'database';
-/* edit config untuk php 8.0 ke atas
+// Cari baris session di config.php dan ganti menjadi berbasis file
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-// $config['sess_expiration'] = 300;//lima menit
-$config['sess_save_path'] = NULL;
-//$config['sess_save_path'] = '/tmp';
+$config['sess_save_path'] = NULL; // Otomatis menggunakan folder temporary sistem
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
-*/
-// Sesi disimpan di tabel ci_sessions (sama seperti server). Tidak bergantung pada
-// izin folder, sehingga aman di XAMPP (Windows) maupun Ubuntu (www-data).
-$config['sess_driver'] = 'database';
-$config['sess_save_path'] = 'ci_sessions';
-// Alternatif berbasis file (folder harus writable oleh web server):
-// $config['sess_driver'] = 'files';
-// $config['sess_save_path'] = APPPATH . 'cache/sessions/';
-$config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200;
-$config['sess_match_ip'] = FALSE; // Set TRUE jika user sering logout sendiri
-$config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
+$config['sess_regenerate_destroy'] = TRUE;
+$config['sess_samesite'] = 'Lax'; // keamanan: cookie sesi tidak dikirim dari form situs lain
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -427,9 +415,9 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= TRUE;
-$config['cookie_samesite'] = 'Lax';
+$config['cookie_secure']	= (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'); // otomatis aktif bila HTTPS
+$config['cookie_httponly'] 	= TRUE; // keamanan: cookie tidak bisa dibaca JavaScript
+$config['cookie_samesite'] 	= 'Lax';
 
 /*
 |--------------------------------------------------------------------------
@@ -478,7 +466,10 @@ $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = array();
+//$config['csrf_exclude_uris'] = array();
+// Cari baris ini di config.php dan tambahkan rute webhook ke dalam array pengecualian
+$config['csrf_exclude_uris'] = array('webhook/receive');
+
 
 /*
 |--------------------------------------------------------------------------

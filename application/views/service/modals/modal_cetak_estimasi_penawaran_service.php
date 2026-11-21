@@ -266,8 +266,8 @@ font-family:Georgia, "Times New Roman", Times, serif;
         <tr>
           <th><div class="text1"><font size="-2">Routing No.</font></div>
             <div class="text2"><?php echo $k->routing_no ?></div></th>
-          <th><div class="text1"><font size="-2">Las Service date/Millage/km</font></div>
-            <div class="text2"><?php echo $k->last_km ?></div></th>
+          <th><div class="text1"><font size="-2">Last Service date/Millage/km</font></div>
+            <div class="text2"><?php echo $k->mileage ?></div></th>
           <th><div class="text1"><font size="-2">Date of 1st registration</font></div>
             <div class="text2"><?php echo $k->date_of_regis ?></div></th>
           <th>&nbsp;</th>

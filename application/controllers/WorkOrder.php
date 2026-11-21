@@ -292,20 +292,11 @@ class WorkOrder extends MY_Controller
         echo json_encode($out);
     }
     public function cetak_work_order()
-	{
-        $idS = trim($_POST['id']);
-        $kat = explode('|', $idS);
-        $kode_cus = $kat[1];
-        $id = $kat[0];
-
-        $data['apl'] = $this->db->get("aplikasi")->row();
-		$data['dataSa'] = $this->Mod_work_order->select_sa($id);
-		$data['detailKet'] = $this->Mod_work_order->select_operation_detail($id);
-		$data['dataCus'] = $this->Mod_work_order->select_customer($kode_cus);
-		$data['dataWork'] = $this->Mod_work_order->select_work_order($id);
-
-		echo show_my_print('service/modals/modal_cetak_work_order', 'cetak-work-order', $data, ' modal-xl');
-	}
+    {
+        // template cetak sama dengan After Sales Report > Services Report, ditampilkan di dalam modal
+        $kat = explode('|', trim((string) $this->input->post('id')));
+        echo show_my_print('service/modals/modal_cetak_dokumen', 'cetak-work-order', array('jenis' => 'wo', 'wo' => $kat[0], 'judul' => 'Work Order'), ' modal-xl');
+    }
 
     //start process start work order
     public function processStartWorkOrder() {

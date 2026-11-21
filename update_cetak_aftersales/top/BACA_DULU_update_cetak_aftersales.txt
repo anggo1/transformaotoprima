@@ -1,0 +1,31 @@
+UPDATE CETAK AFTER SALES - 16/11/2026
+=====================================
+Cara pasang di server (Ubuntu):
+1. Backup dulu folder application di server.
+2. Ekstrak zip ini, lalu salin isi folder "top/application" ke folder "application"
+   aplikasi di server (timpa file lama). Contoh:
+     sudo unzip -o update_cetak_aftersales.zip -d /tmp/upd
+     sudo cp -r /tmp/upd/top/application/* /var/www/html/top/application/
+   (sesuaikan /var/www/html/top dengan lokasi aplikasi di server)
+3. Tidak ada perubahan database.
+
+Isi update:
+- Cetak Pre Order, Part Request, Estimasi Penawaran, Work Order (menu After Sales)
+  kini memakai template yang sama dengan After Sales Report > Services Report,
+  tetap tampil di modal (tombol Cetak & Tab baru).
+- Pre Order / Work Order:
+    Mileage / km            = km pada service terakhir sebelumnya (kosong bila belum pernah service)
+    Last service date / km  = tanggal masuk sekarang / km sekarang
+- Services Report: cetak Part Order per WO & per customer, Job Time Card semua pekerjaan.
+
+File:
+  application/controllers/PreOrder.php
+  application/controllers/WorkOrder.php
+  application/controllers/PartRequest.php
+  application/controllers/EstimasiPenawaranService.php
+  application/controllers/ReportService.php
+  application/models/service/Mod_lapservice.php
+  application/views/service/modals/modal_cetak_dokumen.php          (baru)
+  application/views/service/report_service/cetak_dokumen.php
+  application/views/service/report_service/cetak_partorder.php
+  application/views/service/report_service/all_service.php

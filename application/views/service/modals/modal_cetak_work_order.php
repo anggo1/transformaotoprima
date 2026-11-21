@@ -383,9 +383,9 @@
               </th>
               <th>
                 <div class="text1">
-                  <font size="-2">Las Service date/Millage/km</font>
+                  <font size="-2">Last Service date/Millage/km</font>
                 </div>
-                <div class="text2"></div>
+                <div class="text2"><?php echo $s->mileage.' / '.tglIndoSedang($s->last_service_date) ?></div>
               </th>
               <th>
                 <div class="text1">

@@ -19,6 +19,7 @@ class Mod_lapservice extends CI_Model
         if ( ! empty($f['status'])) $this->db->where('status', $f['status']);
         if ( ! empty($f['sa'])) $this->db->where('sa_name', $f['sa']);
         if ( ! empty($f['ciw'])) $this->db->where('status_service', $f['ciw']);
+        if ( ! empty($f['cus'])) $this->db->where('customer', $f['cus']);
         $rows = $this->db->order_by('date_open_wo', 'DESC')->order_by('wo_no', 'DESC')->get()->result();
         if ( ! $rows) return array();
         $wo = array_map(function ($r) { return $r->wo_no; }, $rows);
@@ -65,6 +66,32 @@ class Mod_lapservice extends CI_Model
         return $o;
     }
 
+    /** customer yang punya WO pada periode (untuk filter / cetak part order) */
+    public function cus_list(array $f)
+    {
+        $this->db->select('customer, MAX(customer_name) AS customer_name', false)->from('tbl_after_sales');
+        if ( ! empty($f['dari'])) $this->db->where('date_open_wo >=', $f['dari']);
+        if ( ! empty($f['sampai'])) $this->db->where('date_open_wo <=', $f['sampai']);
+        return $this->db->where("customer <> ''", null, false)->group_by('customer')->order_by('customer_name')->get()->result();
+    }
+
+    /** part order service (detail estimasi divalidasi sebagai Part order & disetujui) per WO: array wo_no => baris */
+    public function part_order(array $wo)
+    {
+        $o = array(); $tb = 'tbl_af_detail_estimasi_penawaran';
+        if ( ! $wo || ! $this->t($tb)) return $o;
+        $fv = $this->db->field_exists('validasi_jenis', $tb); $fs = $this->db->field_exists('status_ok', $tb);
+        foreach (array_chunk(array_values(array_unique($wo)), 500) as $c) {
+            $this->db->where_in('wo_no', $c);
+            if ($fv) $this->db->where('validasi_jenis', 'P');
+            if ($fs) $this->db->where('status_ok', 'Y');
+            foreach ($this->db->order_by('wo_no')->order_by('id_detail')->get($tb)->result() as $x) $o[$x->wo_no][] = $x;
+        }
+        return $o;
+    }
+
+    public function customer($kode) { return $this->t('tbl_customer') && $kode !== '' ? $this->db->get_where('tbl_customer', array('kode_cus' => $kode))->row() : null; }
+
     public function sa_list() { return $this->db->distinct()->select('sa_name')->where("sa_name <> ''", null, false)->order_by('sa_name')->get('tbl_after_sales')->result(); }
 
     /* ================= dokumen ================= */
@@ -81,8 +108,23 @@ class Mod_lapservice extends CI_Model
         $r->est = $this->t('tbl_af_estimasi_penawaran') ? $this->db->get_where('tbl_af_estimasi_penawaran', array('wo_no' => $wo))->row() : null;
         $r->est_det = $this->t('tbl_af_detail_estimasi_penawaran') ? $this->db->order_by('id_detail')->get_where('tbl_af_detail_estimasi_penawaran', array('wo_no' => $wo))->result() : array();
         $r->est_note = $this->t('tbl_af_detail_estimasi_penawaran_note') ? $this->db->order_by('id_detail_note')->get_where('tbl_af_detail_estimasi_penawaran_note', array('wo_no' => $wo))->result() : array();
+        $po = $this->part_order(array($wo)); $r->part_order = $po[$wo] ?? array();
+        $r->part_req = $this->t('tbl_after_sales_part_request') ? $this->db->order_by('id_request')->get_where('tbl_after_sales_part_request', array('wo_no' => $wo))->result() : array();
+        $pv = $this->servis_sebelumnya($r); $r->prev_mileage = $pv ? trim((string) $pv->mileage) : ''; $r->prev_date = $pv ? $pv->date_open_wo : null; $r->prev_wo = $pv ? $pv->wo_no : '';
         $r->part_keluar = $this->t('tbl_wh_detail_part_keluar_service') ? $this->db->get_where('tbl_wh_detail_part_keluar_service', array('wo_no' => $wo))->result() : array();
         return $r;
+    }
+
+    /** kunjungan service sebelumnya untuk kendaraan yang sama (VIN, atau no. polisi bila VIN kosong); null bila belum pernah */
+    public function servis_sebelumnya($r)
+    {
+        $vin = trim((string) $r->vin); $pol = trim((string) $r->no_pol);
+        if ($vin === '' && $pol === '') return null;
+        $this->db->select('wo_no, date_open_wo, mileage')->from('tbl_after_sales')->where('wo_no <>', $r->wo_no);
+        if ($vin !== '') $this->db->where('vin', $vin); else $this->db->where('no_pol', $pol);
+        $tgl = Mod_lapservice::tgl_ok($r->date_open_wo) ? $r->date_open_wo : date('Y-m-d');
+        $this->db->group_start()->where('date_open_wo <', $tgl)->or_group_start()->where('date_open_wo', $tgl)->where('id <', (int) $r->id)->group_end()->group_end();
+        return $this->db->order_by('date_open_wo', 'DESC')->order_by('id', 'DESC')->limit(1)->get()->row();
     }
 
     /** aplikasi (kop) sesuai lokasi user, fallback baris pertama */

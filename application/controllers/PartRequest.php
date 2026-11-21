@@ -213,18 +213,9 @@ class PartRequest extends MY_Controller
         echo json_encode($out);
     }
     public function cetak_part_request()
-	{
-        $idS = trim($_POST['id']);
-        $kat = explode('|', $idS);
-        $kode_cus = $kat[1];
-        $id = $kat[0];
-
-        $data['apl'] = $this->db->get("aplikasi")->row();
-		$data['dataSa'] = $this->Mod_part_request->select_sa($id);
-		$data['dataCus'] = $this->Mod_part_request->select_customer($kode_cus);
-		$data['dataPartA'] = $this->Mod_part_request->select_part_request_a($id);
-		$data['dataPart'] = $this->Mod_part_request->select_part_request($id);
-
-		echo show_my_print('service/modals/modal_cetak_part', 'cetak-part-request', $data, ' modal-xl');
-	}
+    {
+        // template cetak sama dengan After Sales Report > Services Report, ditampilkan di dalam modal
+        $kat = explode('|', trim((string) $this->input->post('id')));
+        echo show_my_print('service/modals/modal_cetak_dokumen', 'cetak-part-request', array('jenis' => 'partrequest', 'wo' => $kat[0], 'judul' => 'Part Request'), ' modal-xl');
+    }
 }

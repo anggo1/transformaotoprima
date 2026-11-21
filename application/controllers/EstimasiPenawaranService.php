@@ -405,20 +405,11 @@ class EstimasiPenawaranService extends MY_Controller
 		echo json_encode($out);
 	}
 	public function cetak()
-	{
-		$id 				= $_POST['id'];
-		$idS = trim($_POST['id']);
-		$kat = explode('|', $idS);
-		$kode_cus = $kat[1];
-		$id = $kat[0];
-
-		$data['dataCus'] = $this->Mod_estimasi_penawaran_service->select_customer($kode_cus);
-		$data['dataPo'] = $this->Mod_estimasi_penawaran_service->select_by_id($id);
-		$data['detailPo'] = $this->Mod_estimasi_penawaran_service->select_detail($id);
-		$data['detailKet'] = $this->Mod_estimasi_penawaran_service->select_keterangan($id);
-
-		echo show_my_print('service/modals/modal_cetak_estimasi_penawaran_service', 'cetak-po', $data, ' modal-xl');
-	}
+    {
+        // template cetak sama dengan After Sales Report > Services Report, ditampilkan di dalam modal
+        $kat = explode('|', trim((string) $this->input->post('id')));
+        echo show_my_print('service/modals/modal_cetak_dokumen', 'cetak-po', array('jenis' => 'estimasi', 'wo' => $kat[0], 'judul' => 'Estimasi Penawaran'), ' modal-xl');
+    }
 	public function cetak_int()
 	{
 		$id 				= $_POST['id'];

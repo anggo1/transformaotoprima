@@ -168,20 +168,11 @@ class PreOrder extends MY_Controller
         echo json_encode($out);
     }
     public function cetak_pre_order()
-	{
-        $idS = trim($_POST['id']);
-        $kat = explode('|', $idS);
-        $kode_cus = $kat[1];
-        $id = $kat[0];
-
-        $data['apl'] = $this->db->get("aplikasi")->row();
-		$data['dataSa'] = $this->Mod_pre_order->select_sa($id);
-		$data['detailKet'] = $this->Mod_pre_order->select_operation_detail($id);
-		$data['dataCus'] = $this->Mod_pre_order->select_customer($kode_cus);
-		$data['dataPre'] = $this->Mod_pre_order->select_pre_order($id);
-
-		echo show_my_print('service/modals/modal_cetak_pre_order', 'cetak-pre-order', $data, ' modal-xl');
-	}
+    {
+        // template cetak sama dengan After Sales Report > Services Report, ditampilkan di dalam modal
+        $kat = explode('|', trim((string) $this->input->post('id')));
+        echo show_my_print('service/modals/modal_cetak_dokumen', 'cetak-pre-order', array('jenis' => 'preorder', 'wo' => $kat[0], 'judul' => 'Pre Order'), ' modal-xl');
+    }
     public function cetakWorkshop()
     {
         $id                 = $_POST['id'];

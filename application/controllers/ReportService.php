@@ -31,7 +31,7 @@ class ReportService extends MY_Controller
         $st = (string) $this->input->get('status', true); if ($st === null || ! in_array($st, array('', 'F', 'P', 'N'), true)) $st = 'F';
         if ($this->input->get('status') === null) $st = 'F';
         $ciw = (string) $this->input->get('ciw'); if ( ! isset(Mod_lapservice::$CIW[$ciw])) $ciw = '';
-        return array('dari' => $d, 'sampai' => $s, 'status' => $st, 'sa' => trim((string) $this->input->get('sa')), 'ciw' => $ciw);
+        return array('dari' => $d, 'sampai' => $s, 'status' => $st, 'sa' => trim((string) $this->input->get('sa')), 'ciw' => $ciw, 'cus' => trim((string) $this->input->get('cus')));
     }
 
     public function index()
@@ -39,7 +39,7 @@ class ReportService extends MY_Controller
         $f = $this->filter();
         $rows = $this->Mod_lapservice->daftar($f);
         $data = array('page' => 'Services Report', 'judul' => 'After Sales Report', 'f' => $f, 'rows' => $rows, 'R' => $this->Mod_lapservice->ringkasan($rows),
-            'sa_list' => $this->Mod_lapservice->sa_list(), 'boleh_cetak' => $this->boleh('print') || $this->boleh('view'));
+            'sa_list' => $this->Mod_lapservice->sa_list(), 'cus_list' => $this->Mod_lapservice->cus_list($f), 'boleh_cetak' => $this->boleh('print') || $this->boleh('view'));
         $this->template->load('layoutbackend', 'service/report_service/all_service', $data);
     }
 
@@ -49,6 +49,25 @@ class ReportService extends MY_Controller
         $f = $this->filter();
         $rows = $this->Mod_lapservice->daftar($f);
         $this->load->view('service/report_service/cetak_daftar', array('f' => $f, 'rows' => $rows, 'R' => $this->Mod_lapservice->ringkasan($rows), 'apl' => $this->Mod_lapservice->kop()));
+    }
+
+    /** cetak part order service dikelompokkan per customer (mengikuti filter; ?cus= untuk satu customer) */
+    public function cetak_partorder()
+    {
+        $f = $this->filter();
+        $rows = $this->Mod_lapservice->daftar($f);
+        $po = $this->Mod_lapservice->part_order(array_map(function ($r) { return $r->wo_no; }, $rows));
+        $grup = array();
+        foreach ($rows as $r) {
+            if (empty($po[$r->wo_no])) continue;
+            $k = trim((string) $r->customer) ?: ('~' . trim((string) $r->customer_name));
+            if ( ! isset($grup[$k])) $grup[$k] = (object) array('kode' => $r->customer, 'nama' => $r->customer_name, 'cus' => $this->Mod_lapservice->customer((string) $r->customer), 'wo' => array());
+            $r->part_order = $po[$r->wo_no];
+            $grup[$k]->wo[] = $r;
+        }
+        uasort($grup, function ($a, $b) { return strcasecmp((string) $a->nama, (string) $b->nama); });
+        $this->load->view('service/report_service/cetak_partorder', array('f' => $f, 'grup' => $grup, 'apl' => $this->Mod_lapservice->kop(),
+            'oleh' => (string) $this->session->userdata('full_name')));
     }
 
     /** ekspor Excel daftar */
@@ -68,15 +87,15 @@ class ReportService extends MY_Controller
             ->set_header('Content-Disposition: attachment; filename="Services_Report_' . $f['dari'] . '_' . $f['sampai'] . '.xlsx"')->set_output($bin);
     }
 
-    /** dokumen per WO: wo | preorder | estimasi | jobtime | workshop | ringkasan */
+    /** dokumen per WO: wo | preorder | estimasi | partorder | jobtime | workshop | ringkasan */
     public function cetak($jenis = 'wo', $wo = '')
     {
         $this->load->model('service/Mod_lapservice');
-        $jenis = in_array($jenis, array('wo', 'preorder', 'estimasi', 'jobtime', 'workshop', 'ringkasan'), true) ? $jenis : 'wo';
+        $jenis = in_array($jenis, array('wo', 'preorder', 'estimasi', 'partorder', 'partrequest', 'jobtime', 'workshop', 'ringkasan'), true) ? $jenis : 'wo';
         $r = $this->Mod_lapservice->wo(rawurldecode((string) $wo));
         if ( ! $r) show_error('Nomor WO tidak ditemukan.', 404, 'Tidak ditemukan');
         $this->load->view('service/report_service/cetak_dokumen', array('jenis' => $jenis, 'r' => $r, 'apl' => $this->Mod_lapservice->kop(),
-            'oleh' => (string) $this->session->userdata('full_name')));
+            'oleh' => (string) $this->session->userdata('full_name'), 'modal' => (bool) $this->input->get('modal')));
     }
 
     public function listService()
